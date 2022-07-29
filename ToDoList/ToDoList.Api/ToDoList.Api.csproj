@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Asignee\Controllers\" />
+    <Folder Include="Asignee\Models\" />
+    <Folder Include="Asignee\Services\" />
+    <Folder Include="BucketTask\Controllers\" />
+    <Folder Include="BucketTask\Models\" />
+    <Folder Include="BucketTask\Services\" />
+    <Folder Include="Bucket\Controllers\" />
+    <Folder Include="Bucket\Models\" />
+    <Folder Include="Bucket\Services\" />
+    <Folder Include="Stats\Controllers\" />
+    <Folder Include="Stats\Models\" />
+    <Folder Include="Stats\Services\" />
+  </ItemGroup>
+
+</Project>
