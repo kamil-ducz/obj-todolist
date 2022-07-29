@@ -11,13 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Asignee\Models\" />
     <Folder Include="Asignee\Services\" />
-    <Folder Include="BucketTask\Models\" />
     <Folder Include="BucketTask\Services\" />
-    <Folder Include="Bucket\Models\" />
     <Folder Include="Bucket\Services\" />
-    <Folder Include="Stats\Models\" />
     <Folder Include="Stats\Services\" />
   </ItemGroup>
 
