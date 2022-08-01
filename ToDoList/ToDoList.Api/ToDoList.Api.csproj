@@ -11,13 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="BucketTask\Services\" />
-    <Folder Include="Bucket\Services\" />
-    <Folder Include="Stats\Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ToDoList.Domain\ToDoList.Domain.csproj" />
+    <ProjectReference Include="..\ToDoList.Infrastructure\ToDoList.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
