@@ -1,4 +1,6 @@
-﻿namespace ToDoList.Api.Bucket.Models
+﻿using static ToDoList.Domain.Enums.Enums;
+
+namespace ToDoList.Api.Bucket.Models
 {
     public class BucketDTO
     {
@@ -16,20 +18,4 @@
         public bool IsActive { get; set; }
     }
 
-    public enum Category
-    {
-        Home,
-        Job,
-        Hobby
-    }
-
-    public enum BucketColor
-    {
-        Brown,
-        Red,
-        Yellow,
-        Blue,
-        White,
-        Green
-    }
 }

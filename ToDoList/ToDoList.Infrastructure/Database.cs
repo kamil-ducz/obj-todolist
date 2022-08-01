@@ -1,6 +1,6 @@
 ﻿using ToDoList.Domain.Models;
 
-namespace ToDoList.Infrastructure
+namespace ToDoList.Api
 {
     public static class Database
     {
@@ -8,5 +8,12 @@ namespace ToDoList.Infrastructure
         public static BucketTask? BucketTask { get; set; }
         public static Assignee? Assignee { get; set; }
         public static Stats? Stats { get; set; }
+
+        public static void DoSomething()
+        {
+            int a = 1;
+            int b = a;
+        }
+
     }
 }

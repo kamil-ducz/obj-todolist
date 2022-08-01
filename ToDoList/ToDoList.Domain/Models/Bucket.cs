@@ -1,4 +1,6 @@
-﻿namespace ToDoList.Domain.Models
+﻿using static ToDoList.Domain.Enums.Enums;
+
+namespace ToDoList.Domain.Models
 {
     public class Bucket
     {
@@ -14,22 +16,5 @@
         public int MaxAmountOfTasks { get; set; }
         public List<Task>? Tasks { get; set; }
         public bool IsActive { get; set; }
-    }
-
-    public enum Category
-    {
-        Home,
-        Job,
-        Hobby
-    }
-
-    public enum BucketColor
-    {
-        Brown,
-        Red,
-        Yellow,
-        Blue,
-        White,
-        Green
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace ToDoList.Api.BucketTask.Models
+﻿using static ToDoList.Domain.Enums.Enums;
+
+namespace ToDoList.Api.BucketTask.Models
 {
     public class BucketTaskDTO
     {
@@ -8,20 +10,5 @@
         public string? Description { get; set; }
         public TaskState TaskState { get; set; }
         public TaskPriority TaskPriority { get; set; }
-    }
-
-    public enum TaskState
-    {
-        ToDo,
-        InProgress,
-        Done,
-        Cancelled
-    }
-
-    public enum TaskPriority
-    {
-        High,
-        Normal,
-        Low
     }
 }
