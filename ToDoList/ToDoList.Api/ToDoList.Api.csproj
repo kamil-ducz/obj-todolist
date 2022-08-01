@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
+    <ImplicitUsings>disable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,18 +11,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Asignee\Controllers\" />
-    <Folder Include="Asignee\Models\" />
-    <Folder Include="Asignee\Services\" />
-    <Folder Include="BucketTask\Controllers\" />
-    <Folder Include="BucketTask\Models\" />
     <Folder Include="BucketTask\Services\" />
-    <Folder Include="Bucket\Controllers\" />
-    <Folder Include="Bucket\Models\" />
     <Folder Include="Bucket\Services\" />
-    <Folder Include="Stats\Controllers\" />
-    <Folder Include="Stats\Models\" />
     <Folder Include="Stats\Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ToDoList.Domain\ToDoList.Domain.csproj" />
   </ItemGroup>
 
 </Project>
