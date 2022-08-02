@@ -1,10 +1,10 @@
 ﻿using ToDoList.Api;
-using ToDoList.Domain.Interfaces;
 using ToDoList.Domain.Models;
+using ToDoList.Infrastructure.Interfaces;
 
 namespace ToDoList.Infrastructure.Repositories
 {
-    public class AssigneeRepository : IAssignee
+    public class AssigneeRepository : IAssigneeRepository
     {
         public List<Assignee> GetAllAssignees()
         {

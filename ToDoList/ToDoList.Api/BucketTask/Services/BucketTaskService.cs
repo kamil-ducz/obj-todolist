@@ -3,24 +3,38 @@ using ToDoList.Domain.Interfaces;
 
 namespace ToDoList.Api.BucketTask.Services
 {
-    public class BucketTaskService
+    public class BucketTaskService : IBucketTaskService
     {
-        public IBucketTask BucketTaskRepository { get; }
+        private readonly IBucketTaskService bucketTaskService;
 
-        public BucketTaskService(IBucketTask bucketTaskRepository)
+        public BucketTaskService(IBucketTaskService bucketTaskService)
         {
-            BucketTaskRepository = bucketTaskRepository;
+            this.bucketTaskService = bucketTaskService;
         }
 
-        public List<Domain.Models.BucketTask> GetBucketTasks()
+        public List<Domain.Models.BucketTask> GetAllTasks()
         {
-            return BucketTaskRepository.GetAllTasks();
+            return bucketTaskService.GetAllTasks();
         }
 
-        public Domain.Models.BucketTask GetBucket(int id)
+        public Domain.Models.BucketTask GetBucketTask(int taskId)
         {
-            return BucketTaskRepository.GetTask(id);
+            return bucketTaskService.GetBucketTask(taskId);
         }
 
+        public void DeleteBucketTask(int taskId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public int InsertBucketTask(int taskId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void UpdateBucketTask(int taskId)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

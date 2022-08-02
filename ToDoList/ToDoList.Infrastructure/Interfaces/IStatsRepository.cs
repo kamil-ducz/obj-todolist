@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using ToDoList.Domain.Models;
+﻿using ToDoList.Domain.Models;
 
-namespace ToDoList.Domain.Interfaces
+namespace ToDoList.Infrastructure.Interfaces
 {
-    public interface IStats
+    public interface IStatsRepository
     {
         List<Stats> GetAllStats();
         Stats GetStats(int statsId);

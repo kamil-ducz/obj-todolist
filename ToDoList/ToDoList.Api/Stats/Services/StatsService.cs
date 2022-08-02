@@ -1,26 +1,41 @@
 ﻿using System.Collections.Generic;
 using ToDoList.Domain.Interfaces;
+using ToDoList.Infrastructure.Interfaces;
 
 namespace ToDoList.Api.Stats.Services
 {
-    public class StatsService
+    public class StatsService : IStatsService
     {
-        public IStats StatsRepository { get; }
+        private readonly IStatsRepository statsRepository;
 
-        public StatsService(IStats statsRepository)
+        public StatsService(IStatsRepository statsRepository)
         {
-            StatsRepository = statsRepository;
+            this.statsRepository = statsRepository;
         }
 
-        public List<Domain.Models.Stats> GetStats()
+        public List<Domain.Models.Stats> GetAllStats()
         {
-            return StatsRepository.GetAllStats();
+            return statsRepository.GetAllStats();
         }
 
-        public Domain.Models.Stats GetStats(int id)
+        public Domain.Models.Stats GetStats(int statsId)
         {
-            return StatsRepository.GetStats(id);
+            return statsRepository.GetStats(statsId);
         }
 
+        public void DeleteStats(int statsId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public int InsertStats(int statsId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void UpdateStats(int statsId)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
