@@ -7,8 +7,8 @@ namespace ToDoList.Domain.Interfaces
     {
         List<Stats> GetAllStats();
         Stats GetStats(int statsId);
-        int InsertStats(int statsId);
-        void DeleteStats(int statsId);
-        void UpdateStats(int statsId);
+        int InsertStats(Stats stats);
+        void DeleteStats(Stats stats);
+        void UpdateStats(Stats stats);
     }
 }

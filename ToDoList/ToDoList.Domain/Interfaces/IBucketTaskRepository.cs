@@ -7,8 +7,8 @@ namespace ToDoList.Domain.Interfaces
     {
         List<BucketTask> GetAllBucketTasks();
         BucketTask GetBucketTask(int taskId);
-        int InsertBucketTask(int taskId);
-        void DeleteBucketTask(int taskId);
-        void UpdateBucketTask(int taskId);
+        int InsertBucketTask(BucketTask task);
+        void DeleteBucketTask(BucketTask task);
+        void UpdateBucketTask(BucketTask task);
     }
 }
