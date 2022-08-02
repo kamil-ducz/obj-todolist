@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using ToDoList.Domain.Models;
 
-namespace ToDoList.Domain.Interfaces
+namespace ToDoList.Api.Interfaces
 {
     public interface IAssigneeService
     {
-        List<Assignee> GetAllAssignees();
-        Assignee GetAssignee(int assigneeId);
+        List<Domain.Models.Assignee> GetAllAssignees();
+        Domain.Models.Assignee GetAssignee(int assigneeId);
         int InsertAssignee(int assigneeId);
         void DeleteAssignee(int assigneeId);
         void UpdateAssignee(int assigneeId);
