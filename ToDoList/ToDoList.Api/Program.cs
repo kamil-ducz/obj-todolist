@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using ToDoList.Api.Assignee.Services;
 using ToDoList.Api.Bucket.Services;
 using ToDoList.Api.BucketTask.Services;
@@ -35,6 +36,9 @@ namespace ToDoList.Api
             builder.Services.AddScoped<IBucketRepository, BucketRepository>();
             builder.Services.AddScoped<IBucketTaskRepository, BucketTaskRepository>();
             builder.Services.AddScoped<IStatsRepository, StatsRepository>();
+
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 
             var app = builder.Build();
 
