@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using ToDoList.Api.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -9,18 +10,25 @@ namespace ToDoList.Api.Asignee.Controllers
     [ApiController]
     public class AsigneeController : ControllerBase
     {
+        private readonly IAssigneeService assigneeService;
+
+        public AsigneeController(IAssigneeService assigneeService)
+        {
+            this.assigneeService = assigneeService;
+        }
+
         // GET: api/<AsigneeController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Domain.Models.Assignee> Get()
         {
-            return new string[] { "value1", "value2" };
+            return assigneeService.GetAllAssignees();
         }
 
         // GET api/<AsigneeController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Domain.Models.Assignee Get(int id)
         {
-            return "value";
+            return assigneeService.GetAssignee(id);
         }
 
         // POST api/<AsigneeController>
