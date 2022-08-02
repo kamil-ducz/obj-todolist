@@ -1,25 +1,26 @@
 ﻿using System.Collections.Generic;
 using ToDoList.Api.Interfaces;
+using ToDoList.Infrastructure.Interfaces;
 
 namespace ToDoList.Api.BucketTask.Services
 {
     public class BucketTaskService : IBucketTaskService
     {
-        private readonly IBucketTaskService bucketTaskService;
+        private readonly IBucketTaskRepository bucketTaskRepository;
 
-        public BucketTaskService(IBucketTaskService bucketTaskService)
+        public BucketTaskService(IBucketTaskRepository bucketTaskRepository)
         {
-            this.bucketTaskService = bucketTaskService;
+            this.bucketTaskRepository = bucketTaskRepository;
         }
 
-        public List<Domain.Models.BucketTask> GetAllTasks()
+        public List<Domain.Models.BucketTask> GetBucketTasks()
         {
-            return bucketTaskService.GetAllTasks();
+            return bucketTaskRepository.GetAllBucketTasks();
         }
 
         public Domain.Models.BucketTask GetBucketTask(int taskId)
         {
-            return bucketTaskService.GetBucketTask(taskId);
+            return bucketTaskRepository.GetBucketTask(taskId);
         }
 
         public void DeleteBucketTask(int taskId)

@@ -26,15 +26,15 @@ namespace ToDoList.Api
 
             // customer services and repositories
 
-            builder.Services.AddSingleton<IAssigneeService, AssigneeService>();
+            builder.Services.AddScoped<IAssigneeService, AssigneeService>();
             builder.Services.AddScoped<IBucketService, BucketService>();
             builder.Services.AddScoped<IBucketTaskService, BucketTaskService>();
-            builder.Services.AddTransient<IStatsService, StatsService>();
+            builder.Services.AddScoped<IStatsService, StatsService>();
 
-            builder.Services.AddSingleton<IAssigneeRepository, AssigneeRepository>();
+            builder.Services.AddScoped<IAssigneeRepository, AssigneeRepository>();
             builder.Services.AddScoped<IBucketRepository, BucketRepository>();
             builder.Services.AddScoped<IBucketTaskRepository, BucketTaskRepository>();
-            builder.Services.AddTransient<IStatsRepository, StatsRepository>();
+            builder.Services.AddScoped<IStatsRepository, StatsRepository>();
 
             var app = builder.Build();
 

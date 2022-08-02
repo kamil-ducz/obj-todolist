@@ -6,7 +6,7 @@ namespace ToDoList.Infrastructure.Repositories
 {
     public class BucketTaskRepository : IBucketTaskRepository
     {
-        public List<BucketTask> GetAllTasks()
+        public List<BucketTask> GetAllBucketTasks()
         {
             return Database.GetAllBucketTasks();
         }
