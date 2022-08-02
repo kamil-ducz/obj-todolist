@@ -1,26 +1,41 @@
 ﻿using System.Collections.Generic;
 using ToDoList.Domain.Interfaces;
+using ToDoList.Infrastructure.Interfaces;
 
 namespace ToDoList.Api.Assignee.Services
 {
-    public class AssigneeService
+    public class AssigneeService : IAssigneeService
     {
-        public IAssignee AssigneeRepository { get; }
+        private readonly IAssigneeRepository assigneeRepository;
 
-        public AssigneeService(IAssignee assigneeRepository)
+        public AssigneeService(IAssigneeRepository assigneeRepository)
         {
-            AssigneeRepository = assigneeRepository;
+            this.assigneeRepository = assigneeRepository;
         }
 
-        public List<Domain.Models.Assignee> GetAssignees()
+        public List<Domain.Models.Assignee> GetAllAssignees()
         {
-            return AssigneeRepository.GetAllAssignees();
+            return assigneeRepository.GetAllAssignees();
         }
 
-        public Domain.Models.Assignee GetAssignee(int id)
+        public Domain.Models.Assignee GetAssignee(int assigneeId)
         {
-            return AssigneeRepository.GetAssignee(id);
+            return assigneeRepository.GetAssignee(assigneeId);
         }
 
+        public void DeleteAssignee(int assigneeId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public int InsertAssignee(int assigneeId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void UpdateAssignee(int assigneeId)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

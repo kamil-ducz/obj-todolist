@@ -1,17 +1,17 @@
 ﻿using ToDoList.Api;
-using ToDoList.Domain.Interfaces;
 using ToDoList.Domain.Models;
+using ToDoList.Infrastructure.Interfaces;
 
 namespace ToDoList.Infrastructure.Repositories
 {
-    public class BucketTaskRepository : IBucketTask
+    public class BucketTaskRepository : IBucketTaskRepository
     {
         public List<BucketTask> GetAllTasks()
         {
             return Database.GetAllBucketTasks();
         }
 
-        public BucketTask GetTask(int taskId)
+        public BucketTask GetBucketTask(int taskId)
         {
             return Database.GetBucketTask(taskId);
         }
