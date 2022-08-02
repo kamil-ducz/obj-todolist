@@ -16,17 +16,17 @@ namespace ToDoList.Infrastructure.Repositories
             return Database.GetStats(statsId);
         }
 
-        public void DeleteStats(int statsId)
+        public void DeleteStats(Stats stats)
         {
             throw new NotImplementedException();
         }
 
-        public int InsertStats(int statsId)
+        public int InsertStats(Stats stats)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateStats(int statsId)
+        public void UpdateStats(Stats stats)
         {
             throw new NotImplementedException();
         }

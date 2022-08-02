@@ -16,17 +16,17 @@ namespace ToDoList.Infrastructure.Repositories
             return Database.GetBucketTask(taskId);
         }
 
-        public void DeleteBucketTask(int taskId)
+        public void DeleteBucketTask(BucketTask task)
         {
             throw new NotImplementedException();
         }
 
-        public int InsertBucketTask(int taskId)
+        public int InsertBucketTask(BucketTask task)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateBucketTask(int taskId)
+        public void UpdateBucketTask(BucketTask task)
         {
             throw new NotImplementedException();
         }

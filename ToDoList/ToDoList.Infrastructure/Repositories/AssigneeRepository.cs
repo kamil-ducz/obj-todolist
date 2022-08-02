@@ -16,17 +16,17 @@ namespace ToDoList.Infrastructure.Repositories
             return Database.GetAssignee(assigneeId);
         }
 
-        public void DeleteAssignee(int assigneeId)
+        public void DeleteAssignee(Assignee assignee)
         {
             throw new NotImplementedException();
         }
 
-        public int InsertAssignee(int assigneeId)
+        public int InsertAssignee(Assignee assignee)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateAssignee(int assigneeId)
+        public void UpdateAssignee(Assignee assignee)
         {
             throw new NotImplementedException();
         }
