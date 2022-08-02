@@ -6,7 +6,7 @@ using ToDoList.Api.Bucket.Services;
 using ToDoList.Api.BucketTask.Services;
 using ToDoList.Api.Interfaces;
 using ToDoList.Api.Stats.Services;
-using ToDoList.Infrastructure.Interfaces;
+using ToDoList.Domain.Interfaces;
 using ToDoList.Infrastructure.Repositories;
 
 namespace ToDoList.Api

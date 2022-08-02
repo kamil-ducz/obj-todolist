@@ -1,6 +1,7 @@
-﻿using ToDoList.Domain.Models;
+﻿using System.Collections.Generic;
+using ToDoList.Domain.Models;
 
-namespace ToDoList.Infrastructure.Interfaces
+namespace ToDoList.Domain.Interfaces
 {
     public interface IStatsRepository
     {

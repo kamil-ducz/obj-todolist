@@ -3,10 +3,10 @@ using ToDoList.Domain.Models;
 
 namespace ToDoList.Domain.Interfaces
 {
-    public interface IBucketTask
+    public interface IBucketTaskRepository
     {
-        List<BucketTask> GetAllTasks();
-        BucketTask GetTask(int taskId);
+        List<BucketTask> GetAllBucketTasks();
+        BucketTask GetBucketTask(int taskId);
         int InsertBucketTask(int taskId);
         void DeleteBucketTask(int taskId);
         void UpdateBucketTask(int taskId);
