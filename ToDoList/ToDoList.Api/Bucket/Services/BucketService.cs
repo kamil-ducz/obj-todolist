@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using ToDoList.Domain.Interfaces;
+using ToDoList.Api.Interfaces;
 using ToDoList.Infrastructure.Interfaces;
 
 namespace ToDoList.Api.Bucket.Services

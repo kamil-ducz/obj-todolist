@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using ToDoList.Domain.Models;
 
-namespace ToDoList.Domain.Interfaces
+namespace ToDoList.Api.Interfaces
 {
     public interface IBucketService
     {
-        List<Bucket> GetAllBuckets();
-        Bucket GetBucket(int bucketId);
+        List<Domain.Models.Bucket> GetAllBuckets();
+        Domain.Models.Bucket GetBucket(int bucketId);
         int InsertBucket(int bucketId);
         void DeleteBucket(int bucketId);
         void UpdateBucket(int bucketId);
