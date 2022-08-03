@@ -28,12 +28,12 @@ namespace ToDoList.Api.Bucket.Services
             throw new System.NotImplementedException();
         }
 
-        public int InsertBucket(int bucketId)
+        public int InsertBucket(Domain.Models.Bucket bucket)
         {
             throw new System.NotImplementedException();
         }
 
-        public void UpdateBucket(int bucketId)
+        public void UpdateBucket(Domain.Models.Bucket bucket)
         {
             throw new System.NotImplementedException();
         }

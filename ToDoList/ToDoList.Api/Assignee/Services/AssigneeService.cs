@@ -28,12 +28,12 @@ namespace ToDoList.Api.Assignee.Services
             throw new System.NotImplementedException();
         }
 
-        public int InsertAssignee(int assigneeId)
+        public int InsertAssignee(Domain.Models.Assignee assignee)
         {
             throw new System.NotImplementedException();
         }
 
-        public void UpdateAssignee(int assigneeId)
+        public void UpdateAssignee(Domain.Models.Assignee assignee)
         {
             throw new System.NotImplementedException();
         }

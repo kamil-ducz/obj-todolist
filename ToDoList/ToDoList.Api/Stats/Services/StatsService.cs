@@ -28,12 +28,12 @@ namespace ToDoList.Api.Stats.Services
             throw new System.NotImplementedException();
         }
 
-        public int InsertStats(int statsId)
+        public int InsertStats(Domain.Models.Stats stats)
         {
             throw new System.NotImplementedException();
         }
 
-        public void UpdateStats(int statsId)
+        public void UpdateStats(Domain.Models.Stats stats)
         {
             throw new System.NotImplementedException();
         }

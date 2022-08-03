@@ -8,7 +8,7 @@ namespace ToDoList.Domain.Interfaces
         List<Assignee> GetAllAssignees();
         Assignee GetAssignee(int assigneeId);
         int InsertAssignee(Assignee assignee);
-        void DeleteAssignee(Assignee assignee);
+        void DeleteAssignee(int assigneeId);
         void UpdateAssignee(Assignee assignee);
     }
 }

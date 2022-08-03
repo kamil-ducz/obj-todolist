@@ -6,8 +6,8 @@ namespace ToDoList.Api.Interfaces
     {
         List<Domain.Models.Stats> GetAllStats();
         Domain.Models.Stats GetStats(int statsId);
-        int InsertStats(int statsId);
+        int InsertStats(Domain.Models.Stats stats);
         void DeleteStats(int statsId);
-        void UpdateStats(int statsId);
+        void UpdateStats(Domain.Models.Stats stats);
     }
 }

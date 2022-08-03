@@ -8,7 +8,7 @@ namespace ToDoList.Domain.Interfaces
         List<Bucket> GetAllBuckets();
         Bucket GetBucket(int bucketId);
         int InsertBucket(Bucket bucket);
-        void DeleteBucket(Bucket bucket);
+        void DeleteBucket(int bucketId);
         void UpdateBucket(Bucket bucket);
     }
 }

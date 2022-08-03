@@ -6,8 +6,8 @@ namespace ToDoList.Api.Interfaces
     {
         List<Domain.Models.BucketTask> GetBucketTasks();
         Domain.Models.BucketTask GetBucketTask(int taskId);
-        int InsertBucketTask(int taskId);
+        int InsertBucketTask(Domain.Models.BucketTask task);
         void DeleteBucketTask(int taskId);
-        void UpdateBucketTask(int taskId);
+        void UpdateBucketTask(Domain.Models.BucketTask task);
     }
 }

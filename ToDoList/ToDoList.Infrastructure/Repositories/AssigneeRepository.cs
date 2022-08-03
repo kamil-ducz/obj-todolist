@@ -16,7 +16,7 @@ namespace ToDoList.Infrastructure.Repositories
             return Database.GetAssignee(assigneeId);
         }
 
-        public void DeleteAssignee(Assignee assignee)
+        public void DeleteAssignee(int assigneeId)
         {
             throw new NotImplementedException();
         }

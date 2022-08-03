@@ -16,7 +16,7 @@ namespace ToDoList.Infrastructure.Repositories
             return Database.GetBucketTask(taskId);
         }
 
-        public void DeleteBucketTask(BucketTask task)
+        public void DeleteBucketTask(int taskId)
         {
             throw new NotImplementedException();
         }
