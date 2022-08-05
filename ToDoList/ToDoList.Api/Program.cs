@@ -1,6 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using ToDoList.Api.Assignee.Services;
+using ToDoList.Api.Bucket.Services;
+using ToDoList.Api.BucketTask.Services;
+using ToDoList.Api.Interfaces;
+using ToDoList.Api.Stats.Services;
+using ToDoList.Domain.Interfaces;
+using ToDoList.Infrastructure.Repositories;
 
 namespace ToDoList.Api
 {
@@ -16,6 +24,21 @@ namespace ToDoList.Api
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            // customer services and repositories
+
+            builder.Services.AddScoped<IAssigneeService, AssigneeService>();
+            builder.Services.AddScoped<IBucketService, BucketService>();
+            builder.Services.AddScoped<IBucketTaskService, BucketTaskService>();
+            builder.Services.AddScoped<IStatsService, StatsService>();
+
+            builder.Services.AddScoped<IAssigneeRepository, AssigneeRepository>();
+            builder.Services.AddScoped<IBucketRepository, BucketRepository>();
+            builder.Services.AddScoped<IBucketTaskRepository, BucketTaskRepository>();
+            builder.Services.AddScoped<IStatsRepository, StatsRepository>();
+
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 
             var app = builder.Build();
 

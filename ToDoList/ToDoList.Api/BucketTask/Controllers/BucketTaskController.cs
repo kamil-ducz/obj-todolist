@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using ToDoList.Api.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -9,18 +10,25 @@ namespace ToDoList.Api.BucketTask.Controllers
     [ApiController]
     public class BucketTaskController : ControllerBase
     {
+        private readonly IBucketTaskService bucketTaskService;
+
+        public BucketTaskController(IBucketTaskService bucketTaskService)
+        {
+            this.bucketTaskService = bucketTaskService;
+        }
+
         // GET: api/<BucketTaskController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Domain.Models.BucketTask> Get()
         {
-            return new string[] { "value1", "value2" };
+            return bucketTaskService.GetBucketTasks();
         }
 
         // GET api/<BucketTaskController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Domain.Models.BucketTask Get(int id)
         {
-            return "value";
+            return bucketTaskService.GetBucketTask(id);
         }
 
         // POST api/<BucketTaskController>

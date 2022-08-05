@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using ToDoList.Api.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -9,18 +10,25 @@ namespace ToDoList.Api.Stats.Controllers
     [ApiController]
     public class StatsController : ControllerBase
     {
+        private readonly IStatsService statsService;
+
+        public StatsController(IStatsService statsService)
+        {
+            this.statsService = statsService;
+        }
+
         // GET: api/<StatsController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Domain.Models.Stats> Get()
         {
-            return new string[] { "value1", "value2" };
+            return statsService.GetAllStats();
         }
 
         // GET api/<StatsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Domain.Models.Stats Get(int id)
         {
-            return "value";
+            return statsService.GetStats(id);
         }
 
         // POST api/<StatsController>
