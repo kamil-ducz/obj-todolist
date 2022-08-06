@@ -7,7 +7,7 @@ namespace ToDoList.Api.MappingProfiles
     {
         public BucketServiceMappingProfile()
         {
-            CreateMap<Domain.Models.Bucket, BucketDTO>();
+            CreateMap<Domain.Models.Bucket, BucketDTO>().ReverseMap();
         }
     }
 }
