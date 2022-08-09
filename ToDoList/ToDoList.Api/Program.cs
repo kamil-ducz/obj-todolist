@@ -1,3 +1,5 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -7,6 +9,7 @@ using ToDoList.Api.Bucket.Services;
 using ToDoList.Api.BucketTask.Services;
 using ToDoList.Api.Interfaces;
 using ToDoList.Api.Stats.Services;
+using ToDoList.Api.Validation;
 using ToDoList.Domain.Interfaces;
 using ToDoList.Infrastructure.Repositories;
 
@@ -20,12 +23,11 @@ namespace ToDoList.Api
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            // customer services and repositories
+            builder.Services.AddControllers().AddFluentValidation();
 
             builder.Services.AddScoped<IAssigneeService, AssigneeService>();
             builder.Services.AddScoped<IBucketService, BucketService>();
@@ -39,6 +41,11 @@ namespace ToDoList.Api
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            builder.Services.AddMvc();
+            builder.Services.AddScoped<IValidator<Domain.Models.Assignee>, AssigneeValidator>();
+            builder.Services.AddScoped<IValidator<Domain.Models.Bucket>, BucketValidator>();
+            builder.Services.AddScoped<IValidator<Domain.Models.BucketTask>, BucketTaskValidator>();
+            builder.Services.AddScoped<IValidator<Domain.Models.Stats>, StatsValidator>();
 
             var app = builder.Build();
 
