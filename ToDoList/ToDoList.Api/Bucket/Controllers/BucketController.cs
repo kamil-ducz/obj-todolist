@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using ToDoList.Api.Bucket.Models;
 using ToDoList.Api.Interfaces;
+using ToDoList.Api.Validation;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,6 +14,8 @@ namespace ToDoList.Api.Bucket.Controllers
     public class BucketController : ControllerBase
     {
         private readonly IBucketService bucketService;
+
+        BucketDTOValidator bucketDTOValidator = new BucketDTOValidator();
 
         public BucketController(IBucketService bucketService)
         {
@@ -33,8 +38,16 @@ namespace ToDoList.Api.Bucket.Controllers
 
         // POST api/<BucketController>
         [HttpPost]
-        public void Post([FromBody] Domain.Models.Bucket value)
+        public async Task<IActionResult> Post([FromBody] BucketDTO bucketDTO)
         {
+            var validationResult = bucketDTOValidator.Validate(bucketDTO);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult);
+            }
+
+            return Ok();
         }
 
         // PUT api/<BucketController>/5

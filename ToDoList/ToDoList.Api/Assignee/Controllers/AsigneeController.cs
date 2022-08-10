@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using ToDoList.Api.Asignee.Models;
 using ToDoList.Api.Interfaces;
+using ToDoList.Api.Validation;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,6 +14,8 @@ namespace ToDoList.Api.Asignee.Controllers
     public class AsigneeController : ControllerBase
     {
         private readonly IAssigneeService assigneeService;
+
+        AssigneeDTOValidator assigneeDTOValidator = new AssigneeDTOValidator();
 
         public AsigneeController(IAssigneeService assigneeService)
         {
@@ -33,8 +38,16 @@ namespace ToDoList.Api.Asignee.Controllers
 
         // POST api/<AsigneeController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] AssigneeDTO assigneeDTO)
         {
+            var validationResult = assigneeDTOValidator.Validate(assigneeDTO);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult);
+            }
+
+            return Ok();
         }
 
         // PUT api/<AsigneeController>/5

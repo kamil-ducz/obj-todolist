@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ToDoList.Api.Interfaces;
+using ToDoList.Api.Stats.Models;
+using ToDoList.Api.Validation;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,6 +14,8 @@ namespace ToDoList.Api.Stats.Controllers
     public class StatsController : ControllerBase
     {
         private readonly IStatsService statsService;
+
+        StatsDTOValidator statsDTOValidator = new StatsDTOValidator();
 
         public StatsController(IStatsService statsService)
         {
@@ -33,8 +38,16 @@ namespace ToDoList.Api.Stats.Controllers
 
         // POST api/<StatsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] StatsDTO statsDTO)
         {
+            var validationResult = statsDTOValidator.Validate(statsDTO);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult);
+            }
+
+            return Ok();
         }
 
         // PUT api/<StatsController>/5
