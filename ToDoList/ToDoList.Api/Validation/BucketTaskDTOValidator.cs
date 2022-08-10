@@ -1,10 +1,11 @@
 ﻿using FluentValidation;
+using ToDoList.Api.BucketTask.Models;
 
 namespace ToDoList.Api.Validation
 {
-    public class BucketTaskValidator : AbstractValidator<Domain.Models.BucketTask>
+    public class BucketTaskDTOValidator : AbstractValidator<BucketTaskDTO>
     {
-        public BucketTaskValidator()
+        public BucketTaskDTOValidator()
         {
             RuleFor(n => n.Name).NotEmpty();
             RuleFor(n => n.Name).MinimumLength(2).MaximumLength(100);

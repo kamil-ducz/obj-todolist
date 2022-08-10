@@ -1,10 +1,11 @@
 ﻿using FluentValidation;
+using ToDoList.Api.Stats.Models;
 
 namespace ToDoList.Api.Validation
 {
-    public class StatsValidator : AbstractValidator<Domain.Models.Stats>
+    public class StatsDTOValidator : AbstractValidator<StatsDTO>
     {
-        public StatsValidator()
+        public StatsDTOValidator()
         {
             RuleFor(s => s.AsigneeId).NotEmpty();
         }

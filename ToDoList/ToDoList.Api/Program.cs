@@ -4,10 +4,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using ToDoList.Api.Asignee.Models;
 using ToDoList.Api.Assignee.Services;
+using ToDoList.Api.Bucket.Models;
 using ToDoList.Api.Bucket.Services;
+using ToDoList.Api.BucketTask.Models;
 using ToDoList.Api.BucketTask.Services;
 using ToDoList.Api.Interfaces;
+using ToDoList.Api.Stats.Models;
 using ToDoList.Api.Stats.Services;
 using ToDoList.Api.Validation;
 using ToDoList.Domain.Interfaces;
@@ -42,10 +46,10 @@ namespace ToDoList.Api
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             builder.Services.AddMvc();
-            builder.Services.AddScoped<IValidator<Domain.Models.Assignee>, AssigneeValidator>();
-            builder.Services.AddScoped<IValidator<Domain.Models.Bucket>, BucketValidator>();
-            builder.Services.AddScoped<IValidator<Domain.Models.BucketTask>, BucketTaskValidator>();
-            builder.Services.AddScoped<IValidator<Domain.Models.Stats>, StatsValidator>();
+            builder.Services.AddScoped<IValidator<AssigneeDTO>, AssigneeDTOValidator>();
+            builder.Services.AddScoped<IValidator<BucketDTO>, BucketDTOValidator>();
+            builder.Services.AddScoped<IValidator<BucketTaskDTO>, BucketTaskDTOValidator>();
+            builder.Services.AddScoped<IValidator<StatsDTO>, StatsDTOValidator>();
 
             var app = builder.Build();
 
