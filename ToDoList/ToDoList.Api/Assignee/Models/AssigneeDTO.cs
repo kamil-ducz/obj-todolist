@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ToDoList.Api.BucketTask.Models;
 
 namespace ToDoList.Api.Asignee.Models
 {
@@ -6,6 +7,6 @@ namespace ToDoList.Api.Asignee.Models
     {
         public int Id { get; set; }
         public string? Name { get; set; }
-        public List<Domain.Models.BucketTask>? Tasks { get; set; }
+        public List<BucketTaskDTO>? Tasks { get; set; }
     }
 }

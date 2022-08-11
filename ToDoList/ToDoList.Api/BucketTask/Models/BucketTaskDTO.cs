@@ -1,4 +1,5 @@
-﻿using static ToDoList.Domain.Enums.Enums;
+﻿using ToDoList.Api.Bucket.Models;
+using static ToDoList.Domain.Enums.Enums;
 
 namespace ToDoList.Api.BucketTask.Models
 {
@@ -6,7 +7,7 @@ namespace ToDoList.Api.BucketTask.Models
     {
         public int Id { get; set; }
         public int BucketId { get; set; }
-        public virtual Domain.Models.Bucket Bucket { get; set; }
+        public virtual BucketDTO Bucket { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
         public TaskState TaskState { get; set; }
