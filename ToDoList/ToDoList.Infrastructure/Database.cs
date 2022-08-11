@@ -43,8 +43,8 @@ namespace ToDoList.Api
 
         static List<Assignee> Assignees = new List<Assignee>()
         {
-            new Assignee() { Id = 1, Name = "John", TaskId = 1},
-            new Assignee() { Id = 2, Name = "Elle", TaskId = 3},
+            new Assignee() { Id = 1, Name = "John", BucketTaskId = 1},
+            new Assignee() { Id = 2, Name = "Elle", BucketTaskId = 3},
         };
 
         public static List<Assignee> GetAllAssigness()
