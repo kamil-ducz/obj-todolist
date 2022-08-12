@@ -41,12 +41,6 @@ namespace ToDoList.Api
 
             builder.Services.AddDbContext<ToDoListDbContext>();
 
-            builder.Services.AddScoped<ToDoListSeeder>();
-
-            var seeder = builder.Services.BuildServiceProvider().CreateScope().ServiceProvider.GetRequiredService<ToDoListSeeder>();
-
-            seeder.Seed();
-
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
