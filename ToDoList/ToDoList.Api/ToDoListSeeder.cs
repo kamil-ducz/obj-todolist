@@ -17,6 +17,13 @@ namespace ToDoList.Api
         {
             if (toDoListDbContext.Database.CanConnect())
             {
+                if (toDoListDbContext.Stats is not null && !toDoListDbContext.Stats.Any())
+                {
+                    var stats = GetStats();
+                    toDoListDbContext.AddRange(stats);
+                    toDoListDbContext.SaveChanges();
+                }
+
                 if (toDoListDbContext.Assignees is not null && !toDoListDbContext.Assignees.Any())
                 {
                     var assignees = GetAssignees();
@@ -38,12 +45,7 @@ namespace ToDoList.Api
                     toDoListDbContext.SaveChanges();
                 }
 
-                if (toDoListDbContext.Stats is not null && !toDoListDbContext.Stats.Any())
-                {
-                    var stats = GetStats();
-                    toDoListDbContext.AddRange(stats);
-                    toDoListDbContext.SaveChanges();
-                }
+
             }
         }
 
@@ -51,8 +53,8 @@ namespace ToDoList.Api
         {
             var assignees = new List<Domain.Models.Assignee>()
         {
-            new Domain.Models.Assignee() { Name = "John"},
-            new Domain.Models.Assignee() { Name = "Elle"},
+            new Domain.Models.Assignee() { Name = "John", StatsId = 1},
+            new Domain.Models.Assignee() { Name = "Elle", StatsId = 2},
         };
 
             return assignees;
@@ -88,8 +90,8 @@ namespace ToDoList.Api
         {
             var stats = new List<Domain.Models.Stats>()
         {
-            new Domain.Models.Stats() { AsigneeId = 1, PercentOfTasksCancelled = 0, PercentOfTasksCompleted = 0, PercentOfTasksInProgress = 100, PercentOfTasksToDo = 0 },
-            new Domain.Models.Stats() { AsigneeId = 2, PercentOfTasksCancelled = 0, PercentOfTasksCompleted = 100, PercentOfTasksInProgress = 0, PercentOfTasksToDo = 0 }
+            new Domain.Models.Stats() { PercentOfTasksCancelled = 0, PercentOfTasksCompleted = 0, PercentOfTasksInProgress = 100, PercentOfTasksToDo = 0 },
+            new Domain.Models.Stats() { PercentOfTasksCancelled = 0, PercentOfTasksCompleted = 100, PercentOfTasksInProgress = 0, PercentOfTasksToDo = 0 }
         };
 
             return stats;

@@ -6,8 +6,9 @@ namespace ToDoList.Domain.Models
     {
         public int Id { get; set; }
         public string? Name { get; set; }
-        public int BucketTaskId { get; set; }
-        public virtual List<BucketTask>? BucketTask { get; set; }
 
+        public int StatsId { get; set; }
+        public virtual Stats? Stats { get; set; }
+        public virtual List<BucketTask>? BucketTasks { get; set; }
     }
 }
