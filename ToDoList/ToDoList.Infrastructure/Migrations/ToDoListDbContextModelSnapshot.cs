@@ -8,7 +8,7 @@ using ToDoList.Api;
 
 #nullable disable
 
-namespace ToDoList.Api.Migrations
+namespace ToDoList.Infrastructure.Migrations
 {
     [DbContext(typeof(ToDoListDbContext))]
     partial class ToDoListDbContextModelSnapshot : ModelSnapshot

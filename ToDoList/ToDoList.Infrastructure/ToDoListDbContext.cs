@@ -33,7 +33,7 @@ namespace ToDoList.Api
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlServer(configuration.GetConnectionString("ToDoListDatabase"));
+            options.UseSqlServer(configuration.GetConnectionString("ToDoListDatabase"), b => b.MigrationsAssembly("ToDoList.Infrastructure"));
         }
 
         public DbSet<Domain.Models.Assignee>? Assignees { get; set; }

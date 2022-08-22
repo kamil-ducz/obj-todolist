@@ -9,10 +9,10 @@ using ToDoList.Api;
 
 #nullable disable
 
-namespace ToDoList.Api.Migrations
+namespace ToDoList.Infrastructure.Migrations
 {
     [DbContext(typeof(ToDoListDbContext))]
-    [Migration("20220822165523_Init1")]
+    [Migration("20220822172251_Init1")]
     partial class Init1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -124,16 +124,20 @@ namespace ToDoList.Api.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("PercentOfTasksCancelled")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(3, 2)
+                        .HasColumnType("decimal(3,2)");
 
                     b.Property<decimal>("PercentOfTasksCompleted")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(3, 2)
+                        .HasColumnType("decimal(3,2)");
 
                     b.Property<decimal>("PercentOfTasksInProgress")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(3, 2)
+                        .HasColumnType("decimal(3,2)");
 
                     b.Property<decimal>("PercentOfTasksToDo")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(3, 2)
+                        .HasColumnType("decimal(3,2)");
 
                     b.HasKey("Id");
 

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace ToDoList.Api.Migrations
+namespace ToDoList.Infrastructure.Migrations
 {
     public partial class Init1 : Migration
     {
@@ -33,10 +33,10 @@ namespace ToDoList.Api.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AsigneeId = table.Column<int>(type: "int", nullable: false),
-                    PercentOfTasksCompleted = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PercentOfTasksToDo = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PercentOfTasksInProgress = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    PercentOfTasksCancelled = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    PercentOfTasksCompleted = table.Column<decimal>(type: "decimal(3,2)", precision: 3, scale: 2, nullable: false),
+                    PercentOfTasksToDo = table.Column<decimal>(type: "decimal(3,2)", precision: 3, scale: 2, nullable: false),
+                    PercentOfTasksInProgress = table.Column<decimal>(type: "decimal(3,2)", precision: 3, scale: 2, nullable: false),
+                    PercentOfTasksCancelled = table.Column<decimal>(type: "decimal(3,2)", precision: 3, scale: 2, nullable: false)
                 },
                 constraints: table =>
                 {
