@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using ToDoList.Api.BucketTask.Models;
 using ToDoList.Api.Interfaces;
 using ToDoList.Api.Validation;
@@ -14,38 +14,30 @@ namespace ToDoList.Api.BucketTask.Controllers
     public class BucketTaskController : ControllerBase
     {
         private readonly IBucketTaskService bucketTaskService;
+        private readonly BucketTaskDTOValidator _bucketTaskDTOValidator;
 
-        BucketTaskDTOValidator bucketTaskDTOValidator = new BucketTaskDTOValidator();
-
-        public BucketTaskController(IBucketTaskService bucketTaskService)
+        public BucketTaskController(IBucketTaskService bucketTaskService, BucketTaskDTOValidator bucketTaskDTOValidator)
         {
             this.bucketTaskService = bucketTaskService;
+            this._bucketTaskDTOValidator = bucketTaskDTOValidator;
         }
 
-        // GET: api/<BucketTaskController>
         [HttpGet]
         public IEnumerable<Domain.Models.BucketTask> Get()
         {
             return bucketTaskService.GetBucketTasks();
         }
 
-        // GET api/<BucketTaskController>/5
         [HttpGet("{id}")]
         public Domain.Models.BucketTask Get(int id)
         {
             return bucketTaskService.GetBucketTask(id);
         }
 
-        // POST api/<BucketTaskController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] BucketTaskDTO bucketTaskDTO)
+        public IActionResult Post([FromBody] BucketTaskDTO bucketTaskDTO)
         {
-            var validationResult = bucketTaskDTOValidator.Validate(bucketTaskDTO);
-
-            if (!validationResult.IsValid)
-            {
-                return BadRequest(validationResult);
-            }
+            _bucketTaskDTOValidator.ValidateAndThrow(bucketTaskDTO);
 
             return Ok();
         }

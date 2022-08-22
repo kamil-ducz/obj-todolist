@@ -51,6 +51,11 @@ namespace ToDoList.Api
             builder.Services.AddScoped<IValidator<BucketTaskDTO>, BucketTaskDTOValidator>();
             builder.Services.AddScoped<IValidator<StatsDTO>, StatsDTOValidator>();
 
+            builder.Services.AddScoped<AssigneeDTOValidator>();
+            builder.Services.AddScoped<BucketDTOValidator>();
+            builder.Services.AddScoped<BucketTaskDTOValidator>();
+            builder.Services.AddScoped<StatsDTOValidator>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

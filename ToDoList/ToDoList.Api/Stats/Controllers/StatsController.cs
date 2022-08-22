@@ -14,38 +14,30 @@ namespace ToDoList.Api.Stats.Controllers
     public class StatsController : ControllerBase
     {
         private readonly IStatsService statsService;
+        private readonly StatsDTOValidator _statsDTOValidator;
 
-        StatsDTOValidator statsDTOValidator = new StatsDTOValidator();
-
-        public StatsController(IStatsService statsService)
+        public StatsController(IStatsService statsService, StatsDTOValidator statsDTOValidator)
         {
             this.statsService = statsService;
+            _statsDTOValidator = statsDTOValidator;
         }
 
-        // GET: api/<StatsController>
         [HttpGet]
         public IEnumerable<Domain.Models.Stats> Get()
         {
             return statsService.GetAllStats();
         }
 
-        // GET api/<StatsController>/5
         [HttpGet("{id}")]
         public Domain.Models.Stats Get(int id)
         {
             return statsService.GetStats(id);
         }
 
-        // POST api/<StatsController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] StatsDTO statsDTO)
+        public IActionResult Post([FromBody] StatsDTO statsDTO)
         {
-            var validationResult = statsDTOValidator.Validate(statsDTO);
-
-            if (!validationResult.IsValid)
-            {
-                return BadRequest(validationResult);
-            }
+            _statsDTOValidator.Validate(statsDTO);
 
             return Ok();
         }

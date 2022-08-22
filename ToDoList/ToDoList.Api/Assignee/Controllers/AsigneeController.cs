@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using ToDoList.Api.Asignee.Models;
 using ToDoList.Api.Interfaces;
 using ToDoList.Api.Validation;
@@ -14,38 +14,30 @@ namespace ToDoList.Api.Asignee.Controllers
     public class AsigneeController : ControllerBase
     {
         private readonly IAssigneeService assigneeService;
+        private readonly AssigneeDTOValidator _assigneeDTOValidator;
 
-        AssigneeDTOValidator assigneeDTOValidator = new AssigneeDTOValidator();
-
-        public AsigneeController(IAssigneeService assigneeService)
+        public AsigneeController(IAssigneeService assigneeService, AssigneeDTOValidator assigneeDTOValidator)
         {
             this.assigneeService = assigneeService;
+            this._assigneeDTOValidator = assigneeDTOValidator;
         }
 
-        // GET: api/<AsigneeController>
         [HttpGet]
         public IEnumerable<Domain.Models.Assignee> Get()
         {
             return assigneeService.GetAllAssignees();
         }
 
-        // GET api/<AsigneeController>/5
         [HttpGet("{id}")]
         public Domain.Models.Assignee Get(int id)
         {
             return assigneeService.GetAssignee(id);
         }
 
-        // POST api/<AsigneeController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] AssigneeDTO assigneeDTO)
+        public IActionResult Post([FromBody] AssigneeDTO assigneeDTO)
         {
-            var validationResult = assigneeDTOValidator.Validate(assigneeDTO);
-
-            if (!validationResult.IsValid)
-            {
-                return BadRequest(validationResult);
-            }
+            _assigneeDTOValidator.ValidateAndThrow(assigneeDTO);
 
             return Ok();
         }
