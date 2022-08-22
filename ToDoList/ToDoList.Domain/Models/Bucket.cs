@@ -11,7 +11,9 @@ namespace ToDoList.Domain.Models
         public Category Category { get; set; }
         public BucketColor BucketColor { get; set; }
         public int MaxAmountOfTasks { get; set; }
-        public List<BucketTask>? Tasks { get; set; }
         public bool IsActive { get; set; }
+
+        public virtual List<BucketTask>? BucketTasks { get; set; }
+
     }
 }

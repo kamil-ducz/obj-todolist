@@ -55,6 +55,7 @@ namespace ToDoList.Api
             builder.Services.AddScoped<BucketDTOValidator>();
             builder.Services.AddScoped<BucketTaskDTOValidator>();
             builder.Services.AddScoped<StatsDTOValidator>();
+            builder.Services.AddDbContext<ToDoListDbContext>();
 
             var app = builder.Build();
 
