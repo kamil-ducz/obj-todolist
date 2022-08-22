@@ -12,12 +12,24 @@ namespace ToDoList.Api
             this.configuration = configuration;
         }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Domain.Models.Assignee>()
-        //                .Property(n => n.Name)
-        //                .IsRequired();
-        //}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Domain.Models.Stats>()
+                        .Property(s => s.PercentOfTasksCancelled)
+                        .HasPrecision(3, 2);
+
+            modelBuilder.Entity<Domain.Models.Stats>()
+                        .Property(s => s.PercentOfTasksCompleted)
+                        .HasPrecision(3, 2);
+
+            modelBuilder.Entity<Domain.Models.Stats>()
+                        .Property(s => s.PercentOfTasksInProgress)
+                        .HasPrecision(3, 2);
+
+            modelBuilder.Entity<Domain.Models.Stats>()
+                        .Property(s => s.PercentOfTasksToDo)
+                        .HasPrecision(3, 2);
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
