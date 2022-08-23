@@ -7,7 +7,7 @@ namespace ToDoList.Api.Validation
     {
         public StatsDTOValidator()
         {
-            RuleFor(s => s.AsigneeId).NotEmpty();
+
         }
     }
 }
