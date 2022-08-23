@@ -38,7 +38,9 @@ namespace ToDoList.Api.BucketTask.Controllers
         {
             _bucketTaskDTOValidator.ValidateAndThrow(bucketTaskDTO);
 
-            return Ok();
+            var bucketTaskId = bucketTaskService.InsertBucketTask(bucketTaskDTO);
+
+            return Ok($"Bucket task with id={ bucketTaskId } inserted into database.");
         }
 
         // PUT api/<BucketTaskController>/5

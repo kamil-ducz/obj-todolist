@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using AutoMapper;
+using System.Collections.Generic;
+using ToDoList.Api.BucketTask.Models;
 using ToDoList.Api.Interfaces;
 using ToDoList.Domain.Interfaces;
 
@@ -7,10 +9,14 @@ namespace ToDoList.Api.BucketTask.Services
     public class BucketTaskService : IBucketTaskService
     {
         private readonly IBucketTaskRepository bucketTaskRepository;
+        private readonly ToDoListDbContext toDoListDbContext;
+        private readonly IMapper mapper;
 
-        public BucketTaskService(IBucketTaskRepository bucketTaskRepository)
+        public BucketTaskService(IBucketTaskRepository bucketTaskRepository, ToDoListDbContext toDoListDbContext, IMapper mapper)
         {
             this.bucketTaskRepository = bucketTaskRepository;
+            this.toDoListDbContext = toDoListDbContext;
+            this.mapper = mapper;
         }
 
         public List<Domain.Models.BucketTask> GetBucketTasks()
@@ -28,9 +34,17 @@ namespace ToDoList.Api.BucketTask.Services
             throw new System.NotImplementedException();
         }
 
-        public int InsertBucketTask(Domain.Models.BucketTask task)
+        public int InsertBucketTask(BucketTaskDTO bucketTaskDTO)
         {
-            throw new System.NotImplementedException();
+            if (toDoListDbContext.BucketTasks is not null)
+            {
+                var mappedBucketTask = mapper.Map<Domain.Models.BucketTask>(bucketTaskDTO);
+
+                toDoListDbContext.BucketTasks.Add(mappedBucketTask);
+                toDoListDbContext.SaveChanges();
+            }
+
+            return bucketTaskDTO.Id;
         }
 
         public void UpdateBucketTask(Domain.Models.BucketTask task)

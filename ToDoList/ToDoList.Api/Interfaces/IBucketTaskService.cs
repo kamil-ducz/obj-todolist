@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ToDoList.Api.BucketTask.Models;
 
 namespace ToDoList.Api.Interfaces
 {
@@ -6,7 +7,7 @@ namespace ToDoList.Api.Interfaces
     {
         List<Domain.Models.BucketTask> GetBucketTasks();
         Domain.Models.BucketTask GetBucketTask(int taskId);
-        int InsertBucketTask(Domain.Models.BucketTask task);
+        int InsertBucketTask(BucketTaskDTO task);
         void DeleteBucketTask(int taskId);
         void UpdateBucketTask(Domain.Models.BucketTask task);
     }
