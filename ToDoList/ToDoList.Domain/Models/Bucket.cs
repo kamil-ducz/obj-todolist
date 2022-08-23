@@ -13,6 +13,5 @@ namespace ToDoList.Domain.Models
         public int MaxAmountOfTasks { get; set; }
         public bool IsActive { get; set; }
         public virtual List<BucketTask>? BucketTasks { get; set; }
-
     }
 }
