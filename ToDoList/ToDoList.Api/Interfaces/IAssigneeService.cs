@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ToDoList.Api.Asignee.Models;
 
 namespace ToDoList.Api.Interfaces
 {
@@ -6,7 +7,7 @@ namespace ToDoList.Api.Interfaces
     {
         List<Domain.Models.Assignee> GetAllAssignees();
         Domain.Models.Assignee GetAssignee(int assigneeId);
-        int InsertAssignee(Domain.Models.Assignee assigneeId);
+        int InsertAssignee(AssigneeDTO assigneeId);
         void DeleteAssignee(int assigneeId);
         void UpdateAssignee(Domain.Models.Assignee assignee);
     }

@@ -38,9 +38,9 @@ namespace ToDoList.Api.Asignee.Controllers
         {
             _assigneeDTOValidator.ValidateAndThrow(assigneeDTO);
 
-            // TODO implement and use service to add data to db
+            var assigneeId = assigneeService.InsertAssignee(assigneeDTO);
 
-            return Ok();
+            return Ok($"Assignee with id={ assigneeId } inserted into database.");
         }
 
         // PUT api/<AsigneeController>/5
