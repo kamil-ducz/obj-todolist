@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using ToDoList.Api.BucketTask.Models;
 using ToDoList.Api.Interfaces;
-using ToDoList.Api.Validation;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,9 +13,9 @@ namespace ToDoList.Api.BucketTask.Controllers
     public class BucketTaskController : ControllerBase
     {
         private readonly IBucketTaskService bucketTaskService;
-        private readonly BucketTaskDTOValidator _bucketTaskDTOValidator;
+        private readonly IValidator<BucketTaskDTO> _bucketTaskDTOValidator;
 
-        public BucketTaskController(IBucketTaskService bucketTaskService, BucketTaskDTOValidator bucketTaskDTOValidator)
+        public BucketTaskController(IBucketTaskService bucketTaskService, IValidator<BucketTaskDTO> bucketTaskDTOValidator)
         {
             this.bucketTaskService = bucketTaskService;
             this._bucketTaskDTOValidator = bucketTaskDTOValidator;

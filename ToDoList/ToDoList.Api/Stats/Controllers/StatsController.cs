@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using ToDoList.Api.Interfaces;
 using ToDoList.Api.Stats.Models;
-using ToDoList.Api.Validation;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,12 +13,12 @@ namespace ToDoList.Api.Stats.Controllers
     public class StatsController : ControllerBase
     {
         private readonly IStatsService statsService;
-        private readonly StatsDTOValidator _statsDTOValidator;
+        private readonly IValidator<StatsDTO> _statsDTOValidator;
 
-        public StatsController(IStatsService statsService, StatsDTOValidator statsDTOValidator)
+        public StatsController(IStatsService statsService, IValidator<StatsDTO> statsDTOValidator)
         {
             this.statsService = statsService;
-            _statsDTOValidator = statsDTOValidator;
+            this._statsDTOValidator = statsDTOValidator;
         }
 
         [HttpGet]

@@ -31,7 +31,8 @@ namespace ToDoList.Api
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddControllers().AddFluentValidation();
+            builder.Services.AddControllers();
+            builder.Services.AddFluentValidationAutoValidation();
 
             builder.Services.AddScoped<IAssigneeService, AssigneeService>();
             builder.Services.AddScoped<IBucketService, BucketService>();
@@ -45,16 +46,11 @@ namespace ToDoList.Api
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            builder.Services.AddMvc();
             builder.Services.AddScoped<IValidator<AssigneeDTO>, AssigneeDTOValidator>();
             builder.Services.AddScoped<IValidator<BucketDTO>, BucketDTOValidator>();
             builder.Services.AddScoped<IValidator<BucketTaskDTO>, BucketTaskDTOValidator>();
             builder.Services.AddScoped<IValidator<StatsDTO>, StatsDTOValidator>();
 
-            builder.Services.AddScoped<AssigneeDTOValidator>();
-            builder.Services.AddScoped<BucketDTOValidator>();
-            builder.Services.AddScoped<BucketTaskDTOValidator>();
-            builder.Services.AddScoped<StatsDTOValidator>();
             builder.Services.AddDbContext<ToDoListDbContext>();
 
             var app = builder.Build();

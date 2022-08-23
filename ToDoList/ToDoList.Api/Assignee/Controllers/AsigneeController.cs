@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using ToDoList.Api.Asignee.Models;
 using ToDoList.Api.Interfaces;
-using ToDoList.Api.Validation;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,9 +13,9 @@ namespace ToDoList.Api.Asignee.Controllers
     public class AsigneeController : ControllerBase
     {
         private readonly IAssigneeService assigneeService;
-        private readonly AssigneeDTOValidator _assigneeDTOValidator;
+        private readonly IValidator<AssigneeDTO> _assigneeDTOValidator;
 
-        public AsigneeController(IAssigneeService assigneeService, AssigneeDTOValidator assigneeDTOValidator)
+        public AsigneeController(IAssigneeService assigneeService, IValidator<AssigneeDTO> assigneeDTOValidator)
         {
             this.assigneeService = assigneeService;
             this._assigneeDTOValidator = assigneeDTOValidator;
@@ -38,6 +37,8 @@ namespace ToDoList.Api.Asignee.Controllers
         public IActionResult Post([FromBody] AssigneeDTO assigneeDTO)
         {
             _assigneeDTOValidator.ValidateAndThrow(assigneeDTO);
+
+            // TODO implement and use service to add data to db
 
             return Ok();
         }
