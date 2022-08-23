@@ -36,9 +36,11 @@ namespace ToDoList.Api.Stats.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] StatsDTO statsDTO)
         {
-            _statsDTOValidator.Validate(statsDTO);
+            _statsDTOValidator.ValidateAndThrow(statsDTO);
 
-            return Ok();
+            var statsId = statsService.InsertStats(statsDTO);
+
+            return Ok($"Statistic with id={ statsId } inserted into database.");
         }
 
         // PUT api/<StatsController>/5
