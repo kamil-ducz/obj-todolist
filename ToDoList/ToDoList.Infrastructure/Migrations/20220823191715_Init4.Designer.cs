@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ToDoList.Api;
 
@@ -11,9 +12,10 @@ using ToDoList.Api;
 namespace ToDoList.Infrastructure.Migrations
 {
     [DbContext(typeof(ToDoListDbContext))]
-    partial class ToDoListDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220823191715_Init4")]
+    partial class Init4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,12 +35,13 @@ namespace ToDoList.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("StatsId")
+                    b.Property<int>("StatsId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StatsId");
+                    b.HasIndex("StatsId")
+                        .IsUnique();
 
                     b.ToTable("Assignees");
                 });
@@ -85,7 +88,7 @@ namespace ToDoList.Infrastructure.Migrations
                     b.Property<int?>("AssigneeId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("BucketId")
+                    b.Property<int>("BucketId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -117,6 +120,9 @@ namespace ToDoList.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("AsigneeId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("PercentOfTasksCancelled")
                         .HasPrecision(3, 2)
                         .HasColumnType("decimal(3,2)");
@@ -141,8 +147,8 @@ namespace ToDoList.Infrastructure.Migrations
             modelBuilder.Entity("ToDoList.Domain.Models.Assignee", b =>
                 {
                     b.HasOne("ToDoList.Domain.Models.Stats", "Stats")
-                        .WithMany()
-                        .HasForeignKey("StatsId")
+                        .WithOne("Assignee")
+                        .HasForeignKey("ToDoList.Domain.Models.Assignee", "StatsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -155,9 +161,13 @@ namespace ToDoList.Infrastructure.Migrations
                         .WithMany("BucketTasks")
                         .HasForeignKey("AssigneeId");
 
-                    b.HasOne("ToDoList.Domain.Models.Bucket", null)
+                    b.HasOne("ToDoList.Domain.Models.Bucket", "Bucket")
                         .WithMany("BucketTasks")
-                        .HasForeignKey("BucketId");
+                        .HasForeignKey("BucketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bucket");
                 });
 
             modelBuilder.Entity("ToDoList.Domain.Models.Assignee", b =>
@@ -168,6 +178,11 @@ namespace ToDoList.Infrastructure.Migrations
             modelBuilder.Entity("ToDoList.Domain.Models.Bucket", b =>
                 {
                     b.Navigation("BucketTasks");
+                });
+
+            modelBuilder.Entity("ToDoList.Domain.Models.Stats", b =>
+                {
+                    b.Navigation("Assignee");
                 });
 #pragma warning restore 612, 618
         }
