@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using AutoMapper;
+using System.Collections.Generic;
+using ToDoList.Api.Bucket.Models;
 using ToDoList.Api.Interfaces;
 using ToDoList.Domain.Interfaces;
 
@@ -7,10 +9,14 @@ namespace ToDoList.Api.Bucket.Services
     public class BucketService : IBucketService
     {
         private readonly IBucketRepository bucketRepository;
+        private readonly ToDoListDbContext toDoListDbContext;
+        private readonly IMapper mapper;
 
-        public BucketService(IBucketRepository bucketRepository)
+        public BucketService(IBucketRepository bucketRepository, ToDoListDbContext toDoListDbContext, IMapper mapper)
         {
             this.bucketRepository = bucketRepository;
+            this.toDoListDbContext = toDoListDbContext;
+            this.mapper = mapper;
         }
 
         public List<Domain.Models.Bucket> GetAllBuckets()
@@ -28,9 +34,17 @@ namespace ToDoList.Api.Bucket.Services
             throw new System.NotImplementedException();
         }
 
-        public int InsertBucket(Domain.Models.Bucket bucket)
+        public int InsertBucket(BucketDTO bucketDTO)
         {
-            throw new System.NotImplementedException();
+            if (toDoListDbContext.Buckets is not null)
+            {
+                var mappedBucket = mapper.Map<Domain.Models.Bucket>(bucketDTO);
+
+                toDoListDbContext.Buckets.Add(mappedBucket);
+                toDoListDbContext.SaveChanges();
+            }
+
+            return bucketDTO.Id;
         }
 
         public void UpdateBucket(Domain.Models.Bucket bucket)

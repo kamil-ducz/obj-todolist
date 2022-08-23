@@ -38,7 +38,10 @@ namespace ToDoList.Api.Bucket.Controllers
         {
             _bucketDTOValidator.ValidateAndThrow(bucketDTO);
 
-            return Ok();
+            var bucketId = bucketService.InsertBucket(bucketDTO);
+
+            return Ok($"Bucket with id={ bucketId } inserted into database.");
+
         }
 
         // PUT api/<BucketController>/5
