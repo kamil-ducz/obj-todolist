@@ -9,13 +9,11 @@ namespace ToDoList.Api.Assignee.Services
     public class AssigneeService : IAssigneeService
     {
         private readonly IAssigneeRepository assigneeRepository;
-        private readonly ToDoListDbContext toDoListDbContext;
         private readonly IMapper mapper;
 
-        public AssigneeService(IAssigneeRepository assigneeRepository, ToDoListDbContext toDoListDbContext, IMapper mapper)
+        public AssigneeService(IAssigneeRepository assigneeRepository, IMapper mapper)
         {
             this.assigneeRepository = assigneeRepository;
-            this.toDoListDbContext = toDoListDbContext;
             this.mapper = mapper;
         }
 
@@ -36,13 +34,9 @@ namespace ToDoList.Api.Assignee.Services
 
         public int InsertAssignee(AssigneeDTO assigneeDTO)
         {
-            if (toDoListDbContext.Assignees is not null)
-            {
-                var mappedAssignee = mapper.Map<Domain.Models.Assignee>(assigneeDTO);
+            var mappedAssignee = mapper.Map<Domain.Models.Assignee>(assigneeDTO);
 
-                toDoListDbContext.Assignees.Add(mappedAssignee);
-                toDoListDbContext.SaveChanges();
-            }
+            assigneeRepository.InsertAssignee(mappedAssignee);
 
             return assigneeDTO.Id;
         }

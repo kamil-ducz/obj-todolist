@@ -40,6 +40,14 @@ namespace ToDoList.Infrastructure.Repositories
 
         public int InsertAssignee(Assignee assignee)
         {
+            if (_toDoListDbContext.Assignees is not null)
+            {
+                _toDoListDbContext.Assignees.Add(assignee);
+                _toDoListDbContext.SaveChanges();
+
+                return assignee.Id;
+            }
+
             throw new NotImplementedException();
         }
 
