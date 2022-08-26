@@ -40,6 +40,14 @@ namespace ToDoList.Infrastructure.Repositories
 
         public int InsertStats(Stats stats)
         {
+            if (_toDoListDbContext.Stats is not null)
+            {
+                _toDoListDbContext.Stats.Add(stats);
+                _toDoListDbContext.SaveChanges();
+
+                return stats.Id;
+            }
+
             throw new NotImplementedException();
         }
 

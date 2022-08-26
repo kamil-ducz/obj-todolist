@@ -9,13 +9,11 @@ namespace ToDoList.Api.Stats.Services
     public class StatsService : IStatsService
     {
         private readonly IStatsRepository statsRepository;
-        private readonly ToDoListDbContext toDoListDbContext;
         private readonly IMapper mapper;
 
-        public StatsService(IStatsRepository statsRepository, ToDoListDbContext toDoListDbContext, IMapper mapper)
+        public StatsService(IStatsRepository statsRepository, IMapper mapper)
         {
             this.statsRepository = statsRepository;
-            this.toDoListDbContext = toDoListDbContext;
             this.mapper = mapper;
         }
 
@@ -36,15 +34,9 @@ namespace ToDoList.Api.Stats.Services
 
         public int InsertStats(StatsDTO statsDTO)
         {
-            if (toDoListDbContext.Stats is not null)
-            {
-                var mappedBucketTask = mapper.Map<Domain.Models.Stats>(statsDTO);
+            var mappedStats = mapper.Map<Domain.Models.Stats>(statsDTO);
 
-                toDoListDbContext.Stats.Add(mappedBucketTask);
-                toDoListDbContext.SaveChanges();
-            }
-
-            return statsDTO.Id;
+            return statsRepository.InsertStats(mappedStats);
         }
 
         public void UpdateStats(Domain.Models.Stats stats)

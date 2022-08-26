@@ -38,8 +38,16 @@ namespace ToDoList.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public int InsertBucketTask(BucketTask task)
+        public int InsertBucketTask(BucketTask bucketTask)
         {
+            if (_toDoListDbContext.BucketTasks is not null)
+            {
+                _toDoListDbContext.BucketTasks.Add(bucketTask);
+                _toDoListDbContext.SaveChanges();
+
+                return bucketTask.Id;
+            }
+
             throw new NotImplementedException();
         }
 

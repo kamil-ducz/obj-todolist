@@ -9,13 +9,11 @@ namespace ToDoList.Api.BucketTask.Services
     public class BucketTaskService : IBucketTaskService
     {
         private readonly IBucketTaskRepository bucketTaskRepository;
-        private readonly ToDoListDbContext toDoListDbContext;
         private readonly IMapper mapper;
 
-        public BucketTaskService(IBucketTaskRepository bucketTaskRepository, ToDoListDbContext toDoListDbContext, IMapper mapper)
+        public BucketTaskService(IBucketTaskRepository bucketTaskRepository, IMapper mapper)
         {
             this.bucketTaskRepository = bucketTaskRepository;
-            this.toDoListDbContext = toDoListDbContext;
             this.mapper = mapper;
         }
 
@@ -36,15 +34,9 @@ namespace ToDoList.Api.BucketTask.Services
 
         public int InsertBucketTask(BucketTaskDTO bucketTaskDTO)
         {
-            if (toDoListDbContext.BucketTasks is not null)
-            {
-                var mappedBucketTask = mapper.Map<Domain.Models.BucketTask>(bucketTaskDTO);
+            var mappedBucketTask = mapper.Map<Domain.Models.BucketTask>(bucketTaskDTO);
 
-                toDoListDbContext.BucketTasks.Add(mappedBucketTask);
-                toDoListDbContext.SaveChanges();
-            }
-
-            return bucketTaskDTO.Id;
+            return bucketTaskRepository.InsertBucketTask(mappedBucketTask);
         }
 
         public void UpdateBucketTask(Domain.Models.BucketTask task)
