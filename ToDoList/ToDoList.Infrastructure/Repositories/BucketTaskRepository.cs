@@ -6,9 +6,21 @@ namespace ToDoList.Infrastructure.Repositories
 {
     public class BucketTaskRepository : IBucketTaskRepository
     {
+        private readonly ToDoListDbContext _toDoListDbContext;
+
+        public BucketTaskRepository(ToDoListDbContext toDoListDbContext)
+        {
+            this._toDoListDbContext = toDoListDbContext;
+        }
+
         public List<BucketTask> GetAllBucketTasks()
         {
-            return Database.GetAllBucketTasks();
+            if (_toDoListDbContext.BucketTasks is not null)
+            {
+                return _toDoListDbContext.BucketTasks.ToList();
+            }
+
+            throw new NotImplementedException();
         }
 
         public BucketTask GetBucketTask(int taskId)
