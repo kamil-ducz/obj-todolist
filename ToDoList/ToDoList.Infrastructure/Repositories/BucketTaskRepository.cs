@@ -23,9 +23,14 @@ namespace ToDoList.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public BucketTask GetBucketTask(int taskId)
+        public BucketTask GetBucketTask(int bucketTaskId)
         {
-            return Database.GetBucketTask(taskId);
+            if (_toDoListDbContext.BucketTasks is not null)
+            {
+                return _toDoListDbContext.BucketTasks.First(a => a.Id == bucketTaskId);
+            }
+
+            throw new NotImplementedException();
         }
 
         public void DeleteBucketTask(int taskId)

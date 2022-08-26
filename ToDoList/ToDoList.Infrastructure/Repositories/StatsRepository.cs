@@ -25,7 +25,12 @@ namespace ToDoList.Infrastructure.Repositories
 
         public Stats GetStats(int statsId)
         {
-            return Database.GetStats(statsId);
+            if (_toDoListDbContext.Stats is not null)
+            {
+                return _toDoListDbContext.Stats.First(a => a.Id == statsId);
+            }
+
+            throw new NotImplementedException();
         }
 
         public void DeleteStats(int statsId)

@@ -27,7 +27,12 @@ namespace ToDoList.Infrastructure.Repositories
 
         public Bucket GetBucket(int bucketId)
         {
-            return Database.GetBucket(bucketId);
+            if (_toDoListDbContext.Buckets is not null)
+            {
+                return _toDoListDbContext.Buckets.First(a => a.Id == bucketId);
+            }
+
+            throw new NotImplementedException();
         }
 
         public void DeleteBucket(int bucketId)
