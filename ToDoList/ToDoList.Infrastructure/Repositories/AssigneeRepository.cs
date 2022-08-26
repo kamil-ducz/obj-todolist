@@ -17,9 +17,7 @@ namespace ToDoList.Infrastructure.Repositories
         {
             if (_toDoListDbContext.Assignees is not null)
             {
-                var assignees = _toDoListDbContext.Assignees.ToList();
-
-                return assignees;
+                return _toDoListDbContext.Assignees.ToList();
             }
 
             throw new NotImplementedException();
@@ -27,7 +25,12 @@ namespace ToDoList.Infrastructure.Repositories
 
         public Assignee GetAssignee(int assigneeId)
         {
-            return Database.GetAssignee(assigneeId);
+            if (_toDoListDbContext.Assignees is not null)
+            {
+                return _toDoListDbContext.Assignees.First(a => a.Id == assigneeId);
+            }
+
+            throw new NotImplementedException();
         }
 
         public void DeleteAssignee(int assigneeId)
