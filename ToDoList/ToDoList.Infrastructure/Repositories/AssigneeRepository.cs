@@ -35,7 +35,20 @@ namespace ToDoList.Infrastructure.Repositories
 
         public void DeleteAssignee(int assigneeId)
         {
-            throw new NotImplementedException();
+
+            if (_toDoListDbContext.Assignees is not null)
+            {
+                var assigneeToDelete = _toDoListDbContext.Assignees.First(a => a.Id == assigneeId);
+                _toDoListDbContext.Assignees.Remove(assigneeToDelete);
+                _toDoListDbContext.SaveChanges();
+
+            }
+
+            else
+            {
+                throw new NotImplementedException();
+            }
+
         }
 
         public int InsertAssignee(Assignee assignee)

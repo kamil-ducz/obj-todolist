@@ -29,7 +29,7 @@ namespace ToDoList.Api.Assignee.Services
 
         public void DeleteAssignee(int assigneeId)
         {
-            throw new System.NotImplementedException();
+            assigneeRepository.DeleteAssignee(assigneeId);
         }
 
         public int InsertAssignee(AssigneeDTO assigneeDTO)
