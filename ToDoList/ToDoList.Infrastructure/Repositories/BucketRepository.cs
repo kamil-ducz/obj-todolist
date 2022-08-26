@@ -42,6 +42,14 @@ namespace ToDoList.Infrastructure.Repositories
 
         public int InsertBucket(Bucket bucket)
         {
+            if (_toDoListDbContext.Buckets is not null)
+            {
+                _toDoListDbContext.Buckets.Add(bucket);
+                _toDoListDbContext.SaveChanges();
+
+                return bucket.Id;
+            }
+
             throw new NotImplementedException();
         }
 

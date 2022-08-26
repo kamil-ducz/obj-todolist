@@ -36,9 +36,7 @@ namespace ToDoList.Api.Assignee.Services
         {
             var mappedAssignee = mapper.Map<Domain.Models.Assignee>(assigneeDTO);
 
-            assigneeRepository.InsertAssignee(mappedAssignee);
-
-            return assigneeDTO.Id;
+            return assigneeRepository.InsertAssignee(mappedAssignee); ;
         }
 
         public void UpdateAssignee(Domain.Models.Assignee assignee)
