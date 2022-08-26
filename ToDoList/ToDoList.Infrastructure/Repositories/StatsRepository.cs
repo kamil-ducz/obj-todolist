@@ -6,9 +6,21 @@ namespace ToDoList.Infrastructure.Repositories
 {
     public class StatsRepository : IStatsRepository
     {
+        private readonly ToDoListDbContext _toDoListDbContext;
+
+        public StatsRepository(ToDoListDbContext toDoListDbContext)
+        {
+            this._toDoListDbContext = toDoListDbContext;
+        }
+
         public List<Stats> GetAllStats()
         {
-            return Database.GetAllStats();
+            if (_toDoListDbContext.Stats is not null)
+            {
+                return _toDoListDbContext.Stats.ToList();
+            }
+
+            throw new NotImplementedException();
         }
 
         public Stats GetStats(int statsId)
