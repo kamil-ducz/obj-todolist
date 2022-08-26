@@ -6,9 +6,23 @@ namespace ToDoList.Infrastructure.Repositories
 {
     public class AssigneeRepository : IAssigneeRepository
     {
+        private readonly ToDoListDbContext _toDoListDbContext;
+
+        public AssigneeRepository(ToDoListDbContext toDoListDbContext)
+        {
+            this._toDoListDbContext = toDoListDbContext;
+        }
+
         public List<Assignee> GetAllAssignees()
         {
-            return Database.GetAllAssigness();
+            if (_toDoListDbContext.Assignees is not null)
+            {
+                var assignees = _toDoListDbContext.Assignees.ToList();
+
+                return assignees;
+            }
+
+            throw new NotImplementedException();
         }
 
         public Assignee GetAssignee(int assigneeId)
