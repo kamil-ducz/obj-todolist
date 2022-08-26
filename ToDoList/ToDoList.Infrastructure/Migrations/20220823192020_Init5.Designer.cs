@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ToDoList.Api;
 
@@ -11,9 +12,10 @@ using ToDoList.Api;
 namespace ToDoList.Infrastructure.Migrations
 {
     [DbContext(typeof(ToDoListDbContext))]
-    partial class ToDoListDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220823192020_Init5")]
+    partial class Init5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +23,6 @@ namespace ToDoList.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("AssigneeBucketTask", b =>
-                {
-                    b.Property<int>("AssigneesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BucketTasksId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AssigneesId", "BucketTasksId");
-
-                    b.HasIndex("BucketTasksId");
-
-                    b.ToTable("AssigneeBucketTask");
-                });
 
             modelBuilder.Entity("ToDoList.Domain.Models.Assignee", b =>
                 {
@@ -97,6 +84,9 @@ namespace ToDoList.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int?>("AssigneeId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("BucketId")
                         .HasColumnType("int");
 
@@ -113,6 +103,8 @@ namespace ToDoList.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AssigneeId");
 
                     b.HasIndex("BucketId");
 
@@ -148,21 +140,6 @@ namespace ToDoList.Infrastructure.Migrations
                     b.ToTable("Stats");
                 });
 
-            modelBuilder.Entity("AssigneeBucketTask", b =>
-                {
-                    b.HasOne("ToDoList.Domain.Models.Assignee", null)
-                        .WithMany()
-                        .HasForeignKey("AssigneesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ToDoList.Domain.Models.BucketTask", null)
-                        .WithMany()
-                        .HasForeignKey("BucketTasksId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ToDoList.Domain.Models.Assignee", b =>
                 {
                     b.HasOne("ToDoList.Domain.Models.Stats", "Stats")
@@ -176,9 +153,18 @@ namespace ToDoList.Infrastructure.Migrations
 
             modelBuilder.Entity("ToDoList.Domain.Models.BucketTask", b =>
                 {
+                    b.HasOne("ToDoList.Domain.Models.Assignee", null)
+                        .WithMany("BucketTasks")
+                        .HasForeignKey("AssigneeId");
+
                     b.HasOne("ToDoList.Domain.Models.Bucket", null)
                         .WithMany("BucketTasks")
                         .HasForeignKey("BucketId");
+                });
+
+            modelBuilder.Entity("ToDoList.Domain.Models.Assignee", b =>
+                {
+                    b.Navigation("BucketTasks");
                 });
 
             modelBuilder.Entity("ToDoList.Domain.Models.Bucket", b =>
