@@ -49,6 +49,8 @@ namespace ToDoList.Infrastructure.Repositories
                 throw new NotImplementedException();
             }
 
+            // TODO what if we want to delete connected tasks to assignee? Maybe try to find connected tasks and just delete them as well
+
         }
 
         public int InsertAssignee(Assignee assignee)
@@ -60,6 +62,8 @@ namespace ToDoList.Infrastructure.Repositories
 
                 return assignee.Id;
             }
+
+            // TODO what if assignee object has buckettask in its body? Maybe should add to AssigneeBucketTask table then?
 
             throw new NotImplementedException();
         }

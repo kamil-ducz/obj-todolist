@@ -37,7 +37,20 @@ namespace ToDoList.Infrastructure.Repositories
 
         public void DeleteBucket(int bucketId)
         {
-            throw new NotImplementedException();
+            if (_toDoListDbContext.Buckets is not null)
+            {
+                var bucketToDelete = _toDoListDbContext.Buckets.First(a => a.Id == bucketId);
+                _toDoListDbContext.Buckets.Remove(bucketToDelete);
+                _toDoListDbContext.SaveChanges();
+
+            }
+
+            else
+            {
+                throw new NotImplementedException();
+            }
+
+            // TODO what if we want to delete connected bucket tasks?
         }
 
         public int InsertBucket(Bucket bucket)

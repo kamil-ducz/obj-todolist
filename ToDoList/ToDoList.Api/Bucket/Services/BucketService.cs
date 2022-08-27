@@ -29,7 +29,7 @@ namespace ToDoList.Api.Bucket.Services
 
         public void DeleteBucket(int bucketId)
         {
-            throw new System.NotImplementedException();
+            bucketRepository.DeleteBucket(bucketId);        
         }
 
         public int InsertBucket(BucketDTO bucketDTO)
