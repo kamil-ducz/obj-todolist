@@ -35,7 +35,17 @@ namespace ToDoList.Infrastructure.Repositories
 
         public void DeleteStats(int statsId)
         {
-            throw new NotImplementedException();
+            if (_toDoListDbContext.Stats is not null)
+            {
+                var assigneeToDelete = _toDoListDbContext.Stats.First(a => a.Id == statsId);
+                _toDoListDbContext.Stats.Remove(assigneeToDelete);
+                _toDoListDbContext.SaveChanges();
+            }
+
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public int InsertStats(Stats stats)

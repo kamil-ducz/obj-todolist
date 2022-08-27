@@ -35,7 +35,6 @@ namespace ToDoList.Infrastructure.Repositories
 
         public void DeleteAssignee(int assigneeId)
         {
-
             if (_toDoListDbContext.Assignees is not null)
             {
                 var assigneeToDelete = _toDoListDbContext.Assignees.First(a => a.Id == assigneeId);
@@ -50,7 +49,6 @@ namespace ToDoList.Infrastructure.Repositories
             }
 
             // TODO what if we want to delete connected tasks to assignee? Maybe try to find connected tasks and just delete them as well
-
         }
 
         public int InsertAssignee(Assignee assignee)

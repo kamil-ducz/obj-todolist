@@ -29,7 +29,7 @@ namespace ToDoList.Api.Stats.Services
 
         public void DeleteStats(int statsId)
         {
-            throw new System.NotImplementedException();
+            statsRepository.DeleteStats(statsId);
         }
 
         public int InsertStats(StatsDTO statsDTO)

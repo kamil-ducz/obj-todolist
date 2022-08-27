@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using ToDoList.Api.Interfaces;
@@ -14,11 +15,13 @@ namespace ToDoList.Api.Stats.Controllers
     {
         private readonly IStatsService statsService;
         private readonly IValidator<StatsDTO> _statsDTOValidator;
+        private readonly IMapper _mapper;
 
-        public StatsController(IStatsService statsService, IValidator<StatsDTO> statsDTOValidator)
+        public StatsController(IStatsService statsService, IValidator<StatsDTO> statsDTOValidator, IMapper mapper)
         {
             this.statsService = statsService;
             this._statsDTOValidator = statsDTOValidator;
+            this._mapper = mapper;
         }
 
         [HttpGet]
@@ -49,10 +52,18 @@ namespace ToDoList.Api.Stats.Controllers
         {
         }
 
-        // DELETE api/<StatsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            var statsToDelete = statsService.GetStats(id);
+
+            var mappedStats = _mapper.Map<StatsDTO>(statsToDelete);
+
+            _statsDTOValidator.ValidateAndThrow(mappedStats);
+
+            statsService.DeleteStats(id);
+
+            return Ok($"Stats with id={ id } deleted.");
         }
     }
 }
