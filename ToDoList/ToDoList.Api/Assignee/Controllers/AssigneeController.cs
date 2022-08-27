@@ -27,16 +27,12 @@ namespace ToDoList.Api.Asignee.Controllers
         [HttpGet]
         public IEnumerable<Domain.Models.Assignee> Get()
         {
-            // TODO think if validate and throw worth it here?
-
             return assigneeService.GetAllAssignees();
         }
 
         [HttpGet("{id}")]
         public Domain.Models.Assignee Get(int id)
         {
-            // TODO think if validate and throw worth it here?
-
             return assigneeService.GetAssignee(id);
         }
 
