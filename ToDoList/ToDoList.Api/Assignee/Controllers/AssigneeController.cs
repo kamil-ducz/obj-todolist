@@ -11,13 +11,13 @@ namespace ToDoList.Api.Asignee.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AsigneeController : ControllerBase
+    public class AssigneeController : ControllerBase
     {
         private readonly IAssigneeService assigneeService;
         private readonly IValidator<AssigneeDTO> _assigneeDTOValidator;
         private readonly IMapper _mapper;
 
-        public AsigneeController(IAssigneeService assigneeService, IValidator<AssigneeDTO> assigneeDTOValidator, IMapper mapper)
+        public AssigneeController(IAssigneeService assigneeService, IValidator<AssigneeDTO> assigneeDTOValidator, IMapper mapper)
         {
             this.assigneeService = assigneeService;
             this._assigneeDTOValidator = assigneeDTOValidator;
