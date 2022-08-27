@@ -66,9 +66,23 @@ namespace ToDoList.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public void UpdateAssignee(Assignee assignee)
+        public void UpdateAssignee(int id, Assignee assignee)
         {
-            throw new NotImplementedException();
+            if (_toDoListDbContext.Assignees is not null)
+            {
+                var assigneeToUpdate = _toDoListDbContext.Assignees.First(a => a.Id == id);
+
+                assigneeToUpdate.Name = assignee.Name;
+                assigneeToUpdate.BucketTasks = assignee.BucketTasks;
+
+                _toDoListDbContext.Assignees.Update(assigneeToUpdate);
+                _toDoListDbContext.SaveChanges();
+            }
+
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

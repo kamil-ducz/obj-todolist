@@ -50,10 +50,16 @@ namespace ToDoList.Api.Asignee.Controllers
             return Ok($"Assignee with id={ assigneeId } inserted into database.");
         }
 
-        // PUT api/<AsigneeController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] AssigneeDTO assigneeDTO)
         {
+            _assigneeDTOValidator.ValidateAndThrow(assigneeDTO);
+
+            assigneeService.UpdateAssignee(id, assigneeDTO);
+
+            return Ok($"Assignee with id={ id } has been updated.");
+
+
         }
 
         [HttpDelete("{id}")]

@@ -9,6 +9,6 @@ namespace ToDoList.Api.Interfaces
         Domain.Models.Assignee GetAssignee(int assigneeId);
         int InsertAssignee(AssigneeDTO assigneeId);
         void DeleteAssignee(int assigneeId);
-        void UpdateAssignee(Domain.Models.Assignee assignee);
+        void UpdateAssignee(int id, AssigneeDTO assignee);
     }
 }
