@@ -61,9 +61,25 @@ namespace ToDoList.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public void UpdateBucketTask(BucketTask task)
+        public void UpdateBucketTask(int id, BucketTask bucketTask)
         {
-            throw new NotImplementedException();
+            if (_toDoListDbContext.BucketTasks is not null)
+            {
+                var bucketTaskToUpdate = _toDoListDbContext.BucketTasks.First(a => a.Id == id);
+
+                bucketTaskToUpdate.Name = bucketTask.Name;
+                bucketTaskToUpdate.Description = bucketTask.Description;
+                bucketTaskToUpdate.TaskState = bucketTask.TaskState;
+                bucketTaskToUpdate.TaskPriority = bucketTask.TaskPriority;
+
+                _toDoListDbContext.BucketTasks.Update(bucketTaskToUpdate);
+                _toDoListDbContext.SaveChanges();
+            }
+
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

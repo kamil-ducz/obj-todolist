@@ -39,9 +39,11 @@ namespace ToDoList.Api.BucketTask.Services
             return bucketTaskRepository.InsertBucketTask(mappedBucketTask);
         }
 
-        public void UpdateBucketTask(Domain.Models.BucketTask task)
+        public void UpdateBucketTask(int id, BucketTaskDTO bucketTaskDTO)
         {
-            throw new System.NotImplementedException();
+            var mappedBucketTask = mapper.Map<Domain.Models.BucketTask>(bucketTaskDTO);
+
+            bucketTaskRepository.UpdateBucketTask(id, mappedBucketTask);
         }
     }
 }

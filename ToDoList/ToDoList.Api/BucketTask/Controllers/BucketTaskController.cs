@@ -46,10 +46,16 @@ namespace ToDoList.Api.BucketTask.Controllers
             return Ok($"Bucket task with id={ bucketTaskId } inserted into database.");
         }
 
-        // PUT api/<BucketTaskController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] BucketTaskDTO bucketTaskDTO)
         {
+            _bucketTaskDTOValidator.ValidateAndThrow(bucketTaskDTO);
+
+            bucketTaskService.UpdateBucketTask(id, bucketTaskDTO);
+
+            return Ok($"Bucket task with id={ id } has been updated.");
+
+
         }
 
         [HttpDelete("{id}")]
