@@ -66,9 +66,27 @@ namespace ToDoList.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public void UpdateBucket(Bucket bucket)
+        public void UpdateBucket(int id, Bucket bucket)
         {
-            throw new NotImplementedException();
+            if (_toDoListDbContext.Buckets is not null)
+            {
+                var bucketToUpdate = _toDoListDbContext.Buckets.First(a => a.Id == id);
+
+                bucketToUpdate.Name = bucket.Name;
+                bucketToUpdate.Description = bucket.Description;
+                bucketToUpdate.Category = bucket.Category;
+                bucketToUpdate.BucketColor = bucket.BucketColor;
+                bucketToUpdate.MaxAmountOfTasks = bucket.MaxAmountOfTasks;
+                bucketToUpdate.IsActive = bucket.IsActive;
+
+                _toDoListDbContext.Buckets.Update(bucketToUpdate);
+                _toDoListDbContext.SaveChanges();
+            }
+
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

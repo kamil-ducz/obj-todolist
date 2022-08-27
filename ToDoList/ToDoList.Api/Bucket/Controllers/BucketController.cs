@@ -47,10 +47,16 @@ namespace ToDoList.Api.Bucket.Controllers
 
         }
 
-        // PUT api/<BucketController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Domain.Models.Bucket value)
+        public IActionResult Put(int id, [FromBody] BucketDTO bucketDTO)
         {
+            _bucketDTOValidator.ValidateAndThrow(bucketDTO);
+
+            bucketService.UpdateBucket(id, bucketDTO);
+
+            return Ok($"Bucket with id={ id } has been updated.");
+
+
         }
 
         [HttpDelete("{id}")]
