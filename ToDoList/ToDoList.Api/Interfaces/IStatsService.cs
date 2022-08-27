@@ -9,6 +9,6 @@ namespace ToDoList.Api.Interfaces
         Domain.Models.Stats GetStats(int statsId);
         int InsertStats(StatsDTO stats);
         void DeleteStats(int statsId);
-        void UpdateStats(Domain.Models.Stats stats);
+        void UpdateStats(int id, StatsDTO stats);
     }
 }

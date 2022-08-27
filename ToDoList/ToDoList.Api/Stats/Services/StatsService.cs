@@ -39,9 +39,11 @@ namespace ToDoList.Api.Stats.Services
             return statsRepository.InsertStats(mappedStats);
         }
 
-        public void UpdateStats(Domain.Models.Stats stats)
+        public void UpdateStats(int id, StatsDTO statsDTO)
         {
-            throw new System.NotImplementedException();
+            var mappedStats = mapper.Map<Domain.Models.Stats>(statsDTO);
+
+            statsRepository.UpdateStats(id, mappedStats);
         }
     }
 }

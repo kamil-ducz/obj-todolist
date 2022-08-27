@@ -61,9 +61,27 @@ namespace ToDoList.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public void UpdateStats(Stats stats)
+        public void UpdateStats(int id, Stats stats)
         {
-            throw new NotImplementedException();
+            // TODO if wrong id provided throw custom exception
+
+            if (_toDoListDbContext.Stats is not null)
+            {
+                var statsToUpdate = _toDoListDbContext.Stats.First(a => a.Id == id);
+
+                statsToUpdate.PercentOfTasksCompleted = stats.PercentOfTasksCompleted;
+                statsToUpdate.PercentOfTasksToDo = stats.PercentOfTasksToDo;
+                statsToUpdate.PercentOfTasksInProgress = stats.PercentOfTasksInProgress;
+                statsToUpdate.PercentOfTasksCancelled = stats.PercentOfTasksCancelled;
+
+                _toDoListDbContext.Stats.Update(statsToUpdate);
+                _toDoListDbContext.SaveChanges();
+            }
+
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

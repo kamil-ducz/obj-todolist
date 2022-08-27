@@ -46,10 +46,16 @@ namespace ToDoList.Api.Stats.Controllers
             return Ok($"Statistic with id={ statsId } inserted into database.");
         }
 
-        // PUT api/<StatsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] StatsDTO statsDTO)
         {
+            _statsDTOValidator.ValidateAndThrow(statsDTO);
+
+            statsService.UpdateStats(id, statsDTO);
+
+            return Ok($"Stats with id={ id } has been updated.");
+
+
         }
 
         [HttpDelete("{id}")]
