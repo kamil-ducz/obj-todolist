@@ -33,9 +33,19 @@ namespace ToDoList.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public void DeleteBucketTask(int taskId)
+        public void DeleteBucketTask(int bucketTaskId)
         {
-            throw new NotImplementedException();
+            if (_toDoListDbContext.BucketTasks is not null)
+            {
+                var bucketTaskToDelete = _toDoListDbContext.BucketTasks.First(a => a.Id == bucketTaskId);
+                _toDoListDbContext.BucketTasks.Remove(bucketTaskToDelete);
+                _toDoListDbContext.SaveChanges();
+            }
+
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public int InsertBucketTask(BucketTask bucketTask)

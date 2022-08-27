@@ -64,7 +64,7 @@ namespace ToDoList.Api.Bucket.Controllers
 
             bucketService.DeleteBucket(id);
 
-            return Ok($"Assignee with id={ id } deleted.");
+            return Ok($"Bucket with id={ id } deleted.");
         }
     }
 }

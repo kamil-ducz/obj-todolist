@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using ToDoList.Api.BucketTask.Models;
@@ -14,11 +15,13 @@ namespace ToDoList.Api.BucketTask.Controllers
     {
         private readonly IBucketTaskService bucketTaskService;
         private readonly IValidator<BucketTaskDTO> _bucketTaskDTOValidator;
+        private readonly IMapper _mapper;
 
-        public BucketTaskController(IBucketTaskService bucketTaskService, IValidator<BucketTaskDTO> bucketTaskDTOValidator)
+        public BucketTaskController(IBucketTaskService bucketTaskService, IValidator<BucketTaskDTO> bucketTaskDTOValidator, IMapper mapper)
         {
             this.bucketTaskService = bucketTaskService;
             this._bucketTaskDTOValidator = bucketTaskDTOValidator;
+            this._mapper = mapper;
         }
 
         [HttpGet]
@@ -49,10 +52,18 @@ namespace ToDoList.Api.BucketTask.Controllers
         {
         }
 
-        // DELETE api/<BucketTaskController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            var bucketTaskToDelete = bucketTaskService.GetBucketTask(id);
+
+            var mappedBucketTask = _mapper.Map<BucketTaskDTO>(bucketTaskToDelete);
+
+            _bucketTaskDTOValidator.ValidateAndThrow(mappedBucketTask);
+
+            bucketTaskService.DeleteBucketTask(id);
+
+            return Ok($"Bucket task with id={ id } deleted.");
         }
     }
 }
