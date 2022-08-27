@@ -37,8 +37,8 @@ namespace ToDoList.Infrastructure.Repositories
         {
             if (_toDoListDbContext.Stats is not null)
             {
-                var assigneeToDelete = _toDoListDbContext.Stats.First(a => a.Id == statsId);
-                _toDoListDbContext.Stats.Remove(assigneeToDelete);
+                var statsToDelete = _toDoListDbContext.Stats.First(a => a.Id == statsId);
+                _toDoListDbContext.Stats.Remove(statsToDelete);
                 _toDoListDbContext.SaveChanges();
             }
 
@@ -63,8 +63,6 @@ namespace ToDoList.Infrastructure.Repositories
 
         public void UpdateStats(int id, Stats stats)
         {
-            // TODO if wrong id provided throw custom exception
-
             if (_toDoListDbContext.Stats is not null)
             {
                 var statsToUpdate = _toDoListDbContext.Stats.First(a => a.Id == id);
