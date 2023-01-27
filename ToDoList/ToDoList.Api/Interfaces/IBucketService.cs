@@ -9,6 +9,6 @@ namespace ToDoList.Api.Interfaces
         Domain.Models.Bucket GetBucket(int bucketId);
         int InsertBucket(BucketDTO bucket);
         void DeleteBucket(int bucketId);
-        void UpdateBucket(Domain.Models.Bucket bucket);
+        void UpdateBucket(int id, BucketDTO bucket);
     }
 }

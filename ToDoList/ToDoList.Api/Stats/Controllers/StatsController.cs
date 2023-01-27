@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using ToDoList.Api.Interfaces;
@@ -14,11 +15,13 @@ namespace ToDoList.Api.Stats.Controllers
     {
         private readonly IStatsService statsService;
         private readonly IValidator<StatsDTO> _statsDTOValidator;
+        private readonly IMapper _mapper;
 
-        public StatsController(IStatsService statsService, IValidator<StatsDTO> statsDTOValidator)
+        public StatsController(IStatsService statsService, IValidator<StatsDTO> statsDTOValidator, IMapper mapper)
         {
             this.statsService = statsService;
             this._statsDTOValidator = statsDTOValidator;
+            this._mapper = mapper;
         }
 
         [HttpGet]
@@ -43,16 +46,30 @@ namespace ToDoList.Api.Stats.Controllers
             return Ok($"Statistic with id={ statsId } inserted into database.");
         }
 
-        // PUT api/<StatsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] StatsDTO statsDTO)
         {
+            _statsDTOValidator.ValidateAndThrow(statsDTO);
+
+            statsService.UpdateStats(id, statsDTO);
+
+            return Ok($"Stats with id={ id } has been updated.");
+
+
         }
 
-        // DELETE api/<StatsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            var statsToDelete = statsService.GetStats(id);
+
+            var mappedStats = _mapper.Map<StatsDTO>(statsToDelete);
+
+            _statsDTOValidator.ValidateAndThrow(mappedStats);
+
+            statsService.DeleteStats(id);
+
+            return Ok($"Stats with id={ id } deleted.");
         }
     }
 }

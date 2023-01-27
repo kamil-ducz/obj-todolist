@@ -9,13 +9,11 @@ namespace ToDoList.Api.Bucket.Services
     public class BucketService : IBucketService
     {
         private readonly IBucketRepository bucketRepository;
-        private readonly ToDoListDbContext toDoListDbContext;
         private readonly IMapper mapper;
 
-        public BucketService(IBucketRepository bucketRepository, ToDoListDbContext toDoListDbContext, IMapper mapper)
+        public BucketService(IBucketRepository bucketRepository, IMapper mapper)
         {
             this.bucketRepository = bucketRepository;
-            this.toDoListDbContext = toDoListDbContext;
             this.mapper = mapper;
         }
 
@@ -31,25 +29,21 @@ namespace ToDoList.Api.Bucket.Services
 
         public void DeleteBucket(int bucketId)
         {
-            throw new System.NotImplementedException();
+            bucketRepository.DeleteBucket(bucketId);        
         }
 
         public int InsertBucket(BucketDTO bucketDTO)
         {
-            if (toDoListDbContext.Buckets is not null)
-            {
-                var mappedBucket = mapper.Map<Domain.Models.Bucket>(bucketDTO);
+            var mappedBucket = mapper.Map<Domain.Models.Bucket>(bucketDTO);
 
-                toDoListDbContext.Buckets.Add(mappedBucket);
-                toDoListDbContext.SaveChanges();
-            }
-
-            return bucketDTO.Id;
+            return bucketRepository.InsertBucket(mappedBucket);
         }
 
-        public void UpdateBucket(Domain.Models.Bucket bucket)
+        public void UpdateBucket(int id, BucketDTO bucketDTO)
         {
-            throw new System.NotImplementedException();
+            var mappedBucket = mapper.Map<Domain.Models.Bucket>(bucketDTO);
+
+            bucketRepository.UpdateBucket(id, mappedBucket);
         }
     }
 }

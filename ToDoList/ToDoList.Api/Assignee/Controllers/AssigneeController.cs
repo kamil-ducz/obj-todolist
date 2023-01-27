@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using ToDoList.Api.Asignee.Models;
@@ -10,15 +11,17 @@ namespace ToDoList.Api.Asignee.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AsigneeController : ControllerBase
+    public class AssigneeController : ControllerBase
     {
         private readonly IAssigneeService assigneeService;
         private readonly IValidator<AssigneeDTO> _assigneeDTOValidator;
+        private readonly IMapper _mapper;
 
-        public AsigneeController(IAssigneeService assigneeService, IValidator<AssigneeDTO> assigneeDTOValidator)
+        public AssigneeController(IAssigneeService assigneeService, IValidator<AssigneeDTO> assigneeDTOValidator, IMapper mapper)
         {
             this.assigneeService = assigneeService;
             this._assigneeDTOValidator = assigneeDTOValidator;
+            this._mapper = mapper;
         }
 
         [HttpGet]
@@ -43,16 +46,30 @@ namespace ToDoList.Api.Asignee.Controllers
             return Ok($"Assignee with id={ assigneeId } inserted into database.");
         }
 
-        // PUT api/<AsigneeController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] AssigneeDTO assigneeDTO)
         {
+            _assigneeDTOValidator.ValidateAndThrow(assigneeDTO);
+
+            assigneeService.UpdateAssignee(id, assigneeDTO);
+
+            return Ok($"Assignee with id={ id } has been updated.");
+
+
         }
 
-        // DELETE api/<AsigneeController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            var assigneeToDelete = assigneeService.GetAssignee(id);
+
+            var mappedAssignee = _mapper.Map<AssigneeDTO>(assigneeToDelete);
+
+            _assigneeDTOValidator.ValidateAndThrow(mappedAssignee);
+
+            assigneeService.DeleteAssignee(id);
+
+            return Ok($"Assignee with id={ id } deleted.");
         }
     }
 }

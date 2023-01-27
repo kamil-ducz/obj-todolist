@@ -16,19 +16,19 @@ namespace ToDoList.Api
         {
             modelBuilder.Entity<Domain.Models.Stats>()
                         .Property(s => s.PercentOfTasksCancelled)
-                        .HasPrecision(3, 2);
+                        .HasPrecision(3, 0);
 
             modelBuilder.Entity<Domain.Models.Stats>()
                         .Property(s => s.PercentOfTasksCompleted)
-                        .HasPrecision(3, 2);
+                        .HasPrecision(3, 0);
 
             modelBuilder.Entity<Domain.Models.Stats>()
                         .Property(s => s.PercentOfTasksInProgress)
-                        .HasPrecision(3, 2);
+                        .HasPrecision(3, 0);
 
             modelBuilder.Entity<Domain.Models.Stats>()
                         .Property(s => s.PercentOfTasksToDo)
-                        .HasPrecision(3, 2);
+                        .HasPrecision(3, 0);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)

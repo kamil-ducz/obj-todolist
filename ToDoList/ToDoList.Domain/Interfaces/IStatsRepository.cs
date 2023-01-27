@@ -9,6 +9,6 @@ namespace ToDoList.Domain.Interfaces
         Stats GetStats(int statsId);
         int InsertStats(Stats stats);
         void DeleteStats(int statsId);
-        void UpdateStats(Stats stats);
+        void UpdateStats(int id, Stats stats);
     }
 }

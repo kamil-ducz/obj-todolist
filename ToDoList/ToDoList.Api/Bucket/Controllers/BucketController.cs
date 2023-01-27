@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using ToDoList.Api.Bucket.Models;
@@ -14,11 +15,13 @@ namespace ToDoList.Api.Bucket.Controllers
     {
         private readonly IBucketService bucketService;
         private readonly IValidator<BucketDTO> _bucketDTOValidator;
+        private readonly IMapper _mapper;
 
-        public BucketController(IBucketService bucketService, IValidator<BucketDTO> bucketDTOValidator)
+        public BucketController(IBucketService bucketService, IValidator<BucketDTO> bucketDTOValidator, IMapper mapper)
         {
             this.bucketService = bucketService;
             this._bucketDTOValidator = bucketDTOValidator;
+            this._mapper = mapper;
         }
 
         [HttpGet]
@@ -44,16 +47,30 @@ namespace ToDoList.Api.Bucket.Controllers
 
         }
 
-        // PUT api/<BucketController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Domain.Models.Bucket value)
+        public IActionResult Put(int id, [FromBody] BucketDTO bucketDTO)
         {
+            _bucketDTOValidator.ValidateAndThrow(bucketDTO);
+
+            bucketService.UpdateBucket(id, bucketDTO);
+
+            return Ok($"Bucket with id={ id } has been updated.");
+
+
         }
 
-        // DELETE api/<BucketController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            var bucketToDelete = bucketService.GetBucket(id);
+
+            var mappedBucket = _mapper.Map<BucketDTO>(bucketToDelete);
+
+            _bucketDTOValidator.ValidateAndThrow(mappedBucket);
+
+            bucketService.DeleteBucket(id);
+
+            return Ok($"Bucket with id={ id } deleted.");
         }
     }
 }

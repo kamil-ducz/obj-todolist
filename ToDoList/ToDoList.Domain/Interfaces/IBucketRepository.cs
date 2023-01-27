@@ -9,6 +9,6 @@ namespace ToDoList.Domain.Interfaces
         Bucket GetBucket(int bucketId);
         int InsertBucket(Bucket bucket);
         void DeleteBucket(int bucketId);
-        void UpdateBucket(Bucket bucket);
+        void UpdateBucket(int id, Bucket bucket);
     }
 }

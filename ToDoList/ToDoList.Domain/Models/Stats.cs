@@ -7,5 +7,6 @@
         public decimal PercentOfTasksToDo { get; set; }
         public decimal PercentOfTasksInProgress { get; set; }
         public decimal PercentOfTasksCancelled { get; set; }
+        public virtual Assignee? Assignee { get; set; }
     }
 }
