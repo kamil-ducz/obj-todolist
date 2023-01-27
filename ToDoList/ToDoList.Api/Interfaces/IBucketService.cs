@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ToDoList.Api.Bucket.Models;
 
 namespace ToDoList.Api.Interfaces
 {
@@ -6,8 +7,8 @@ namespace ToDoList.Api.Interfaces
     {
         List<Domain.Models.Bucket> GetAllBuckets();
         Domain.Models.Bucket GetBucket(int bucketId);
-        int InsertBucket(Domain.Models.Bucket bucket);
+        int InsertBucket(BucketDTO bucket);
         void DeleteBucket(int bucketId);
-        void UpdateBucket(Domain.Models.Bucket bucket);
+        void UpdateBucket(int id, BucketDTO bucket);
     }
 }

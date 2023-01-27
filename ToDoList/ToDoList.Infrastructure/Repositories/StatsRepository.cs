@@ -6,29 +6,80 @@ namespace ToDoList.Infrastructure.Repositories
 {
     public class StatsRepository : IStatsRepository
     {
+        private readonly ToDoListDbContext _toDoListDbContext;
+
+        public StatsRepository(ToDoListDbContext toDoListDbContext)
+        {
+            this._toDoListDbContext = toDoListDbContext;
+        }
+
         public List<Stats> GetAllStats()
         {
-            return Database.GetAllStats();
+            if (_toDoListDbContext.Stats is not null)
+            {
+                return _toDoListDbContext.Stats.ToList();
+            }
+
+            throw new NotImplementedException();
         }
 
         public Stats GetStats(int statsId)
         {
-            return Database.GetStats(statsId);
+            if (_toDoListDbContext.Stats is not null)
+            {
+                return _toDoListDbContext.Stats.First(a => a.Id == statsId);
+            }
+
+            throw new NotImplementedException();
         }
 
         public void DeleteStats(int statsId)
         {
-            throw new NotImplementedException();
+            if (_toDoListDbContext.Stats is not null)
+            {
+                var statsToDelete = _toDoListDbContext.Stats.First(a => a.Id == statsId);
+                _toDoListDbContext.Stats.Remove(statsToDelete);
+                _toDoListDbContext.SaveChanges();
+            }
+
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public int InsertStats(Stats stats)
         {
+            if (_toDoListDbContext.Stats is not null)
+            {
+                _toDoListDbContext.Stats.Add(stats);
+                _toDoListDbContext.SaveChanges();
+
+                return stats.Id;
+            }
+
             throw new NotImplementedException();
         }
 
-        public void UpdateStats(Stats stats)
+        public void UpdateStats(int id, Stats stats)
         {
-            throw new NotImplementedException();
+            if (_toDoListDbContext.Stats is not null)
+            {
+                var statsToUpdate = _toDoListDbContext.Stats.First(a => a.Id == id);
+
+                statsToUpdate.PercentOfTasksCompleted = stats.PercentOfTasksCompleted;
+                statsToUpdate.PercentOfTasksToDo = stats.PercentOfTasksToDo;
+                statsToUpdate.PercentOfTasksInProgress = stats.PercentOfTasksInProgress;
+                statsToUpdate.PercentOfTasksCancelled = stats.PercentOfTasksCancelled;
+
+                _toDoListDbContext.Stats.Update(statsToUpdate);
+                _toDoListDbContext.SaveChanges();
+            }
+
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

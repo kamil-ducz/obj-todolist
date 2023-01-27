@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using AutoMapper;
+using System.Collections.Generic;
 using ToDoList.Api.Interfaces;
+using ToDoList.Api.Stats.Models;
 using ToDoList.Domain.Interfaces;
 
 namespace ToDoList.Api.Stats.Services
@@ -7,10 +9,12 @@ namespace ToDoList.Api.Stats.Services
     public class StatsService : IStatsService
     {
         private readonly IStatsRepository statsRepository;
+        private readonly IMapper mapper;
 
-        public StatsService(IStatsRepository statsRepository)
+        public StatsService(IStatsRepository statsRepository, IMapper mapper)
         {
             this.statsRepository = statsRepository;
+            this.mapper = mapper;
         }
 
         public List<Domain.Models.Stats> GetAllStats()
@@ -25,17 +29,21 @@ namespace ToDoList.Api.Stats.Services
 
         public void DeleteStats(int statsId)
         {
-            throw new System.NotImplementedException();
+            statsRepository.DeleteStats(statsId);
         }
 
-        public int InsertStats(Domain.Models.Stats stats)
+        public int InsertStats(StatsDTO statsDTO)
         {
-            throw new System.NotImplementedException();
+            var mappedStats = mapper.Map<Domain.Models.Stats>(statsDTO);
+
+            return statsRepository.InsertStats(mappedStats);
         }
 
-        public void UpdateStats(Domain.Models.Stats stats)
+        public void UpdateStats(int id, StatsDTO statsDTO)
         {
-            throw new System.NotImplementedException();
+            var mappedStats = mapper.Map<Domain.Models.Stats>(statsDTO);
+
+            statsRepository.UpdateStats(id, mappedStats);
         }
     }
 }

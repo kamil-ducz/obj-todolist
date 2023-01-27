@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ToDoList.Api.Stats.Models;
 
 namespace ToDoList.Api.Interfaces
 {
@@ -6,8 +7,8 @@ namespace ToDoList.Api.Interfaces
     {
         List<Domain.Models.Stats> GetAllStats();
         Domain.Models.Stats GetStats(int statsId);
-        int InsertStats(Domain.Models.Stats stats);
+        int InsertStats(StatsDTO stats);
         void DeleteStats(int statsId);
-        void UpdateStats(Domain.Models.Stats stats);
+        void UpdateStats(int id, StatsDTO stats);
     }
 }
