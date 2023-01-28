@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { BucketComponent } from './bucket/bucket.component';
+import { BucketsComponent } from './buckets/buckets.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     StatisticsComponent,
-    BucketComponent
+    BucketComponent,
+    BucketsComponent
   ],
   imports: [
     BrowserModule,
