@@ -23,4 +23,5 @@ export class StatsService {
     deleteStat(id:number): void {
         this.httpClient.delete('https://localhost:7247/api/Stats');
     }
+    
 }
