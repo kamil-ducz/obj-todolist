@@ -32,6 +32,8 @@ namespace ToDoList.Api
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddControllers();
+            builder.Services.AddCors();
+            builder.Services.AddMvc();
             builder.Services.AddFluentValidationAutoValidation();
 
             builder.Services.AddScoped<IAssigneeService, AssigneeService>();
@@ -66,6 +68,9 @@ namespace ToDoList.Api
 
             app.UseAuthorization();
 
+            app.UseCors(
+                options => options.WithOrigins("").AllowAnyMethod()
+                );
 
             app.MapControllers();
 
