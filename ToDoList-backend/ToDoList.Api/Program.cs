@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.ComponentModel;
 using ToDoList.Api.Asignee.Models;
 using ToDoList.Api.Assignee.Services;
 using ToDoList.Api.Bucket.Models;
@@ -69,7 +70,7 @@ namespace ToDoList.Api
             app.UseAuthorization();
 
             app.UseCors(
-                options => options.WithOrigins("http://localhost:4200/").AllowAnyMethod()
+                options => options.WithOrigins(builder.Configuration["AllowedOrigins"]).AllowAnyMethod().AllowAnyHeader()
                 );
 
             app.MapControllers();
