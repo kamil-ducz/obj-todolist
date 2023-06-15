@@ -69,7 +69,7 @@ namespace ToDoList.Api
             app.UseAuthorization();
 
             app.UseCors(
-                options => options.WithOrigins("").AllowAnyMethod()
+                options => options.WithOrigins("http://localhost:4200/").AllowAnyMethod()
                 );
 
             app.MapControllers();
