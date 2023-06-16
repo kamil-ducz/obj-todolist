@@ -8,9 +8,9 @@ import { BucketService } from '../services/bucket-service';
 })
 export class BucketsComponent implements OnInit {
 
-  bucketsData: any;
-
   constructor(private bucketService: BucketService) { }
+
+  bucketsData: any;
 
   ngOnInit() {
     this.bucketService.getBuckets().subscribe(

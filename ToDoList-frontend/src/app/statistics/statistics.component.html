@@ -6,16 +6,16 @@
         <tbody class="cursor-pointer">
             <tr>
                 <th scope="col" class="px-6 py-3">
-                    <li class="text-yellow-500 ">To do: [count]</li>
+                    <li class="text-yellow-500 ">To do: {{ statData.percentOfTasksToDo }}</li>
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    <li class="text-blue-500">In progress: [count]</li>
+                    <li class="text-blue-500">In progress: {{ statData.percentOfTasksInProgress }}</li>
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    <li class="text-green-500">Done: [count]</li>
+                    <li class="text-green-500">Done: {{ statData.percentOfTasksCompleted }}</li>
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    <li class="text-black-500">Cancelled: [count]</li>
+                    <li class="text-black-500">Cancelled: {{ statData.percentOfTasksCancelled }}</li>
                 </th>
             </tr>
         </tbody>
