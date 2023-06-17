@@ -15,19 +15,19 @@ namespace ToDoList.Api
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Domain.Models.Stats>()
-                        .Property(s => s.PercentOfTasksCancelled)
+                        .Property(s => s.Cancelled)
                         .HasPrecision(3, 0);
 
             modelBuilder.Entity<Domain.Models.Stats>()
-                        .Property(s => s.PercentOfTasksCompleted)
+                        .Property(s => s.Completed)
                         .HasPrecision(3, 0);
 
             modelBuilder.Entity<Domain.Models.Stats>()
-                        .Property(s => s.PercentOfTasksInProgress)
+                        .Property(s => s.InProgress)
                         .HasPrecision(3, 0);
 
             modelBuilder.Entity<Domain.Models.Stats>()
-                        .Property(s => s.PercentOfTasksToDo)
+                        .Property(s => s.ToDo)
                         .HasPrecision(3, 0);
         }
 

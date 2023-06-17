@@ -67,10 +67,10 @@ namespace ToDoList.Infrastructure.Repositories
             {
                 var statsToUpdate = _toDoListDbContext.Stats.First(a => a.Id == id);
 
-                statsToUpdate.PercentOfTasksCompleted = stats.PercentOfTasksCompleted;
-                statsToUpdate.PercentOfTasksToDo = stats.PercentOfTasksToDo;
-                statsToUpdate.PercentOfTasksInProgress = stats.PercentOfTasksInProgress;
-                statsToUpdate.PercentOfTasksCancelled = stats.PercentOfTasksCancelled;
+                statsToUpdate.Completed = stats.Completed;
+                statsToUpdate.ToDo = stats.ToDo;
+                statsToUpdate.InProgress = stats.InProgress;
+                statsToUpdate.Cancelled = stats.Cancelled;
 
                 _toDoListDbContext.Stats.Update(statsToUpdate);
                 _toDoListDbContext.SaveChanges();

@@ -3,10 +3,10 @@
     public class Stats
     {
         public int Id { get; set; }
-        public decimal PercentOfTasksCompleted { get; set; }
-        public decimal PercentOfTasksToDo { get; set; }
-        public decimal PercentOfTasksInProgress { get; set; }
-        public decimal PercentOfTasksCancelled { get; set; }
+        public decimal Completed { get; set; }
+        public decimal ToDo { get; set; }
+        public decimal InProgress { get; set; }
+        public decimal Cancelled { get; set; }
         public virtual Assignee? Assignee { get; set; }
     }
 }
