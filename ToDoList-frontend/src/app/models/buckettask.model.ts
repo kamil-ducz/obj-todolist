@@ -22,15 +22,3 @@ export class BucketTask {
         this.imageHeight = imageHeight;
     }
 }
-
-//C# model
-// public class BucketTaskDTO
-// {
-//     public int Id { get; set; }
-//     public string? Name { get; set; }
-//     public string? Description { get; set; }
-//     public TaskState TaskState { get; set; }
-//     public TaskPriority TaskPriority { get; set; }
-//     public virtual List<AssigneeDTO>? Assignees { get; set; }    SHOULD MOVE THIS TO ANGULAR SOMEHOW?
-
-// }
