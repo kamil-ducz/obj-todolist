@@ -8,6 +8,8 @@ import { StatisticsComponent } from './statistics/statistics.component';
 import { BucketComponent } from './bucket/bucket.component';
 import { BucketsComponent } from './buckets/buckets.component';
 import { HttpClientModule } from '@angular/common/http';
+import { BucketTasksComponent } from './bucket-tasks/bucket-tasks.component';
+import { AssigneesComponent } from './assignees/assignees.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { HttpClientModule } from '@angular/common/http';
     HeaderComponent,
     StatisticsComponent,
     BucketComponent,
-    BucketsComponent
+    BucketsComponent,
+    BucketTasksComponent,
+    AssigneesComponent
   ],
   imports: [
     BrowserModule,

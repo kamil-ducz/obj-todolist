@@ -70,7 +70,7 @@ namespace ToDoList.Api
             app.UseAuthorization();
 
             app.UseCors(
-                options => options.WithOrigins(builder.Configuration["AllowedOrigins"]).AllowAnyMethod().AllowAnyHeader()
+                options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
                 );
 
             app.MapControllers();

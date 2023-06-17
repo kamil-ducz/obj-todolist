@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BucketService } from '../services/bucket-service';
 
 @Component({
   selector: 'app-buckets',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BucketsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private bucketService: BucketService) { }
 
-  ngOnInit(): void {
+  bucketsData: any;
+
+  ngOnInit() {
+    this.bucketService.getBuckets().subscribe(
+      (response: any) => {
+        this.bucketsData = response;
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
   }
-
 }
