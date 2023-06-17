@@ -1,14 +1,14 @@
 export class Stat {
-    public percentOfTasksCompleted: number;
-    public percentOfTasksToDo: number;
-    public percentOfTasksInProgress: number;
-    public percentOfTasksCancelled: number;
+    public Completed: number;
+    public ToDo: number;
+    public InProgress: number;
+    public Cancelled: number;
 
-    constructor(percentOfTasksCompleted: number, percentOfTasksToDo: number, percentOfTasksInProgress: number, percentOfTasksCancelled: number)
+    constructor(Completed: number, ToDo: number, InProgress: number, Cancelled: number)
     {
-        this.percentOfTasksCompleted = percentOfTasksCompleted;
-        this.percentOfTasksToDo = percentOfTasksToDo;
-        this.percentOfTasksInProgress = percentOfTasksInProgress;
-        this.percentOfTasksCancelled = percentOfTasksCancelled;
+        this.Completed = Completed;
+        this.ToDo = ToDo;
+        this.InProgress = InProgress;
+        this.Cancelled = Cancelled;
     }
 }

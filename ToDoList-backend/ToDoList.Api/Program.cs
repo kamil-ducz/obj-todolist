@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.ComponentModel;
 using ToDoList.Api.Asignee.Models;
 using ToDoList.Api.Assignee.Services;
 using ToDoList.Api.Bucket.Models;
@@ -12,8 +11,6 @@ using ToDoList.Api.Bucket.Services;
 using ToDoList.Api.BucketTask.Models;
 using ToDoList.Api.BucketTask.Services;
 using ToDoList.Api.Interfaces;
-using ToDoList.Api.Stats.Models;
-using ToDoList.Api.Stats.Services;
 using ToDoList.Api.Validation;
 using ToDoList.Domain.Interfaces;
 using ToDoList.Infrastructure.Repositories;
@@ -40,19 +37,16 @@ namespace ToDoList.Api
             builder.Services.AddScoped<IAssigneeService, AssigneeService>();
             builder.Services.AddScoped<IBucketService, BucketService>();
             builder.Services.AddScoped<IBucketTaskService, BucketTaskService>();
-            builder.Services.AddScoped<IStatsService, StatsService>();
 
             builder.Services.AddScoped<IAssigneeRepository, AssigneeRepository>();
             builder.Services.AddScoped<IBucketRepository, BucketRepository>();
             builder.Services.AddScoped<IBucketTaskRepository, BucketTaskRepository>();
-            builder.Services.AddScoped<IStatsRepository, StatsRepository>();
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             builder.Services.AddScoped<IValidator<AssigneeDTO>, AssigneeDTOValidator>();
             builder.Services.AddScoped<IValidator<BucketDTO>, BucketDTOValidator>();
             builder.Services.AddScoped<IValidator<BucketTaskDTO>, BucketTaskDTOValidator>();
-            builder.Services.AddScoped<IValidator<StatsDTO>, StatsDTOValidator>();
 
             builder.Services.AddDbContext<ToDoListDbContext>();
 
