@@ -27,8 +27,8 @@ export class BucketService {
         return this.httpClient.put('https://localhost:7247/api/Bucket', null);
     }
 
-    deleteBucket(id:number) {
-        return this.httpClient.delete('https://localhost:7247/api/Bucket');
+    deleteBucket(id:any): Observable<Bucket> {
+        return this.httpClient.delete<Bucket>('https://localhost:7247/api/Bucket/'+id);
     }
     
 }

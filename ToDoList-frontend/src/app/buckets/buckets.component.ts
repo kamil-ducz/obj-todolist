@@ -8,6 +8,7 @@ import { BucketService } from '../services/bucket-service';
 })
 export class BucketsComponent implements OnInit {
 
+
   constructor(private bucketService: BucketService) { }
 
   bucketsData: any;
@@ -22,4 +23,16 @@ export class BucketsComponent implements OnInit {
       }
     );
   }
-}
+
+  RemoveBucket(id: any) {
+    this.bucketService.deleteBucket(id).subscribe(
+        (response: any) => {
+          console.log("yo"+response);
+          this.ngOnInit();
+        },
+        (error: any) => {
+          console.error(error);
+        }
+    );
+  }
+} 

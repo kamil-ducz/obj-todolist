@@ -70,7 +70,7 @@ namespace ToDoList.Api.Bucket.Controllers
 
             bucketService.DeleteBucket(id);
 
-            return Ok($"Bucket with id={ id } deleted.");
+            return Ok(bucketToDelete);
         }
     }
 }
