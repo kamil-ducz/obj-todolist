@@ -6,7 +6,9 @@ import { BucketsComponent } from './buckets/buckets.component';
 const routes: Routes = [
   { path: '', redirectTo: '/buckets', pathMatch: 'full' },
   { path: 'buckets', component: BucketsComponent },
-  { path: 'bucket', component: BucketComponent },
+  { path: 'bucket', component: BucketComponent, children: [
+    { path: ':id', component: BucketComponent },
+  ] },
 ];
 
 @NgModule({

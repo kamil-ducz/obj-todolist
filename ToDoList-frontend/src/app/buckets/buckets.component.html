@@ -25,7 +25,7 @@
 <br><br>
 <div class="h-66 grid grid-cols-3 gap-8 content-start">
   <div *ngFor="let item of bucketsData; let i=index;" class="bg-green-300 border-2 border-black text-center">
-        <a routerLink="/bucket">{{ item.name }}, id= {{ item.id }}</a>
+        <a routerLink="/bucket/{{ i }}">{{ item.name }}, id= {{ item.id }}</a>
         <br>
         <span class="font-light text-center">To do: [count]</span>
         <a href="http://www.google.com" class="float-right cursor-pointer">
