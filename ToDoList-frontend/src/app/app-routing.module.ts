@@ -4,7 +4,8 @@ import { BucketComponent } from './bucket/bucket.component';
 import { BucketsComponent } from './buckets/buckets.component';
 
 const routes: Routes = [
-  { path: '', component: BucketsComponent },
+  { path: '', redirectTo: '/buckets', pathMatch: 'full' },
+  { path: 'buckets', component: BucketsComponent },
   { path: 'bucket', component: BucketComponent },
 ];
 
