@@ -28,54 +28,48 @@
         <a routerLink="/bucket/{{ i }}">{{ item.name }}, id= {{ item.id }}</a>
         <br>
         <span class="font-light text-center">To do: [count]</span>
-        <button (click)="RemoveBucket(item.id)" class="float-right cursor-pointer">
+        <button (click)="toggleModal()" class="float-right cursor-pointer">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-              </svg>          
+              </svg>
+              <!-- deletion modal start -->
+              <div *ngIf="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+                <div class="relative w-auto my-6 mx-auto max-w-6xl">
+                  <!--content-->
+                  <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                    <!--header-->
+                    <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                      <h3 class="text-3xl font-semibold">
+                        Confirm delete
+                      </h3>
+                      <button class="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="toggleModal()">
+                        <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
+                          ×
+                        </span>
+                      </button>
+                    </div>
+                    <!--body-->
+                    <div class="relative p-6 flex-auto">
+                      <p class="my-4 text-slate-500 text-lg leading-relaxed">
+                        Are you sure you want to delete {{ item.name }} bucket?
+                      </p>
+                    </div>
+                    <!--footer-->
+                    <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                      <button class="text-red-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="RemoveBucket(item.id)">
+                        Delete
+                      </button>
+                      <button class="text-emerald-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="toggleModal()">
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div *ngIf="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div> -->
+              <!-- deletion modal end -->
           </button>
   </div>
 </div>
 
-<!-- example modal for html/ts -->
 
-<button class="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="toggleModal()">
-  Open large modal
-</button>
-<div *ngIf="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
-  <div class="relative w-auto my-6 mx-auto max-w-6xl">
-    <!--content-->
-    <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-      <!--header-->
-      <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-        <h3 class="text-3xl font-semibold">
-          Modal Title
-        </h3>
-        <button class="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="toggleModal()">
-          <span class="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-            ×
-          </span>
-        </button>
-      </div>
-      <!--body-->
-      <div class="relative p-6 flex-auto">
-        <p class="my-4 text-slate-500 text-lg leading-relaxed">
-          I always felt like I could do anything. That’s the main
-          thing people are controlled by! Thoughts- their perception
-          of themselves! They're slowed down by their perception of
-          themselves. If you're taught you can’t do anything, you
-          won’t do anything. I was taught I could do everything.
-        </p>
-      </div>
-      <!--footer-->
-      <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-        <button class="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="toggleModal()">
-          Close
-        </button>
-        <button class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="toggleModal()">
-          Save Changes
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-<div *ngIf="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
