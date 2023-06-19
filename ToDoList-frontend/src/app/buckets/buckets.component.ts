@@ -35,4 +35,9 @@ export class BucketsComponent implements OnInit {
         }
     );
   }
+
+  showModal = false;
+  toggleModal(){
+    this.showModal = !this.showModal;
+  }
 } 
