@@ -8,7 +8,6 @@ import { BucketService } from '../services/bucket-service';
 })
 export class BucketsComponent implements OnInit {
 
-
   constructor(private bucketService: BucketService) { }
 
   bucketsData: any;
@@ -27,7 +26,7 @@ export class BucketsComponent implements OnInit {
   RemoveBucket(id: any) {
     this.bucketService.deleteBucket(id).subscribe(
         (response: any) => {
-          console.log("yo"+response);
+          this.showModal = !this.showModal;
           this.ngOnInit();
         },
         (error: any) => {
@@ -36,8 +35,28 @@ export class BucketsComponent implements OnInit {
     );
   }
 
+  elementToRemove: any;
+
   showModal = false;
-  toggleModal(){
+
+  findElementToRemoveById(id: number) {
+    const foundElement = this.bucketsData.find(element => element.id == id);
+    if(foundElement)
+    {
+      return foundElement;
+    }
+    else
+    {
+      return;
+    }
+  }
+
+  toggleDeleteModal(i: number) {
+    this.elementToRemove = this.findElementToRemoveById(i);
+    this.showModal = !this.showModal;
+  }
+
+  exitDeleteModal() {
     this.showModal = !this.showModal;
   }
 } 
