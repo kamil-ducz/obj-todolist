@@ -44,8 +44,14 @@ export class BucketNewComponent implements OnInit {
         data.bucketColor = 3;
       }
     }
-    console.log(data);
     this.bucketService.postBucket('https://localhost:7247/api/Bucket', data);
+    this.toggleAdditionModal();
+  }
+
+  showModal = false;
+
+  toggleAdditionModal() {
+    this.showModal = !this.showModal;
   }
 
 }
