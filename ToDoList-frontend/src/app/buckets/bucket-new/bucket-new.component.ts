@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BucketService } from 'src/app/services/bucket-service';
 import { Bucket } from 'src/app/models/bucket.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-bucket-new',
@@ -13,6 +14,24 @@ export class BucketNewComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  newBucketFormGroup = new FormGroup({
+    name: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
+    description: new FormControl('', [
+      Validators.maxLength(50),
+    ]),
+    bucketColor: new FormControl('', [
+      Validators.required,
+    ]),
+    maxAmountOfTasks: new FormControl('3', [
+      Validators.required,
+      Validators.min(1),
+      Validators.max(15),
+    ]),
+  });
 
   onSubmit(data: Bucket) {
     switch(data.bucketColor) {
@@ -44,6 +63,8 @@ export class BucketNewComponent implements OnInit {
         data.bucketColor = 3;
       }
     }
+    console.log(data);
+
     this.bucketService.postBucket('https://localhost:7247/api/Bucket', data);
     this.toggleAdditionModal();
   }

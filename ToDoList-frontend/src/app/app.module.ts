@@ -10,7 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BucketTasksComponent } from './bucket-tasks/bucket-tasks.component';
 import { AssigneesComponent } from './assignees/assignees.component';
 import { BucketNewComponent } from './buckets/bucket-new/bucket-new.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -27,6 +27,7 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
