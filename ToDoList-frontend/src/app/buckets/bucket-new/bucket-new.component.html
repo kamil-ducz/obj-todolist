@@ -1,0 +1,38 @@
+<nav class="p-3 border-gray-200 rounded bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+    <div class="container flex flex-wrap items-center justify-between mx-auto">
+      <a href="#" class="flex items-center">
+          <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">New bucket</span>
+      </a>
+    </div>
+</nav>
+
+
+<form #bucketNewForm="ngForm" class="mx-10" (ngSubmit)="onSubmit(bucketNewForm.value)">
+    <div class="mb-6">
+      <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+      <input type="text" id="name" name="name" ngModel class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket name e.x. Office" required>
+    </div>
+    <div class="mb-6">
+      <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+      <input type="text" id="description" name="description" ngModel class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket description, e.x. Organize the office errands">
+    </div>
+    <div class="mb-6">
+    <label for="color" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bucket color</label>
+        <select id="bucketColor" name="bucketColor" ngModel class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option>Brown</option>
+            <option>Red</option>
+            <option>Yellow</option>
+            <option>Blue</option>
+            <option>White</option>
+            <option>Green</option>
+        </select>
+    </div>
+    <div class="mb-6">
+        <label for="number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Maximum number of tasks(1-15)</label>
+        <input type="number" min="1" max="15" id="maxAmountOfTasks" name="maxAmountOfTasks" ngModel class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="How many tasks can the bucket contain?">
+    </div>
+    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+      Create new bucket
+    </button>
+  </form>
+  

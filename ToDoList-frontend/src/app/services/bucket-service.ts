@@ -19,8 +19,15 @@ export class BucketService {
         return this.httpClient.get('https://localhost:7247/api/Bucket/{id}');
     }
 
-    postBucket(id:number) {
-        return this.httpClient.post('https://localhost:7247/api/Bucket', null); //2nd argument to work out TODO
+    postBucket(url, data) {
+        this.httpClient.post(url, data).subscribe(
+            (result) => {
+                console.log(result);
+            },
+            (error: any) => {
+                console.error(error);
+            }
+        );
     }
 
     putBucket(id:number) {
