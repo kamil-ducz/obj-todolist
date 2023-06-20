@@ -1,13 +1,13 @@
 export class Bucket {
     public name: string;
     public description: string;
-    public category: number;
+    public category: any;
     public bucketColor: any;
     public maxAmountOfTasks: number;
     public isActive: boolean;
     public bucketTasks: any;
 
-    constructor(name:string, description:string, category: number, bucketColor: any, maxAmountOfTasks: number,
+    constructor(name:string, description:string, category: any, bucketColor: any, maxAmountOfTasks: number,
         isActive: boolean, bucketTasks: any)
     {
         this.name = name;

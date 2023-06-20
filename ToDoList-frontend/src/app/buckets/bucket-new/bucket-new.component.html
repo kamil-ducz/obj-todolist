@@ -9,13 +9,21 @@
 <form #bucketNewForm="ngForm" [formGroup]="newBucketFormGroup" class="mx-10" (ngSubmit)="onSubmit(bucketNewForm.value)">
     <div class="mb-6">
       <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-      <input type="text" id="name" name="name" formControlName="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket name e.x. Office" required>
+      <input type="text" id="name" name="name" formControlName="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket name e.x. Office">
     </div>
     <div class="mb-6">
       <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
       <input type="text" id="description" name="description" formControlName="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket description, e.x. Organize the office errands">
     </div>
     <div class="mb-6">
+        <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+        <select id="category" name="category" formControlName="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          <option>Home</option>
+          <option>Job</option>
+          <option>Hobby</option>
+        </select>      
+    </div>
+      <div class="mb-6">
     <label for="color" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bucket color</label>
         <select id="bucketColor" name="bucketColor" formControlName="bucketColor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             <option>Brown</option>
@@ -30,11 +38,14 @@
         <label for="number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Maximum number of tasks(1-15)</label>
         <input type="number" id="maxAmountOfTasks" name="maxAmountOfTasks" formControlName="maxAmountOfTasks" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="How many tasks can the bucket contain?">
     </div>
+    <div class="mb-6">
+      <label for="isActive" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Is active?</label>
+      <input type="checkbox" id="isActive" name="isActive" formControlName="isActive" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+  </div>
     <button type="submit" [disabled]="!bucketNewForm.valid" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
       Create new bucket
     </button>
   </form>
-  
                 <!-- addition modal start -->
                 <div *ngIf="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
                   <div class="relative w-auto my-6 mx-auto max-w-6xl">

@@ -23,6 +23,9 @@ export class BucketNewComponent implements OnInit {
     description: new FormControl('', [
       Validators.maxLength(50),
     ]),
+    category: new FormControl('', [
+      Validators.required,      
+    ]),
     bucketColor: new FormControl('', [
       Validators.required,
     ]),
@@ -31,6 +34,9 @@ export class BucketNewComponent implements OnInit {
       Validators.min(1),
       Validators.max(15),
     ]),
+    isActive: new FormControl(true, [
+      Validators.required,
+    ])
   });
 
   onSubmit(data: Bucket) {
@@ -63,10 +69,29 @@ export class BucketNewComponent implements OnInit {
         data.bucketColor = 3;
       }
     }
+
+    switch(data.category) {
+      case "Home": {
+        data.category = 0;
+        break;
+      }
+      case "Job": {
+        data.category = 1;
+        break;
+      }
+      case "Hobby": {
+        data.category = 2;
+        break;
+      }
+      default: {
+        data.category = 0;
+      }
+    }
+
     console.log(data);
 
     this.bucketService.postBucket('https://localhost:7247/api/Bucket', data);
-    this.toggleAdditionModal();
+        this.toggleAdditionModal();
   }
 
   showModal = false;
