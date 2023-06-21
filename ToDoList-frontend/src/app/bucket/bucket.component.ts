@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BucketService } from '../services/bucket-service';
 import { Bucket } from '../models/bucket.model';
 
@@ -14,7 +14,7 @@ export class BucketComponent implements OnInit {
 
   currentBucket: Bucket;
 
-  constructor(private route: ActivatedRoute, private bucketService: BucketService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private bucketService: BucketService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(
@@ -32,6 +32,32 @@ export class BucketComponent implements OnInit {
         console.error(error);
       }
     );
+  }
+
+
+
+  removeBucket(id: any) {
+    this.bucketService.deleteBucket(id).subscribe(
+        (response: any) => {
+          this.exitDeleteModal();
+          this.router.navigate(['/buckets']);
+
+        },
+        (error: any) => {
+          console.error(error);
+        }
+    );
+  }
+
+  showModal = false;
+
+  toggleDeleteModal(i: number, e: Event) {
+    this.showModal = !this.showModal;
+    event.stopPropagation();
+  }
+
+  exitDeleteModal() {
+    this.showModal = !this.showModal;
   }
 
 }
