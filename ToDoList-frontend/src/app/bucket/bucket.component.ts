@@ -32,8 +32,6 @@ export class BucketComponent implements OnInit {
         console.error(error);
       }
     );
-
-    console.log("currentBucket: " + this.currentBucket);
   }
 
 }

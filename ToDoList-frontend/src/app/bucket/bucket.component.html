@@ -1,4 +1,4 @@
-<nav class="p-3 border-gray-200 rounded bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+<nav *ngIf="currentBucket" class="p-3 border-gray-200 rounded bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
     <div class="container flex flex-wrap items-center justify-between mx-auto">
       <div class="flex items-center cursor-pointer">
           <span [ngClass]="{'line-through': !currentBucket.isActive}" class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Bucket {{ currentBucket.name }}</span>
