@@ -15,8 +15,8 @@ export class BucketService {
         return this.httpClient.get<Bucket>('https://localhost:7247/api/Bucket');
     }
 
-    getBucket(id:number) {
-        return this.httpClient.get('https://localhost:7247/api/Bucket/{id}');
+    getBucket(id:number): Observable<Bucket> {
+        return this.httpClient.get<Bucket>('https://localhost:7247/api/Bucket/'+id);
     }
 
     postBucket(url, data) {

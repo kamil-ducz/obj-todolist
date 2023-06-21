@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { BucketService } from '../services/bucket-service';
+import { Bucket } from '../models/bucket.model';
 
 @Component({
   selector: 'app-bucket',
@@ -7,9 +9,12 @@ import { ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./bucket.component.css']
 })
 export class BucketComponent implements OnInit {
+
   id: number;
 
-  constructor(private route: ActivatedRoute) { }
+  currentBucket: Bucket;
+
+  constructor(private route: ActivatedRoute, private bucketService: BucketService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(
@@ -18,6 +23,17 @@ export class BucketComponent implements OnInit {
         console.log("this.id="+this.id);
       }
     )
+
+    this.bucketService.getBucket(this.id).subscribe(
+      (response: any) => {
+        this.currentBucket = response;
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
+
+    console.log("currentBucket: " + this.currentBucket);
   }
 
 }
