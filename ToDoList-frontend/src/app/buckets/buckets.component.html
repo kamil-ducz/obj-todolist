@@ -17,38 +17,44 @@
 </div>
 <br><br>
 <div class="h-66 grid grid-cols-3 gap-8 content-start">
-  <div *ngFor="let item of bucketsData; let i=index;">
+  <ng-container *ngFor="let item of bucketsData">
     <div 
+    [routerLink]="['/bucket-details', item.id]"
     [ngClass]="{'bg-yellow-900': item.bucketColor == 0,
                 'bg-red-500': item.bucketColor == 1, 
                 'bg-yellow-500': item.bucketColor == 2, 
                 'bg-blue-500': item.bucketColor == 3,
-                'bg-white': item.bucketColor ==4,
+                'bg-white': item.bucketColor == 4,
                 'bg-green-500': item.bucketColor == 5,
                 'border-2':true, 
-                'border-black text-center':true}"
+                'border-black text-center':true,
+                'cursor-pointer': true}"
     *ngIf="item.isActive"
     >
-        <a routerLink="/bucket/{{ i }}">{{ item.name }}, id= {{ item.id }}</a>
-        <br>
+    {{ item.name }}, id= {{ item.id }}
+    <br>
         <span class="font-light text-center">To do: [count]</span>
-        <button (click)="toggleDeleteModal(item.id)" class="float-right cursor-pointer">
+        <button (click)="toggleDeleteModal(item.id, $event)" class="float-right cursor-pointer">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
               </svg>
           </button>
       </div>
-      <div class="bg-gray-700 text-center" *ngIf="!item.isActive">
-        <a routerLink="/bucket/{{ i }}">{{ item.name }}, id= {{ item.id }}</a>
+      <div 
+      [routerLink]="['/bucket-details', item.id]"
+      class="bg-gray-700 text-center cursor-help" 
+      *ngIf="!item.isActive"
+      >
+        {{ item.name }}, id= {{ item.id }}
         <br>
-        <span class="font-light text-center italic">disactivated</span>
-        <button (click)="toggleDeleteModal(item.id)" class="float-right cursor-pointer">
+        <span class="font-light text-center italic">deactivated</span>
+        <button (click)="toggleDeleteModal(item.id, $event)" class="float-right cursor-pointer">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
               </svg>
           </button>
       </div>
-  </div>
+  </ng-container>
 </div>
 
               <!-- deletion modal start -->

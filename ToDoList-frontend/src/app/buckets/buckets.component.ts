@@ -51,9 +51,10 @@ export class BucketsComponent implements OnInit {
     }
   }
 
-  toggleDeleteModal(i: number) {
+  toggleDeleteModal(i: number, e: Event) {
     this.elementToRemove = this.findElementToRemoveById(i);
     this.showModal = !this.showModal;
+    event.stopPropagation();
   }
 
   exitDeleteModal() {

@@ -7,9 +7,8 @@ import { BucketNewComponent } from './buckets/bucket-new/bucket-new.component';
 const routes: Routes = [
   { path: '', redirectTo: '/buckets', pathMatch: 'full' },
   { path: 'buckets', component: BucketsComponent },
-  { path: 'bucket', component: BucketComponent, children: [
-    { path: ':id', component: BucketComponent },
-  ] },
+  { path: 'bucket', component: BucketComponent },
+  { path: 'bucket-details/:id', component: BucketComponent },
   { path: 'bucketnew', component: BucketNewComponent },
 ];
 
