@@ -14,7 +14,12 @@ export class BucketComponent implements OnInit {
   id: number;
 
   currentBucket: Bucket;
+
   currentBucketBucketTasks: any;
+  bucketTasksToDo: any;
+  bucketTasksInProgress: any;
+  bucketTasksDone: any;
+  bucketTasksCancelled: any;
 
   constructor(private route: ActivatedRoute, private router: Router, 
               private bucketService: BucketService, private bucketTaskService: BucketTaskService) { }
@@ -40,8 +45,10 @@ export class BucketComponent implements OnInit {
     this.bucketService.getBucketTasks(this.id).subscribe(
       (response: any) => {
         this.currentBucketBucketTasks = response;
-        console.log("response=" + response);
-        console.log("found bucket tasks: " + this.currentBucketBucketTasks);
+        this.bucketTasksToDo = this.currentBucketBucketTasks.filter(element => element.taskState == 0);
+        this.bucketTasksInProgress = this.currentBucketBucketTasks.filter(element => element.taskState == 1);
+        this.bucketTasksDone = this.currentBucketBucketTasks.filter(element => element.taskState == 2);
+        this.bucketTasksCancelled = this.currentBucketBucketTasks.filter(element => element.taskState == 3);
       },
       (error: any) => {
         console.error(error);
@@ -54,7 +61,6 @@ export class BucketComponent implements OnInit {
         (response: any) => {
           this.exitDeleteModal();
           this.router.navigate(['/buckets']);
-
         },
         (error: any) => {
           console.error(error);

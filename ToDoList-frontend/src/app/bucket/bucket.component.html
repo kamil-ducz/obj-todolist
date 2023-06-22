@@ -45,22 +45,30 @@
 </nav>
 
 <br><br>
-<div class="grid-cols-4 gap-8 m-10 flex h-48">
-    <div class="border-2 bg-yellow-400 border-black text-center">
+<div class="grid grid-cols-4 gap-8 m-10 h-64">
+    <div class="border-2 bg-yellow-400 border-black text-center cursor-pointer">
         To do: 
-        <li class="text-left">[list from bucket tasks]</li>
+        <li *ngFor="let bucketTask of bucketTasksToDo" class="text-left">
+          <span>{{ bucketTask.name }}</span>
+        </li>
     </div>
-    <div class="border-2 bg-blue-400 border-black text-center">
+    <div class="border-2 bg-blue-400 border-black text-center cursor-pointer">
         In progress:
-        <li class="text-left">[list from bucket tasks]</li>
+        <li *ngFor="let bucketTask of bucketTasksInProgress" class="text-left">
+          <span>{{ bucketTask.name }}</span>
+        </li>
     </div>
-    <div class="border-2 bg-green-400 border-black text-center">
+    <div class="border-2 bg-green-400 border-black text-center cursor-pointer">
         Done:
-        <li class="text-left">[list from bucket tasks]</li>
+        <li *ngFor="let bucketTask of bucketTasksDone" class="text-left">
+          <span>{{ bucketTask.name }}</span>
+        </li>
     </div>
-    <div class="border-2 bg-pink-600 border-black text-center">
+    <div class="border-2 bg-pink-600 border-black text-center cursor-pointer">
         Cancelled:
-        <li class="text-left">[list from bucket tasks]</li>
+        <li *ngFor="let bucketTask of bucketTasksCancelled" class="text-left">
+          <span>{{ bucketTask.name }}</span>
+        </li>
     </div>
 </div>
 
