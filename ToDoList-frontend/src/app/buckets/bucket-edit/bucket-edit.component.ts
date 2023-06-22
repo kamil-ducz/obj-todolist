@@ -28,53 +28,9 @@ export class BucketEditComponent implements OnInit {
     this.bucketService.getBucket(this.id).subscribe(
       (response: any) => {
         this.currentBucket = response;
-        switch(this.currentBucket.bucketColor) {
-          case 0: {
-            this.currentBucket.bucketColor = "Brown";
-            break;
-          }
-          case 1: {
-            this.currentBucket.bucketColor = "Red";
-            break;
-          }
-          case 2: {
-            this.currentBucket.bucketColor = "Yellow";
-            break;
-          }
-          case 3: {
-            this.currentBucket.bucketColor = "Blue";
-            break;
-          }
-          case 4: {
-            this.currentBucket.bucketColor = "White";
-            break;
-          }
-          case 5: {
-            this.currentBucket.bucketColor = "Green";
-            break;
-          }
-          default: {
-            this.currentBucket.bucketColor = 3;
-          }
-        }
-    
-        switch(this.currentBucket.category) {
-          case 0: {
-            this.currentBucket.category = "Home";
-            break;
-          }
-          case 1: {
-            this.currentBucket.category = "Job";
-            break;
-          }
-          case 2: {
-            this.currentBucket.category = "Hobby";
-            break;
-          }
-          default: {
-            this.currentBucket.category = "Job";
-          }
-        }
+        this.currentBucket.bucketColor = this.bucketService.mapBucketColorEnumToString(this.currentBucket.bucketColor);
+        this.currentBucket.category = this.bucketService.mapBucketCategoryEnumToString(this.currentBucket.category);
+
         this.initializeForm();
       },
       (error: any) => {
@@ -110,63 +66,15 @@ export class BucketEditComponent implements OnInit {
   }
 
   onSubmit() {
-    switch(this.editBucketFormGroup.value.bucketColor) {
-      case "Brown": {
-        this.editBucketFormGroup.value.bucketColor = 0;
-        break;
-      }
-      case "Red": {
-        this.editBucketFormGroup.value.bucketColor = 1;
-        break;
-      }
-      case "Yellow": {
-        this.editBucketFormGroup.value.bucketColor = 2;
-        break;
-      }
-      case "Blue": {
-        this.editBucketFormGroup.value.bucketColor = 3;
-        break;
-      }
-      case "White": {
-        this.editBucketFormGroup.value.bucketColor = 4;
-        break;
-      }
-      case "Green": {
-        this.editBucketFormGroup.value.bucketColor = 5;
-        break;
-      }
-      default: {
-        this.editBucketFormGroup.value.bucketColor = 3;
-      }
-    }
-
-    switch(this.editBucketFormGroup.value.category) {
-      case "Home": {
-        this.editBucketFormGroup.value.category = 0;
-        break;
-      }
-      case "Job": {
-        this.editBucketFormGroup.value.category = 1;
-        break;
-      }
-      case "Hobby": {
-        this.editBucketFormGroup.value.category = 2;
-        break;
-      }
-      default: {
-        this.editBucketFormGroup.value.category = 0;
-      }
-    }
-
     this.currentBucket = this.editBucketFormGroup.value;
+    this.currentBucket.bucketColor = this.bucketService.mapBucketColorStringToEnum(this.editBucketFormGroup.value.bucketColor);
+    this.currentBucket.category = this.bucketService.mapBucketCategoryStringToEnum(this.editBucketFormGroup.value.category);
 
     this.bucketService.putBucket('https://localhost:7247/api/Bucket/'+this.id, this.currentBucket);
     this.toggleEditModal();
-    
   }
 
   toggleEditModal() {
     this.showModal = !this.showModal;
   }
-
 }

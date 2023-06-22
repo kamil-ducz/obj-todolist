@@ -27,6 +27,7 @@ export class BucketComponent implements OnInit {
     this.bucketService.getBucket(this.id).subscribe(
       (response: any) => {
         this.currentBucket = response;
+        this.currentBucket.category = this.bucketService.mapBucketCategoryEnumToString(this.currentBucket.category);
       },
       (error: any) => {
         console.error(error);
