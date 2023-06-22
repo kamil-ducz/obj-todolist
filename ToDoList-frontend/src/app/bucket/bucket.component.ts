@@ -28,7 +28,6 @@ export class BucketComponent implements OnInit {
     this.route.params.subscribe(
       (params: Params) => {
         this.id = +params['id'];
-        console.log("this.id="+this.id);
       }
     )
 

@@ -1,10 +1,10 @@
 <h1 class="mt-2 mb-2 text-center text-xl">Browse your buckets</h1>
-<h1 class="font-small leading-tight text-lg mt-2 mb-2 text-black-300 text-left ml-5">Statistics</h1>
-<div class="m-4 gap-8 flex">
-  <div class="flex"><li class="text-yellow-400 w-2 h-1"></li>To do:</div>
-  <div class="flex"><li class="text-blue-400 w-2 h-1"></li>In progress: [count from bucket tasks]</div>
-  <div class="flex"><li class="text-green-400 w-2 h-1"></li>Done: [count from bucket tasks]</div>
-  <div class="flex"><li class="text-pink-600 w-2 h-1"></li>Cancelled: [count from bucket tasks]</div>
+<h1 class="font-small leading-tight text-lg mt-2 mb-2 text-black-300 text-left ml-5">Tasks from buckets - overall statistics:</h1>
+<div *ngIf="bucketTasksData" class="m-4 gap-8 flex cursor-pointer">
+  <div class="flex"><li class="text-yellow-400 w-2 h-1"></li>To do: {{ bucketTasksToDo.length }}</div>
+  <div class="flex"><li class="text-blue-400 w-2 h-1"></li>In progress: {{ bucketTasksInProgress.length }}</div>
+  <div class="flex"><li class="text-green-400 w-2 h-1"></li>Done: {{ bucketTasksDone.length }}</div>
+  <div class="flex"><li class="text-pink-600 w-2 h-1"></li>Cancelled: {{ bucketTasksCancelled.length }}</div>
 </div>
 
 <div class="float-right w-1/6 text-center mr-5 bg-white border-2 border-violet-600">
