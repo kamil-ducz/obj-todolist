@@ -29,10 +29,10 @@
     <br>
     <h1 class="font-small leading-tight text-lg mt-2 mb-2 text-black-300 text-left ml-5">Statistics</h1>
     <div class="grid grid-cols-5 gap-8 content-start">
-      <div class="flex"><li class="text-yellow-400 w-2 h-1"></li>To do: [count from bucket tasks]</div>
-      <div class="flex"><li class="text-blue-400 w-2 h-1"></li>In progress: [count from bucket tasks]</div>
-      <div class="flex"><li class="text-green-400 w-2 h-1"></li>Done: [count from bucket tasks]</div>
-      <div class="flex"><li class="text-pink-600 w-2 h-1"></li>Cancelled: [count from bucket tasks]</div>
+      <div class="flex"><li class="text-yellow-400 w-2 h-1"></li>To do: {{ bucketTasksToDo.length }}</div>
+      <div class="flex"><li class="text-blue-400 w-2 h-1"></li>In progress: {{ bucketTasksInProgress.length }}</div>
+      <div class="flex"><li class="text-green-400 w-2 h-1"></li>Done: {{ bucketTasksDone.length }}</div>
+      <div class="flex"><li class="text-pink-600 w-2 h-1"></li>Cancelled: {{ bucketTasksCancelled.length }}</div>
       <div class="float-right text-center mr-5 bg-white border-2 border-violet-400">
         <button>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6">
