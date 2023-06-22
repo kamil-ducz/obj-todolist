@@ -5,10 +5,9 @@ export class Bucket {
     public bucketColor: any;
     public maxAmountOfTasks: number;
     public isActive: boolean;
-    public bucketTasks: any;
 
     constructor(name:string, description:string, category: any, bucketColor: any, maxAmountOfTasks: number,
-        isActive: boolean, bucketTasks: any)
+        isActive: boolean)
     {
         this.name = name;
         this.description = description;
@@ -16,6 +15,5 @@ export class Bucket {
         this.bucketColor = bucketColor;
         this.maxAmountOfTasks = maxAmountOfTasks;
         this.isActive = isActive;
-        this.bucketTasks = bucketTasks;
     }
 }

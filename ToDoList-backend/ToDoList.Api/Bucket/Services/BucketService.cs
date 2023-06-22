@@ -1,19 +1,23 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
+using System.Linq;
 using ToDoList.Api.Bucket.Models;
 using ToDoList.Api.Interfaces;
 using ToDoList.Domain.Interfaces;
+using ToDoList.Infrastructure.Repositories;
 
 namespace ToDoList.Api.Bucket.Services
 {
     public class BucketService : IBucketService
     {
         private readonly IBucketRepository bucketRepository;
+        private readonly IBucketTaskRepository bucketTaskRepository;
         private readonly IMapper mapper;
 
-        public BucketService(IBucketRepository bucketRepository, IMapper mapper)
+        public BucketService(IBucketRepository bucketRepository, IBucketTaskRepository bucketTaskRepository, IMapper mapper)
         {
             this.bucketRepository = bucketRepository;
+            this.bucketTaskRepository = bucketTaskRepository;
             this.mapper = mapper;
         }
 
@@ -44,6 +48,12 @@ namespace ToDoList.Api.Bucket.Services
             var mappedBucket = mapper.Map<Domain.Models.Bucket>(bucketDTO);
 
             bucketRepository.UpdateBucket(id, mappedBucket);
+        }
+
+        public IEnumerable<Domain.Models.BucketTask> GetAllBucketsTasks(int bucketId)
+        {
+            var bucketTasks = bucketTaskRepository.GetAllBucketTasks().Where(b => b.BucketId == bucketId);
+            return bucketTasks;
         }
     }
 }
