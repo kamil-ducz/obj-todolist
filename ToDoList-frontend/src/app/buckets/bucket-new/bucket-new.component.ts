@@ -88,10 +88,8 @@ export class BucketNewComponent implements OnInit {
       }
     }
 
-    console.log(data);
-
     this.bucketService.postBucket('https://localhost:7247/api/Bucket', data);
-        this.toggleAdditionModal();
+    this.toggleAdditionModal();
   }
 
   showModal = false;

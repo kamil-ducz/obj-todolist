@@ -54,7 +54,7 @@ namespace ToDoList.Api.Bucket.Controllers
 
             bucketService.UpdateBucket(id, bucketDTO);
 
-            return Ok($"Bucket with id={ id } has been updated.");
+            return Ok(bucketDTO);
 
 
         }

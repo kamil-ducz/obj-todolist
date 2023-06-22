@@ -30,8 +30,15 @@ export class BucketService {
         );
     }
 
-    putBucket(id:number) {
-        return this.httpClient.put('https://localhost:7247/api/Bucket', null);
+    putBucket(url, data) {
+        this.httpClient.put(url, data).subscribe(
+            (result) => {
+                console.log(result);
+            },
+            (error: any) => {
+                console.error(error);
+            }
+        );
     }
 
     deleteBucket(id:any): Observable<Bucket> {

@@ -1,11 +1,11 @@
 <nav *ngIf="currentBucket" class="p-3 border-gray-200 rounded bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
     <div class="container flex flex-wrap items-center justify-between mx-auto">
       <div class="flex items-center cursor-pointer">
-          <span [ngClass]="{'line-through': true}" class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Bucket {{ currentBucket.name }}</span>
+          <span [ngClass]="{'line-through': !currentBucket.isActive}" class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Bucket {{ currentBucket.name }}</span>
       </div>
     </div>
     <div class="grid grid-cols-2 float-right">
-        <div class="text-center m-1 flex bg-white border-2 border-violet-400 cursor-pointer">
+        <div [routerLink]="['/bucket-edit', this.id]"  class="text-center m-1 flex bg-white border-2 border-violet-400 cursor-pointer">
             <span>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
@@ -24,6 +24,7 @@
     </div>
     <br>
     <h2><b>Description: </b>{{ currentBucket.description }}</h2>
+    <h2><b>Category: </b>{{ currentBucket.category }}</h2>
 
     <br>
     <h1 class="font-small leading-tight text-lg mt-2 mb-2 text-black-300 text-left ml-5">Statistics</h1>

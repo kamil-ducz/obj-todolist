@@ -34,8 +34,6 @@ export class BucketComponent implements OnInit {
     );
   }
 
-
-
   removeBucket(id: any) {
     this.bucketService.deleteBucket(id).subscribe(
         (response: any) => {

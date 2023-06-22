@@ -3,13 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { BucketComponent } from './bucket/bucket.component';
 import { BucketsComponent } from './buckets/buckets.component';
 import { BucketNewComponent } from './buckets/bucket-new/bucket-new.component';
+import { BucketEditComponent } from './buckets/bucket-edit/bucket-edit.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/buckets', pathMatch: 'full' },
   { path: 'buckets', component: BucketsComponent },
-  { path: 'bucket', component: BucketComponent },
   { path: 'bucket-details/:id', component: BucketComponent },
   { path: 'bucketnew', component: BucketNewComponent },
+  { path: 'bucket-edit/:id', component: BucketEditComponent }
 ];
 
 @NgModule({

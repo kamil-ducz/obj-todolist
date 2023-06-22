@@ -11,6 +11,7 @@ import { BucketTasksComponent } from './bucket-tasks/bucket-tasks.component';
 import { AssigneesComponent } from './assignees/assignees.component';
 import { BucketNewComponent } from './buckets/bucket-new/bucket-new.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BucketEditComponent } from './buckets/bucket-edit/bucket-edit.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BucketsComponent,
     BucketTasksComponent,
     AssigneesComponent,
-    BucketNewComponent
+    BucketNewComponent,
+    BucketEditComponent
   ],
   imports: [
     BrowserModule,
