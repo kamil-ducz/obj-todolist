@@ -11,7 +11,7 @@ namespace ToDoList.Api.Bucket.Models
         public string? Description { get; set; }
         public Category Category { get; set; }
         public BucketColor BucketColor { get; set; }
-        public int MaxAmountOfTasks { get; set; }
+        public int? MaxAmountOfTasks { get; set; }
         public bool IsActive { get; set; }
         public virtual List<BucketTaskDTO>? BucketTasks { get; set; }
     }

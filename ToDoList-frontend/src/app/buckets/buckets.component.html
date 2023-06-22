@@ -1,6 +1,14 @@
-<h1 class="font-small leading-tight text-lg mt-2 mb-2 text-black-300 text-left ml-5">Browser your bucket</h1>
-<div class="float-right w-1/6 text-center mr-5 bg-white border-2 border-violet-400">
-    <button>
+<h1 class="mt-2 mb-2 text-center text-xl">Browse your buckets</h1>
+<h1 class="font-small leading-tight text-lg mt-2 mb-2 text-black-300 text-left ml-5">Statistics</h1>
+<div class="m-4 gap-8 flex">
+  <div class="flex"><li class="text-yellow-400 w-2 h-1"></li>To do:</div>
+  <div class="flex"><li class="text-blue-400 w-2 h-1"></li>In progress: [count from bucket tasks]</div>
+  <div class="flex"><li class="text-green-400 w-2 h-1"></li>Done: [count from bucket tasks]</div>
+  <div class="flex"><li class="text-pink-600 w-2 h-1"></li>Cancelled: [count from bucket tasks]</div>
+</div>
+
+<div class="float-right w-1/6 text-center mr-5 bg-white border-2 border-violet-600">
+    <button routerLink="/bucketnew">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
@@ -9,14 +17,78 @@
 </div>
 <br><br>
 <div class="h-66 grid grid-cols-3 gap-8 content-start">
-    <div *ngFor="let item of bucketsData" class="bg-green-300 border-2 border-black text-center">
+  <ng-container *ngFor="let item of bucketsData">
+    <div 
+    [routerLink]="['/bucket-details', item.id]"
+    [ngClass]="{'bg-yellow-900': item.bucketColor == 0,
+                'bg-red-500': item.bucketColor == 1, 
+                'bg-yellow-500': item.bucketColor == 2, 
+                'bg-blue-500': item.bucketColor == 3,
+                'bg-white': item.bucketColor == 4,
+                'bg-green-500': item.bucketColor == 5,
+                'border-2':true, 
+                'border-black text-center':true,
+                'cursor-pointer': true}"
+    *ngIf="item.isActive"
+    >
+    {{ item.name }}, id= {{ item.id }}
+    <br>
+        <span class="font-light text-center">To do: [count]</span>
+        <button (click)="toggleDeleteModal(item.id, $event)" class="float-right cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+              </svg>
+          </button>
+      </div>
+      <div 
+      [routerLink]="['/bucket-details', item.id]"
+      class="bg-gray-700 text-center cursor-help" 
+      *ngIf="!item.isActive"
+      >
         {{ item.name }}, id= {{ item.id }}
         <br>
-        <span class="font-light text-center">To do: [count]</span>
-        <button class="text-right">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-            </svg>          
-        </button> 
-    </div>
+        <span class="font-light text-center italic">deactivated</span>
+        <button (click)="toggleDeleteModal(item.id, $event)" class="float-right cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+              </svg>
+          </button>
+      </div>
+  </ng-container>
 </div>
+
+              <!-- deletion modal start -->
+              <div *ngIf="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+                <div class="relative w-auto my-6 mx-auto max-w-6xl">
+                  <!--content-->
+                  <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                    <!--header-->
+                    <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                      <h3 class="text-3xl font-semibold">
+                        Confirm delete
+                      </h3>
+                      <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="exitDeleteModal()">
+                        <span class="text-black">
+                          ×
+                        </span>
+                      </button>
+                    </div>
+                    <!--body-->
+                    <div class="relative p-6 flex-auto">
+                      <p class="my-4 text-slate-500 text-lg leading-relaxed">
+                        Are you sure you want to delete bucket {{ elementToRemove.name }}?
+                      </p>
+                    </div>
+                    <!--footer-->
+                    <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                      <button class="text-red-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="RemoveBucket(elementToRemove.id)">
+                        Delete
+                      </button>
+                      <button class="text-emerald-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="exitDeleteModal()">
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- deletion modal end -->

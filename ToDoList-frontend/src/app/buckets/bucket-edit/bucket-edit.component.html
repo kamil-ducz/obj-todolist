@@ -1,0 +1,83 @@
+<nav *ngIf="currentBucket" class="p-3 border-gray-200 rounded bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+    <div class="container flex flex-wrap items-center justify-between mx-auto">
+      <a class="flex items-center cursor-pointer">
+          <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Edit bucket</span>
+      </a>
+    </div>
+</nav>
+
+<form *ngIf="currentBucket" #bucketEditForm="ngForm" [formGroup]="editBucketFormGroup" class="mx-10" (ngSubmit)="onSubmit()">
+    <div class="mb-6">
+      <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+      <input type="text" id="name" name="name" formControlName="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket name e.x. Office">
+    </div>
+    <div class="mb-6">
+      <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+      <input type="text" id="description" name="description" formControlName="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket description, e.x. Organize the office errands">
+    </div>
+    <div class="mb-6">
+        <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+        <select id="category" name="category" formControlName="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+          <option>Home</option>
+          <option>Job</option>
+          <option>Hobby</option>
+        </select>      
+    </div>
+      <div class="mb-6">
+    <label for="color" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bucket color</label>
+        <select id="bucketColor" name="bucketColor" formControlName="bucketColor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option>Brown</option>
+            <option>Red</option>
+            <option>Yellow</option>
+            <option>Blue</option>
+            <option>White</option>
+            <option>Green</option>
+        </select>
+    </div>
+    <div class="mb-6">
+        <label for="number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Maximum number of tasks(1-15)</label>
+        <input type="number" id="maxAmountOfTasks" name="maxAmountOfTasks" formControlName="maxAmountOfTasks" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="How many tasks can the bucket contain?">
+    </div>
+    <div class="mb-6">
+      <label for="isActive" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Is active?</label>
+      <input type="checkbox" id="isActive" name="isActive" formControlName="isActive" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+  </div>
+    <button type="submit" [disabled]="!editBucketFormGroup.valid" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+      Save changes
+    </button>
+  </form>
+  <br>
+  <a href="#" class="m-8 mt-8 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">Return to main page</a>
+
+                <!-- addition modal start -->
+                <div *ngIf="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+                  <div class="relative w-auto my-6 mx-auto max-w-6xl">
+                    <!--content-->
+                    <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                      <!--header-->
+                      <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+                        <h3 class="text-3xl font-semibold">
+                          Confirm edit
+                        </h3>
+                        <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="toggleEditModal()">
+                          <span class="text-black">
+                            ×
+                          </span>
+                        </button>
+                      </div>
+                      <!--body-->
+                      <div class="relative p-6 flex-auto">
+                        <p class="my-4 text-slate-500 text-lg leading-relaxed">
+                          Saved changes for bucket {{ editBucketFormGroup.value.name }}
+                        </p>
+                      </div>
+                      <!--footer-->
+                      <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+                        <button class="text-emerald-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="toggleEditModal()">
+                          OK
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- addition modal end -->

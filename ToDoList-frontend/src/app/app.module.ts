@@ -9,6 +9,9 @@ import { BucketsComponent } from './buckets/buckets.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BucketTasksComponent } from './bucket-tasks/bucket-tasks.component';
 import { AssigneesComponent } from './assignees/assignees.component';
+import { BucketNewComponent } from './buckets/bucket-new/bucket-new.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BucketEditComponent } from './buckets/bucket-edit/bucket-edit.component';
 
 @NgModule({
   declarations: [
@@ -17,12 +20,16 @@ import { AssigneesComponent } from './assignees/assignees.component';
     BucketComponent,
     BucketsComponent,
     BucketTasksComponent,
-    AssigneesComponent
+    AssigneesComponent,
+    BucketNewComponent,
+    BucketEditComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

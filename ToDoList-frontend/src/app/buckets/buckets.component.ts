@@ -22,4 +22,42 @@ export class BucketsComponent implements OnInit {
       }
     );
   }
-}
+
+  RemoveBucket(id: any) {
+    this.bucketService.deleteBucket(id).subscribe(
+        (response: any) => {
+          this.showModal = !this.showModal;
+          this.ngOnInit();
+        },
+        (error: any) => {
+          console.error(error);
+        }
+    );
+  }
+
+  elementToRemove: any;
+
+  showModal = false;
+
+  findElementToRemoveById(id: number) {
+    const foundElement = this.bucketsData.find(element => element.id == id);
+    if(foundElement)
+    {
+      return foundElement;
+    }
+    else
+    {
+      return;
+    }
+  }
+
+  toggleDeleteModal(i: number, e: Event) {
+    this.elementToRemove = this.findElementToRemoveById(i);
+    this.showModal = !this.showModal;
+    event.stopPropagation();
+  }
+
+  exitDeleteModal() {
+    this.showModal = !this.showModal;
+  }
+} 
