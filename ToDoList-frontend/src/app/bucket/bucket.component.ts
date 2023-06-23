@@ -79,7 +79,12 @@ export class BucketComponent implements OnInit {
     });
   }
 
-  onSubmitNewBucketTask() {
+  onSubmitNewBucketTask(data: BucketTask) {
+    data.bucketId = this.id;
+    data.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.addNewBucketTaskFormGroup.value.state);
+    data.taskPriority = this.bucketTaskService.mapBucketTaskPriorityStringToEnum(this.addNewBucketTaskFormGroup.value.priority);
+    this.bucketTaskService.postBucketTask('https://localhost:7247/api/BucketTask/', data);
+
     this.popNewBucketTaskConfirmationModal();
   }
 
@@ -116,6 +121,7 @@ export class BucketComponent implements OnInit {
 
   exitNewBucketTaskForm() {
     this.showNewBucketTaskForm = !this.showNewBucketTaskForm;
+    this.ngOnInit();
   }
 
   popNewBucketTaskConfirmationModal() {
