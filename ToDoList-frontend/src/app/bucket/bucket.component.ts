@@ -3,6 +3,8 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BucketService } from '../services/bucket-service';
 import { Bucket } from '../models/bucket.model';
 import { BucketTaskService } from '../services/buckettask-service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BucketTask } from '../models/buckettask.model';
 
 @Component({
   selector: 'app-bucket',
@@ -20,6 +22,9 @@ export class BucketComponent implements OnInit {
   bucketTasksInProgress: any;
   bucketTasksDone: any;
   bucketTasksCancelled: any;
+
+  newBucketTaskToCreate: BucketTask;
+  addNewBucketTaskFormGroup: FormGroup;
   
   constructor(private route: ActivatedRoute, private router: Router, 
               private bucketService: BucketService, private bucketTaskService: BucketTaskService) { }
@@ -55,6 +60,29 @@ export class BucketComponent implements OnInit {
     );
   }
 
+  
+  initializeNewBucketTaskForm() {
+    this.addNewBucketTaskFormGroup = new FormGroup({
+      name: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
+      description: new FormControl('', [
+        Validators.maxLength(50),
+      ]),
+      state: new FormControl('', [
+        Validators.required,      
+      ]),
+      priority: new FormControl('', [
+        Validators.required,
+      ]),
+    });
+  }
+
+  onSubmitNewBucketTask() {
+    this.popNewBucketTaskConfirmationModal();
+  }
+
   removeBucket(id: any) {
     this.bucketService.deleteBucket(id).subscribe(
         (response: any) => {
@@ -76,6 +104,27 @@ export class BucketComponent implements OnInit {
 
   exitDeleteModal() {
     this.showModal = !this.showModal;
+  }
+
+  showNewBucketTaskForm = false;
+  bucketTaskNewConfirmationModal = false;
+
+  popupNewBucketTaskForm() {
+    this.showNewBucketTaskForm = !this.showNewBucketTaskForm;
+    this.initializeNewBucketTaskForm();
+  }
+
+  exitNewBucketTaskForm() {
+    this.showNewBucketTaskForm = !this.showNewBucketTaskForm;
+  }
+
+  popNewBucketTaskConfirmationModal() {
+    this.bucketTaskNewConfirmationModal = !this.bucketTaskNewConfirmationModal;
+  }
+
+  exitNewBucketTaskConfirmationModal() {
+    this.bucketTaskNewConfirmationModal = !this.bucketTaskNewConfirmationModal;
+    this.exitNewBucketTaskForm();
   }
 
 }

@@ -33,7 +33,7 @@
       <div class="flex"><li class="text-blue-400 w-2 h-1"></li>In progress: {{ bucketTasksInProgress.length }}</div>
       <div class="flex"><li class="text-green-400 w-2 h-1"></li>Done: {{ bucketTasksDone.length }}</div>
       <div class="flex"><li class="text-pink-600 w-2 h-1"></li>Cancelled: {{ bucketTasksCancelled.length }}</div>
-      <div class="float-right text-center mr-5 bg-white border-2 border-violet-400">
+      <div (click)="popupNewBucketTaskForm()" class="float-right text-center mr-5 bg-white border-2 border-violet-400">
         <button>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
@@ -169,3 +169,94 @@
     </div>
   </div>
   <!-- deletion modal end -->
+
+  <!-- new task modal start -->
+  <div *ngIf="showNewBucketTaskForm" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+    <div class="relative w-auto my-6 mx-auto max-w-6xl">
+      <!--content-->
+      <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+        <!--header-->
+        <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+          <h3 class="text-3xl font-semibold">
+            Add new bucket task
+          </h3>
+          <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="exitNewBucketTaskForm()">
+            <span class="text-black">
+              ×
+            </span>
+          </button>
+        </div>
+        <!--body-->
+        <form #bucketTaskNewForm="ngForm" [formGroup]="addNewBucketTaskFormGroup" class="mx-10 my-5" (ngSubmit)="onSubmitNewBucketTask()">
+          <div class="mb-6">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+            <input type="text" id="name" name="name" formControlName="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket name e.x. Office">
+          </div>
+          <div class="mb-6">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+            <input type="text" id="description" name="description" formControlName="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket description, e.x. Organize the office errands">
+          </div>
+          <div class="mb-6">
+              <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">State</label>
+              <select id="state" name="state" formControlName="state" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option>To do</option>
+                <option>In progress</option>
+                <option>Done</option>
+                <option>Cancelled</option>
+              </select>      
+          </div>
+            <div class="mb-6">
+          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Priority</label>
+              <select id="priority" name="priority" formControlName="priority" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  <option>Low</option>
+                  <option>Medium</option>
+                  <option>High</option>
+              </select>
+          </div>
+          <button type="submit" [disabled]="!bucketTaskNewForm.valid" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Create new bucket task
+          </button>
+        </form>
+        <!--footer-->
+        <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+          <button class="text-amber-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="exitNewBucketTaskForm()">
+            Return to bucket
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- new task modal end -->
+
+<!-- confirm new bucket task modal start -->
+<div *ngIf="bucketTaskNewConfirmationModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+  <div class="relative w-auto my-6 mx-auto max-w-6xl">
+    <!--content-->
+    <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+      <!--header-->
+      <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+        <h3 class="text-3xl font-semibold">
+          Confirm creation
+        </h3>
+        <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="exitNewBucketTaskConfirmationModal()">
+          <span class="text-black">
+            ×
+          </span>
+        </button>
+      </div>
+      <!--body-->
+      <div class="relative p-6 flex-auto">
+        <p class="my-4 text-slate-500 text-lg leading-relaxed">
+          Bucket task {{ addNewBucketTaskFormGroup.value.name }} successfully created.
+        </p>
+      </div>
+      <!--footer-->
+      <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+        <button class="text-emerald-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="exitNewBucketTaskConfirmationModal()">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- confirm new bucket task modal end -->
