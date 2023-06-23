@@ -56,7 +56,14 @@ export class BucketsComponent implements OnInit {
   }
 
   calculateTotalToDoForBucket(id: number) {
-    return this.bucketTasksData.filter(element => element.taskState == 0 && element.id == id)
+    if (this.bucketTasksData)
+    {
+      return this.bucketTasksData.filter(element => element.taskState == 0 && element.id == id).length;
+    }
+    else
+    {
+      return;
+    }
   }
 
   elementToRemove: any;
