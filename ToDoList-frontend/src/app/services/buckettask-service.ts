@@ -30,8 +30,15 @@ export class BucketTaskService {
         );
     }
 
-    putBucketTask(id:number) {
-        return this.httpClient.put('https://localhost:7247/api/BucketTask', null);
+    putBucketTask(url, data: BucketTask) {
+        return this.httpClient.put(url, data).subscribe(
+            (response: any) => {
+                console.log(response);
+            },
+            (error: any) => {
+                console.error(error);
+            }
+        );
     }
 
     deleteBucketTask(id:number) {
@@ -56,7 +63,6 @@ export class BucketTaskService {
                 return 3;
             }
         }
-
     }
 
     mapBucketTaskPriorityStringToEnum(bucketTaskPriority) {
@@ -75,5 +81,41 @@ export class BucketTaskService {
             }
         }
     }
-    
+
+    mapBucketTaskStateEnumToString(bucketTaskState: number) {
+        switch(bucketTaskState) {
+            case 0: {
+                return "To do";
+            }
+            case 1: {
+                return "In progress";
+            }
+            case 2: {
+                return "Done";
+            }
+            case 3: {
+                return "Cancelled";
+            }
+            default: {
+                return "Cancelled";
+            }
+        }
+    }
+
+    mapBucketTaskPriorityEnumToString(bucketTaskPriority) {
+        switch(bucketTaskPriority) {
+            case 0: {
+                return "High";
+            }
+            case 1: {
+                return "Medium";
+            }
+            case 2: {
+                return "Low";
+            }
+            default: {
+                return "Low";
+            }
+        }
+    }
 }

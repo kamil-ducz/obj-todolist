@@ -18,6 +18,7 @@ export class BucketComponent implements OnInit {
   currentBucket: Bucket;
 
   currentBucketBucketTasks: any;
+  currentBucketTask: any;
   bucketTasksToDo: any;
   bucketTasksInProgress: any;
   bucketTasksDone: any;
@@ -25,6 +26,7 @@ export class BucketComponent implements OnInit {
 
   newBucketTaskToCreate: BucketTask;
   addNewBucketTaskFormGroup: FormGroup;
+  editNewBucketTaskFormGroup: FormGroup;
   
   constructor(private route: ActivatedRoute, private router: Router, 
               private bucketService: BucketService, private bucketTaskService: BucketTaskService) { }
@@ -79,6 +81,24 @@ export class BucketComponent implements OnInit {
     });
   }
 
+  initializeEditBucketTaskForm() {
+    this.editNewBucketTaskFormGroup = new FormGroup({
+      name: new FormControl(this.currentBucketTask.name, [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
+      description: new FormControl(this.currentBucketTask.description, [
+        Validators.maxLength(50),
+      ]),
+      state: new FormControl(this.currentBucketTask.taskState, [
+        Validators.required,      
+      ]),
+      priority: new FormControl(this.currentBucketTask.taskPriority, [
+        Validators.required,
+      ]),
+    });
+  }
+
   onSubmitNewBucketTask(data: BucketTask) {
     data.bucketId = this.id;
     data.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.addNewBucketTaskFormGroup.value.state);
@@ -86,6 +106,15 @@ export class BucketComponent implements OnInit {
     this.bucketTaskService.postBucketTask('https://localhost:7247/api/BucketTask/', data);
 
     this.popNewBucketTaskConfirmationModal();
+  }
+
+  onSubmitEditBucketTask(data: BucketTask) {
+    data = this.editNewBucketTaskFormGroup.value;
+    data.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.editNewBucketTaskFormGroup.value.state);
+    data.taskPriority = this.bucketTaskService.mapBucketTaskPriorityStringToEnum(this.editNewBucketTaskFormGroup.value.priority);
+    this.bucketTaskService.putBucketTask('https://localhost:7247/api/BucketTask/'+this.currentBucketTask.id, data);
+
+    this.popEditBucketTaskConfirmationModal();
   }
 
   removeBucket(id: any) {
@@ -112,7 +141,9 @@ export class BucketComponent implements OnInit {
   }
 
   showNewBucketTaskForm = false;
+  showEditBucketTaskForm = false;
   bucketTaskNewConfirmationModal = false;
+  bucketTaskEditConfirmationModal = false;
 
   popupNewBucketTaskForm() {
     this.showNewBucketTaskForm = !this.showNewBucketTaskForm;
@@ -133,4 +164,25 @@ export class BucketComponent implements OnInit {
     this.exitNewBucketTaskForm();
   }
 
+  popEditBucketTaskForm(bucketTaskId: number) {
+    this.showEditBucketTaskForm = !this.showEditBucketTaskForm;
+    this.currentBucketTask = this.currentBucketBucketTasks.find(element => element.id == bucketTaskId);
+    this.currentBucketTask.taskState = this.bucketTaskService.mapBucketTaskStateEnumToString(this.currentBucketTask.taskState);
+    this.currentBucketTask.taskPriority = this.bucketTaskService.mapBucketTaskPriorityEnumToString(this.currentBucketTask.taskPriority);
+    this.initializeEditBucketTaskForm();
+  }
+
+  exitEditBucketTaskForm() {
+    this.showEditBucketTaskForm = !this.showEditBucketTaskForm;
+    this.ngOnInit();
+  }
+
+  popEditBucketTaskConfirmationModal() {
+    this.bucketTaskEditConfirmationModal = !this.bucketTaskEditConfirmationModal;
+  }
+
+  exitEditBucketTaskConfirmationModal() {
+    this.bucketTaskEditConfirmationModal = !this.bucketTaskEditConfirmationModal;
+    this.exitEditBucketTaskForm();
+  }
 }
