@@ -55,9 +55,11 @@ export class BucketsComponent implements OnInit {
     );
   }
 
-  elementToRemove: any;
+  calculateTotalToDoForBucket(id: number) {
+    return this.bucketTasksData.filter(element => element.taskState == 0 && element.id == id)
+  }
 
-  showModal = false;
+  elementToRemove: any;
 
   findElementToRemoveById(id: number) {
     const foundElement = this.bucketsData.find(element => element.id == id);
@@ -70,6 +72,8 @@ export class BucketsComponent implements OnInit {
       return;
     }
   }
+
+  showModal = false;
 
   toggleDeleteModal(i: number, e: Event) {
     this.elementToRemove = this.findElementToRemoveById(i);
