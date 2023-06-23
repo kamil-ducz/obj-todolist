@@ -20,7 +20,7 @@ export class BucketComponent implements OnInit {
   bucketTasksInProgress: any;
   bucketTasksDone: any;
   bucketTasksCancelled: any;
-
+  
   constructor(private route: ActivatedRoute, private router: Router, 
               private bucketService: BucketService, private bucketTaskService: BucketTaskService) { }
 

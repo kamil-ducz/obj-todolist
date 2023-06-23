@@ -48,26 +48,86 @@
 <div class="grid grid-cols-4 gap-8 m-10 h-64">
     <div class="border-2 bg-yellow-400 border-black text-center cursor-pointer">
         To do: 
-        <li *ngFor="let bucketTask of bucketTasksToDo" class="text-left">
-          <span>{{ bucketTask.name }}</span>
+        <li *ngFor="let bucketTask of bucketTasksToDo" class="p-2 flex w-full">
+          <span class="bg-white text-left">{{ bucketTask.name }}</span>
+          <span *ngIf="bucketTask.taskPriority == 0" class="bg-white p-1" name="taskPriorityHigh">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-pink-700 rounded">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 11.25l-3-3m0 0l-3 3m3-3v7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </span>
+          <span *ngIf="bucketTask.taskPriority == 1" class="bg-white p-1" name="taskPriorityMiddle">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-blue-700">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>            
+          </span>
+          <span *ngIf="bucketTask.taskPriority == 2" class="bg-white p-1" name="taskPriorityLow">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6 bg-green-700">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75l3 3m0 0l3-3m-3 3v-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </span>
         </li>
     </div>
     <div class="border-2 bg-blue-400 border-black text-center cursor-pointer">
         In progress:
-        <li *ngFor="let bucketTask of bucketTasksInProgress" class="text-left">
-          <span>{{ bucketTask.name }}</span>
+        <li *ngFor="let bucketTask of bucketTasksInProgress" class="p-2 flex w-full">
+          <span class="bg-white text-left">{{ bucketTask.name }}</span>
+          <span *ngIf="bucketTask.taskPriority == 0" class="bg-white p-1" name="taskPriorityHigh">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-pink-700 rounded">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 11.25l-3-3m0 0l-3 3m3-3v7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </span>
+          <span *ngIf="bucketTask.taskPriority == 1" class="bg-white p-1" name="taskPriorityMiddle">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-blue-700">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>            
+          </span>
+          <span *ngIf="bucketTask.taskPriority == 2" class="bg-white p-1" name="taskPriorityLow">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6 bg-green-700">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75l3 3m0 0l3-3m-3 3v-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </span>
         </li>
     </div>
     <div class="border-2 bg-green-400 border-black text-center cursor-pointer">
         Done:
-        <li *ngFor="let bucketTask of bucketTasksDone" class="text-left">
-          <span>{{ bucketTask.name }}</span>
+        <li *ngFor="let bucketTask of bucketTasksDone" class="p-2 flex w-full">
+          <span class="bg-white text-left">{{ bucketTask.name }}</span>
+          <span *ngIf="bucketTask.taskPriority == 0" class="bg-white p-1" name="taskPriorityHigh">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-pink-700 rounded">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 11.25l-3-3m0 0l-3 3m3-3v7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </span>
+          <span *ngIf="bucketTask.taskPriority == 1" class="bg-white p-1" name="taskPriorityMiddle">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-blue-700">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>            
+          </span>
+          <span *ngIf="bucketTask.taskPriority == 2" class="bg-white p-1" name="taskPriorityLow">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6 bg-green-700">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75l3 3m0 0l3-3m-3 3v-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </span>
         </li>
     </div>
     <div class="border-2 bg-pink-600 border-black text-center cursor-pointer">
         Cancelled:
-        <li *ngFor="let bucketTask of bucketTasksCancelled" class="text-left">
-          <span>{{ bucketTask.name }}</span>
+        <li *ngFor="let bucketTask of bucketTasksCancelled" class="p-2 flex w-full">
+          <span class="bg-white text-left">{{ bucketTask.name }}</span>
+          <span *ngIf="bucketTask.taskPriority == 0" class="bg-white p-1" name="taskPriorityHigh">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-pink-700 rounded">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 11.25l-3-3m0 0l-3 3m3-3v7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </span>
+          <span *ngIf="bucketTask.taskPriority == 1" class="bg-white p-1" name="taskPriorityMiddle">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-blue-700">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>            
+          </span>
+          <span *ngIf="bucketTask.taskPriority == 2" class="bg-white p-1" name="taskPriorityLow">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6 bg-green-700">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75l3 3m0 0l3-3m-3 3v-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </span>
         </li>
     </div>
 </div>
