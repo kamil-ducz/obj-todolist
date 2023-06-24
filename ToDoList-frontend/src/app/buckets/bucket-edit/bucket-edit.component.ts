@@ -25,7 +25,7 @@ export class BucketEditComponent implements OnInit {
       }
     )
 
-    this.bucketService.getBucket(this.id).subscribe(
+    this.bucketService.getBucket('https://localhost:7247/api/Bucket/'+this.id).subscribe(
       (response: any) => {
         this.currentBucket = response;
         this.currentBucket.bucketColor = this.bucketService.mapBucketColorEnumToString(this.currentBucket.bucketColor);

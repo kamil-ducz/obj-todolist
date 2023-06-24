@@ -21,7 +21,7 @@ export class BucketsComponent implements OnInit {
   bucketTasksCancelled: any;
 
   ngOnInit() {
-    this.bucketService.getBuckets().subscribe(
+    this.bucketService.getBuckets('https://localhost:7247/api/Bucket').subscribe(
       (response: any) => {
         this.bucketsData = response;
       },
@@ -45,7 +45,7 @@ export class BucketsComponent implements OnInit {
   }
 
   RemoveBucket(id: any) {
-    this.bucketService.deleteBucket(id).subscribe(
+    this.bucketService.deleteBucket('https://localhost:7247/api/Bucket/'+id).subscribe(
         (response: any) => {
           this.showModal = !this.showModal;
           this.ngOnInit();

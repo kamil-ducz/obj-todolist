@@ -38,7 +38,7 @@ export class BucketComponent implements OnInit {
       }
     )
 
-    this.bucketService.getBucket(this.id).subscribe(
+    this.bucketService.getBucket('https://localhost:7247/api/Bucket/'+this.id).subscribe(
       (response: any) => {
         this.currentBucket = response;
         this.currentBucket.category = this.bucketService.mapBucketCategoryEnumToString(this.currentBucket.category);
@@ -52,7 +52,7 @@ export class BucketComponent implements OnInit {
   }
 
   fetchBucketTasks() {
-    this.bucketService.getBucketTasks(this.id).subscribe(
+    this.bucketService.getBucketTasks('https://localhost:7247/api/Bucket/buckettask/'+this.id).subscribe(
       (response: any) => {
         this.currentBucketBucketTasks = response;
         this.bucketTasksToDo = this.currentBucketBucketTasks.filter(element => element.taskState == 0);
@@ -147,7 +147,7 @@ export class BucketComponent implements OnInit {
   }
 
   removeBucket(id: any) {
-    this.bucketService.deleteBucket(id).subscribe(
+    this.bucketService.deleteBucket('https://localhost:7247/api/Bucket/'+id).subscribe(
         (response: any) => {
           this.exitDeleteModal();
           this.router.navigate(['/buckets']);

@@ -12,16 +12,16 @@ export class BucketService {
         
     constructor(private httpClient: HttpClient) {}
 
-    getBuckets(): Observable<Bucket> {
-        return this.httpClient.get<Bucket>('https://localhost:7247/api/Bucket');
+    getBuckets(url): Observable<Bucket> {
+        return this.httpClient.get<Bucket>(url);
     }
 
-    getBucket(id:number): Observable<Bucket> {
-        return this.httpClient.get<Bucket>('https://localhost:7247/api/Bucket/'+id);
+    getBucket(url): Observable<Bucket> {
+        return this.httpClient.get<Bucket>(url);
     }
 
-    getBucketTasks(bucketId: number): Observable<BucketTask> {
-      return this.httpClient.get<BucketTask>('https://localhost:7247/api/Bucket/buckettask/'+bucketId);
+    getBucketTasks(url): Observable<BucketTask> {
+      return this.httpClient.get<BucketTask>(url);
   }
 
     postBucket(url, data): Observable<Bucket> {
@@ -32,8 +32,8 @@ export class BucketService {
         return this.httpClient.put<any>(url, data);
     }
 
-    deleteBucket(id:any): Observable<Bucket> {
-        return this.httpClient.delete<Bucket>('https://localhost:7247/api/Bucket/'+id);
+    deleteBucket(url): Observable<Bucket> {
+        return this.httpClient.delete<Bucket>(url);
     }
 
     mapBucketCategoryEnumToString(bucketCategory: number) {
