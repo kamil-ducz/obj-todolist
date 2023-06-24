@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
 using ToDoList.Api.BucketTask.Models;
 
-namespace ToDoList.Api.MappingProfiles
+namespace ToDoList.Api.MappingProfiles;
+
+public class BucketTaskServiceMappingProfile : Profile
 {
-    public class BucketTaskServiceMappingProfile : Profile
+    public BucketTaskServiceMappingProfile()
     {
-        public BucketTaskServiceMappingProfile()
-        {
-            CreateMap<Domain.Models.BucketTask, BucketTaskDTO>().ReverseMap();
-        }
+        CreateMap<Domain.Models.BucketTask, BucketTaskDTO>().ReverseMap();
     }
 }

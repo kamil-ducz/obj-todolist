@@ -1,41 +1,40 @@
-﻿namespace ToDoList.Domain.Enums
+﻿namespace ToDoList.Domain.Enums;
+
+public class Enums
 {
-    public class Enums
+    // bucket enums
+
+    public enum Category
     {
-        // bucket enums
+        Home,
+        Job,
+        Hobby
+    }
 
-        public enum Category
-        {
-            Home,
-            Job,
-            Hobby
-        }
+    public enum BucketColor
+    {
+        Brown,
+        Red,
+        Yellow,
+        Blue,
+        White,
+        Green
+    }
 
-        public enum BucketColor
-        {
-            Brown,
-            Red,
-            Yellow,
-            Blue,
-            White,
-            Green
-        }
+    // task enums
 
-        // task enums
+    public enum TaskState
+    {
+        ToDo,
+        InProgress,
+        Done,
+        Cancelled
+    }
 
-        public enum TaskState
-        {
-            ToDo,
-            InProgress,
-            Done,
-            Cancelled
-        }
-
-        public enum TaskPriority
-        {
-            High,
-            Normal,
-            Low
-        }
+    public enum TaskPriority
+    {
+        High,
+        Normal,
+        Low
     }
 }

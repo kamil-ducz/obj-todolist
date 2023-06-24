@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using ToDoList.Domain.Models;
 
-namespace ToDoList.Domain.Interfaces
+namespace ToDoList.Domain.Interfaces;
+
+public interface IBucketTaskRepository
 {
-    public interface IBucketTaskRepository
-    {
-        List<BucketTask> GetAllBucketTasks();
-        BucketTask GetBucketTask(int taskId);
-        int InsertBucketTask(BucketTask task);
-        void DeleteBucketTask(int taskId);
-        void UpdateBucketTask(int id, BucketTask task);
-    }
+    List<BucketTask> GetAllBucketTasks();
+    BucketTask GetBucketTask(int taskId);
+    int InsertBucketTask(BucketTask task);
+    void DeleteBucketTask(int taskId);
+    void UpdateBucketTask(int id, BucketTask task);
 }
