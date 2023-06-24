@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Bucket } from 'src/app/models/bucket.model';
 import { BucketService } from 'src/app/services/bucket-service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-bucket-edit',
@@ -25,7 +26,7 @@ export class BucketEditComponent implements OnInit {
       }
     )
 
-    this.bucketService.getBucket('https://localhost:7247/api/Bucket/'+this.id).subscribe(
+    this.bucketService.getBucket(environment.bucketEndpoint+this.id).subscribe(
       (response: any) => {
         this.currentBucket = response;
         this.currentBucket.bucketColor = this.bucketService.mapBucketColorEnumToString(this.currentBucket.bucketColor);
@@ -70,7 +71,7 @@ export class BucketEditComponent implements OnInit {
     this.currentBucket.bucketColor = this.bucketService.mapBucketColorStringToEnum(this.editBucketFormGroup.value.bucketColor);
     this.currentBucket.category = this.bucketService.mapBucketCategoryStringToEnum(this.editBucketFormGroup.value.category);
 
-    this.bucketService.putBucket('https://localhost:7247/api/Bucket/'+this.id, this.currentBucket).subscribe(
+    this.bucketService.putBucket(environment.bucketEndpoint+this.id, this.currentBucket).subscribe(
       (response: any) => {
         console.log(response);
       },

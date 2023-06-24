@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BucketService } from 'src/app/services/bucket-service';
 import { Bucket } from 'src/app/models/bucket.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-bucket-new',
@@ -43,7 +44,7 @@ export class BucketNewComponent implements OnInit {
     data.bucketColor = this.bucketService.mapBucketColorStringToEnum(data.bucketColor);
     data.category = this.bucketService.mapBucketColorStringToEnum(data.category);
 
-    this.bucketService.postBucket('https://localhost:7247/api/Bucket', data).subscribe(
+    this.bucketService.postBucket(environment.bucketEndpoint, data).subscribe(
       (response: any) => {
         console.log(response);
       },

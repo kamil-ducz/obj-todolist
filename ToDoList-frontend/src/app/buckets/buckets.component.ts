@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BucketService } from '../services/bucket-service';
 import { BucketTaskService } from '../services/buckettask-service';
-import { BucketTask } from '../models/buckettask.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-buckets',
@@ -21,7 +21,7 @@ export class BucketsComponent implements OnInit {
   bucketTasksCancelled: any;
 
   ngOnInit() {
-    this.bucketService.getBuckets('https://localhost:7247/api/Bucket').subscribe(
+    this.bucketService.getBuckets(environment.bucketEndpoint).subscribe(
       (response: any) => {
         this.bucketsData = response;
       },
@@ -30,7 +30,7 @@ export class BucketsComponent implements OnInit {
       }
     );
 
-    this.bucketTaskService.getBucketTasks('https://localhost:7247/api/BucketTask').subscribe(
+    this.bucketTaskService.getBucketTasks(environment.bucketTaskEndpoint).subscribe(
       (response: any) => {
         this.bucketTasksData = response;
         this.bucketTasksToDo = this.bucketTasksData.filter(element => element.taskState == 0);
@@ -45,7 +45,7 @@ export class BucketsComponent implements OnInit {
   }
 
   RemoveBucket(id: any) {
-    this.bucketService.deleteBucket('https://localhost:7247/api/Bucket/'+id).subscribe(
+    this.bucketService.deleteBucket(environment.bucketEndpoint+id).subscribe(
         (response: any) => {
           this.showModal = !this.showModal;
           this.ngOnInit();

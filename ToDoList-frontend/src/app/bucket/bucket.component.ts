@@ -5,6 +5,7 @@ import { Bucket } from '../models/bucket.model';
 import { BucketTaskService } from '../services/buckettask-service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BucketTask } from '../models/buckettask.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-bucket',
@@ -38,7 +39,7 @@ export class BucketComponent implements OnInit {
       }
     )
 
-    this.bucketService.getBucket('https://localhost:7247/api/Bucket/'+this.id).subscribe(
+    this.bucketService.getBucket(environment.bucketEndpoint+this.id).subscribe(
       (response: any) => {
         this.currentBucket = response;
         this.currentBucket.category = this.bucketService.mapBucketCategoryEnumToString(this.currentBucket.category);
@@ -52,7 +53,7 @@ export class BucketComponent implements OnInit {
   }
 
   fetchBucketTasks() {
-    this.bucketService.getBucketTasks('https://localhost:7247/api/Bucket/buckettask/'+this.id).subscribe(
+    this.bucketService.getBucketTasks(environment.buckeTasksForBucketEndpoint+this.id).subscribe(
       (response: any) => {
         this.currentBucketBucketTasks = response;
         this.bucketTasksToDo = this.currentBucketBucketTasks.filter(element => element.taskState == 0);
@@ -66,7 +67,6 @@ export class BucketComponent implements OnInit {
     );
   }
 
-  
   initializeNewBucketTaskForm() {
     this.addNewBucketTaskFormGroup = new FormGroup({
       name: new FormControl('', [
@@ -107,11 +107,9 @@ export class BucketComponent implements OnInit {
     data.bucketId = this.id;
     data.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.addNewBucketTaskFormGroup.value.state);
     data.taskPriority = this.bucketTaskService.mapBucketTaskPriorityStringToEnum(this.addNewBucketTaskFormGroup.value.priority);
-    console.log("this.currentBucketBucketTasks.length" + this.currentBucketBucketTasks.length);
-    console.log("this.currentBucket.maxAmountOfTasks" + this.currentBucket.maxAmountOfTasks);
     if (this.currentBucketBucketTasks.length < this.currentBucket.maxAmountOfTasks)
     {
-      this.bucketTaskService.postBucketTask('https://localhost:7247/api/BucketTask/', data).subscribe(
+      this.bucketTaskService.postBucketTask(environment.bucketTaskEndpoint, data).subscribe(
         (response) => {
           console.log(response);
         },
@@ -124,7 +122,6 @@ export class BucketComponent implements OnInit {
     }
     else 
     {
-      console.log("max amount of task reached!");
       this.popNewBucketTaskMaxAmountOfTasksReachedWarning();
       return;
     }
@@ -134,7 +131,7 @@ export class BucketComponent implements OnInit {
     data = this.editNewBucketTaskFormGroup.value;
     data.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.editNewBucketTaskFormGroup.value.state);
     data.taskPriority = this.bucketTaskService.mapBucketTaskPriorityStringToEnum(this.editNewBucketTaskFormGroup.value.priority);
-    this.bucketTaskService.putBucketTask('https://localhost:7247/api/BucketTask/'+this.currentBucketTask.id, data).subscribe(
+    this.bucketTaskService.putBucketTask(environment.bucketTaskEndpoint+this.currentBucketTask.id, data).subscribe(
       (response: any) => {
         console.log(response);
       },
@@ -147,7 +144,7 @@ export class BucketComponent implements OnInit {
   }
 
   removeBucket(id: any) {
-    this.bucketService.deleteBucket('https://localhost:7247/api/Bucket/'+id).subscribe(
+    this.bucketService.deleteBucket(environment.bucketEndpoint+id).subscribe(
         (response: any) => {
           this.exitDeleteModal();
           this.router.navigate(['/buckets']);
@@ -159,7 +156,7 @@ export class BucketComponent implements OnInit {
   }
 
   removeBucketTask(bucketTaskId: number) {
-    this.bucketTaskService.deleteBucketTask('https://localhost:7247/api/BucketTask/'+bucketTaskId).subscribe(
+    this.bucketTaskService.deleteBucketTask(environment.bucketTaskEndpoint+bucketTaskId).subscribe(
       (response: any) => {
         this.fetchBucketTasks();
         this.exitDeleteBucketTaskConfirmationModal();
