@@ -107,16 +107,27 @@ export class BucketComponent implements OnInit {
     data.bucketId = this.id;
     data.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.addNewBucketTaskFormGroup.value.state);
     data.taskPriority = this.bucketTaskService.mapBucketTaskPriorityStringToEnum(this.addNewBucketTaskFormGroup.value.priority);
-    this.bucketTaskService.postBucketTask('https://localhost:7247/api/BucketTask/', data).subscribe(
-      (response) => {
-        console.log(response);
-      },
-      (error: any) => {
-        console.error(error);
-      }
-    );
-
-    this.popNewBucketTaskConfirmationModal();
+    console.log("this.currentBucketBucketTasks.length" + this.currentBucketBucketTasks.length);
+    console.log("this.currentBucket.maxAmountOfTasks" + this.currentBucket.maxAmountOfTasks);
+    if (this.currentBucketBucketTasks.length < this.currentBucket.maxAmountOfTasks)
+    {
+      this.bucketTaskService.postBucketTask('https://localhost:7247/api/BucketTask/', data).subscribe(
+        (response) => {
+          console.log(response);
+        },
+        (error: any) => {
+          console.error(error);
+        }
+      );
+  
+      this.popNewBucketTaskConfirmationModal();
+    }
+    else 
+    {
+      console.log("max amount of task reached!");
+      this.popNewBucketTaskMaxAmountOfTasksReachedWarning();
+      return;
+    }
   }
 
   onSubmitEditBucketTask(data: BucketTask) {
@@ -224,5 +235,15 @@ export class BucketComponent implements OnInit {
   exitDeleteBucketTaskConfirmationModal() {
     this.bucketTaskDeleteConfirmationModal = false;
     this.exitEditBucketTaskConfirmationModal()
+  }
+
+  MaxAmountOfTasksReachedWarningModal = false;
+
+  popNewBucketTaskMaxAmountOfTasksReachedWarning() {
+    this.MaxAmountOfTasksReachedWarningModal = true;
+  }
+
+  exitNewBucketTaskMaxAmountOfTasksReachedWarning() {
+    this.MaxAmountOfTasksReachedWarningModal = false;
   }
 }
