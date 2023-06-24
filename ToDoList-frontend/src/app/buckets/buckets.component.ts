@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BucketService } from '../services/bucket-service';
+import { BucketTaskService } from '../services/buckettask-service';
+import { BucketTask } from '../models/buckettask.model';
 
 @Component({
   selector: 'app-buckets',
@@ -8,14 +10,33 @@ import { BucketService } from '../services/bucket-service';
 })
 export class BucketsComponent implements OnInit {
 
-  constructor(private bucketService: BucketService) { }
+  constructor(private bucketService: BucketService, private bucketTaskService: BucketTaskService) { }
 
   bucketsData: any;
+
+  bucketTasksData;
+  bucketTasksToDo: any;
+  bucketTasksInProgress: any;
+  bucketTasksDone: any;
+  bucketTasksCancelled: any;
 
   ngOnInit() {
     this.bucketService.getBuckets().subscribe(
       (response: any) => {
         this.bucketsData = response;
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
+
+    this.bucketTaskService.getBucketTasks().subscribe(
+      (response: any) => {
+        this.bucketTasksData = response;
+        this.bucketTasksToDo = this.bucketTasksData.filter(element => element.taskState == 0);
+        this.bucketTasksInProgress = this.bucketTasksData.filter(element => element.taskState == 1);
+        this.bucketTasksDone = this.bucketTasksData.filter(element => element.taskState == 2);
+        this.bucketTasksCancelled = this.bucketTasksData.filter(element => element.taskState == 3);
       },
       (error: any) => {
         console.error(error);
@@ -35,9 +56,20 @@ export class BucketsComponent implements OnInit {
     );
   }
 
-  elementToRemove: any;
+  calculateTotalToDoForBucket(id: number) {
+    if (this.bucketTasksData)
+    {
+      const tasksForBucket = this.bucketTasksData.filter(task => task.bucketId === id && task.taskState === 0);
 
-  showModal = false;
+      return tasksForBucket.length;
+    }
+    else
+    {
+      return 0;
+    }
+  }
+
+  elementToRemove: any;
 
   findElementToRemoveById(id: number) {
     const foundElement = this.bucketsData.find(element => element.id == id);
@@ -50,6 +82,8 @@ export class BucketsComponent implements OnInit {
       return;
     }
   }
+
+  showModal = false;
 
   toggleDeleteModal(i: number, e: Event) {
     this.elementToRemove = this.findElementToRemoveById(i);

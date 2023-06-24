@@ -40,53 +40,8 @@ export class BucketNewComponent implements OnInit {
   });
 
   onSubmit(data: Bucket) {
-    switch(data.bucketColor) {
-      case "Brown": {
-        data.bucketColor = 0;
-        break;
-      }
-      case "Red": {
-        data.bucketColor = 1;
-        break;
-      }
-      case "Yellow": {
-        data.bucketColor = 2;
-        break;
-      }
-      case "Blue": {
-        data.bucketColor = 3;
-        break;
-      }
-      case "White": {
-        data.bucketColor = 4;
-        break;
-      }
-      case "Green": {
-        data.bucketColor = 5;
-        break;
-      }
-      default: {
-        data.bucketColor = 3;
-      }
-    }
-
-    switch(data.category) {
-      case "Home": {
-        data.category = 0;
-        break;
-      }
-      case "Job": {
-        data.category = 1;
-        break;
-      }
-      case "Hobby": {
-        data.category = 2;
-        break;
-      }
-      default: {
-        data.category = 0;
-      }
-    }
+    data.bucketColor = this.bucketService.mapBucketColorStringToEnum(data.bucketColor);
+    data.category = this.bucketService.mapBucketColorStringToEnum(data.category);
 
     this.bucketService.postBucket('https://localhost:7247/api/Bucket', data);
     this.toggleAdditionModal();

@@ -53,7 +53,7 @@ namespace ToDoList.Api.BucketTask.Controllers
 
             bucketTaskService.UpdateBucketTask(id, bucketTaskDTO);
 
-            return Ok($"Bucket task with id={ id } has been updated.");
+            return Ok(bucketTaskDTO);
 
 
         }
@@ -69,7 +69,7 @@ namespace ToDoList.Api.BucketTask.Controllers
 
             bucketTaskService.DeleteBucketTask(id);
 
-            return Ok($"Bucket task with id={ id } deleted.");
+            return Ok(bucketTaskToDelete);
         }
     }
 }

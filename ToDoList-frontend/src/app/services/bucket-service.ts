@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Bucket } from "../models/bucket.model";
+import { BucketTask } from "../models/buckettask.model";
 
 @Injectable ({
     providedIn: 'root'
@@ -18,6 +19,10 @@ export class BucketService {
     getBucket(id:number): Observable<Bucket> {
         return this.httpClient.get<Bucket>('https://localhost:7247/api/Bucket/'+id);
     }
+
+    getBucketTasks(bucketId: number): Observable<BucketTask> {
+      return this.httpClient.get<BucketTask>('https://localhost:7247/api/Bucket/buckettask/'+bucketId);
+  }
 
     postBucket(url, data) {
         this.httpClient.post(url, data).subscribe(

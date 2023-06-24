@@ -19,16 +19,103 @@ export class BucketTaskService {
         return this.httpClient.get('https://localhost:7247/api/BucketTask/{id}');
     }
 
-    postBucketTask(id:number) {
-        return this.httpClient.post('https://localhost:7247/api/BucketTask', null); //2nd argument to work out TODO
+    postBucketTask(url, data) {
+        return this.httpClient.post(url, data).subscribe(
+            (response: any) => {
+                console.log(response);
+            },
+            (error: any) => {
+                console.error(error);
+            }
+        );
     }
 
-    putBucketTask(id:number) {
-        return this.httpClient.put('https://localhost:7247/api/BucketTask', null);
+    putBucketTask(url, data: BucketTask) {
+        return this.httpClient.put(url, data).subscribe(
+            (response: any) => {
+                console.log(response);
+            },
+            (error: any) => {
+                console.error(error);
+            }
+        );
     }
 
-    deleteBucketTask(id:number) {
-        return this.httpClient.delete('https://localhost:7247/api/BucketTask');
+    deleteBucketTask(url): Observable<BucketTask> {
+        return this.httpClient.delete<BucketTask>(url);
     }
-    
+
+    mapBucketTaskStateStringToEnum(bucketTaskState: string) {
+        switch(bucketTaskState) {
+            case "To do": {
+                return 0;
+            }
+            case "In progress": {
+                return 1;
+            }
+            case "Done": {
+                return 2;
+            }
+            case "Cancelled": {
+                return 3;
+            }
+            default: {
+                return 3;
+            }
+        }
+    }
+
+    mapBucketTaskPriorityStringToEnum(bucketTaskPriority) {
+        switch(bucketTaskPriority) {
+            case "High": {
+                return 0;
+            }
+            case "Medium": {
+                return 1;
+            }
+            case "Low": {
+                return 2;
+            }
+            default: {
+                return 2;
+            }
+        }
+    }
+
+    mapBucketTaskStateEnumToString(bucketTaskState: number) {
+        switch(bucketTaskState) {
+            case 0: {
+                return "To do";
+            }
+            case 1: {
+                return "In progress";
+            }
+            case 2: {
+                return "Done";
+            }
+            case 3: {
+                return "Cancelled";
+            }
+            default: {
+                return "Cancelled";
+            }
+        }
+    }
+
+    mapBucketTaskPriorityEnumToString(bucketTaskPriority) {
+        switch(bucketTaskPriority) {
+            case 0: {
+                return "High";
+            }
+            case 1: {
+                return "Medium";
+            }
+            case 2: {
+                return "Low";
+            }
+            default: {
+                return "Low";
+            }
+        }
+    }
 }

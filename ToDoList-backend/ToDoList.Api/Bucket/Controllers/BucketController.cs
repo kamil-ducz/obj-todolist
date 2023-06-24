@@ -2,6 +2,7 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using ToDoList.Api.Bucket.Models;
 using ToDoList.Api.Interfaces;
 
@@ -26,6 +27,7 @@ namespace ToDoList.Api.Bucket.Controllers
 
         [HttpGet]
         public IEnumerable<Domain.Models.Bucket> Get()
+        
         {
             return bucketService.GetAllBuckets();
         }
@@ -34,6 +36,12 @@ namespace ToDoList.Api.Bucket.Controllers
         public Domain.Models.Bucket Get(int id)
         {
             return bucketService.GetBucket(id);
+        }
+
+        [HttpGet("buckettask/{id}")]
+        public IEnumerable<Domain.Models.BucketTask> Get(int id, bool? cloghole)
+        {
+            return bucketService.GetAllBucketsTasks(id).ToList();
         }
 
         [HttpPost]
