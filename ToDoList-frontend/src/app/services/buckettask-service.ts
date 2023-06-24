@@ -11,12 +11,12 @@ export class BucketTaskService {
         
     constructor(private httpClient: HttpClient) {}
 
-    getBucketTasks(): Observable<BucketTask> {
-        return this.httpClient.get<BucketTask>('https://localhost:7247/api/BucketTask');
+    getBucketTasks(url): Observable<BucketTask> {
+        return this.httpClient.get<BucketTask>(url);
     }
 
-    getBucketTask(id:number): Observable<BucketTask> {
-        return this.httpClient.get<BucketTask>('https://localhost:7247/api/BucketTask/'+id);
+    getBucketTask(url): Observable<BucketTask> {
+        return this.httpClient.get<BucketTask>(url);
     }
 
     postBucketTask(url, data): Observable<BucketTask> {

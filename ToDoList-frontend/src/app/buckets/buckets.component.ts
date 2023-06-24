@@ -30,7 +30,7 @@ export class BucketsComponent implements OnInit {
       }
     );
 
-    this.bucketTaskService.getBucketTasks().subscribe(
+    this.bucketTaskService.getBucketTasks('https://localhost:7247/api/BucketTask').subscribe(
       (response: any) => {
         this.bucketTasksData = response;
         this.bucketTasksToDo = this.bucketTasksData.filter(element => element.taskState == 0);
