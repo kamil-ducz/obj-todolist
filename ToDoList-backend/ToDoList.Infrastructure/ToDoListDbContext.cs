@@ -20,9 +20,9 @@ namespace ToDoList.Api
                 );
 
             modelBuilder.Entity<Bucket>().HasData(
-                new Bucket { Id = 1, Name = "Work", IsActive = true },
-                new Bucket { Id = 2, Name = "Home", IsActive = true },
-                new Bucket { Id = 3, Name = "Hobby", IsActive = true })
+                new Bucket { Id = 1, Name = "Work", IsActive = true, MaxAmountOfTasks = 15 },
+                new Bucket { Id = 2, Name = "Home", IsActive = true, MaxAmountOfTasks = 15 },
+                new Bucket { Id = 3, Name = "Hobby", IsActive = true, MaxAmountOfTasks = 15 })
                 ;
 
             modelBuilder.Entity<BucketTask>().HasData(
