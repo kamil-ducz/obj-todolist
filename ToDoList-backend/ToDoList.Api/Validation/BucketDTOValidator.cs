@@ -9,11 +9,10 @@ namespace ToDoList.Api.Validation
         {
             RuleFor(x => x.Name).NotEmpty();
             RuleFor(x => x.Name).MinimumLength(1);
-            RuleFor(d => d.Description).MaximumLength(2000);
+            RuleFor(d => d.Description).MaximumLength(15);
             RuleFor(t => t.MaxAmountOfTasks).NotEmpty();
-            RuleFor(t => t.MaxAmountOfTasks).GreaterThanOrEqualTo(0)
-                                            .LessThanOrEqualTo(40);
-
+            RuleFor(t => t.MaxAmountOfTasks).GreaterThanOrEqualTo(1)
+                                            .LessThanOrEqualTo(15);
         }
     }
 }
