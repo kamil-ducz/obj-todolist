@@ -107,7 +107,14 @@ export class BucketComponent implements OnInit {
     data.bucketId = this.id;
     data.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.addNewBucketTaskFormGroup.value.state);
     data.taskPriority = this.bucketTaskService.mapBucketTaskPriorityStringToEnum(this.addNewBucketTaskFormGroup.value.priority);
-    this.bucketTaskService.postBucketTask('https://localhost:7247/api/BucketTask/', data);
+    this.bucketTaskService.postBucketTask('https://localhost:7247/api/BucketTask/', data).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
 
     this.popNewBucketTaskConfirmationModal();
   }
@@ -116,7 +123,14 @@ export class BucketComponent implements OnInit {
     data = this.editNewBucketTaskFormGroup.value;
     data.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.editNewBucketTaskFormGroup.value.state);
     data.taskPriority = this.bucketTaskService.mapBucketTaskPriorityStringToEnum(this.editNewBucketTaskFormGroup.value.priority);
-    this.bucketTaskService.putBucketTask('https://localhost:7247/api/BucketTask/'+this.currentBucketTask.id, data);
+    this.bucketTaskService.putBucketTask('https://localhost:7247/api/BucketTask/'+this.currentBucketTask.id, data).subscribe(
+      (response: any) => {
+        console.log(response);
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
 
     this.popEditBucketTaskConfirmationModal();
   }

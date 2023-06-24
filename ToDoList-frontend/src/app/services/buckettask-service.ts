@@ -15,30 +15,16 @@ export class BucketTaskService {
         return this.httpClient.get<BucketTask>('https://localhost:7247/api/BucketTask');
     }
 
-    getBucketTask(id:number) {
-        return this.httpClient.get('https://localhost:7247/api/BucketTask/{id}');
+    getBucketTask(id:number): Observable<BucketTask> {
+        return this.httpClient.get<BucketTask>('https://localhost:7247/api/BucketTask/'+id);
     }
 
-    postBucketTask(url, data) {
-        return this.httpClient.post(url, data).subscribe(
-            (response: any) => {
-                console.log(response);
-            },
-            (error: any) => {
-                console.error(error);
-            }
-        );
+    postBucketTask(url, data): Observable<BucketTask> {
+        return this.httpClient.post<BucketTask>(url, data);
     }
 
-    putBucketTask(url, data: BucketTask) {
-        return this.httpClient.put(url, data).subscribe(
-            (response: any) => {
-                console.log(response);
-            },
-            (error: any) => {
-                console.error(error);
-            }
-        );
+    putBucketTask(url, data: BucketTask): Observable<BucketTask> {
+        return this.httpClient.put<BucketTask>(url, data);
     }
 
     deleteBucketTask(url): Observable<BucketTask> {

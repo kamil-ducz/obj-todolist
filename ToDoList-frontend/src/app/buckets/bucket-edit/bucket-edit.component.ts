@@ -70,7 +70,15 @@ export class BucketEditComponent implements OnInit {
     this.currentBucket.bucketColor = this.bucketService.mapBucketColorStringToEnum(this.editBucketFormGroup.value.bucketColor);
     this.currentBucket.category = this.bucketService.mapBucketCategoryStringToEnum(this.editBucketFormGroup.value.category);
 
-    this.bucketService.putBucket('https://localhost:7247/api/Bucket/'+this.id, this.currentBucket);
+    this.bucketService.putBucket('https://localhost:7247/api/Bucket/'+this.id, this.currentBucket).subscribe(
+      (response: any) => {
+        console.log(response);
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
+
     this.toggleEditModal();
   }
 

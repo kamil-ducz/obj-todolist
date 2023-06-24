@@ -24,26 +24,12 @@ export class BucketService {
       return this.httpClient.get<BucketTask>('https://localhost:7247/api/Bucket/buckettask/'+bucketId);
   }
 
-    postBucket(url, data) {
-        this.httpClient.post(url, data).subscribe(
-            (result) => {
-                console.log(result);
-            },
-            (error: any) => {
-                console.error(error);
-            }
-        );
+    postBucket(url, data): Observable<Bucket> {
+      return this.httpClient.post<Bucket>(url, data);
     }
 
-    putBucket(url, data) {
-        this.httpClient.put(url, data).subscribe(
-            (result) => {
-                console.log(result);
-            },
-            (error: any) => {
-                console.error(error);
-            }
-        );
+    putBucket(url, data): Observable<any> {
+        return this.httpClient.put<any>(url, data);
     }
 
     deleteBucket(id:any): Observable<Bucket> {
