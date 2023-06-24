@@ -41,8 +41,8 @@ export class BucketTaskService {
         );
     }
 
-    deleteBucketTask(id:number) {
-        return this.httpClient.delete('https://localhost:7247/api/BucketTask');
+    deleteBucketTask(url): Observable<BucketTask> {
+        return this.httpClient.delete<BucketTask>(url);
     }
 
     mapBucketTaskStateStringToEnum(bucketTaskState: string) {

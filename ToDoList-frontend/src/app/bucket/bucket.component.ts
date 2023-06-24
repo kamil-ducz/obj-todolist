@@ -48,6 +48,10 @@ export class BucketComponent implements OnInit {
       }
     );
 
+    this.fetchBucketTasks();
+  }
+
+  fetchBucketTasks() {
     this.bucketService.getBucketTasks(this.id).subscribe(
       (response: any) => {
         this.currentBucketBucketTasks = response;
@@ -129,6 +133,18 @@ export class BucketComponent implements OnInit {
     );
   }
 
+  removeBucketTask(bucketTaskId: number) {
+    this.bucketTaskService.deleteBucketTask('https://localhost:7247/api/BucketTask/'+bucketTaskId).subscribe(
+      (response: any) => {
+        this.fetchBucketTasks();
+        this.exitDeleteBucketTaskConfirmationModal();
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
+  }
+
   showModal = false;
 
   toggleDeleteModal(i: number, e: Event) {
@@ -144,6 +160,7 @@ export class BucketComponent implements OnInit {
   showEditBucketTaskForm = false;
   bucketTaskNewConfirmationModal = false;
   bucketTaskEditConfirmationModal = false;
+  bucketTaskDeleteConfirmationModal = false;
 
   popupNewBucketTaskForm() {
     this.showNewBucketTaskForm = !this.showNewBucketTaskForm;
@@ -173,7 +190,7 @@ export class BucketComponent implements OnInit {
   }
 
   exitEditBucketTaskForm() {
-    this.showEditBucketTaskForm = !this.showEditBucketTaskForm;
+    this.showEditBucketTaskForm = false;
     this.ngOnInit();
   }
 
@@ -182,7 +199,16 @@ export class BucketComponent implements OnInit {
   }
 
   exitEditBucketTaskConfirmationModal() {
-    this.bucketTaskEditConfirmationModal = !this.bucketTaskEditConfirmationModal;
+    this.bucketTaskEditConfirmationModal = false;
     this.exitEditBucketTaskForm();
+  }
+
+  popDeleteBucketTaskConfirmationModal() {    
+    this.bucketTaskDeleteConfirmationModal = !this.bucketTaskDeleteConfirmationModal;
+  }
+
+  exitDeleteBucketTaskConfirmationModal() {
+    this.bucketTaskDeleteConfirmationModal = false;
+    this.exitEditBucketTaskConfirmationModal()
   }
 }

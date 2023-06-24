@@ -69,7 +69,7 @@ namespace ToDoList.Api.BucketTask.Controllers
 
             bucketTaskService.DeleteBucketTask(id);
 
-            return Ok($"Bucket task with id={ id } deleted.");
+            return Ok(bucketTaskToDelete);
         }
     }
 }
