@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BucketService } from '../services/bucket-service';
 import { BucketTaskService } from '../services/buckettask-service';
+import { BucketTask } from '../models/buckettask.model';
 
 @Component({
   selector: 'app-buckets',
@@ -13,7 +14,7 @@ export class BucketsComponent implements OnInit {
 
   bucketsData: any;
 
-  bucketTasksData: any;
+  bucketTasksData;
   bucketTasksToDo: any;
   bucketTasksInProgress: any;
   bucketTasksDone: any;
@@ -58,11 +59,14 @@ export class BucketsComponent implements OnInit {
   calculateTotalToDoForBucket(id: number) {
     if (this.bucketTasksData)
     {
-      return this.bucketTasksData.filter(element => element.taskState == 0 && element.id == id).length;
+      console.log(this.bucketTasksData);
+      const tasksForBucket = this.bucketTasksData.filter(task => task.bucketId === id && task.taskState === 0);
+
+      return tasksForBucket.length;
     }
     else
     {
-      return;
+      return 0;
     }
   }
 
