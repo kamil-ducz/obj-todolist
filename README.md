@@ -3,7 +3,7 @@ Local setup
 1. Clone the repository to your local machine. To do this, click on green button "Code" when on repository view and copy the URL. 
    Use Git Bash command git clone https://github.com/kamil-ducz/obj-todolist.git or Tortoise Git to easily clone the repository. 
    Also, any other program you prefer can be a good choice for this.
-2. Checkout to the preferred branch. Main branch of the application is master, working branch is development. Both are fine choice, however at the moment of writing this development is some commits ahead of master - to be synced soon.
+2. Checkout to the preferred branch. Main branch of the application is master, working branch is development. Both are fine choice.
 3. Launch the .sln file in Visual Studio. Set startup project to WebApi if not set already.
 4. Use Visual Studio PackageManager to use backend migrations by command "UpdateDatabase". This should create and seed database locally.
 5. Go to frontend folder of the project.
