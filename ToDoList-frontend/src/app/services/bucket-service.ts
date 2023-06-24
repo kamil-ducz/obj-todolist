@@ -12,42 +12,28 @@ export class BucketService {
         
     constructor(private httpClient: HttpClient) {}
 
-    getBuckets(): Observable<Bucket> {
-        return this.httpClient.get<Bucket>('https://localhost:7247/api/Bucket');
+    getBuckets(url): Observable<Bucket> {
+        return this.httpClient.get<Bucket>(url);
     }
 
-    getBucket(id:number): Observable<Bucket> {
-        return this.httpClient.get<Bucket>('https://localhost:7247/api/Bucket/'+id);
+    getBucket(url): Observable<Bucket> {
+        return this.httpClient.get<Bucket>(url);
     }
 
-    getBucketTasks(bucketId: number): Observable<BucketTask> {
-      return this.httpClient.get<BucketTask>('https://localhost:7247/api/Bucket/buckettask/'+bucketId);
+    getBucketTasks(url): Observable<BucketTask> {
+      return this.httpClient.get<BucketTask>(url);
   }
 
-    postBucket(url, data) {
-        this.httpClient.post(url, data).subscribe(
-            (result) => {
-                console.log(result);
-            },
-            (error: any) => {
-                console.error(error);
-            }
-        );
+    postBucket(url, data): Observable<Bucket> {
+      return this.httpClient.post<Bucket>(url, data);
     }
 
-    putBucket(url, data) {
-        this.httpClient.put(url, data).subscribe(
-            (result) => {
-                console.log(result);
-            },
-            (error: any) => {
-                console.error(error);
-            }
-        );
+    putBucket(url, data): Observable<any> {
+        return this.httpClient.put<any>(url, data);
     }
 
-    deleteBucket(id:any): Observable<Bucket> {
-        return this.httpClient.delete<Bucket>('https://localhost:7247/api/Bucket/'+id);
+    deleteBucket(url): Observable<Bucket> {
+        return this.httpClient.delete<Bucket>(url);
     }
 
     mapBucketCategoryEnumToString(bucketCategory: number) {

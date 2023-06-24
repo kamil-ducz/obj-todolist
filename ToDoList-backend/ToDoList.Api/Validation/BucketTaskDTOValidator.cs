@@ -8,8 +8,8 @@ namespace ToDoList.Api.Validation
         public BucketTaskDTOValidator()
         {
             RuleFor(n => n.Name).NotEmpty();
-            RuleFor(n => n.Name).MinimumLength(2).MaximumLength(100);
-            RuleFor(d => d.Description).MaximumLength(2000);
+            RuleFor(n => n.Name).MinimumLength(2).MaximumLength(15);
+            RuleFor(d => d.Description).MaximumLength(250);
         }
     }
 }

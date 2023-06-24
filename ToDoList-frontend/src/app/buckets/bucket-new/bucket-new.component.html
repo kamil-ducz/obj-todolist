@@ -6,7 +6,7 @@
     </div>
 </nav>
 
-<form #bucketNewForm="ngForm" [formGroup]="newBucketFormGroup" class="mx-10" (ngSubmit)="onSubmit(bucketNewForm.value)">
+<form #bucketNewForm="ngForm" [formGroup]="newBucketFormGroup" class="mx-10" (ngSubmit)="onSubmitNewBucketTask(bucketNewForm.value)">
     <div class="mb-6">
       <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
       <input type="text" id="name" name="name" formControlName="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket name e.x. Office">
@@ -50,7 +50,7 @@
   <a href="#" class="m-8 mt-8 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">Return to main page</a>
 
                 <!-- addition modal start -->
-                <div *ngIf="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+                <div *ngIf="showAddBucketModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
                   <div class="relative w-auto my-6 mx-auto max-w-6xl">
                     <!--content-->
                     <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">

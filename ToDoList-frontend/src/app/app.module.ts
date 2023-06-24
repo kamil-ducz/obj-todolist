@@ -7,7 +7,6 @@ import { HeaderComponent } from './header/header.component';
 import { BucketComponent } from './bucket/bucket.component';
 import { BucketsComponent } from './buckets/buckets.component';
 import { HttpClientModule } from '@angular/common/http';
-import { BucketTasksComponent } from './bucket-tasks/bucket-tasks.component';
 import { AssigneesComponent } from './assignees/assignees.component';
 import { BucketNewComponent } from './buckets/bucket-new/bucket-new.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -19,7 +18,6 @@ import { BucketEditComponent } from './buckets/bucket-edit/bucket-edit.component
     HeaderComponent,
     BucketComponent,
     BucketsComponent,
-    BucketTasksComponent,
     AssigneesComponent,
     BucketNewComponent,
     BucketEditComponent

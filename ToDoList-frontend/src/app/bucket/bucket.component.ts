@@ -5,6 +5,7 @@ import { Bucket } from '../models/bucket.model';
 import { BucketTaskService } from '../services/buckettask-service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BucketTask } from '../models/buckettask.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-bucket',
@@ -38,7 +39,7 @@ export class BucketComponent implements OnInit {
       }
     )
 
-    this.bucketService.getBucket(this.id).subscribe(
+    this.bucketService.getBucket(environment.bucketEndpoint+this.id).subscribe(
       (response: any) => {
         this.currentBucket = response;
         this.currentBucket.category = this.bucketService.mapBucketCategoryEnumToString(this.currentBucket.category);
@@ -52,7 +53,7 @@ export class BucketComponent implements OnInit {
   }
 
   fetchBucketTasks() {
-    this.bucketService.getBucketTasks(this.id).subscribe(
+    this.bucketService.getBucketTasks(environment.buckeTasksForBucketEndpoint+this.id).subscribe(
       (response: any) => {
         this.currentBucketBucketTasks = response;
         this.bucketTasksToDo = this.currentBucketBucketTasks.filter(element => element.taskState == 0);
@@ -66,7 +67,6 @@ export class BucketComponent implements OnInit {
     );
   }
 
-  
   initializeNewBucketTaskForm() {
     this.addNewBucketTaskFormGroup = new FormGroup({
       name: new FormControl('', [
@@ -107,22 +107,44 @@ export class BucketComponent implements OnInit {
     data.bucketId = this.id;
     data.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.addNewBucketTaskFormGroup.value.state);
     data.taskPriority = this.bucketTaskService.mapBucketTaskPriorityStringToEnum(this.addNewBucketTaskFormGroup.value.priority);
-    this.bucketTaskService.postBucketTask('https://localhost:7247/api/BucketTask/', data);
-
-    this.popNewBucketTaskConfirmationModal();
+    if (this.currentBucketBucketTasks.length < this.currentBucket.maxAmountOfTasks)
+    {
+      this.bucketTaskService.postBucketTask(environment.bucketTaskEndpoint, data).subscribe(
+        (response) => {
+          console.log(response);
+        },
+        (error: any) => {
+          console.error(error);
+        }
+      );
+  
+      this.popNewBucketTaskConfirmationModal();
+    }
+    else 
+    {
+      this.popNewBucketTaskMaxAmountOfTasksReachedWarning();
+      return;
+    }
   }
 
   onSubmitEditBucketTask(data: BucketTask) {
     data = this.editNewBucketTaskFormGroup.value;
     data.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.editNewBucketTaskFormGroup.value.state);
     data.taskPriority = this.bucketTaskService.mapBucketTaskPriorityStringToEnum(this.editNewBucketTaskFormGroup.value.priority);
-    this.bucketTaskService.putBucketTask('https://localhost:7247/api/BucketTask/'+this.currentBucketTask.id, data);
+    this.bucketTaskService.putBucketTask(environment.bucketTaskEndpoint+this.currentBucketTask.id, data).subscribe(
+      (response: any) => {
+        console.log(response);
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
 
     this.popEditBucketTaskConfirmationModal();
   }
 
   removeBucket(id: any) {
-    this.bucketService.deleteBucket(id).subscribe(
+    this.bucketService.deleteBucket(environment.bucketEndpoint+id).subscribe(
         (response: any) => {
           this.exitDeleteModal();
           this.router.navigate(['/buckets']);
@@ -134,7 +156,7 @@ export class BucketComponent implements OnInit {
   }
 
   removeBucketTask(bucketTaskId: number) {
-    this.bucketTaskService.deleteBucketTask('https://localhost:7247/api/BucketTask/'+bucketTaskId).subscribe(
+    this.bucketTaskService.deleteBucketTask(environment.bucketTaskEndpoint+bucketTaskId).subscribe(
       (response: any) => {
         this.fetchBucketTasks();
         this.exitDeleteBucketTaskConfirmationModal();
@@ -210,5 +232,15 @@ export class BucketComponent implements OnInit {
   exitDeleteBucketTaskConfirmationModal() {
     this.bucketTaskDeleteConfirmationModal = false;
     this.exitEditBucketTaskConfirmationModal()
+  }
+
+  MaxAmountOfTasksReachedWarningModal = false;
+
+  popNewBucketTaskMaxAmountOfTasksReachedWarning() {
+    this.MaxAmountOfTasksReachedWarningModal = true;
+  }
+
+  exitNewBucketTaskMaxAmountOfTasksReachedWarning() {
+    this.MaxAmountOfTasksReachedWarningModal = false;
   }
 }

@@ -43,7 +43,7 @@ namespace ToDoList.Api.BucketTask.Controllers
 
             var bucketTaskId = bucketTaskService.InsertBucketTask(bucketTaskDTO);
 
-            return Ok($"Bucket task with id={ bucketTaskId } inserted into database.");
+            return Ok(bucketTaskDTO);
         }
 
         [HttpPut("{id}")]

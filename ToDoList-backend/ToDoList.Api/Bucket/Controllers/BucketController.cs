@@ -51,7 +51,7 @@ namespace ToDoList.Api.Bucket.Controllers
 
             var bucketId = bucketService.InsertBucket(bucketDTO);
 
-            return Ok($"Bucket with id={ bucketId } inserted into database.");
+            return Ok(bucketDTO);
 
         }
 
