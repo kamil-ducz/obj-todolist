@@ -7,6 +7,6 @@ public class AssigneeServiceMappingProfile : Profile
 {
     public AssigneeServiceMappingProfile()
     {
-        CreateMap<Domain.Models.Assignee, AssigneeDTO>().ReverseMap();
+        CreateMap<Domain.Models.Assignee, AssigneeDto>().ReverseMap();
     }
 }

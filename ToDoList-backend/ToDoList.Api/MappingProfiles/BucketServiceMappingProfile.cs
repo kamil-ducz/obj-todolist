@@ -7,6 +7,6 @@ public class BucketServiceMappingProfile : Profile
 {
     public BucketServiceMappingProfile()
     {
-        CreateMap<Domain.Models.Bucket, BucketDTO>().ReverseMap();
+        CreateMap<Domain.Models.Bucket, BucketDto>().ReverseMap();
     }
 }

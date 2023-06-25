@@ -14,10 +14,10 @@ namespace ToDoList.Api.Asignee.Controllers;
 public class AssigneeController : ControllerBase
 {
     private readonly IAssigneeService _assigneeService;
-    private readonly IValidator<AssigneeDTO> _assigneeDTOValidator;
+    private readonly IValidator<AssigneeDto> _assigneeDTOValidator;
     private readonly IMapper _mapper;
 
-    public AssigneeController(IAssigneeService assigneeService, IValidator<AssigneeDTO> assigneeDTOValidator, IMapper mapper)
+    public AssigneeController(IAssigneeService assigneeService, IValidator<AssigneeDto> assigneeDTOValidator, IMapper mapper)
     {
         _assigneeService = assigneeService;
         _assigneeDTOValidator = assigneeDTOValidator;
@@ -25,19 +25,19 @@ public class AssigneeController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<Domain.Models.Assignee> Get()
+    public IEnumerable<AssigneeDto> Get()
     {
         return _assigneeService.GetAllAssignees();
     }
 
     [HttpGet("{id}")]
-    public Domain.Models.Assignee Get(int id)
+    public AssigneeDto Get(int id)
     {
         return _assigneeService.GetAssignee(id);
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] AssigneeDTO assigneeDTO)
+    public IActionResult Post([FromBody] AssigneeDto assigneeDTO)
     {
         _assigneeDTOValidator.ValidateAndThrow(assigneeDTO);
 
@@ -47,7 +47,7 @@ public class AssigneeController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] AssigneeDTO assigneeDTO)
+    public IActionResult Put(int id, [FromBody] AssigneeDto assigneeDTO)
     {
         _assigneeDTOValidator.ValidateAndThrow(assigneeDTO);
 
@@ -63,7 +63,7 @@ public class AssigneeController : ControllerBase
     {
         var assigneeToDelete = _assigneeService.GetAssignee(id);
 
-        var mappedAssignee = _mapper.Map<AssigneeDTO>(assigneeToDelete);
+        var mappedAssignee = _mapper.Map<AssigneeDto>(assigneeToDelete);
 
         _assigneeDTOValidator.ValidateAndThrow(mappedAssignee);
 

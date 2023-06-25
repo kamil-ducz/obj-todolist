@@ -5,9 +5,9 @@ namespace ToDoList.Api.Interfaces;
 
 public interface IAssigneeService
 {
-    List<Domain.Models.Assignee> GetAllAssignees();
-    Domain.Models.Assignee GetAssignee(int assigneeId);
-    int InsertAssignee(AssigneeDTO assigneeId);
+    List<AssigneeDto> GetAllAssignees();
+    AssigneeDto GetAssignee(int assigneeId);
+    int InsertAssignee(AssigneeDto assigneeId);
     void DeleteAssignee(int assigneeId);
-    void UpdateAssignee(int id, AssigneeDTO assignee);
+    void UpdateAssignee(int id, AssigneeDto assignee);
 }

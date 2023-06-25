@@ -17,14 +17,14 @@ public class AssigneeService : IAssigneeService
         _mapper = mapper;
     }
 
-    public List<Domain.Models.Assignee> GetAllAssignees()
+    public List<AssigneeDto> GetAllAssignees()
     {
-        return _assigneeRepository.GetAllAssignees();
+        return _mapper.Map<List<AssigneeDto>>(_assigneeRepository.GetAllAssignees());
     }
 
-    public Domain.Models.Assignee GetAssignee(int assigneeId)
+    public AssigneeDto GetAssignee(int assigneeId)
     {
-        return _assigneeRepository.GetAssignee(assigneeId);
+        return _mapper.Map<AssigneeDto>(_assigneeRepository.GetAssignee(assigneeId));
     }
 
     public void DeleteAssignee(int assigneeId)
@@ -32,14 +32,14 @@ public class AssigneeService : IAssigneeService
         _assigneeRepository.DeleteAssignee(assigneeId);
     }
 
-    public int InsertAssignee(AssigneeDTO assigneeDTO)
+    public int InsertAssignee(AssigneeDto assigneeDTO)
     {
         var mappedAssignee = _mapper.Map<Domain.Models.Assignee>(assigneeDTO);
 
         return _assigneeRepository.InsertAssignee(mappedAssignee); ;
     }
 
-    public void UpdateAssignee(int id, AssigneeDTO assigneeDTO)
+    public void UpdateAssignee(int id, AssigneeDto assigneeDTO)
     {
         var mappedAssignee = _mapper.Map<Domain.Models.Assignee>(assigneeDTO);
 

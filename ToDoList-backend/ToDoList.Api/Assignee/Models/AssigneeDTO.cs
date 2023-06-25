@@ -3,7 +3,7 @@ using ToDoList.Api.BucketTask.Models;
 
 namespace ToDoList.Api.Asignee.Models;
 
-public class AssigneeDTO
+public class AssigneeDto
 {
     public int Id { get; set; }
     public string? Name { get; set; }

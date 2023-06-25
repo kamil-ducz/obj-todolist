@@ -20,14 +20,14 @@ public class BucketService : IBucketService
         _mapper = mapper;
     }
 
-    public List<Domain.Models.Bucket> GetAllBuckets()
+    public List<BucketDto> GetAllBuckets()
     {
-        return _bucketRepository.GetAllBuckets();
+        return _mapper.Map<List<BucketDto>>(_bucketRepository.GetAllBuckets());
     }
 
-    public Domain.Models.Bucket GetBucket(int bucketId)
+    public BucketDto GetBucket(int bucketId)
     {
-        return _bucketRepository.GetBucket(bucketId);
+        return _mapper.Map<BucketDto>(_bucketRepository.GetBucket(bucketId));
     }
 
     public void DeleteBucket(int bucketId)
@@ -35,23 +35,23 @@ public class BucketService : IBucketService
         _bucketRepository.DeleteBucket(bucketId);
     }
 
-    public int InsertBucket(BucketDTO bucketDTO)
+    public int InsertBucket(BucketDto bucketDTO)
     {
         var mappedBucket = _mapper.Map<Domain.Models.Bucket>(bucketDTO);
 
         return _bucketRepository.InsertBucket(mappedBucket);
     }
 
-    public void UpdateBucket(int id, BucketDTO bucketDTO)
+    public void UpdateBucket(int id, BucketDto bucketDTO)
     {
         var mappedBucket = _mapper.Map<Domain.Models.Bucket>(bucketDTO);
 
         _bucketRepository.UpdateBucket(id, mappedBucket);
     }
 
-    public IEnumerable<Domain.Models.BucketTask> GetAllBucketsTasks(int bucketId)
+    public IEnumerable<BucketDto> GetAllBucketsTasks(int bucketId)
     {
         var bucketTasks = _bucketTaskRepository.GetAllBucketTasks().Where(b => b.BucketId == bucketId);
-        return bucketTasks;
+        return _mapper.Map<IEnumerable<BucketDto>>(bucketTasks);
     }
 }

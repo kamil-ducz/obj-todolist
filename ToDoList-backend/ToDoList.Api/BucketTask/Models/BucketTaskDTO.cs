@@ -13,6 +13,6 @@ public class BucketTaskDTO
     public TaskPriority TaskPriority { get; set; }
 
     public int BucketId { get; set; }
-    public virtual List<AssigneeDTO>? Assignees { get; set; }
+    public virtual List<AssigneeDto>? Assignees { get; set; }
 
 }

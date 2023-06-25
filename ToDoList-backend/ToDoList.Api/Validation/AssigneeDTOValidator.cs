@@ -3,7 +3,7 @@ using ToDoList.Api.Asignee.Models;
 
 namespace ToDoList.Api.Validation;
 
-public class AssigneeDTOValidator : AbstractValidator<AssigneeDTO>
+public class AssigneeDTOValidator : AbstractValidator<AssigneeDto>
 {
     public AssigneeDTOValidator()
     {

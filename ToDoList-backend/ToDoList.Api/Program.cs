@@ -44,8 +44,8 @@ public class Program
 
         builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-        builder.Services.AddScoped<IValidator<AssigneeDTO>, AssigneeDTOValidator>();
-        builder.Services.AddScoped<IValidator<BucketDTO>, BucketDTOValidator>();
+        builder.Services.AddScoped<IValidator<AssigneeDto>, AssigneeDTOValidator>();
+        builder.Services.AddScoped<IValidator<BucketDto>, BucketDTOValidator>();
         builder.Services.AddScoped<IValidator<BucketTaskDTO>, BucketTaskDTOValidator>();
 
         builder.Services.AddDbContext<ToDoListDbContext>();
