@@ -129,6 +129,7 @@ export class BucketComponent implements OnInit {
 
   onSubmitEditBucketTask(data: BucketTask) {
     data = this.editNewBucketTaskFormGroup.value;
+    data.bucketId = this.id;
     data.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.editNewBucketTaskFormGroup.value.state);
     data.taskPriority = this.bucketTaskService.mapBucketTaskPriorityStringToEnum(this.editNewBucketTaskFormGroup.value.priority);
     this.bucketTaskService.putBucketTask(environment.bucketTaskEndpoint+this.currentBucketTask.id, data).subscribe(
