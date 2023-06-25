@@ -35,7 +35,7 @@ public class AssigneeController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] AssigneeInsertDto assigneeInsertDto)
+    public IActionResult Post(AssigneeInsertDto assigneeInsertDto)
     {
         _assigneeInsertDtoValidator.ValidateAndThrow(assigneeInsertDto);
 
@@ -45,7 +45,7 @@ public class AssigneeController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] AssigneeInsertDto assigneeInsertDTO)
+    public IActionResult Put(int id, AssigneeInsertDto assigneeInsertDTO)
     {
         _assigneeInsertDtoValidator.ValidateAndThrow(assigneeInsertDTO);
 

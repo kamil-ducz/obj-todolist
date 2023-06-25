@@ -35,7 +35,7 @@ public class BucketTaskController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] BucketInsertTaskDto bucketInsertTaskDto)
+    public IActionResult Post(BucketInsertTaskDto bucketInsertTaskDto)
     {
         _bucketInsertTaskDtoValidator.ValidateAndThrow(bucketInsertTaskDto);
 
@@ -45,7 +45,7 @@ public class BucketTaskController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] BucketInsertTaskDto bucketTaskDto)
+    public IActionResult Put(int id, BucketInsertTaskDto bucketTaskDto)
     {
         _bucketInsertTaskDtoValidator.ValidateAndThrow(bucketTaskDto);
 
