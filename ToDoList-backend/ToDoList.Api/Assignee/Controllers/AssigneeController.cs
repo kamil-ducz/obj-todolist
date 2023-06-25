@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using ToDoList.Api.Asignee.Models;
@@ -43,7 +44,7 @@ public class AssigneeController : ControllerBase
 
         var assigneeId = _assigneeService.InsertAssignee(assigneeDTO);
 
-        return Ok($"Assignee with id={assigneeId} inserted into database.");
+        return Created(Request.GetEncodedUrl() + "/" + assigneeId, assigneeDTO);
     }
 
     [HttpPut("{id}")]
@@ -53,7 +54,7 @@ public class AssigneeController : ControllerBase
 
         _assigneeService.UpdateAssignee(id, assigneeDTO);
 
-        return Ok($"Assignee with id={id} has been updated.");
+        return Ok(assigneeDTO);
 
 
     }
@@ -69,6 +70,6 @@ public class AssigneeController : ControllerBase
 
         _assigneeService.DeleteAssignee(id);
 
-        return Ok($"Assignee with id={id} deleted.");
+        return Ok(mappedAssignee);
     }
 }

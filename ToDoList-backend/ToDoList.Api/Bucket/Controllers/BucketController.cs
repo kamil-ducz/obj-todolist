@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,7 +53,7 @@ public class BucketController : ControllerBase
 
         var bucketId = _bucketService.InsertBucket(bucketDTO);
 
-        return Ok(bucketDTO);
+        return Created(Request.GetEncodedUrl() + "/" + bucketId, bucketDTO);
 
     }
 

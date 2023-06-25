@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using ToDoList.Api.BucketTask.Models;
@@ -43,7 +44,7 @@ public class BucketTaskController : ControllerBase
 
         var bucketTaskId = _bucketTaskService.InsertBucketTask(bucketTaskDTO);
 
-        return Ok(bucketTaskDTO);
+        return Created(Request.GetEncodedUrl() + "/" + bucketTaskId, bucketTaskDTO);
     }
 
     [HttpPut("{id}")]
