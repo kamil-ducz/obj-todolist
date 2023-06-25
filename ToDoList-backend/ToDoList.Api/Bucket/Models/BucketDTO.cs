@@ -13,5 +13,5 @@ public class BucketDto
     public BucketColor BucketColor { get; set; }
     public int? MaxAmountOfTasks { get; set; }
     public bool IsActive { get; set; }
-    public virtual List<BucketTaskDto>? BucketTasks { get; set; }
+    public List<BucketTaskDto>? BucketTasks { get; set; }
 }

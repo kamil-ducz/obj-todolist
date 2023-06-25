@@ -7,5 +7,5 @@ public class AssigneeInsertDto
 {
     public int Id { get; set; }
     public string? Name { get; set; }
-    public virtual List<BucketTaskDto>? BucketTasks { get; set; }
+    public List<BucketTaskDto>? BucketTasks { get; set; }
 }

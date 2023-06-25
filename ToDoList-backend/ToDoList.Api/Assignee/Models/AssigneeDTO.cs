@@ -3,9 +3,9 @@ using ToDoList.Api.BucketTask.Models;
 
 namespace ToDoList.Api.Asignee.Models;
 
-public class AssigneeDto
+public record AssigneeDto
 {
     public int Id { get; set; }
     public string? Name { get; set; }
-    public virtual List<BucketTaskDto>? BucketTasks { get; set; }
+    public List<BucketTaskDto>? BucketTasks { get; set; }
 }
