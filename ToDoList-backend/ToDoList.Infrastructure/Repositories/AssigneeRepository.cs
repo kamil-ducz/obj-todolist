@@ -15,69 +15,37 @@ public class AssigneeRepository : IAssigneeRepository
 
     public IReadOnlyList<Assignee> GetAllAssignees()
     {
-        if (_toDoListDbContext.Assignees is not null)
-        {
-            return _toDoListDbContext.Assignees.ToList();
-        }
-
-        throw new NotImplementedException();
+        return _toDoListDbContext.Assignees!.ToList();
     }
 
     public Assignee GetAssignee(int assigneeId)
     {
-        if (_toDoListDbContext.Assignees is not null)
-        {
-            return _toDoListDbContext.Assignees.First(a => a.Id == assigneeId);
-        }
-
-        throw new NotImplementedException();
+        return _toDoListDbContext.Assignees!.First(a => a.Id == assigneeId);
     }
 
     public void DeleteAssignee(int assigneeId)
     {
-        if (_toDoListDbContext.Assignees is not null)
-        {
-            var assigneeToDelete = _toDoListDbContext.Assignees.First(a => a.Id == assigneeId);
-            _toDoListDbContext.Assignees.Remove(assigneeToDelete);
-            _toDoListDbContext.SaveChanges();
-
-        }
-
-        else
-        {
-            throw new NotImplementedException();
-        }
+        var assigneeToDelete = _toDoListDbContext.Assignees!.First(a => a.Id == assigneeId);
+        _toDoListDbContext.Assignees!.Remove(assigneeToDelete);
+        _toDoListDbContext.SaveChanges();
     }
 
     public int InsertAssignee(Assignee assignee)
     {
-        if (_toDoListDbContext.Assignees is not null)
-        {
-            _toDoListDbContext.Assignees.Add(assignee);
-            _toDoListDbContext.SaveChanges();
+        _toDoListDbContext.Assignees!.Add(assignee);
+        _toDoListDbContext.SaveChanges();
 
-            return assignee.Id;
-        }
-
-        throw new NotImplementedException();
+        return assignee.Id;
     }
 
     public void UpdateAssignee(int id, Assignee assignee)
     {
-        if (_toDoListDbContext.Assignees is not null)
-        {
-            var assigneeToUpdate = _toDoListDbContext.Assignees.First(a => a.Id == id);
+        var assigneeToUpdate = _toDoListDbContext.Assignees!.First(a => a.Id == id);
 
-            assigneeToUpdate.Name = assignee.Name;
-            assigneeToUpdate.BucketTasks = assignee.BucketTasks;
+        assigneeToUpdate.Name = assignee.Name;
+        assigneeToUpdate.BucketTasks = assignee.BucketTasks;
 
-            _toDoListDbContext.Assignees.Update(assigneeToUpdate);
-            _toDoListDbContext.SaveChanges();
-        }
-
-        else
-        {
-            throw new NotImplementedException();
-        }
+        _toDoListDbContext.Assignees!.Update(assigneeToUpdate);
+        _toDoListDbContext.SaveChanges();
     }
 }

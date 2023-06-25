@@ -15,70 +15,39 @@ public class BucketTaskRepository : IBucketTaskRepository
 
     public IReadOnlyList<BucketTask> GetAllBucketTasks()
     {
-        if (_toDoListDbContext.BucketTasks is not null)
-        {
-            return _toDoListDbContext.BucketTasks.ToList();
-        }
-
-        throw new NotImplementedException();
+        return _toDoListDbContext.BucketTasks!.ToList();
     }
 
     public BucketTask GetBucketTask(int bucketTaskId)
     {
-        if (_toDoListDbContext.BucketTasks is not null)
-        {
-            return _toDoListDbContext.BucketTasks.First(a => a.Id == bucketTaskId);
-        }
-
-        throw new NotImplementedException();
+        return _toDoListDbContext.BucketTasks!.First(a => a.Id == bucketTaskId);
     }
 
     public void DeleteBucketTask(int bucketTaskId)
     {
-        if (_toDoListDbContext.BucketTasks is not null)
-        {
-            var bucketTaskToDelete = _toDoListDbContext.BucketTasks.First(a => a.Id == bucketTaskId);
-            _toDoListDbContext.BucketTasks.Remove(bucketTaskToDelete);
-            _toDoListDbContext.SaveChanges();
-        }
-
-        else
-        {
-            throw new NotImplementedException();
-        }
+        var bucketTaskToDelete = _toDoListDbContext.BucketTasks!.First(a => a.Id == bucketTaskId);
+        _toDoListDbContext.BucketTasks!.Remove(bucketTaskToDelete);
+        _toDoListDbContext.SaveChanges();
     }
 
     public int InsertBucketTask(BucketTask bucketTask)
     {
-        if (_toDoListDbContext.BucketTasks is not null)
-        {
-            _toDoListDbContext.BucketTasks.Add(bucketTask);
-            _toDoListDbContext.SaveChanges();
+        _toDoListDbContext.BucketTasks!.Add(bucketTask);
+        _toDoListDbContext.SaveChanges();
 
-            return bucketTask.Id;
-        }
-
-        throw new NotImplementedException();
+        return bucketTask.Id;
     }
 
     public void UpdateBucketTask(int id, BucketTask bucketTask)
     {
-        if (_toDoListDbContext.BucketTasks is not null)
-        {
-            var bucketTaskToUpdate = _toDoListDbContext.BucketTasks.First(a => a.Id == id);
+        var bucketTaskToUpdate = _toDoListDbContext.BucketTasks!.First(a => a.Id == id);
 
-            bucketTaskToUpdate.Name = bucketTask.Name;
-            bucketTaskToUpdate.Description = bucketTask.Description;
-            bucketTaskToUpdate.TaskState = bucketTask.TaskState;
-            bucketTaskToUpdate.TaskPriority = bucketTask.TaskPriority;
+        bucketTaskToUpdate.Name = bucketTask.Name;
+        bucketTaskToUpdate.Description = bucketTask.Description;
+        bucketTaskToUpdate.TaskState = bucketTask.TaskState;
+        bucketTaskToUpdate.TaskPriority = bucketTask.TaskPriority;
 
-            _toDoListDbContext.BucketTasks.Update(bucketTaskToUpdate);
-            _toDoListDbContext.SaveChanges();
-        }
-
-        else
-        {
-            throw new NotImplementedException();
-        }
+        _toDoListDbContext.BucketTasks!.Update(bucketTaskToUpdate);
+        _toDoListDbContext.SaveChanges();
     }
 }
