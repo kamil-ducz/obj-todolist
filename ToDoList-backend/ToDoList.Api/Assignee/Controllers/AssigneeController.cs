@@ -13,27 +13,27 @@ namespace ToDoList.Api.Asignee.Controllers;
 [ApiController]
 public class AssigneeController : ControllerBase
 {
-    private readonly IAssigneeService assigneeService;
+    private readonly IAssigneeService _assigneeService;
     private readonly IValidator<AssigneeDTO> _assigneeDTOValidator;
     private readonly IMapper _mapper;
 
     public AssigneeController(IAssigneeService assigneeService, IValidator<AssigneeDTO> assigneeDTOValidator, IMapper mapper)
     {
-        this.assigneeService = assigneeService;
-        this._assigneeDTOValidator = assigneeDTOValidator;
-        this._mapper = mapper;
+        _assigneeService = assigneeService;
+        _assigneeDTOValidator = assigneeDTOValidator;
+        _mapper = mapper;
     }
 
     [HttpGet]
     public IEnumerable<Domain.Models.Assignee> Get()
     {
-        return assigneeService.GetAllAssignees();
+        return _assigneeService.GetAllAssignees();
     }
 
     [HttpGet("{id}")]
     public Domain.Models.Assignee Get(int id)
     {
-        return assigneeService.GetAssignee(id);
+        return _assigneeService.GetAssignee(id);
     }
 
     [HttpPost]
@@ -41,7 +41,7 @@ public class AssigneeController : ControllerBase
     {
         _assigneeDTOValidator.ValidateAndThrow(assigneeDTO);
 
-        var assigneeId = assigneeService.InsertAssignee(assigneeDTO);
+        var assigneeId = _assigneeService.InsertAssignee(assigneeDTO);
 
         return Ok($"Assignee with id={assigneeId} inserted into database.");
     }
@@ -51,7 +51,7 @@ public class AssigneeController : ControllerBase
     {
         _assigneeDTOValidator.ValidateAndThrow(assigneeDTO);
 
-        assigneeService.UpdateAssignee(id, assigneeDTO);
+        _assigneeService.UpdateAssignee(id, assigneeDTO);
 
         return Ok($"Assignee with id={id} has been updated.");
 
@@ -61,13 +61,13 @@ public class AssigneeController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var assigneeToDelete = assigneeService.GetAssignee(id);
+        var assigneeToDelete = _assigneeService.GetAssignee(id);
 
         var mappedAssignee = _mapper.Map<AssigneeDTO>(assigneeToDelete);
 
         _assigneeDTOValidator.ValidateAndThrow(mappedAssignee);
 
-        assigneeService.DeleteAssignee(id);
+        _assigneeService.DeleteAssignee(id);
 
         return Ok($"Assignee with id={id} deleted.");
     }

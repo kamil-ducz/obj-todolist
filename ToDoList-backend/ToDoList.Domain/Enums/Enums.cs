@@ -2,8 +2,6 @@
 
 public class Enums
 {
-    // bucket enums
-
     public enum Category
     {
         Home,
@@ -20,8 +18,6 @@ public class Enums
         White,
         Green
     }
-
-    // task enums
 
     public enum TaskState
     {

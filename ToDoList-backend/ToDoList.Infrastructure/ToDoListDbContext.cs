@@ -20,15 +20,9 @@ public class ToDoListDbContext : DbContext
             );
 
         modelBuilder.Entity<Bucket>().HasData(
-<<<<<<< HEAD
             new Bucket { Id = 1, Name = "Work", IsActive = true, MaxAmountOfTasks = 15 },
             new Bucket { Id = 2, Name = "Home", IsActive = true, MaxAmountOfTasks = 15 },
             new Bucket { Id = 3, Name = "Hobby", IsActive = true, MaxAmountOfTasks = 15 })
-=======
-            new Bucket { Id = 1, Name = "Work", IsActive = true },
-            new Bucket { Id = 2, Name = "Home", IsActive = true },
-            new Bucket { Id = 3, Name = "Hobby", IsActive = true })
->>>>>>> 1864a8c (Development (#33))
             ;
 
         modelBuilder.Entity<BucketTask>().HasData(
@@ -46,7 +40,7 @@ public class ToDoListDbContext : DbContext
         options.UseSqlServer(configuration.GetConnectionString("ToDoListDatabase"), b => b.MigrationsAssembly("ToDoList.Infrastructure"));
     }
 
-    public DbSet<Domain.Models.Assignee>? Assignees { get; set; }
-    public DbSet<Domain.Models.Bucket>? Buckets { get; set; }
-    public DbSet<Domain.Models.BucketTask>? BucketTasks { get; set; }
+    public DbSet<Assignee>? Assignees { get; set; }
+    public DbSet<Bucket>? Buckets { get; set; }
+    public DbSet<BucketTask>? BucketTasks { get; set; }
 }

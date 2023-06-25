@@ -14,34 +14,34 @@ namespace ToDoList.Api.Bucket.Controllers;
 [ApiController]
 public class BucketController : ControllerBase
 {
-    private readonly IBucketService bucketService;
+    private readonly IBucketService _bucketService;
     private readonly IValidator<BucketDTO> _bucketDTOValidator;
     private readonly IMapper _mapper;
 
     public BucketController(IBucketService bucketService, IValidator<BucketDTO> bucketDTOValidator, IMapper mapper)
     {
-        this.bucketService = bucketService;
-        this._bucketDTOValidator = bucketDTOValidator;
-        this._mapper = mapper;
+        _bucketService = bucketService;
+        _bucketDTOValidator = bucketDTOValidator;
+        _mapper = mapper;
     }
 
     [HttpGet]
     public IEnumerable<Domain.Models.Bucket> Get()
-    
+
     {
-        return bucketService.GetAllBuckets();
+        return _bucketService.GetAllBuckets();
     }
 
     [HttpGet("{id}")]
     public Domain.Models.Bucket Get(int id)
     {
-        return bucketService.GetBucket(id);
+        return _bucketService.GetBucket(id);
     }
 
     [HttpGet("buckettask/{id}")]
     public IEnumerable<Domain.Models.BucketTask> Get(int id, bool? cloghole)
     {
-        return bucketService.GetAllBucketsTasks(id).ToList();
+        return _bucketService.GetAllBucketsTasks(id).ToList();
     }
 
     [HttpPost]
@@ -49,7 +49,7 @@ public class BucketController : ControllerBase
     {
         _bucketDTOValidator.ValidateAndThrow(bucketDTO);
 
-        var bucketId = bucketService.InsertBucket(bucketDTO);
+        var bucketId = _bucketService.InsertBucket(bucketDTO);
 
         return Ok(bucketDTO);
 
@@ -60,7 +60,7 @@ public class BucketController : ControllerBase
     {
         _bucketDTOValidator.ValidateAndThrow(bucketDTO);
 
-        bucketService.UpdateBucket(id, bucketDTO);
+        _bucketService.UpdateBucket(id, bucketDTO);
 
         return Ok(bucketDTO);
 
@@ -70,13 +70,13 @@ public class BucketController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var bucketToDelete = bucketService.GetBucket(id);
+        var bucketToDelete = _bucketService.GetBucket(id);
 
         var mappedBucket = _mapper.Map<BucketDTO>(bucketToDelete);
 
         _bucketDTOValidator.ValidateAndThrow(mappedBucket);
 
-        bucketService.DeleteBucket(id);
+        _bucketService.DeleteBucket(id);
 
         return Ok(bucketToDelete);
     }

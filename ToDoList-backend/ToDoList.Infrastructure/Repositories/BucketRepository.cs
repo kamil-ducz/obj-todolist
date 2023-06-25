@@ -49,8 +49,6 @@ public class BucketRepository : IBucketRepository
         {
             throw new NotImplementedException();
         }
-
-        // TODO what if we want to delete connected bucket tasks?
     }
 
     public int InsertBucket(Bucket bucket)
