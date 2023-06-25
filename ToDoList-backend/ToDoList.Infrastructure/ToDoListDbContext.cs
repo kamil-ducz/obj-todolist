@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using ToDoList.Domain.Enums;
 using ToDoList.Domain.Models;
+using ToDoList.Infrastructure.DbContextConfigs;
 
 namespace ToDoList.Api;
 
@@ -16,24 +16,11 @@ public class ToDoListDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Assignee>().HasData(
-            new Assignee { Id = 1, Name = "John Doe" }
-            );
+        modelBuilder.ApplyConfiguration(new AssigneeConfiguration());
 
-        modelBuilder.Entity<Bucket>().HasData(
-            new Bucket { Id = 1, Name = "Work", IsActive = true, MaxAmountOfTasks = 15 },
-            new Bucket { Id = 2, Name = "Home", IsActive = true, MaxAmountOfTasks = 15 },
-            new Bucket { Id = 3, Name = "Hobby", IsActive = true, MaxAmountOfTasks = 15 })
-            ;
+        modelBuilder.ApplyConfiguration(new BucketConfiguration());
 
-        modelBuilder.Entity<BucketTask>().HasData(
-            new BucketTask { Id = 1, BucketId = 1, Name = "Speak to manager", TaskState = TaskState.ToDo },
-            new BucketTask { Id = 2, BucketId = 1, Name = "Organize desk", TaskState = TaskState.InProgress },
-            new BucketTask { Id = 3, BucketId = 2, Name = "Water plants", TaskState = TaskState.Cancelled },
-            new BucketTask { Id = 4, BucketId = 2, Name = "Clean bedroom", TaskState = TaskState.Done },
-            new BucketTask { Id = 5, BucketId = 3, Name = "Organize diet", TaskState = TaskState.Done },
-            new BucketTask { Id = 6, BucketId = 3, Name = "Update training plan", TaskState = TaskState.InProgress });
-
+        modelBuilder.ApplyConfiguration(new BucketTaskConfiguration());
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
