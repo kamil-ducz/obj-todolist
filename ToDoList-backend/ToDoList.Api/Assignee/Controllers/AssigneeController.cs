@@ -39,17 +39,17 @@ public class AssigneeController : ControllerBase
     {
         _assigneeInsertDtoValidator.ValidateAndThrow(assigneeInsertDto);
 
-        var assigneeId = _assigneeService.InsertAssignee(assigneeInsertDto);
+        _assigneeService.InsertAssignee(assigneeInsertDto);
 
-        return Created(Request.GetEncodedUrl() + "/" + assigneeId, assigneeInsertDto);
+        return Created(Request.GetEncodedUrl(), assigneeInsertDto);
     }
 
     [HttpPut("{id}")]
-    public IActionResult Put(int id, AssigneeInsertDto assigneeInsertDTO)
+    public IActionResult Put(AssigneeInsertDto assigneeInsertDTO, int id)
     {
         _assigneeInsertDtoValidator.ValidateAndThrow(assigneeInsertDTO);
 
-        _assigneeService.UpdateAssignee(id, assigneeInsertDTO);
+        _assigneeService.UpdateAssignee(assigneeInsertDTO, id);
 
         return Ok(assigneeInsertDTO);
     }

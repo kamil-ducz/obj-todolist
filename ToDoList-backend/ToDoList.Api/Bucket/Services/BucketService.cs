@@ -33,21 +33,26 @@ public class BucketService : IBucketService
 
     public void DeleteBucket(int bucketId)
     {
-        _bucketRepository.DeleteBucket(bucketId);
+        var bucketToDelete = _bucketRepository.GetAllBuckets().First(b => b.Id == bucketId);
+
+        _bucketRepository.DeleteBucket(bucketToDelete);
     }
 
-    public int InsertBucket(BucketInsertDto bucketDTO)
+    public void InsertBucket(BucketInsertDto bucketDTO)
     {
         var mappedBucket = _mapper.Map<Domain.Models.Bucket>(bucketDTO);
 
-        return _bucketRepository.InsertBucket(mappedBucket);
+        _bucketRepository.InsertBucket(mappedBucket);
     }
 
     public void UpdateBucket(int id, BucketInsertDto bucketDTO)
     {
-        var mappedBucket = _mapper.Map<Domain.Models.Bucket>(bucketDTO);
+        var bucketToUpdate = bucketDTO;
+        bucketToUpdate.Id = id;
 
-        _bucketRepository.UpdateBucket(id, mappedBucket);
+        var mappedBucket = _mapper.Map<Domain.Models.Bucket>(bucketToUpdate);
+
+        _bucketRepository.UpdateBucket(mappedBucket);
     }
 
     public IEnumerable<BucketTaskDto> GetAllBucketsTasks(int bucketId)

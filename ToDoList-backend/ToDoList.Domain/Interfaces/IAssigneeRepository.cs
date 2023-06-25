@@ -7,7 +7,7 @@ public interface IAssigneeRepository
 {
     IReadOnlyList<Assignee> GetAllAssignees();
     Assignee GetAssignee(int assigneeId);
-    int InsertAssignee(Assignee assignee);
+    void InsertAssignee(Assignee assignee);
     void DeleteAssignee(int assigneeId);
-    void UpdateAssignee(int id, Assignee assignee);
+    void UpdateAssignee(Assignee assignee);
 }

@@ -30,21 +30,14 @@ public class AssigneeRepository : IAssigneeRepository
         _toDoListDbContext.SaveChanges();
     }
 
-    public int InsertAssignee(Assignee assignee)
+    public void InsertAssignee(Assignee assignee)
     {
         _toDoListDbContext.Assignees!.Add(assignee);
         _toDoListDbContext.SaveChanges();
-
-        return assignee.Id;
     }
 
-    public void UpdateAssignee(int id, Assignee assignee)
+    public void UpdateAssignee(Assignee assigneeToUpdate)
     {
-        var assigneeToUpdate = _toDoListDbContext.Assignees!.First(a => a.Id == id);
-
-        assigneeToUpdate.Name = assignee.Name;
-        assigneeToUpdate.BucketTasks = assignee.BucketTasks;
-
         _toDoListDbContext.Assignees!.Update(assigneeToUpdate);
         _toDoListDbContext.SaveChanges();
     }

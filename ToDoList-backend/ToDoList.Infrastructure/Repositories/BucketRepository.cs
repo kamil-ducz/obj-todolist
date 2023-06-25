@@ -10,14 +10,12 @@ public class BucketRepository : IBucketRepository
 
     public BucketRepository(ToDoListDbContext toDoListDbContext)
     {
-        this._toDoListDbContext = toDoListDbContext;
+        _toDoListDbContext = toDoListDbContext;
     }
 
     public IReadOnlyList<Bucket> GetAllBuckets()
     {
-        var buckets = _toDoListDbContext.Buckets!.ToList();
-
-        return buckets;
+        return _toDoListDbContext.Buckets!.ToList();
     }
 
     public Bucket GetBucket(int bucketId)
@@ -25,32 +23,20 @@ public class BucketRepository : IBucketRepository
         return _toDoListDbContext.Buckets!.First(a => a.Id == bucketId);
     }
 
-    public void DeleteBucket(int bucketId)
+    public void DeleteBucket(Bucket bucketToDelete)
     {
-        var bucketToDelete = _toDoListDbContext.Buckets!.First(a => a.Id == bucketId);
         _toDoListDbContext.Buckets!.Remove(bucketToDelete);
         _toDoListDbContext.SaveChanges();
     }
 
-    public int InsertBucket(Bucket bucket)
+    public void InsertBucket(Bucket bucketToInsert)
     {
-        _toDoListDbContext.Buckets!.Add(bucket);
+        _toDoListDbContext.Buckets!.Add(bucketToInsert);
         _toDoListDbContext.SaveChanges();
-
-        return bucket.Id;
     }
 
-    public void UpdateBucket(int id, Bucket bucket)
+    public void UpdateBucket(Bucket bucketToUpdate)
     {
-        var bucketToUpdate = _toDoListDbContext.Buckets!.First(a => a.Id == id);
-
-        bucketToUpdate.Name = bucket.Name;
-        bucketToUpdate.Description = bucket.Description;
-        bucketToUpdate.Category = bucket.Category;
-        bucketToUpdate.BucketColor = bucket.BucketColor;
-        bucketToUpdate.MaxAmountOfTasks = bucket.MaxAmountOfTasks;
-        bucketToUpdate.IsActive = bucket.IsActive;
-
         _toDoListDbContext.Buckets!.Update(bucketToUpdate);
         _toDoListDbContext.SaveChanges();
     }

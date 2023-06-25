@@ -7,7 +7,7 @@ public interface IBucketRepository
 {
     IReadOnlyList<Bucket> GetAllBuckets();
     Bucket GetBucket(int bucketId);
-    int InsertBucket(Bucket bucket);
-    void DeleteBucket(int bucketId);
-    void UpdateBucket(int id, Bucket bucket);
+    void InsertBucket(Bucket bucket);
+    void DeleteBucket(Bucket bucket);
+    void UpdateBucket(Bucket bucket);
 }
