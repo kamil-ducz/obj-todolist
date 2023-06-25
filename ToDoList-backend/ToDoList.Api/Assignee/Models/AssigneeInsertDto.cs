@@ -6,6 +6,6 @@ namespace ToDoList.Api.Asignee.Models;
 public class AssigneeInsertDto
 {
     public int Id { get; set; }
-    public string? Name { get; set; }
-    public List<BucketTaskDto>? BucketTasks { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public List<BucketTaskDto> BucketTasks { get; set; } = new List<BucketTaskDto>();
 }

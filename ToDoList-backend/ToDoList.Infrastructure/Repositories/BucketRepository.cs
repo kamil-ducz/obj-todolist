@@ -13,7 +13,7 @@ public class BucketRepository : IBucketRepository
         this._toDoListDbContext = toDoListDbContext;
     }
 
-    public List<Bucket> GetAllBuckets()
+    public IReadOnlyList<Bucket> GetAllBuckets()
     {
         if (_toDoListDbContext.Buckets is not null)
         {

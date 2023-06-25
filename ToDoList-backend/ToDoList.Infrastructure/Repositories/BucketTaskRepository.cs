@@ -13,7 +13,7 @@ public class BucketTaskRepository : IBucketTaskRepository
         this._toDoListDbContext = toDoListDbContext;
     }
 
-    public List<BucketTask> GetAllBucketTasks()
+    public IReadOnlyList<BucketTask> GetAllBucketTasks()
     {
         if (_toDoListDbContext.BucketTasks is not null)
         {

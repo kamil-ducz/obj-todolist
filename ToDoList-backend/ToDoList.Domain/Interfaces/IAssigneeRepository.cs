@@ -5,7 +5,7 @@ namespace ToDoList.Domain.Interfaces;
 
 public interface IAssigneeRepository
 {
-    List<Assignee> GetAllAssignees();
+    IReadOnlyList<Assignee> GetAllAssignees();
     Assignee GetAssignee(int assigneeId);
     int InsertAssignee(Assignee assignee);
     void DeleteAssignee(int assigneeId);

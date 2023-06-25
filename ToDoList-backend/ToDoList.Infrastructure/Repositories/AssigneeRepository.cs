@@ -13,7 +13,7 @@ public class AssigneeRepository : IAssigneeRepository
         this._toDoListDbContext = toDoListDbContext;
     }
 
-    public List<Assignee> GetAllAssignees()
+    public IReadOnlyList<Assignee> GetAllAssignees()
     {
         if (_toDoListDbContext.Assignees is not null)
         {

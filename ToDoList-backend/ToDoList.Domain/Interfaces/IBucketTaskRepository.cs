@@ -5,7 +5,7 @@ namespace ToDoList.Domain.Interfaces;
 
 public interface IBucketTaskRepository
 {
-    List<BucketTask> GetAllBucketTasks();
+    IReadOnlyList<BucketTask> GetAllBucketTasks();
     BucketTask GetBucketTask(int taskId);
     int InsertBucketTask(BucketTask task);
     void DeleteBucketTask(int taskId);
