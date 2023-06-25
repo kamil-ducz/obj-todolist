@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using FluentValidation;
+﻿using FluentValidation;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -15,14 +14,14 @@ namespace ToDoList.Api.Asignee.Controllers;
 public class AssigneeController : ControllerBase
 {
     private readonly IAssigneeService _assigneeService;
-    private readonly IValidator<AssigneeDto> _assigneeDTOValidator;
-    private readonly IMapper _mapper;
+    private readonly IValidator<AssigneeDto> _assigneeDtoValidator;
+    private readonly IValidator<AssigneeInsertDto> _assigneeInsertDtoValidator;
 
-    public AssigneeController(IAssigneeService assigneeService, IValidator<AssigneeDto> assigneeDTOValidator, IMapper mapper)
+    public AssigneeController(IAssigneeService assigneeService, IValidator<AssigneeDto> assigneetDtoValidator, IValidator<AssigneeInsertDto> assigneeDTOValidator)
     {
         _assigneeService = assigneeService;
-        _assigneeDTOValidator = assigneeDTOValidator;
-        _mapper = mapper;
+        _assigneeDtoValidator = assigneetDtoValidator;
+        _assigneeInsertDtoValidator = assigneeDTOValidator;
     }
 
     [HttpGet]
@@ -38,23 +37,23 @@ public class AssigneeController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] AssigneeDto assigneeDTO)
+    public IActionResult Post([FromBody] AssigneeInsertDto assigneeInsertDto)
     {
-        _assigneeDTOValidator.ValidateAndThrow(assigneeDTO);
+        _assigneeInsertDtoValidator.ValidateAndThrow(assigneeInsertDto);
 
-        var assigneeId = _assigneeService.InsertAssignee(assigneeDTO);
+        var assigneeId = _assigneeService.InsertAssignee(assigneeInsertDto);
 
-        return Created(Request.GetEncodedUrl() + "/" + assigneeId, assigneeDTO);
+        return Created(Request.GetEncodedUrl() + "/" + assigneeId, assigneeInsertDto);
     }
 
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] AssigneeDto assigneeDTO)
+    public IActionResult Put(int id, [FromBody] AssigneeInsertDto assigneeInsertDTO)
     {
-        _assigneeDTOValidator.ValidateAndThrow(assigneeDTO);
+        _assigneeInsertDtoValidator.ValidateAndThrow(assigneeInsertDTO);
 
-        _assigneeService.UpdateAssignee(id, assigneeDTO);
+        _assigneeService.UpdateAssignee(id, assigneeInsertDTO);
 
-        return Ok(assigneeDTO);
+        return Ok(assigneeInsertDTO);
 
 
     }
@@ -64,12 +63,10 @@ public class AssigneeController : ControllerBase
     {
         var assigneeToDelete = _assigneeService.GetAssignee(id);
 
-        var mappedAssignee = _mapper.Map<AssigneeDto>(assigneeToDelete);
-
-        _assigneeDTOValidator.ValidateAndThrow(mappedAssignee);
+        _assigneeDtoValidator.ValidateAndThrow(assigneeToDelete);
 
         _assigneeService.DeleteAssignee(id);
 
-        return Ok(mappedAssignee);
+        return Ok(assigneeToDelete);
     }
 }
