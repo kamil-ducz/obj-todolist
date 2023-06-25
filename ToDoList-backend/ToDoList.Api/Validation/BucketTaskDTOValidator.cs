@@ -3,7 +3,7 @@ using ToDoList.Api.BucketTask.Models;
 
 namespace ToDoList.Api.Validation;
 
-public class BucketTaskDTOValidator : AbstractValidator<BucketTaskDTO>
+public class BucketTaskDTOValidator : AbstractValidator<BucketTaskDto>
 {
     public BucketTaskDTOValidator()
     {

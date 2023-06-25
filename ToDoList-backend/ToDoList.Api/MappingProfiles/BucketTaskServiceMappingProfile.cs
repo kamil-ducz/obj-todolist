@@ -7,6 +7,6 @@ public class BucketTaskServiceMappingProfile : Profile
 {
     public BucketTaskServiceMappingProfile()
     {
-        CreateMap<Domain.Models.BucketTask, BucketTaskDTO>().ReverseMap();
+        CreateMap<Domain.Models.BucketTask, BucketTaskDto>().ReverseMap();
     }
 }

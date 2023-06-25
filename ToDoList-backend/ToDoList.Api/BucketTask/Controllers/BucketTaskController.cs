@@ -14,10 +14,10 @@ namespace ToDoList.Api.BucketTask.Controllers;
 public class BucketTaskController : ControllerBase
 {
     private readonly IBucketTaskService _bucketTaskService;
-    private readonly IValidator<BucketTaskDTO> _bucketTaskDTOValidator;
+    private readonly IValidator<BucketTaskDto> _bucketTaskDTOValidator;
     private readonly IMapper _mapper;
 
-    public BucketTaskController(IBucketTaskService bucketTaskService, IValidator<BucketTaskDTO> bucketTaskDTOValidator, IMapper mapper)
+    public BucketTaskController(IBucketTaskService bucketTaskService, IValidator<BucketTaskDto> bucketTaskDTOValidator, IMapper mapper)
     {
         _bucketTaskService = bucketTaskService;
         _bucketTaskDTOValidator = bucketTaskDTOValidator;
@@ -25,19 +25,19 @@ public class BucketTaskController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<Domain.Models.BucketTask> Get()
+    public IEnumerable<BucketTaskDto> Get()
     {
         return _bucketTaskService.GetBucketTasks();
     }
 
     [HttpGet("{id}")]
-    public Domain.Models.BucketTask Get(int id)
+    public BucketTaskDto Get(int id)
     {
         return _bucketTaskService.GetBucketTask(id);
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] BucketTaskDTO bucketTaskDTO)
+    public IActionResult Post([FromBody] BucketTaskDto bucketTaskDTO)
     {
         _bucketTaskDTOValidator.ValidateAndThrow(bucketTaskDTO);
 
@@ -47,15 +47,13 @@ public class BucketTaskController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] BucketTaskDTO bucketTaskDTO)
+    public IActionResult Put(int id, [FromBody] BucketTaskDto bucketTaskDTO)
     {
         _bucketTaskDTOValidator.ValidateAndThrow(bucketTaskDTO);
 
         _bucketTaskService.UpdateBucketTask(id, bucketTaskDTO);
 
         return Ok(bucketTaskDTO);
-
-
     }
 
     [HttpDelete("{id}")]
@@ -63,7 +61,7 @@ public class BucketTaskController : ControllerBase
     {
         var bucketTaskToDelete = _bucketTaskService.GetBucketTask(id);
 
-        var mappedBucketTask = _mapper.Map<BucketTaskDTO>(bucketTaskToDelete);
+        var mappedBucketTask = _mapper.Map<BucketTaskDto>(bucketTaskToDelete);
 
         _bucketTaskDTOValidator.ValidateAndThrow(mappedBucketTask);
 

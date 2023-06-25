@@ -17,14 +17,14 @@ public class BucketTaskService : IBucketTaskService
         _mapper = mapper;
     }
 
-    public List<Domain.Models.BucketTask> GetBucketTasks()
+    public List<BucketTaskDto> GetBucketTasks()
     {
-        return _bucketTaskRepository.GetAllBucketTasks();
+        return _mapper.Map<List<BucketTaskDto>>(_bucketTaskRepository.GetAllBucketTasks());
     }
 
-    public Domain.Models.BucketTask GetBucketTask(int taskId)
+    public BucketTaskDto GetBucketTask(int taskId)
     {
-        return _bucketTaskRepository.GetBucketTask(taskId);
+        return _mapper.Map<BucketTaskDto>(_bucketTaskRepository.GetBucketTask(taskId));
     }
 
     public void DeleteBucketTask(int taskId)
@@ -32,14 +32,14 @@ public class BucketTaskService : IBucketTaskService
         _bucketTaskRepository.DeleteBucketTask(taskId);
     }
 
-    public int InsertBucketTask(BucketTaskDTO bucketTaskDTO)
+    public int InsertBucketTask(BucketTaskDto bucketTaskDTO)
     {
         var mappedBucketTask = _mapper.Map<Domain.Models.BucketTask>(bucketTaskDTO);
 
         return _bucketTaskRepository.InsertBucketTask(mappedBucketTask);
     }
 
-    public void UpdateBucketTask(int id, BucketTaskDTO bucketTaskDTO)
+    public void UpdateBucketTask(int id, BucketTaskDto bucketTaskDTO)
     {
         var mappedBucketTask = _mapper.Map<Domain.Models.BucketTask>(bucketTaskDTO);
 
