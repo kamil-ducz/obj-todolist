@@ -48,7 +48,8 @@ public class Program
         builder.Services.AddScoped<IValidator<AssigneeInsertDto>, AssigneeInsertDtoValidator>();
         builder.Services.AddScoped<IValidator<BucketDto>, BucketDtoValidator>();
         builder.Services.AddScoped<IValidator<BucketInsertDto>, BucketInsertDtoValidator>();
-        builder.Services.AddScoped<IValidator<BucketTaskDto>, BucketTaskDTOValidator>();
+        builder.Services.AddScoped<IValidator<BucketTaskDto>, BucketTaskDtoValidator>();
+        builder.Services.AddScoped<IValidator<BucketInsertTaskDto>, BucketInsertTaskDtoValidator>();
 
         builder.Services.AddDbContext<ToDoListDbContext>();
 

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using FluentValidation;
+﻿using FluentValidation;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -15,14 +14,15 @@ namespace ToDoList.Api.BucketTask.Controllers;
 public class BucketTaskController : ControllerBase
 {
     private readonly IBucketTaskService _bucketTaskService;
-    private readonly IValidator<BucketTaskDto> _bucketTaskDTOValidator;
-    private readonly IMapper _mapper;
+    private readonly IValidator<BucketTaskDto> _bucketTaskDtoValidator;
+    private readonly IValidator<BucketInsertTaskDto> _bucketInsertTaskDtoValidator;
 
-    public BucketTaskController(IBucketTaskService bucketTaskService, IValidator<BucketTaskDto> bucketTaskDTOValidator, IMapper mapper)
+    public BucketTaskController(IBucketTaskService bucketTaskService,
+        IValidator<BucketInsertTaskDto> bucketInsertTaskDtoValidator, IValidator<BucketTaskDto> bucketTaskDtoValidator)
     {
         _bucketTaskService = bucketTaskService;
-        _bucketTaskDTOValidator = bucketTaskDTOValidator;
-        _mapper = mapper;
+        _bucketTaskDtoValidator = bucketTaskDtoValidator;
+        _bucketInsertTaskDtoValidator = bucketInsertTaskDtoValidator;
     }
 
     [HttpGet]
@@ -38,23 +38,23 @@ public class BucketTaskController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] BucketTaskDto bucketTaskDTO)
+    public IActionResult Post([FromBody] BucketInsertTaskDto bucketInsertTaskDto)
     {
-        _bucketTaskDTOValidator.ValidateAndThrow(bucketTaskDTO);
+        _bucketInsertTaskDtoValidator.ValidateAndThrow(bucketInsertTaskDto);
 
-        var bucketTaskId = _bucketTaskService.InsertBucketTask(bucketTaskDTO);
+        var bucketTaskId = _bucketTaskService.InsertBucketTask(bucketInsertTaskDto);
 
-        return Created(Request.GetEncodedUrl() + "/" + bucketTaskId, bucketTaskDTO);
+        return Created(Request.GetEncodedUrl() + "/" + bucketTaskId, bucketInsertTaskDto);
     }
 
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] BucketTaskDto bucketTaskDTO)
+    public IActionResult Put(int id, [FromBody] BucketInsertTaskDto bucketTaskDto)
     {
-        _bucketTaskDTOValidator.ValidateAndThrow(bucketTaskDTO);
+        _bucketInsertTaskDtoValidator.ValidateAndThrow(bucketTaskDto);
 
-        _bucketTaskService.UpdateBucketTask(id, bucketTaskDTO);
+        _bucketTaskService.UpdateBucketTask(id, bucketTaskDto);
 
-        return Ok(bucketTaskDTO);
+        return Ok(bucketTaskDto);
     }
 
     [HttpDelete("{id}")]
@@ -62,9 +62,7 @@ public class BucketTaskController : ControllerBase
     {
         var bucketTaskToDelete = _bucketTaskService.GetBucketTask(id);
 
-        var mappedBucketTask = _mapper.Map<BucketTaskDto>(bucketTaskToDelete);
-
-        _bucketTaskDTOValidator.ValidateAndThrow(mappedBucketTask);
+        _bucketTaskDtoValidator.ValidateAndThrow(bucketTaskToDelete);
 
         _bucketTaskService.DeleteBucketTask(id);
 
