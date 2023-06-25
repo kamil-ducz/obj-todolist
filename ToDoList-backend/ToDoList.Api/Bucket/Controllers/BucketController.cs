@@ -16,14 +16,11 @@ namespace ToDoList.Api.Bucket.Controllers;
 public class BucketController : ControllerBase
 {
     private readonly IBucketService _bucketService;
-    private readonly IValidator<BucketDto> _bucketDtoValidator;
     private readonly IValidator<BucketInsertDto> _bucketInsertDtoValidator;
 
-    public BucketController(IBucketService bucketService, IValidator<BucketDto> bucketDtoValidator,
-                            IValidator<BucketInsertDto> bucketInsertDtoValidator)
+    public BucketController(IBucketService bucketService, IValidator<BucketInsertDto> bucketInsertDtoValidator)
     {
         _bucketService = bucketService;
-        _bucketDtoValidator = bucketDtoValidator;
         _bucketInsertDtoValidator = bucketInsertDtoValidator;
     }
 
@@ -72,12 +69,8 @@ public class BucketController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var bucketToDelete = _bucketService.GetBucket(id);
-
-        _bucketDtoValidator.ValidateAndThrow(bucketToDelete);
-
         _bucketService.DeleteBucket(id);
 
-        return Ok(bucketToDelete);
+        return NoContent();
     }
 }

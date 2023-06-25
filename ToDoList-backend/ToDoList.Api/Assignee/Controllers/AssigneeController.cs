@@ -14,13 +14,11 @@ namespace ToDoList.Api.Asignee.Controllers;
 public class AssigneeController : ControllerBase
 {
     private readonly IAssigneeService _assigneeService;
-    private readonly IValidator<AssigneeDto> _assigneeDtoValidator;
     private readonly IValidator<AssigneeInsertDto> _assigneeInsertDtoValidator;
 
-    public AssigneeController(IAssigneeService assigneeService, IValidator<AssigneeDto> assigneetDtoValidator, IValidator<AssigneeInsertDto> assigneeDTOValidator)
+    public AssigneeController(IAssigneeService assigneeService, IValidator<AssigneeInsertDto> assigneeDTOValidator)
     {
         _assigneeService = assigneeService;
-        _assigneeDtoValidator = assigneetDtoValidator;
         _assigneeInsertDtoValidator = assigneeDTOValidator;
     }
 
@@ -54,19 +52,13 @@ public class AssigneeController : ControllerBase
         _assigneeService.UpdateAssignee(id, assigneeInsertDTO);
 
         return Ok(assigneeInsertDTO);
-
-
     }
 
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var assigneeToDelete = _assigneeService.GetAssignee(id);
-
-        _assigneeDtoValidator.ValidateAndThrow(assigneeToDelete);
-
         _assigneeService.DeleteAssignee(id);
 
-        return Ok(assigneeToDelete);
+        return NoContent();
     }
 }
