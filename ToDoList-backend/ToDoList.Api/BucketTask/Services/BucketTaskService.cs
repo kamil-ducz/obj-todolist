@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
+using System.Linq;
 using ToDoList.Api.BucketTask.Models;
 using ToDoList.Api.Interfaces;
 using ToDoList.Domain.Interfaces;
@@ -29,20 +30,23 @@ public class BucketTaskService : IBucketTaskService
 
     public void DeleteBucketTask(int taskId)
     {
-        _bucketTaskRepository.DeleteBucketTask(taskId);
+        var bucketTaskToDelete = _bucketTaskRepository.GetAllBucketTasks().First(t => t.Id == taskId);
+        _bucketTaskRepository.DeleteBucketTask(bucketTaskToDelete);
     }
 
-    public int InsertBucketTask(BucketInsertTaskDto bucketTaskDTO)
+    public void InsertBucketTask(BucketInsertTaskDto bucketTaskDTO)
     {
         var mappedBucketTask = _mapper.Map<Domain.Models.BucketTask>(bucketTaskDTO);
 
-        return _bucketTaskRepository.InsertBucketTask(mappedBucketTask);
+        _bucketTaskRepository.InsertBucketTask(mappedBucketTask);
     }
 
-    public void UpdateBucketTask(int id, BucketInsertTaskDto bucketTaskDTO)
+    public void UpdateBucketTask(int bucketTaskId, BucketInsertTaskDto bucketTaskDTO)
     {
+        var bucketTaskToUpdate = _bucketTaskRepository.GetAllBucketTasks().First(a => a.Id == bucketTaskId);
+
         var mappedBucketTask = _mapper.Map<Domain.Models.BucketTask>(bucketTaskDTO);
 
-        _bucketTaskRepository.UpdateBucketTask(id, mappedBucketTask);
+        _bucketTaskRepository.UpdateBucketTask(mappedBucketTask);
     }
 }
