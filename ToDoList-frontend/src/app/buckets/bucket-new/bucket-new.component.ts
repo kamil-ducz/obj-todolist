@@ -40,11 +40,11 @@ export class BucketNewComponent implements OnInit {
     ])
   });
 
-  onSubmitNewBucketTask(data: Bucket) {
-    data.bucketColor = this.bucketService.mapBucketColorStringToEnum(data.bucketColor);
-    data.category = this.bucketService.mapBucketColorStringToEnum(data.category);
+  onSubmitNewBucketTask(newBucketTask: Bucket) {
+    newBucketTask.bucketColor = this.bucketService.mapBucketColorStringToEnum(newBucketTask.bucketColor);
+    newBucketTask.category = this.bucketService.mapBucketColorStringToEnum(newBucketTask.category);
 
-    this.bucketService.postBucket(environment.bucketEndpoint, data).subscribe(
+    this.bucketService.postBucket(environment.bucketEndpoint, newBucketTask).subscribe(
       (response: any) => {
         console.log(response);
       },
@@ -61,5 +61,4 @@ export class BucketNewComponent implements OnInit {
   toggleAdditionModal() {
     this.showAddBucketModal = !this.showAddBucketModal;
   }
-
 }

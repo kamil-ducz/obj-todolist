@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Bucket } from 'src/app/models/bucket.model';
 import { BucketService } from 'src/app/services/bucket-service';
 import { environment } from 'src/environments/environment';
@@ -15,9 +15,8 @@ export class BucketEditComponent implements OnInit {
   id: number;
   currentBucket: Bucket;
   editBucketFormGroup: FormGroup;
-  showModal = false;
 
-  constructor(private route: ActivatedRoute, private router: Router, private bucketService: BucketService) {}
+  constructor(private route: ActivatedRoute, private bucketService: BucketService) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(
@@ -66,10 +65,10 @@ export class BucketEditComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-    this.currentBucket = this.editBucketFormGroup.value;
-    this.currentBucket.bucketColor = this.bucketService.mapBucketColorStringToEnum(this.editBucketFormGroup.value.bucketColor);
-    this.currentBucket.category = this.bucketService.mapBucketCategoryStringToEnum(this.editBucketFormGroup.value.category);
+  onSubmitEditForm(bucketFromEditForm: Bucket) {
+    this.currentBucket = bucketFromEditForm;
+    this.currentBucket.bucketColor = this.bucketService.mapBucketColorStringToEnum(bucketFromEditForm.bucketColor);
+    this.currentBucket.category = this.bucketService.mapBucketCategoryStringToEnum(bucketFromEditForm.category);
 
     this.bucketService.putBucket(environment.bucketEndpoint+this.id, this.currentBucket).subscribe(
       (response: any) => {
@@ -83,7 +82,9 @@ export class BucketEditComponent implements OnInit {
     this.toggleEditModal();
   }
 
+  showEditModal = false;
+
   toggleEditModal() {
-    this.showModal = !this.showModal;
+    this.showEditModal = !this.showEditModal;
   }
 }

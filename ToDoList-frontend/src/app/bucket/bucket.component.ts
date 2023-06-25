@@ -103,13 +103,13 @@ export class BucketComponent implements OnInit {
     });
   }
 
-  onSubmitNewBucketTask(data: BucketTask) {
-    data.bucketId = this.id;
-    data.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.addNewBucketTaskFormGroup.value.state);
-    data.taskPriority = this.bucketTaskService.mapBucketTaskPriorityStringToEnum(this.addNewBucketTaskFormGroup.value.priority);
+  onSubmitNewBucketTask(newBucketTask: BucketTask) {
+    newBucketTask.bucketId = this.id;
+    newBucketTask.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.addNewBucketTaskFormGroup.value.state);
+    newBucketTask.taskPriority = this.bucketTaskService.mapBucketTaskPriorityStringToEnum(this.addNewBucketTaskFormGroup.value.priority);
     if (this.currentBucketBucketTasks.length < this.currentBucket.maxAmountOfTasks)
     {
-      this.bucketTaskService.postBucketTask(environment.bucketTaskEndpoint, data).subscribe(
+      this.bucketTaskService.postBucketTask(environment.bucketTaskEndpoint, newBucketTask).subscribe(
         (response) => {
           console.log(response);
         },
@@ -127,12 +127,12 @@ export class BucketComponent implements OnInit {
     }
   }
 
-  onSubmitEditBucketTask(data: BucketTask) {
-    data = this.editNewBucketTaskFormGroup.value;
-    data.bucketId = this.id;
-    data.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.editNewBucketTaskFormGroup.value.state);
-    data.taskPriority = this.bucketTaskService.mapBucketTaskPriorityStringToEnum(this.editNewBucketTaskFormGroup.value.priority);
-    this.bucketTaskService.putBucketTask(environment.bucketTaskEndpoint+this.currentBucketTask.id, data).subscribe(
+  onSubmitEditBucketTask(newBucketTask: BucketTask) {
+    newBucketTask = this.editNewBucketTaskFormGroup.value;
+    newBucketTask.bucketId = this.id;
+    newBucketTask.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.editNewBucketTaskFormGroup.value.state);
+    newBucketTask.taskPriority = this.bucketTaskService.mapBucketTaskPriorityStringToEnum(this.editNewBucketTaskFormGroup.value.priority);
+    this.bucketTaskService.putBucketTask(environment.bucketTaskEndpoint+this.currentBucketTask.id, newBucketTask).subscribe(
       (response: any) => {
         console.log(response);
       },

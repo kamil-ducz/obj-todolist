@@ -10,12 +10,12 @@ export class AssigneesComponent implements OnInit {
 
   constructor(private assigneeService: AssigneeService) { }
 
-  assignessData: any;
+  assigness: any;
 
   ngOnInit(): void {
     this.assigneeService.getAssignees().subscribe(
       (response: any) => {
-        this.assignessData = response;
+        this.assigness = response;
       },
       (error: any) => {
         console.error(error);

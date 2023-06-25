@@ -1,6 +1,6 @@
 <h1 class="mt-2 mb-2 text-center text-xl">Browse your buckets</h1>
 <h1 class="font-small leading-tight text-lg mt-2 mb-2 text-black-300 text-left ml-5">Tasks from buckets - overall statistics:</h1>
-<div *ngIf="bucketTasksData" class="m-4 gap-8 flex cursor-pointer">
+<div *ngIf="bucketTasks" class="m-4 gap-8 flex cursor-pointer">
   <div class="flex"><li class="text-yellow-400 w-2 h-1"></li>To do: {{ bucketTasksToDo.length }}</div>
   <div class="flex"><li class="text-blue-400 w-2 h-1"></li>In progress: {{ bucketTasksInProgress.length }}</div>
   <div class="flex"><li class="text-green-400 w-2 h-1"></li>Done: {{ bucketTasksDone.length }}</div>
@@ -17,7 +17,7 @@
 </div>
 <br><br>
 <div class="h-66 grid grid-cols-3 gap-8 content-start">
-  <ng-container *ngFor="let item of bucketsData">
+  <ng-container *ngFor="let item of buckets">
     <div 
     [routerLink]="['/bucket-details', item.id]"
     [ngClass]="{'bg-yellow-900': item.bucketColor == 0,

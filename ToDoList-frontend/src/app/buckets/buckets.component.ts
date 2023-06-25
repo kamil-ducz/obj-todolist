@@ -12,9 +12,9 @@ export class BucketsComponent implements OnInit {
 
   constructor(private bucketService: BucketService, private bucketTaskService: BucketTaskService) { }
 
-  bucketsData: any;
+  buckets: any;
 
-  bucketTasksData;
+  bucketTasks;
   bucketTasksToDo: any;
   bucketTasksInProgress: any;
   bucketTasksDone: any;
@@ -23,7 +23,7 @@ export class BucketsComponent implements OnInit {
   ngOnInit() {
     this.bucketService.getBuckets(environment.bucketEndpoint).subscribe(
       (response: any) => {
-        this.bucketsData = response;
+        this.buckets = response;
       },
       (error: any) => {
         console.error(error);
@@ -32,11 +32,11 @@ export class BucketsComponent implements OnInit {
 
     this.bucketTaskService.getBucketTasks(environment.bucketTaskEndpoint).subscribe(
       (response: any) => {
-        this.bucketTasksData = response;
-        this.bucketTasksToDo = this.bucketTasksData.filter(element => element.taskState == 0);
-        this.bucketTasksInProgress = this.bucketTasksData.filter(element => element.taskState == 1);
-        this.bucketTasksDone = this.bucketTasksData.filter(element => element.taskState == 2);
-        this.bucketTasksCancelled = this.bucketTasksData.filter(element => element.taskState == 3);
+        this.bucketTasks = response;
+        this.bucketTasksToDo = this.bucketTasks.filter(element => element.taskState == 0);
+        this.bucketTasksInProgress = this.bucketTasks.filter(element => element.taskState == 1);
+        this.bucketTasksDone = this.bucketTasks.filter(element => element.taskState == 2);
+        this.bucketTasksCancelled = this.bucketTasks.filter(element => element.taskState == 3);
       },
       (error: any) => {
         console.error(error);
@@ -57,9 +57,9 @@ export class BucketsComponent implements OnInit {
   }
 
   calculateTotalToDoForBucket(id: number) {
-    if (this.bucketTasksData)
+    if (this.bucketTasks)
     {
-      const tasksForBucket = this.bucketTasksData.filter(task => task.bucketId === id && task.taskState === 0);
+      const tasksForBucket = this.bucketTasks.filter(task => task.bucketId === id && task.taskState === 0);
 
       return tasksForBucket.length;
     }
@@ -72,7 +72,7 @@ export class BucketsComponent implements OnInit {
   elementToRemove: any;
 
   findElementToRemoveById(id: number) {
-    const foundElement = this.bucketsData.find(element => element.id == id);
+    const foundElement = this.buckets.find(element => element.id == id);
     if(foundElement)
     {
       return foundElement;
@@ -94,4 +94,4 @@ export class BucketsComponent implements OnInit {
   exitDeleteModal() {
     this.showModal = !this.showModal;
   }
-} 
+}
