@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ToDoList.Api.Bucket.Models;
+using ToDoList.Api.BucketTask.Models;
 using ToDoList.Api.Interfaces;
 using ToDoList.Domain.Interfaces;
 
@@ -49,9 +50,9 @@ public class BucketService : IBucketService
         _bucketRepository.UpdateBucket(id, mappedBucket);
     }
 
-    public IEnumerable<BucketDto> GetAllBucketsTasks(int bucketId)
+    public IEnumerable<BucketTaskDto> GetAllBucketsTasks(int bucketId)
     {
         var bucketTasks = _bucketTaskRepository.GetAllBucketTasks().Where(b => b.BucketId == bucketId);
-        return _mapper.Map<IEnumerable<BucketDto>>(bucketTasks);
+        return _mapper.Map<IEnumerable<BucketTaskDto>>(bucketTasks);
     }
 }

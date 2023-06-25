@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using ToDoList.Api.Bucket.Models;
+using ToDoList.Api.BucketTask.Models;
 using ToDoList.Api.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -39,7 +40,7 @@ public class BucketController : ControllerBase
     }
 
     [HttpGet("buckettask/{id}")]
-    public IEnumerable<BucketDto> Get(int id, bool? cloghole)
+    public IEnumerable<BucketTaskDto> Get(int id, bool? cloghole)
     {
         return _bucketService.GetAllBucketsTasks(id).ToList();
     }
