@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using FluentValidation;
+﻿using FluentValidation;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -17,14 +16,15 @@ namespace ToDoList.Api.Bucket.Controllers;
 public class BucketController : ControllerBase
 {
     private readonly IBucketService _bucketService;
-    private readonly IValidator<BucketDto> _bucketDTOValidator;
-    private readonly IMapper _mapper;
+    private readonly IValidator<BucketDto> _bucketDtoValidator;
+    private readonly IValidator<BucketInsertDto> _bucketInsertDtoValidator;
 
-    public BucketController(IBucketService bucketService, IValidator<BucketDto> bucketDTOValidator, IMapper mapper)
+    public BucketController(IBucketService bucketService, IValidator<BucketDto> bucketDtoValidator,
+                            IValidator<BucketInsertDto> bucketInsertDtoValidator)
     {
         _bucketService = bucketService;
-        _bucketDTOValidator = bucketDTOValidator;
-        _mapper = mapper;
+        _bucketDtoValidator = bucketDtoValidator;
+        _bucketInsertDtoValidator = bucketInsertDtoValidator;
     }
 
     [HttpGet]
@@ -47,24 +47,24 @@ public class BucketController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Post([FromBody] BucketDto bucketDTO)
+    public IActionResult Post([FromBody] BucketInsertDto bucketInsertDto)
     {
-        _bucketDTOValidator.ValidateAndThrow(bucketDTO);
+        _bucketInsertDtoValidator.ValidateAndThrow(bucketInsertDto);
 
-        var bucketId = _bucketService.InsertBucket(bucketDTO);
+        var bucketId = _bucketService.InsertBucket(bucketInsertDto);
 
-        return Created(Request.GetEncodedUrl() + "/" + bucketId, bucketDTO);
+        return Created(Request.GetEncodedUrl() + "/" + bucketId, bucketInsertDto);
 
     }
 
     [HttpPut("{id}")]
-    public IActionResult Put(int id, [FromBody] BucketDto bucketDTO)
+    public IActionResult Put(int id, [FromBody] BucketInsertDto bucketInsertDto)
     {
-        _bucketDTOValidator.ValidateAndThrow(bucketDTO);
+        _bucketInsertDtoValidator.ValidateAndThrow(bucketInsertDto);
 
-        _bucketService.UpdateBucket(id, bucketDTO);
+        _bucketService.UpdateBucket(id, bucketInsertDto);
 
-        return Ok(bucketDTO);
+        return Ok(bucketInsertDto);
 
 
     }
@@ -74,9 +74,7 @@ public class BucketController : ControllerBase
     {
         var bucketToDelete = _bucketService.GetBucket(id);
 
-        var mappedBucket = _mapper.Map<BucketDto>(bucketToDelete);
-
-        _bucketDTOValidator.ValidateAndThrow(mappedBucket);
+        _bucketDtoValidator.ValidateAndThrow(bucketToDelete);
 
         _bucketService.DeleteBucket(id);
 

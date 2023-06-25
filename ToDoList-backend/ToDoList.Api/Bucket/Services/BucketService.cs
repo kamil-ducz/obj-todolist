@@ -36,14 +36,14 @@ public class BucketService : IBucketService
         _bucketRepository.DeleteBucket(bucketId);
     }
 
-    public int InsertBucket(BucketDto bucketDTO)
+    public int InsertBucket(BucketInsertDto bucketDTO)
     {
         var mappedBucket = _mapper.Map<Domain.Models.Bucket>(bucketDTO);
 
         return _bucketRepository.InsertBucket(mappedBucket);
     }
 
-    public void UpdateBucket(int id, BucketDto bucketDTO)
+    public void UpdateBucket(int id, BucketInsertDto bucketDTO)
     {
         var mappedBucket = _mapper.Map<Domain.Models.Bucket>(bucketDTO);
 
