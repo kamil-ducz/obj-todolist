@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using ToDoList.Domain.Enums;
 using ToDoList.Domain.Models;
 
 namespace ToDoList.Api;
@@ -26,12 +27,12 @@ public class ToDoListDbContext : DbContext
             ;
 
         modelBuilder.Entity<BucketTask>().HasData(
-            new BucketTask { Id = 1, BucketId = 1, Name = "Speak to manager", TaskState = Domain.Enums.Enums.TaskState.ToDo },
-            new BucketTask { Id = 2, BucketId = 1, Name = "Organize desk", TaskState = Domain.Enums.Enums.TaskState.InProgress },
-            new BucketTask { Id = 3, BucketId = 2, Name = "Water plants", TaskState = Domain.Enums.Enums.TaskState.Cancelled },
-            new BucketTask { Id = 4, BucketId = 2, Name = "Clean bedroom", TaskState = Domain.Enums.Enums.TaskState.Done },
-            new BucketTask { Id = 5, BucketId = 3, Name = "Organize diet", TaskState = Domain.Enums.Enums.TaskState.Done },
-            new BucketTask { Id = 6, BucketId = 3, Name = "Update training plan", TaskState = Domain.Enums.Enums.TaskState.InProgress });
+            new BucketTask { Id = 1, BucketId = 1, Name = "Speak to manager", TaskState = TaskState.ToDo },
+            new BucketTask { Id = 2, BucketId = 1, Name = "Organize desk", TaskState = TaskState.InProgress },
+            new BucketTask { Id = 3, BucketId = 2, Name = "Water plants", TaskState = TaskState.Cancelled },
+            new BucketTask { Id = 4, BucketId = 2, Name = "Clean bedroom", TaskState = TaskState.Done },
+            new BucketTask { Id = 5, BucketId = 3, Name = "Organize diet", TaskState = TaskState.Done },
+            new BucketTask { Id = 6, BucketId = 3, Name = "Update training plan", TaskState = TaskState.InProgress });
 
     }
 

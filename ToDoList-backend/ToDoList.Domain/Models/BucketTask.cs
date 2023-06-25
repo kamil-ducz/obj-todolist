@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using static ToDoList.Domain.Enums.Enums;
+using ToDoList.Domain.Enums;
 
 namespace ToDoList.Domain.Models;
 
