@@ -3,7 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BucketService } from '../services/bucket-service';
 import { Bucket } from '../models/bucket.model';
 import { BucketTaskService } from '../services/buckettask-service';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormGroup, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { BucketTask } from '../models/buckettask.model';
 import { environment } from 'src/environments/environment';
 
@@ -30,12 +30,12 @@ export class BucketComponent implements OnInit {
     );
   }
 
-  currentBucketBucketTasks: any;
-  currentBucketTask: any;
-  bucketTasksToDo: any;
-  bucketTasksInProgress: any;
-  bucketTasksDone: any;
-  bucketTasksCancelled: any;
+  currentBucketBucketTasks: BucketTask[];
+  currentBucketTask: BucketTask;
+  bucketTasksToDo: BucketTask[];
+  bucketTasksInProgress: BucketTask[];
+  bucketTasksDone: BucketTask[];
+  bucketTasksCancelled: BucketTask[];
 
   fetchBucketTasks() {
     this.bucketService.getBucketTasks(environment.buckeTasksForBucketEndpoint+this.id).subscribe(
@@ -53,8 +53,8 @@ export class BucketComponent implements OnInit {
   }
 
   newBucketTaskToCreate: BucketTask;
-  addNewBucketTaskFormGroup: UntypedFormGroup;
-  editNewBucketTaskFormGroup: UntypedFormGroup;
+  addNewBucketTaskFormGroup: FormGroup;
+  editNewBucketTaskFormGroup: FormGroup;
   
   constructor(private route: ActivatedRoute, private router: Router, 
               private bucketService: BucketService, private bucketTaskService: BucketTaskService) { }

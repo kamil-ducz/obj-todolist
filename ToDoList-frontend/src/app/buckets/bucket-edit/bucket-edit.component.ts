@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormGroup, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Bucket } from 'src/app/models/bucket.model';
 import { BucketService } from 'src/app/services/bucket-service';
@@ -14,7 +14,7 @@ export class BucketEditComponent implements OnInit {
 
   id: number;
   currentBucket: Bucket;
-  editBucketFormGroup: UntypedFormGroup;
+  editBucketFormGroup: FormGroup;
 
   constructor(private route: ActivatedRoute, private bucketService: BucketService) {}
 

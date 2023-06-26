@@ -3,6 +3,7 @@ import { BucketService } from '../services/bucket-service';
 import { BucketTaskService } from '../services/buckettask-service';
 import { environment } from 'src/environments/environment';
 import { Bucket } from '../models/bucket.model';
+import { BucketTask } from '../models/buckettask.model';
 
 @Component({
   selector: 'app-buckets',
@@ -18,7 +19,7 @@ export class BucketsComponent implements OnInit {
     this.fetchBucketTasks();
   }
 
-  buckets: any;
+  buckets: Bucket[];
   bucketColorClass: string;
 
   fetchBuckets() {
@@ -32,11 +33,11 @@ export class BucketsComponent implements OnInit {
     );
   }
 
-  bucketTasks;
-  bucketTasksToDo: any;
-  bucketTasksInProgress: any;
-  bucketTasksDone: any;
-  bucketTasksCancelled: any;
+  bucketTasks: BucketTask[];
+  bucketTasksToDo: BucketTask[];
+  bucketTasksInProgress: BucketTask[];
+  bucketTasksDone: BucketTask[];
+  bucketTasksCancelled: BucketTask[];
 
   fetchBucketTasks() {
     this.bucketTaskService.getBucketTasks(environment.bucketTaskEndpoint).subscribe(
@@ -82,7 +83,7 @@ export class BucketsComponent implements OnInit {
     }
   }
 
-  elementToRemove: any;
+  elementToRemove: Bucket;
 
   findElementToRemoveById(id: number) {
     const foundElement = this.buckets.find(element => element.id == id);
