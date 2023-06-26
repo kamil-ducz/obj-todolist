@@ -3,7 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BucketService } from '../services/bucket-service';
 import { Bucket } from '../models/bucket.model';
 import { BucketTaskService } from '../services/buckettask-service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { BucketTask } from '../models/buckettask.model';
 import { environment } from 'src/environments/environment';
 
@@ -26,8 +26,8 @@ export class BucketComponent implements OnInit {
   bucketTasksCancelled: any;
 
   newBucketTaskToCreate: BucketTask;
-  addNewBucketTaskFormGroup: FormGroup;
-  editNewBucketTaskFormGroup: FormGroup;
+  addNewBucketTaskFormGroup: UntypedFormGroup;
+  editNewBucketTaskFormGroup: UntypedFormGroup;
   
   constructor(private route: ActivatedRoute, private router: Router, 
               private bucketService: BucketService, private bucketTaskService: BucketTaskService) { }
@@ -68,36 +68,36 @@ export class BucketComponent implements OnInit {
   }
 
   initializeNewBucketTaskForm() {
-    this.addNewBucketTaskFormGroup = new FormGroup({
-      name: new FormControl('', [
+    this.addNewBucketTaskFormGroup = new UntypedFormGroup({
+      name: new UntypedFormControl('', [
         Validators.required,
         Validators.minLength(3),
       ]),
-      description: new FormControl('', [
+      description: new UntypedFormControl('', [
         Validators.maxLength(50),
       ]),
-      state: new FormControl('', [
+      state: new UntypedFormControl('', [
         Validators.required,      
       ]),
-      priority: new FormControl('', [
+      priority: new UntypedFormControl('', [
         Validators.required,
       ]),
     });
   }
 
   initializeEditBucketTaskForm() {
-    this.editNewBucketTaskFormGroup = new FormGroup({
-      name: new FormControl(this.currentBucketTask.name, [
+    this.editNewBucketTaskFormGroup = new UntypedFormGroup({
+      name: new UntypedFormControl(this.currentBucketTask.name, [
         Validators.required,
         Validators.minLength(3),
       ]),
-      description: new FormControl(this.currentBucketTask.description, [
+      description: new UntypedFormControl(this.currentBucketTask.description, [
         Validators.maxLength(50),
       ]),
-      state: new FormControl(this.currentBucketTask.taskState, [
+      state: new UntypedFormControl(this.currentBucketTask.taskState, [
         Validators.required,      
       ]),
-      priority: new FormControl(this.currentBucketTask.taskPriority, [
+      priority: new UntypedFormControl(this.currentBucketTask.taskPriority, [
         Validators.required,
       ]),
     });

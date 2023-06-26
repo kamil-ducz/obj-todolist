@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Bucket } from 'src/app/models/bucket.model';
 import { BucketService } from 'src/app/services/bucket-service';
@@ -14,7 +14,7 @@ export class BucketEditComponent implements OnInit {
 
   id: number;
   currentBucket: Bucket;
-  editBucketFormGroup: FormGroup;
+  editBucketFormGroup: UntypedFormGroup;
 
   constructor(private route: ActivatedRoute, private bucketService: BucketService) {}
 
@@ -40,26 +40,26 @@ export class BucketEditComponent implements OnInit {
   }
 
   initializeForm() {
-    this.editBucketFormGroup = new FormGroup({
-      name: new FormControl(this.currentBucket.name, [
+    this.editBucketFormGroup = new UntypedFormGroup({
+      name: new UntypedFormControl(this.currentBucket.name, [
         Validators.required,
         Validators.minLength(3),
       ]),
-      description: new FormControl(this.currentBucket.description, [
+      description: new UntypedFormControl(this.currentBucket.description, [
         Validators.maxLength(50),
       ]),
-      category: new FormControl(this.currentBucket.category, [
+      category: new UntypedFormControl(this.currentBucket.category, [
         Validators.required,      
       ]),
-      bucketColor: new FormControl(this.currentBucket.bucketColor, [
+      bucketColor: new UntypedFormControl(this.currentBucket.bucketColor, [
         Validators.required,
       ]),
-      maxAmountOfTasks: new FormControl(this.currentBucket.maxAmountOfTasks.toString(), [
+      maxAmountOfTasks: new UntypedFormControl(this.currentBucket.maxAmountOfTasks.toString(), [
         Validators.required,
         Validators.min(1),
         Validators.max(15),
       ]),
-      isActive: new FormControl(this.currentBucket.isActive, [
+      isActive: new UntypedFormControl(this.currentBucket.isActive, [
         Validators.required,
       ])
     });
