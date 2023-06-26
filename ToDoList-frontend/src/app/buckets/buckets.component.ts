@@ -12,15 +12,14 @@ export class BucketsComponent implements OnInit {
 
   constructor(private bucketService: BucketService, private bucketTaskService: BucketTaskService) { }
 
+  refreshBucketAndBucketsComponents() {
+    this.fetchBuckets();
+    this.fetchBucketTasks();
+  }
+
   buckets: any;
 
-  bucketTasks;
-  bucketTasksToDo: any;
-  bucketTasksInProgress: any;
-  bucketTasksDone: any;
-  bucketTasksCancelled: any;
-
-  ngOnInit() {
+  fetchBuckets() {
     this.bucketService.getBuckets(environment.bucketEndpoint).subscribe(
       (response: any) => {
         this.buckets = response;
@@ -29,7 +28,15 @@ export class BucketsComponent implements OnInit {
         console.error(error);
       }
     );
+  }
 
+  bucketTasks;
+  bucketTasksToDo: any;
+  bucketTasksInProgress: any;
+  bucketTasksDone: any;
+  bucketTasksCancelled: any;
+
+  fetchBucketTasks() {
     this.bucketTaskService.getBucketTasks(environment.bucketTaskEndpoint).subscribe(
       (response: any) => {
         this.bucketTasks = response;
@@ -44,11 +51,15 @@ export class BucketsComponent implements OnInit {
     );
   }
 
+  ngOnInit() {
+    this.refreshBucketAndBucketsComponents();
+  }
+
   RemoveBucket(id: any) {
     this.bucketService.deleteBucket(environment.bucketEndpoint+id).subscribe(
         (response: any) => {
           this.showModal = !this.showModal;
-          this.ngOnInit();
+          this.refreshBucketAndBucketsComponents();
         },
         (error: any) => {
           console.error(error);
@@ -79,7 +90,7 @@ export class BucketsComponent implements OnInit {
     }
     else
     {
-      return;
+      return null;
     }
   }
 
