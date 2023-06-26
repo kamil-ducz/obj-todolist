@@ -20,18 +20,10 @@
   <ng-container *ngFor="let item of buckets">
     <div 
     [routerLink]="['/bucket-details', item.id]"
-    [ngClass]="{'bg-yellow-900': item.bucketColor == 0,
-                'bg-red-500': item.bucketColor == 1, 
-                'bg-yellow-500': item.bucketColor == 2, 
-                'bg-blue-500': item.bucketColor == 3,
-                'bg-white': item.bucketColor == 4,
-                'bg-green-500': item.bucketColor == 5,
-                'border-2':true, 
-                'border-black text-center':true,
-                'cursor-pointer': true}"
+    class="{{ setBucketColorClass(item) }} border-2 border-black text-center cursor-pointer"    
     *ngIf="item.isActive"
     >
-    {{ item.name }}, id= {{ item.id }}
+    {{ item.name }}
     <br>
         <span class="font-light text-center">To do: {{ calculateTotalToDoForBucket(item.id) }}</span>
         <button (click)="toggleDeleteModal(item.id, $event)" class="float-right cursor-pointer">
