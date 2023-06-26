@@ -202,11 +202,11 @@
         <form #bucketTaskNewForm="ngForm" [formGroup]="addNewBucketTaskFormGroup" class="mx-10 my-5" (ngSubmit)="onSubmitNewBucketTask(bucketTaskNewForm.value)">
           <div class="mb-6">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-            <input type="text" id="name" name="name" formControlName="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket name e.x. Office">
+            <input type="text" id="name" name="name" minlength="2" maxlength="15" formControlName="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket name e.x. Office">
           </div>
           <div class="mb-6">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-            <input type="text" id="description" name="description" formControlName="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket description, e.x. Organize the office errands">
+            <input type="text" id="description" name="description" maxlength="20" formControlName="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket description, e.x. Organize the office errands">
           </div>
           <div class="mb-6">
               <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">State</label>

@@ -4,7 +4,7 @@ using ToDoList.Domain.Enums;
 
 namespace ToDoList.Api.BucketTask.Models;
 
-public class BucketTaskDto
+public class BucketInsertTaskDto
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;

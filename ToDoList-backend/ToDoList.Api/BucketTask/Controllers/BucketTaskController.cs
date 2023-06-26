@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using FluentValidation;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using ToDoList.Api.BucketTask.Models;
@@ -7,69 +7,58 @@ using ToDoList.Api.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace ToDoList.Api.BucketTask.Controllers
+namespace ToDoList.Api.BucketTask.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class BucketTaskController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class BucketTaskController : ControllerBase
+    private readonly IBucketTaskService _bucketTaskService;
+    private readonly IValidator<BucketInsertTaskDto> _bucketInsertTaskDtoValidator;
+
+    public BucketTaskController(IBucketTaskService bucketTaskService, IValidator<BucketInsertTaskDto> bucketInsertTaskDtoValidator)
     {
-        private readonly IBucketTaskService bucketTaskService;
-        private readonly IValidator<BucketTaskDTO> _bucketTaskDTOValidator;
-        private readonly IMapper _mapper;
+        _bucketTaskService = bucketTaskService;
+        _bucketInsertTaskDtoValidator = bucketInsertTaskDtoValidator;
+    }
 
-        public BucketTaskController(IBucketTaskService bucketTaskService, IValidator<BucketTaskDTO> bucketTaskDTOValidator, IMapper mapper)
-        {
-            this.bucketTaskService = bucketTaskService;
-            this._bucketTaskDTOValidator = bucketTaskDTOValidator;
-            this._mapper = mapper;
-        }
+    [HttpGet]
+    public IEnumerable<BucketTaskDto> Get()
+    {
+        return _bucketTaskService.GetBucketTasks();
+    }
 
-        [HttpGet]
-        public IEnumerable<Domain.Models.BucketTask> Get()
-        {
-            return bucketTaskService.GetBucketTasks();
-        }
+    [HttpGet("{id}")]
+    public BucketTaskDto Get(int id)
+    {
+        return _bucketTaskService.GetBucketTask(id);
+    }
 
-        [HttpGet("{id}")]
-        public Domain.Models.BucketTask Get(int id)
-        {
-            return bucketTaskService.GetBucketTask(id);
-        }
+    [HttpPost]
+    public IActionResult Post(BucketInsertTaskDto bucketInsertTaskDto)
+    {
+        _bucketInsertTaskDtoValidator.ValidateAndThrow(bucketInsertTaskDto);
 
-        [HttpPost]
-        public IActionResult Post([FromBody] BucketTaskDTO bucketTaskDTO)
-        {
-            _bucketTaskDTOValidator.ValidateAndThrow(bucketTaskDTO);
+        _bucketTaskService.InsertBucketTask(bucketInsertTaskDto);
 
-            var bucketTaskId = bucketTaskService.InsertBucketTask(bucketTaskDTO);
+        return Created(Request.GetEncodedUrl(), bucketInsertTaskDto);
+    }
 
-            return Ok(bucketTaskDTO);
-        }
+    [HttpPut("{id}")]
+    public IActionResult Put(int id, BucketInsertTaskDto bucketTaskDto)
+    {
+        _bucketInsertTaskDtoValidator.ValidateAndThrow(bucketTaskDto);
 
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] BucketTaskDTO bucketTaskDTO)
-        {
-            _bucketTaskDTOValidator.ValidateAndThrow(bucketTaskDTO);
+        _bucketTaskService.UpdateBucketTask(id, bucketTaskDto);
 
-            bucketTaskService.UpdateBucketTask(id, bucketTaskDTO);
+        return Ok(bucketTaskDto);
+    }
 
-            return Ok(bucketTaskDTO);
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        _bucketTaskService.DeleteBucketTask(id);
 
-
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            var bucketTaskToDelete = bucketTaskService.GetBucketTask(id);
-
-            var mappedBucketTask = _mapper.Map<BucketTaskDTO>(bucketTaskToDelete);
-
-            _bucketTaskDTOValidator.ValidateAndThrow(mappedBucketTask);
-
-            bucketTaskService.DeleteBucketTask(id);
-
-            return Ok(bucketTaskToDelete);
-        }
+        return NoContent();
     }
 }

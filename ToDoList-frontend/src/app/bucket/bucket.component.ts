@@ -3,7 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BucketService } from '../services/bucket-service';
 import { Bucket } from '../models/bucket.model';
 import { BucketTaskService } from '../services/buckettask-service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { BucketTask } from '../models/buckettask.model';
 import { environment } from 'src/environments/environment';
 
@@ -18,27 +18,7 @@ export class BucketComponent implements OnInit {
 
   currentBucket: Bucket;
 
-  currentBucketBucketTasks: any;
-  currentBucketTask: any;
-  bucketTasksToDo: any;
-  bucketTasksInProgress: any;
-  bucketTasksDone: any;
-  bucketTasksCancelled: any;
-
-  newBucketTaskToCreate: BucketTask;
-  addNewBucketTaskFormGroup: FormGroup;
-  editNewBucketTaskFormGroup: FormGroup;
-  
-  constructor(private route: ActivatedRoute, private router: Router, 
-              private bucketService: BucketService, private bucketTaskService: BucketTaskService) { }
-
-  ngOnInit(): void {
-    this.route.params.subscribe(
-      (params: Params) => {
-        this.id = +params['id'];
-      }
-    )
-
+  fetchCurrentBucket() {
     this.bucketService.getBucket(environment.bucketEndpoint+this.id).subscribe(
       (response: any) => {
         this.currentBucket = response;
@@ -48,9 +28,14 @@ export class BucketComponent implements OnInit {
         console.error(error);
       }
     );
-
-    this.fetchBucketTasks();
   }
+
+  currentBucketBucketTasks: BucketTask[];
+  currentBucketTask: BucketTask;
+  bucketTasksToDo: BucketTask[];
+  bucketTasksInProgress: BucketTask[];
+  bucketTasksDone: BucketTask[];
+  bucketTasksCancelled: BucketTask[];
 
   fetchBucketTasks() {
     this.bucketService.getBucketTasks(environment.buckeTasksForBucketEndpoint+this.id).subscribe(
@@ -67,49 +52,70 @@ export class BucketComponent implements OnInit {
     );
   }
 
+  newBucketTaskToCreate: BucketTask;
+  addNewBucketTaskFormGroup: FormGroup;
+  editNewBucketTaskFormGroup: FormGroup;
+  
+  constructor(private route: ActivatedRoute, private router: Router, 
+              private bucketService: BucketService, private bucketTaskService: BucketTaskService) { }
+
+  refreshCurrentBucketBucketTasksComponents() {
+    this.fetchCurrentBucket();
+    this.fetchBucketTasks();
+  }
+
+  ngOnInit(): void {
+    this.route.params.subscribe(
+      (params: Params) => {
+        this.id = +params['id'];
+      }
+    );
+    this.refreshCurrentBucketBucketTasksComponents();
+  }
+
   initializeNewBucketTaskForm() {
-    this.addNewBucketTaskFormGroup = new FormGroup({
-      name: new FormControl('', [
+    this.addNewBucketTaskFormGroup = new UntypedFormGroup({
+      name: new UntypedFormControl('', [
         Validators.required,
         Validators.minLength(3),
       ]),
-      description: new FormControl('', [
+      description: new UntypedFormControl('', [
         Validators.maxLength(50),
       ]),
-      state: new FormControl('', [
+      state: new UntypedFormControl('', [
         Validators.required,      
       ]),
-      priority: new FormControl('', [
+      priority: new UntypedFormControl('', [
         Validators.required,
       ]),
     });
   }
 
   initializeEditBucketTaskForm() {
-    this.editNewBucketTaskFormGroup = new FormGroup({
-      name: new FormControl(this.currentBucketTask.name, [
+    this.editNewBucketTaskFormGroup = new UntypedFormGroup({
+      name: new UntypedFormControl(this.currentBucketTask.name, [
         Validators.required,
         Validators.minLength(3),
       ]),
-      description: new FormControl(this.currentBucketTask.description, [
+      description: new UntypedFormControl(this.currentBucketTask.description, [
         Validators.maxLength(50),
       ]),
-      state: new FormControl(this.currentBucketTask.taskState, [
+      state: new UntypedFormControl(this.currentBucketTask.taskState, [
         Validators.required,      
       ]),
-      priority: new FormControl(this.currentBucketTask.taskPriority, [
+      priority: new UntypedFormControl(this.currentBucketTask.taskPriority, [
         Validators.required,
       ]),
     });
   }
 
-  onSubmitNewBucketTask(data: BucketTask) {
-    data.bucketId = this.id;
-    data.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.addNewBucketTaskFormGroup.value.state);
-    data.taskPriority = this.bucketTaskService.mapBucketTaskPriorityStringToEnum(this.addNewBucketTaskFormGroup.value.priority);
+  onSubmitNewBucketTask(newBucketTask: BucketTask) {
+    newBucketTask.bucketId = this.id;
+    newBucketTask.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.addNewBucketTaskFormGroup.value.state);
+    newBucketTask.taskPriority = this.bucketTaskService.mapBucketTaskPriorityStringToEnum(this.addNewBucketTaskFormGroup.value.priority);
     if (this.currentBucketBucketTasks.length < this.currentBucket.maxAmountOfTasks)
     {
-      this.bucketTaskService.postBucketTask(environment.bucketTaskEndpoint, data).subscribe(
+      this.bucketTaskService.postBucketTask(environment.bucketTaskEndpoint, newBucketTask).subscribe(
         (response) => {
           console.log(response);
         },
@@ -123,15 +129,16 @@ export class BucketComponent implements OnInit {
     else 
     {
       this.popNewBucketTaskMaxAmountOfTasksReachedWarning();
-      return;
+      return null;
     }
   }
 
-  onSubmitEditBucketTask(data: BucketTask) {
-    data = this.editNewBucketTaskFormGroup.value;
-    data.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.editNewBucketTaskFormGroup.value.state);
-    data.taskPriority = this.bucketTaskService.mapBucketTaskPriorityStringToEnum(this.editNewBucketTaskFormGroup.value.priority);
-    this.bucketTaskService.putBucketTask(environment.bucketTaskEndpoint+this.currentBucketTask.id, data).subscribe(
+  onSubmitEditBucketTask(newBucketTask: BucketTask) {
+    newBucketTask = this.editNewBucketTaskFormGroup.value;
+    newBucketTask.bucketId = this.id;
+    newBucketTask.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.editNewBucketTaskFormGroup.value.state);
+    newBucketTask.taskPriority = this.bucketTaskService.mapBucketTaskPriorityStringToEnum(this.editNewBucketTaskFormGroup.value.priority);
+    this.bucketTaskService.putBucketTask(environment.bucketTaskEndpoint+this.currentBucketTask.id, newBucketTask).subscribe(
       (response: any) => {
         console.log(response);
       },
@@ -191,7 +198,7 @@ export class BucketComponent implements OnInit {
 
   exitNewBucketTaskForm() {
     this.showNewBucketTaskForm = !this.showNewBucketTaskForm;
-    this.ngOnInit();
+    this.refreshCurrentBucketBucketTasksComponents();
   }
 
   popNewBucketTaskConfirmationModal() {
@@ -213,7 +220,7 @@ export class BucketComponent implements OnInit {
 
   exitEditBucketTaskForm() {
     this.showEditBucketTaskForm = false;
-    this.ngOnInit();
+    this.refreshCurrentBucketBucketTasksComponents();
   }
 
   popEditBucketTaskConfirmationModal() {

@@ -2,58 +2,62 @@
 using System.Collections.Generic;
 using System.Linq;
 using ToDoList.Api.Bucket.Models;
+using ToDoList.Api.BucketTask.Models;
 using ToDoList.Api.Interfaces;
 using ToDoList.Domain.Interfaces;
-using ToDoList.Infrastructure.Repositories;
 
-namespace ToDoList.Api.Bucket.Services
+namespace ToDoList.Api.Bucket.Services;
+
+public class BucketService : IBucketService
 {
-    public class BucketService : IBucketService
+    private readonly IBucketRepository _bucketRepository;
+    private readonly IBucketTaskRepository _bucketTaskRepository;
+    private readonly IMapper _mapper;
+
+    public BucketService(IBucketRepository bucketRepository, IBucketTaskRepository bucketTaskRepository, IMapper mapper)
     {
-        private readonly IBucketRepository bucketRepository;
-        private readonly IBucketTaskRepository bucketTaskRepository;
-        private readonly IMapper mapper;
+        _bucketRepository = bucketRepository;
+        _bucketTaskRepository = bucketTaskRepository;
+        _mapper = mapper;
+    }
 
-        public BucketService(IBucketRepository bucketRepository, IBucketTaskRepository bucketTaskRepository, IMapper mapper)
-        {
-            this.bucketRepository = bucketRepository;
-            this.bucketTaskRepository = bucketTaskRepository;
-            this.mapper = mapper;
-        }
+    public List<BucketDto> GetAllBuckets()
+    {
+        return _mapper.Map<List<BucketDto>>(_bucketRepository.GetAllBuckets());
+    }
 
-        public List<Domain.Models.Bucket> GetAllBuckets()
-        {
-            return bucketRepository.GetAllBuckets();
-        }
+    public BucketDto GetBucket(int bucketId)
+    {
+        return _mapper.Map<BucketDto>(_bucketRepository.GetBucket(bucketId));
+    }
 
-        public Domain.Models.Bucket GetBucket(int bucketId)
-        {
-            return bucketRepository.GetBucket(bucketId);
-        }
+    public void DeleteBucket(int bucketId)
+    {
+        var bucketToDelete = _bucketRepository.GetAllBuckets().First(b => b.Id == bucketId);
 
-        public void DeleteBucket(int bucketId)
-        {
-            bucketRepository.DeleteBucket(bucketId);        
-        }
+        _bucketRepository.DeleteBucket(bucketToDelete);
+    }
 
-        public int InsertBucket(BucketDTO bucketDTO)
-        {
-            var mappedBucket = mapper.Map<Domain.Models.Bucket>(bucketDTO);
+    public void InsertBucket(BucketInsertDto bucketDTO)
+    {
+        var mappedBucket = _mapper.Map<Domain.Models.Bucket>(bucketDTO);
 
-            return bucketRepository.InsertBucket(mappedBucket);
-        }
+        _bucketRepository.InsertBucket(mappedBucket);
+    }
 
-        public void UpdateBucket(int id, BucketDTO bucketDTO)
-        {
-            var mappedBucket = mapper.Map<Domain.Models.Bucket>(bucketDTO);
+    public void UpdateBucket(int id, BucketInsertDto bucketDTO)
+    {
+        var bucketToUpdate = bucketDTO;
+        bucketToUpdate.Id = id;
 
-            bucketRepository.UpdateBucket(id, mappedBucket);
-        }
+        var mappedBucket = _mapper.Map<Domain.Models.Bucket>(bucketToUpdate);
 
-        public IEnumerable<Domain.Models.BucketTask> GetAllBucketsTasks(int bucketId)
-        {
-            var bucketTasks = bucketTaskRepository.GetAllBucketTasks().Where(b => b.BucketId == bucketId);
-            return bucketTasks;
-        }
+        _bucketRepository.UpdateBucket(mappedBucket);
+    }
+
+    public IEnumerable<BucketTaskDto> GetAllBucketsTasks(int bucketId)
+    {
+        var bucketTasks = _bucketTaskRepository.GetAllBucketTasks().Where(b => b.BucketId == bucketId);
+        return _mapper.Map<IEnumerable<BucketTaskDto>>(bucketTasks);
     }
 }

@@ -102,5 +102,7 @@
       }
     }
   },
-  "defaultProject": "ToDoList-frontend"
+  "cli": {
+    "analytics": "79163a13-d29c-4433-9ce0-cb9803984e39"
+  }
 }

@@ -2,37 +2,36 @@
 
 #nullable disable
 
-namespace ToDoList.Infrastructure.Migrations
+namespace ToDoList.Infrastructure.Migrations;
+
+public partial class StatsIdAllowNull : Migration
 {
-    public partial class StatsIdAllowNull : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Assignees_Stats_StatsId",
-                table: "Assignees");
+        migrationBuilder.DropForeignKey(
+            name: "FK_Assignees_Stats_StatsId",
+            table: "Assignees");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Assignees_Stats_StatsId",
-                table: "Assignees",
-                column: "StatsId",
-                principalTable: "Stats",
-                principalColumn: "Id");
-        }
+        migrationBuilder.AddForeignKey(
+            name: "FK_Assignees_Stats_StatsId",
+            table: "Assignees",
+            column: "StatsId",
+            principalTable: "Stats",
+            principalColumn: "Id");
+    }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Assignees_Stats_StatsId",
-                table: "Assignees");
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropForeignKey(
+            name: "FK_Assignees_Stats_StatsId",
+            table: "Assignees");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Assignees_Stats_StatsId",
-                table: "Assignees",
-                column: "StatsId",
-                principalTable: "Stats",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-        }
+        migrationBuilder.AddForeignKey(
+            name: "FK_Assignees_Stats_StatsId",
+            table: "Assignees",
+            column: "StatsId",
+            principalTable: "Stats",
+            principalColumn: "Id",
+            onDelete: ReferentialAction.Cascade);
     }
 }

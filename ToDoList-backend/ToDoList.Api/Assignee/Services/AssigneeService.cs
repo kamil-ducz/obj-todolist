@@ -4,46 +4,46 @@ using ToDoList.Api.Asignee.Models;
 using ToDoList.Api.Interfaces;
 using ToDoList.Domain.Interfaces;
 
-namespace ToDoList.Api.Assignee.Services
+namespace ToDoList.Api.Assignee.Services;
+
+public class AssigneeService : IAssigneeService
 {
-    public class AssigneeService : IAssigneeService
+    private readonly IAssigneeRepository _assigneeRepository;
+    private readonly IMapper _mapper;
+
+    public AssigneeService(IAssigneeRepository assigneeRepository, IMapper mapper)
     {
-        private readonly IAssigneeRepository assigneeRepository;
-        private readonly IMapper mapper;
+        _assigneeRepository = assigneeRepository;
+        _mapper = mapper;
+    }
 
-        public AssigneeService(IAssigneeRepository assigneeRepository, IMapper mapper)
-        {
-            this.assigneeRepository = assigneeRepository;
-            this.mapper = mapper;
-        }
+    public List<AssigneeDto> GetAllAssignees()
+    {
+        return _mapper.Map<List<AssigneeDto>>(_assigneeRepository.GetAllAssignees());
+    }
 
-        public List<Domain.Models.Assignee> GetAllAssignees()
-        {
-            return assigneeRepository.GetAllAssignees();
-        }
+    public AssigneeDto GetAssignee(int assigneeId)
+    {
+        return _mapper.Map<AssigneeDto>(_assigneeRepository.GetAssignee(assigneeId));
+    }
 
-        public Domain.Models.Assignee GetAssignee(int assigneeId)
-        {
-            return assigneeRepository.GetAssignee(assigneeId);
-        }
+    public void DeleteAssignee(int assigneeId)
+    {
+        _assigneeRepository.DeleteAssignee(assigneeId);
+    }
 
-        public void DeleteAssignee(int assigneeId)
-        {
-            assigneeRepository.DeleteAssignee(assigneeId);
-        }
+    public void InsertAssignee(AssigneeInsertDto assigneeDTO)
+    {
+        var mappedAssignee = _mapper.Map<Domain.Models.Assignee>(assigneeDTO);
 
-        public int InsertAssignee(AssigneeDTO assigneeDTO)
-        {
-            var mappedAssignee = mapper.Map<Domain.Models.Assignee>(assigneeDTO);
+        _assigneeRepository.InsertAssignee(mappedAssignee); ;
+    }
 
-            return assigneeRepository.InsertAssignee(mappedAssignee); ;
-        }
+    public void UpdateAssignee(AssigneeInsertDto assigneeDTO, int assigneeId)
+    {
+        var assigneeToUpdate = _mapper.Map<Domain.Models.Assignee>(assigneeDTO);
+        assigneeToUpdate.Id = assigneeId;
 
-        public void UpdateAssignee(int id, AssigneeDTO assigneeDTO)
-        {
-            var mappedAssignee = mapper.Map<Domain.Models.Assignee>(assigneeDTO);
-
-            assigneeRepository.UpdateAssignee(id, mappedAssignee);
-        }
+        _assigneeRepository.UpdateAssignee(assigneeToUpdate);
     }
 }

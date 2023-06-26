@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using ToDoList.Domain.Models;
 
-namespace ToDoList.Domain.Interfaces
+namespace ToDoList.Domain.Interfaces;
+
+public interface IBucketRepository
 {
-    public interface IBucketRepository
-    {
-        List<Bucket> GetAllBuckets();
-        Bucket GetBucket(int bucketId);
-        int InsertBucket(Bucket bucket);
-        void DeleteBucket(int bucketId);
-        void UpdateBucket(int id, Bucket bucket);
-    }
+    IReadOnlyList<Bucket> GetAllBuckets();
+    Bucket GetBucket(int bucketId);
+    void InsertBucket(Bucket bucket);
+    void DeleteBucket(Bucket bucket);
+    void UpdateBucket(Bucket bucket);
 }
