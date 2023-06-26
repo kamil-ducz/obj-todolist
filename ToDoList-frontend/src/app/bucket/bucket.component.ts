@@ -18,27 +18,7 @@ export class BucketComponent implements OnInit {
 
   currentBucket: Bucket;
 
-  currentBucketBucketTasks: any;
-  currentBucketTask: any;
-  bucketTasksToDo: any;
-  bucketTasksInProgress: any;
-  bucketTasksDone: any;
-  bucketTasksCancelled: any;
-
-  newBucketTaskToCreate: BucketTask;
-  addNewBucketTaskFormGroup: UntypedFormGroup;
-  editNewBucketTaskFormGroup: UntypedFormGroup;
-  
-  constructor(private route: ActivatedRoute, private router: Router, 
-              private bucketService: BucketService, private bucketTaskService: BucketTaskService) { }
-
-  ngOnInit(): void {
-    this.route.params.subscribe(
-      (params: Params) => {
-        this.id = +params['id'];
-      }
-    )
-
+  fetchCurrentBucket() {
     this.bucketService.getBucket(environment.bucketEndpoint+this.id).subscribe(
       (response: any) => {
         this.currentBucket = response;
@@ -48,9 +28,14 @@ export class BucketComponent implements OnInit {
         console.error(error);
       }
     );
-
-    this.fetchBucketTasks();
   }
+
+  currentBucketBucketTasks: any;
+  currentBucketTask: any;
+  bucketTasksToDo: any;
+  bucketTasksInProgress: any;
+  bucketTasksDone: any;
+  bucketTasksCancelled: any;
 
   fetchBucketTasks() {
     this.bucketService.getBucketTasks(environment.buckeTasksForBucketEndpoint+this.id).subscribe(
@@ -65,6 +50,27 @@ export class BucketComponent implements OnInit {
         console.error(error);
       }
     );
+  }
+
+  newBucketTaskToCreate: BucketTask;
+  addNewBucketTaskFormGroup: UntypedFormGroup;
+  editNewBucketTaskFormGroup: UntypedFormGroup;
+  
+  constructor(private route: ActivatedRoute, private router: Router, 
+              private bucketService: BucketService, private bucketTaskService: BucketTaskService) { }
+
+  refreshCurrentBucketBucketTasksComponents() {
+    this.fetchCurrentBucket();
+    this.fetchBucketTasks();
+  }
+
+  ngOnInit(): void {
+    this.route.params.subscribe(
+      (params: Params) => {
+        this.id = +params['id'];
+      }
+    );
+    this.refreshCurrentBucketBucketTasksComponents();
   }
 
   initializeNewBucketTaskForm() {
@@ -123,7 +129,7 @@ export class BucketComponent implements OnInit {
     else 
     {
       this.popNewBucketTaskMaxAmountOfTasksReachedWarning();
-      return;
+      return null;
     }
   }
 
@@ -192,7 +198,7 @@ export class BucketComponent implements OnInit {
 
   exitNewBucketTaskForm() {
     this.showNewBucketTaskForm = !this.showNewBucketTaskForm;
-    this.ngOnInit();
+    this.refreshCurrentBucketBucketTasksComponents();
   }
 
   popNewBucketTaskConfirmationModal() {
@@ -214,7 +220,7 @@ export class BucketComponent implements OnInit {
 
   exitEditBucketTaskForm() {
     this.showEditBucketTaskForm = false;
-    this.ngOnInit();
+    this.refreshCurrentBucketBucketTasksComponents();
   }
 
   popEditBucketTaskConfirmationModal() {
