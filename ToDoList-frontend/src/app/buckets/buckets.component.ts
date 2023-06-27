@@ -4,6 +4,7 @@ import { BucketTaskService } from '../services/buckettask-service';
 import { environment } from 'src/environments/environment';
 import { Bucket } from '../models/bucket.model';
 import { BucketTask } from '../models/buckettask.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-buckets',
@@ -12,7 +13,7 @@ import { BucketTask } from '../models/buckettask.model';
 })
 export class BucketsComponent implements OnInit {
 
-  constructor(private bucketService: BucketService, private bucketTaskService: BucketTaskService) { }
+  constructor(private bucketService: BucketService, private bucketTaskService: BucketTaskService, private toastr: ToastrService) { }
 
   refreshBucketAndBucketsComponents() {
     this.fetchBuckets();
@@ -20,15 +21,14 @@ export class BucketsComponent implements OnInit {
   }
 
   buckets: Bucket[];
-  bucketColorClass: string;
-
+  
   fetchBuckets() {
     this.bucketService.getBuckets(environment.bucketEndpoint).subscribe(
       (response: any) => {
         this.buckets = response;
       },
       (error: any) => {
-        console.error(error);
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
       }
     );
   }
@@ -49,7 +49,7 @@ export class BucketsComponent implements OnInit {
         this.bucketTasksCancelled = this.bucketTasks.filter(element => element.taskState == 3);
       },
       (error: any) => {
-        console.error(error);
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
       }
     );
   }
@@ -65,7 +65,7 @@ export class BucketsComponent implements OnInit {
           this.refreshBucketAndBucketsComponents();
         },
         (error: any) => {
-          console.error(error);
+          this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
         }
     );
   }
@@ -107,31 +107,5 @@ export class BucketsComponent implements OnInit {
 
   exitDeleteModal() {
     this.showModal = !this.showModal;
-  }
-
-  setBucketColorClass(bucket: Bucket) {
-    switch(bucket.bucketColor) {
-      case 0: {
-        return 'bg-yellow-900';
-      }
-      case 1: {
-        return 'bg-red-500';
-      }
-      case 2: {
-        return 'bg-yellow-500';
-      }
-      case 3: {
-        return 'bg-blue-500';
-      }
-      case 4: {
-        return 'bg-white';
-      }
-      case 5: {
-        return 'bg-green-500'
-      }
-      default: {
-        return 'bg-white';
-      }
-    }
   }
 }

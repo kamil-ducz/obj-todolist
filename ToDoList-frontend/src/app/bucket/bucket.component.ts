@@ -6,6 +6,7 @@ import { BucketTaskService } from '../services/buckettask-service';
 import { FormGroup, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { BucketTask } from '../models/buckettask.model';
 import { environment } from 'src/environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-bucket',
@@ -57,7 +58,7 @@ export class BucketComponent implements OnInit {
   editNewBucketTaskFormGroup: FormGroup;
   
   constructor(private route: ActivatedRoute, private router: Router, 
-              private bucketService: BucketService, private bucketTaskService: BucketTaskService) { }
+              private bucketService: BucketService, private bucketTaskService: BucketTaskService, private toastr: ToastrService) { }
 
   refreshCurrentBucketBucketTasksComponents() {
     this.fetchCurrentBucket();
@@ -120,7 +121,7 @@ export class BucketComponent implements OnInit {
           console.log(response);
         },
         (error: any) => {
-          console.error(error);
+          this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
         }
       );
   
@@ -157,7 +158,7 @@ export class BucketComponent implements OnInit {
           this.router.navigate(['/buckets']);
         },
         (error: any) => {
-          console.error(error);
+          this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
         }
     );
   }
@@ -169,7 +170,7 @@ export class BucketComponent implements OnInit {
         this.exitDeleteBucketTaskConfirmationModal();
       },
       (error: any) => {
-        console.error(error);
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
       }
     );
   }

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -11,6 +10,9 @@ import { AssigneesComponent } from './assignees/assignees.component';
 import { BucketNewComponent } from './buckets/bucket-new/bucket-new.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BucketEditComponent } from './buckets/bucket-edit/bucket-edit.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { BucketEditComponent } from './buckets/bucket-edit/bucket-edit.component
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
