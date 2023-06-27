@@ -3,6 +3,7 @@ import { BucketService } from 'src/app/services/bucket-service';
 import { Bucket } from 'src/app/models/bucket.model';
 import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-bucket-new',
@@ -11,7 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export class BucketNewComponent implements OnInit {
 
-  constructor(private bucketService: BucketService) { }
+  constructor(private bucketService: BucketService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
@@ -49,7 +50,7 @@ export class BucketNewComponent implements OnInit {
         console.log(response);
       },
       (error: any) => {
-        console.error(error);
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
       }
     );
     

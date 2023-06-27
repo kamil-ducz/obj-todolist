@@ -4,6 +4,7 @@ import { BucketTaskService } from '../services/buckettask-service';
 import { environment } from 'src/environments/environment';
 import { Bucket } from '../models/bucket.model';
 import { BucketTask } from '../models/buckettask.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-buckets',
@@ -12,7 +13,7 @@ import { BucketTask } from '../models/buckettask.model';
 })
 export class BucketsComponent implements OnInit {
 
-  constructor(private bucketService: BucketService, private bucketTaskService: BucketTaskService) { }
+  constructor(private bucketService: BucketService, private bucketTaskService: BucketTaskService, private toastr: ToastrService) { }
 
   refreshBucketAndBucketsComponents() {
     this.fetchBuckets();
@@ -27,7 +28,7 @@ export class BucketsComponent implements OnInit {
         this.buckets = response;
       },
       (error: any) => {
-        console.error(error);
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
       }
     );
   }
@@ -48,7 +49,7 @@ export class BucketsComponent implements OnInit {
         this.bucketTasksCancelled = this.bucketTasks.filter(element => element.taskState == 3);
       },
       (error: any) => {
-        console.error(error);
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
       }
     );
   }
@@ -64,7 +65,7 @@ export class BucketsComponent implements OnInit {
           this.refreshBucketAndBucketsComponents();
         },
         (error: any) => {
-          console.error(error);
+          this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
         }
     );
   }
