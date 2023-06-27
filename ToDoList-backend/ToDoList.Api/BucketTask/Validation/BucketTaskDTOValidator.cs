@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 using ToDoList.Api.BucketTask.Models;
 
-namespace ToDoList.Api.Validation;
+namespace ToDoList.Api.BucketTask;
 
-public class BucketInsertTaskDtoValidator : AbstractValidator<BucketInsertTaskDto>
+public class BucketTaskDtoValidator : AbstractValidator<BucketTaskDto>
 {
-    public BucketInsertTaskDtoValidator()
+    public BucketTaskDtoValidator()
     {
         RuleFor(n => n.Name)
             .NotEmpty()

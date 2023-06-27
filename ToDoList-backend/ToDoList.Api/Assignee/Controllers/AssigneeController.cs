@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using ToDoList.Api.Asignee.Models;
-using ToDoList.Api.Interfaces;
+using ToDoList.Api.Assignee.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,7 +23,7 @@ public class AssigneeController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<AssigneeDto> Get()
+    public IReadOnlyCollection<AssigneeDto> Get()
     {
         return _assigneeService.GetAllAssignees();
     }
@@ -38,17 +38,15 @@ public class AssigneeController : ControllerBase
     public IActionResult Post(AssigneeInsertDto assigneeInsertDto)
     {
         _assigneeInsertDtoValidator.ValidateAndThrow(assigneeInsertDto);
+        var assigneeId = _assigneeService.InsertAssignee(assigneeInsertDto);
 
-        _assigneeService.InsertAssignee(assigneeInsertDto);
-
-        return Created(Request.GetEncodedUrl(), assigneeInsertDto);
+        return Created(Request.GetEncodedUrl() + "/" + assigneeId, assigneeInsertDto);
     }
 
     [HttpPut("{id}")]
     public IActionResult Put(AssigneeInsertDto assigneeInsertDTO, int id)
     {
         _assigneeInsertDtoValidator.ValidateAndThrow(assigneeInsertDTO);
-
         _assigneeService.UpdateAssignee(assigneeInsertDTO, id);
 
         return Ok(assigneeInsertDTO);

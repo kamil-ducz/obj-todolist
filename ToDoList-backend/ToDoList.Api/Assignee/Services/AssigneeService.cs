@@ -1,10 +1,18 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
 using ToDoList.Api.Asignee.Models;
-using ToDoList.Api.Interfaces;
 using ToDoList.Domain.Interfaces;
 
 namespace ToDoList.Api.Assignee.Services;
+
+public interface IAssigneeService
+{
+    IReadOnlyCollection<AssigneeDto> GetAllAssignees();
+    AssigneeDto GetAssignee(int assigneeId);
+    int InsertAssignee(AssigneeInsertDto assignee);
+    void DeleteAssignee(int assigneeId);
+    void UpdateAssignee(AssigneeInsertDto assignee, int assigneeId);
+}
 
 public class AssigneeService : IAssigneeService
 {
@@ -17,9 +25,9 @@ public class AssigneeService : IAssigneeService
         _mapper = mapper;
     }
 
-    public List<AssigneeDto> GetAllAssignees()
+    public IReadOnlyCollection<AssigneeDto> GetAllAssignees()
     {
-        return _mapper.Map<List<AssigneeDto>>(_assigneeRepository.GetAllAssignees());
+        return _mapper.Map<IReadOnlyCollection<AssigneeDto>>(_assigneeRepository.GetAllAssignees());
     }
 
     public AssigneeDto GetAssignee(int assigneeId)
@@ -32,18 +40,18 @@ public class AssigneeService : IAssigneeService
         _assigneeRepository.DeleteAssignee(assigneeId);
     }
 
-    public void InsertAssignee(AssigneeInsertDto assigneeDTO)
+    public int InsertAssignee(AssigneeInsertDto assigneeDTO)
     {
         var mappedAssignee = _mapper.Map<Domain.Models.Assignee>(assigneeDTO);
-
-        _assigneeRepository.InsertAssignee(mappedAssignee); ;
+        _assigneeRepository.InsertAssignee(mappedAssignee);
+        return mappedAssignee.Id;
     }
 
     public void UpdateAssignee(AssigneeInsertDto assigneeDTO, int assigneeId)
     {
-        var assigneeToUpdate = _mapper.Map<Domain.Models.Assignee>(assigneeDTO);
-        assigneeToUpdate.Id = assigneeId;
+        var mappedAssignee = _mapper.Map<Domain.Models.Assignee>(assigneeDTO);
+        mappedAssignee.Id = assigneeId;
 
-        _assigneeRepository.UpdateAssignee(assigneeToUpdate);
+        _assigneeRepository.UpdateAssignee(mappedAssignee);
     }
 }

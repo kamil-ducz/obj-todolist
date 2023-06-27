@@ -2,10 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using ToDoList.Api.BucketTask.Models;
-using ToDoList.Api.Interfaces;
 using ToDoList.Domain.Interfaces;
 
 namespace ToDoList.Api.BucketTask.Services;
+
+public interface IBucketTaskService
+{
+    List<BucketTaskDto> GetBucketTasks();
+    BucketTaskDto GetBucketTask(int taskId);
+    int InsertBucketTask(BucketInsertTaskDto task);
+    void DeleteBucketTask(int taskId);
+    void UpdateBucketTask(int id, BucketInsertTaskDto bucketTask);
+}
 
 public class BucketTaskService : IBucketTaskService
 {
@@ -34,11 +42,12 @@ public class BucketTaskService : IBucketTaskService
         _bucketTaskRepository.DeleteBucketTask(bucketTaskToDelete);
     }
 
-    public void InsertBucketTask(BucketInsertTaskDto bucketTaskDTO)
+    public int InsertBucketTask(BucketInsertTaskDto bucketTaskDTO)
     {
         var mappedBucketTask = _mapper.Map<Domain.Models.BucketTask>(bucketTaskDTO);
-
         _bucketTaskRepository.InsertBucketTask(mappedBucketTask);
+
+        return mappedBucketTask.Id;
     }
 
     public void UpdateBucketTask(int bucketTaskId, BucketInsertTaskDto bucketTaskDTO)

@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using ToDoList.Api.Bucket.Models;
+using ToDoList.Api.Bucket.Services;
 using ToDoList.Api.BucketTask.Models;
-using ToDoList.Api.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -25,8 +25,7 @@ public class BucketController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<BucketDto> Get()
-
+    public IReadOnlyCollection<BucketDto> Get()
     {
         return _bucketService.GetAllBuckets();
     }
@@ -38,7 +37,7 @@ public class BucketController : ControllerBase
     }
 
     [HttpGet("buckettask/{id}")]
-    public IEnumerable<BucketTaskDto> Get(int id, bool? cloghole)
+    public IReadOnlyCollection<BucketTaskDto> Get(int id, bool? cloghole)
     {
         return _bucketService.GetAllBucketsTasks(id).ToList();
     }
@@ -47,17 +46,15 @@ public class BucketController : ControllerBase
     public IActionResult Post(BucketInsertDto bucketInsertDto)
     {
         _bucketInsertDtoValidator.ValidateAndThrow(bucketInsertDto);
+        var bucketId = _bucketService.InsertBucket(bucketInsertDto);
 
-        _bucketService.InsertBucket(bucketInsertDto);
-
-        return Created(Request.GetEncodedUrl(), bucketInsertDto);
+        return Created(Request.GetEncodedUrl() + "/" + bucketId, bucketInsertDto);
     }
 
     [HttpPut("{id}")]
     public IActionResult Put(int id, BucketInsertDto bucketInsertDto)
     {
         _bucketInsertDtoValidator.ValidateAndThrow(bucketInsertDto);
-
         _bucketService.UpdateBucket(id, bucketInsertDto);
 
         return Ok(bucketInsertDto);

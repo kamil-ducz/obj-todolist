@@ -1,11 +1,11 @@
 ﻿using FluentValidation;
 using ToDoList.Api.Asignee.Models;
 
-namespace ToDoList.Api.Validation;
+namespace ToDoList.Api.Assignee;
 
-public class AssigneeInsertDtoValidator : AbstractValidator<AssigneeInsertDto>
+public class AssigneeDtoValidator : AbstractValidator<AssigneeDto>
 {
-    public AssigneeInsertDtoValidator()
+    public AssigneeDtoValidator()
     {
         RuleFor(n => n.Name)
             .NotEmpty()

@@ -3,10 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using ToDoList.Api.Bucket.Models;
 using ToDoList.Api.BucketTask.Models;
-using ToDoList.Api.Interfaces;
 using ToDoList.Domain.Interfaces;
 
 namespace ToDoList.Api.Bucket.Services;
+
+public interface IBucketService
+{
+    IReadOnlyCollection<BucketDto> GetAllBuckets();
+    BucketDto GetBucket(int bucketId);
+    IReadOnlyCollection<BucketTaskDto> GetAllBucketsTasks(int bucketId);
+    int InsertBucket(BucketInsertDto bucket);
+    void DeleteBucket(int bucketId);
+    void UpdateBucket(int id, BucketInsertDto bucket);
+}
 
 public class BucketService : IBucketService
 {
@@ -21,9 +30,9 @@ public class BucketService : IBucketService
         _mapper = mapper;
     }
 
-    public List<BucketDto> GetAllBuckets()
+    public IReadOnlyCollection<BucketDto> GetAllBuckets()
     {
-        return _mapper.Map<List<BucketDto>>(_bucketRepository.GetAllBuckets());
+        return _mapper.Map<IReadOnlyCollection<BucketDto>>(_bucketRepository.GetAllBuckets());
     }
 
     public BucketDto GetBucket(int bucketId)
@@ -38,26 +47,26 @@ public class BucketService : IBucketService
         _bucketRepository.DeleteBucket(bucketToDelete);
     }
 
-    public void InsertBucket(BucketInsertDto bucketDTO)
+    public int InsertBucket(BucketInsertDto bucketDTO)
     {
         var mappedBucket = _mapper.Map<Domain.Models.Bucket>(bucketDTO);
-
         _bucketRepository.InsertBucket(mappedBucket);
+
+        return mappedBucket.Id;
     }
 
     public void UpdateBucket(int id, BucketInsertDto bucketDTO)
     {
-        var bucketToUpdate = bucketDTO;
-        bucketToUpdate.Id = id;
-
-        var mappedBucket = _mapper.Map<Domain.Models.Bucket>(bucketToUpdate);
+        var mappedBucket = _mapper.Map<Domain.Models.Bucket>(bucketDTO);
+        mappedBucket.Id = id;
 
         _bucketRepository.UpdateBucket(mappedBucket);
     }
 
-    public IEnumerable<BucketTaskDto> GetAllBucketsTasks(int bucketId)
+    public IReadOnlyCollection<BucketTaskDto> GetAllBucketsTasks(int bucketId)
     {
         var bucketTasks = _bucketTaskRepository.GetAllBucketTasks().Where(b => b.BucketId == bucketId);
-        return _mapper.Map<IEnumerable<BucketTaskDto>>(bucketTasks);
+
+        return _mapper.Map<IReadOnlyCollection<BucketTaskDto>>(bucketTasks);
     }
 }
