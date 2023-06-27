@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Bucket } from 'src/app/models/bucket.model';
 import { BucketService } from 'src/app/services/bucket-service';
 import { environment } from 'src/environments/environment';
@@ -16,7 +17,7 @@ export class BucketEditComponent implements OnInit {
   currentBucket: Bucket;
   editBucketFormGroup: FormGroup;
 
-  constructor(private route: ActivatedRoute, private bucketService: BucketService) {}
+  constructor(private route: ActivatedRoute, private bucketService: BucketService, private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(
@@ -34,7 +35,7 @@ export class BucketEditComponent implements OnInit {
         this.initializeForm();
       },
       (error: any) => {
-        console.error(error);
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
       }
     );
   }
@@ -75,7 +76,7 @@ export class BucketEditComponent implements OnInit {
         console.log(response);
       },
       (error: any) => {
-        console.error(error);
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
       }
     );
 
