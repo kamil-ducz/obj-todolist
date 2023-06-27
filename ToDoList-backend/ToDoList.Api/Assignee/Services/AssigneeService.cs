@@ -1,10 +1,18 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
 using ToDoList.Api.Asignee.Models;
-using ToDoList.Api.Interfaces;
 using ToDoList.Domain.Interfaces;
 
 namespace ToDoList.Api.Assignee.Services;
+
+public interface IAssigneeService
+{
+    IReadOnlyCollection<AssigneeDto> GetAllAssignees();
+    AssigneeDto GetAssignee(int assigneeId);
+    int InsertAssignee(AssigneeInsertDto assignee);
+    void DeleteAssignee(int assigneeId);
+    void UpdateAssignee(AssigneeInsertDto assignee, int assigneeId);
+}
 
 public class AssigneeService : IAssigneeService
 {

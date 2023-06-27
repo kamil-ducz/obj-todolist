@@ -3,10 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using ToDoList.Api.Bucket.Models;
 using ToDoList.Api.BucketTask.Models;
-using ToDoList.Api.Interfaces;
 using ToDoList.Domain.Interfaces;
 
 namespace ToDoList.Api.Bucket.Services;
+
+public interface IBucketService
+{
+    IReadOnlyCollection<BucketDto> GetAllBuckets();
+    BucketDto GetBucket(int bucketId);
+    IReadOnlyCollection<BucketTaskDto> GetAllBucketsTasks(int bucketId);
+    int InsertBucket(BucketInsertDto bucket);
+    void DeleteBucket(int bucketId);
+    void UpdateBucket(int id, BucketInsertDto bucket);
+}
 
 public class BucketService : IBucketService
 {
