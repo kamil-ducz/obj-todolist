@@ -10,9 +10,9 @@ public interface IBucketTaskService
 {
     List<BucketTaskDto> GetBucketTasks();
     BucketTaskDto GetBucketTask(int taskId);
-    int InsertBucketTask(BucketInsertTaskDto task);
+    int InsertBucketTask(BucketUpsertTaskDto task);
     void DeleteBucketTask(int taskId);
-    void UpdateBucketTask(int id, BucketInsertTaskDto bucketTask);
+    void UpdateBucketTask(int id, BucketUpsertTaskDto bucketTask);
 }
 
 public class BucketTaskService : IBucketTaskService
@@ -42,7 +42,7 @@ public class BucketTaskService : IBucketTaskService
         _bucketTaskRepository.DeleteBucketTask(bucketTaskToDelete);
     }
 
-    public int InsertBucketTask(BucketInsertTaskDto bucketTaskDTO)
+    public int InsertBucketTask(BucketUpsertTaskDto bucketTaskDTO)
     {
         var mappedBucketTask = _mapper.Map<Domain.Models.BucketTask>(bucketTaskDTO);
         _bucketTaskRepository.InsertBucketTask(mappedBucketTask);
@@ -50,7 +50,7 @@ public class BucketTaskService : IBucketTaskService
         return mappedBucketTask.Id;
     }
 
-    public void UpdateBucketTask(int bucketTaskId, BucketInsertTaskDto bucketTaskDTO)
+    public void UpdateBucketTask(int bucketTaskId, BucketUpsertTaskDto bucketTaskDTO)
     {
         var mappedBucketTask = _mapper.Map<Domain.Models.BucketTask>(bucketTaskDTO);
         mappedBucketTask.Id = bucketTaskId;

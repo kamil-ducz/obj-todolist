@@ -3,9 +3,9 @@ using ToDoList.Api.Bucket.Models;
 
 namespace ToDoList.Api.Bucket;
 
-public class BucketInsertDtoValidator : AbstractValidator<BucketInsertDto>
+public class BucketUpsertDtoValidator : AbstractValidator<BucketUpsertDto>
 {
-    public BucketInsertDtoValidator()
+    public BucketUpsertDtoValidator()
     {
         RuleFor(x => x.Name)
             .NotEmpty()

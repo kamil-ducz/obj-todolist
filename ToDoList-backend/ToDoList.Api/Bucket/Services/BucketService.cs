@@ -12,9 +12,9 @@ public interface IBucketService
     IReadOnlyCollection<BucketDto> GetAllBuckets();
     BucketDto GetBucket(int bucketId);
     IReadOnlyCollection<BucketTaskDto> GetAllBucketsTasks(int bucketId);
-    int InsertBucket(BucketInsertDto bucket);
+    int InsertBucket(BucketUpsertDto bucket);
     void DeleteBucket(int bucketId);
-    void UpdateBucket(int id, BucketInsertDto bucket);
+    void UpdateBucket(int id, BucketUpsertDto bucket);
 }
 
 public class BucketService : IBucketService
@@ -47,7 +47,7 @@ public class BucketService : IBucketService
         _bucketRepository.DeleteBucket(bucketToDelete);
     }
 
-    public int InsertBucket(BucketInsertDto bucketDTO)
+    public int InsertBucket(BucketUpsertDto bucketDTO)
     {
         var mappedBucket = _mapper.Map<Domain.Models.Bucket>(bucketDTO);
         _bucketRepository.InsertBucket(mappedBucket);
@@ -55,7 +55,7 @@ public class BucketService : IBucketService
         return mappedBucket.Id;
     }
 
-    public void UpdateBucket(int id, BucketInsertDto bucketDTO)
+    public void UpdateBucket(int id, BucketUpsertDto bucketDTO)
     {
         var mappedBucket = _mapper.Map<Domain.Models.Bucket>(bucketDTO);
         mappedBucket.Id = id;

@@ -14,9 +14,9 @@ namespace ToDoList.Api.BucketTask.Controllers;
 public class BucketTaskController : ControllerBase
 {
     private readonly IBucketTaskService _bucketTaskService;
-    private readonly IValidator<BucketInsertTaskDto> _bucketInsertTaskDtoValidator;
+    private readonly IValidator<BucketUpsertTaskDto> _bucketInsertTaskDtoValidator;
 
-    public BucketTaskController(IBucketTaskService bucketTaskService, IValidator<BucketInsertTaskDto> bucketInsertTaskDtoValidator)
+    public BucketTaskController(IBucketTaskService bucketTaskService, IValidator<BucketUpsertTaskDto> bucketInsertTaskDtoValidator)
     {
         _bucketTaskService = bucketTaskService;
         _bucketInsertTaskDtoValidator = bucketInsertTaskDtoValidator;
@@ -35,7 +35,7 @@ public class BucketTaskController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Post(BucketInsertTaskDto bucketInsertTaskDto)
+    public IActionResult Post(BucketUpsertTaskDto bucketInsertTaskDto)
     {
         _bucketInsertTaskDtoValidator.ValidateAndThrow(bucketInsertTaskDto);
         var bucketTaskId = _bucketTaskService.InsertBucketTask(bucketInsertTaskDto);
@@ -44,7 +44,7 @@ public class BucketTaskController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult Put(int id, BucketInsertTaskDto bucketTaskDto)
+    public IActionResult Put(int id, BucketUpsertTaskDto bucketTaskDto)
     {
         _bucketInsertTaskDtoValidator.ValidateAndThrow(bucketTaskDto);
         _bucketTaskService.UpdateBucketTask(id, bucketTaskDto);

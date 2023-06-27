@@ -3,9 +3,9 @@ using ToDoList.Api.Asignee.Models;
 
 namespace ToDoList.Api.Assignee;
 
-public class AssigneeInsertDtoValidator : AbstractValidator<AssigneeInsertDto>
+public class AssigneeUpsertDtoValidator : AbstractValidator<AssigneeUpsertDto>
 {
-    public AssigneeInsertDtoValidator()
+    public AssigneeUpsertDtoValidator()
     {
         RuleFor(n => n.Name)
             .NotEmpty()

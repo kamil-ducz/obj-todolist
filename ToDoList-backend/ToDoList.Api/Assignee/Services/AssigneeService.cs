@@ -9,9 +9,9 @@ public interface IAssigneeService
 {
     IReadOnlyCollection<AssigneeDto> GetAllAssignees();
     AssigneeDto GetAssignee(int assigneeId);
-    int InsertAssignee(AssigneeInsertDto assignee);
+    int InsertAssignee(AssigneeUpsertDto assignee);
     void DeleteAssignee(int assigneeId);
-    void UpdateAssignee(AssigneeInsertDto assignee, int assigneeId);
+    void UpdateAssignee(AssigneeUpsertDto assignee, int assigneeId);
 }
 
 public class AssigneeService : IAssigneeService
@@ -40,14 +40,14 @@ public class AssigneeService : IAssigneeService
         _assigneeRepository.DeleteAssignee(assigneeId);
     }
 
-    public int InsertAssignee(AssigneeInsertDto assigneeDTO)
+    public int InsertAssignee(AssigneeUpsertDto assigneeDTO)
     {
         var mappedAssignee = _mapper.Map<Domain.Models.Assignee>(assigneeDTO);
         _assigneeRepository.InsertAssignee(mappedAssignee);
         return mappedAssignee.Id;
     }
 
-    public void UpdateAssignee(AssigneeInsertDto assigneeDTO, int assigneeId)
+    public void UpdateAssignee(AssigneeUpsertDto assigneeDTO, int assigneeId)
     {
         var mappedAssignee = _mapper.Map<Domain.Models.Assignee>(assigneeDTO);
         mappedAssignee.Id = assigneeId;

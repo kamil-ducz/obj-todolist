@@ -39,11 +39,11 @@ public static class DependencyInjection
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
         services.AddScoped<IValidator<AssigneeDto>, AssigneeDtoValidator>();
-        services.AddScoped<IValidator<AssigneeInsertDto>, AssigneeInsertDtoValidator>();
+        services.AddScoped<IValidator<AssigneeUpsertDto>, AssigneeUpsertDtoValidator>();
         services.AddScoped<IValidator<BucketDto>, BucketDtoValidator>();
-        services.AddScoped<IValidator<BucketInsertDto>, BucketInsertDtoValidator>();
+        services.AddScoped<IValidator<BucketUpsertDto>, BucketUpsertDtoValidator>();
         services.AddScoped<IValidator<BucketTaskDto>, BucketTaskDtoValidator>();
-        services.AddScoped<IValidator<BucketInsertTaskDto>, BucketInsertTaskDtoValidator>();
+        services.AddScoped<IValidator<BucketUpsertTaskDto>, BucketUpsertTaskDtoValidator>();
 
         services.AddDbContext<ToDoListDbContext>();
 

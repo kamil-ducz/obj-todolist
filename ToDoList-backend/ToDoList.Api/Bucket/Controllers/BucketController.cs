@@ -16,9 +16,9 @@ namespace ToDoList.Api.Bucket.Controllers;
 public class BucketController : ControllerBase
 {
     private readonly IBucketService _bucketService;
-    private readonly IValidator<BucketInsertDto> _bucketInsertDtoValidator;
+    private readonly IValidator<BucketUpsertDto> _bucketInsertDtoValidator;
 
-    public BucketController(IBucketService bucketService, IValidator<BucketInsertDto> bucketInsertDtoValidator)
+    public BucketController(IBucketService bucketService, IValidator<BucketUpsertDto> bucketInsertDtoValidator)
     {
         _bucketService = bucketService;
         _bucketInsertDtoValidator = bucketInsertDtoValidator;
@@ -43,7 +43,7 @@ public class BucketController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Post(BucketInsertDto bucketInsertDto)
+    public IActionResult Post(BucketUpsertDto bucketInsertDto)
     {
         _bucketInsertDtoValidator.ValidateAndThrow(bucketInsertDto);
         var bucketId = _bucketService.InsertBucket(bucketInsertDto);
@@ -52,7 +52,7 @@ public class BucketController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult Put(int id, BucketInsertDto bucketInsertDto)
+    public IActionResult Put(int id, BucketUpsertDto bucketInsertDto)
     {
         _bucketInsertDtoValidator.ValidateAndThrow(bucketInsertDto);
         _bucketService.UpdateBucket(id, bucketInsertDto);

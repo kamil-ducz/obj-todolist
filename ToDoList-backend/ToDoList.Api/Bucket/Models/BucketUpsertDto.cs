@@ -4,7 +4,7 @@ using ToDoList.Domain.Enums;
 
 namespace ToDoList.Api.Bucket.Models;
 
-public class BucketInsertDto
+public class BucketUpsertDto
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
