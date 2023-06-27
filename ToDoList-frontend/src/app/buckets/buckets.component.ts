@@ -20,8 +20,7 @@ export class BucketsComponent implements OnInit {
   }
 
   buckets: Bucket[];
-  bucketColorClass: string;
-
+  
   fetchBuckets() {
     this.bucketService.getBuckets(environment.bucketEndpoint).subscribe(
       (response: any) => {
@@ -107,31 +106,5 @@ export class BucketsComponent implements OnInit {
 
   exitDeleteModal() {
     this.showModal = !this.showModal;
-  }
-
-  setBucketColorClass(bucket: Bucket) {
-    switch(bucket.bucketColor) {
-      case 0: {
-        return 'bg-yellow-900';
-      }
-      case 1: {
-        return 'bg-red-500';
-      }
-      case 2: {
-        return 'bg-yellow-500';
-      }
-      case 3: {
-        return 'bg-blue-500';
-      }
-      case 4: {
-        return 'bg-white';
-      }
-      case 5: {
-        return 'bg-green-500'
-      }
-      default: {
-        return 'bg-white';
-      }
-    }
   }
 }
