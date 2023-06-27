@@ -48,7 +48,7 @@ public class BucketController : ControllerBase
         _bucketInsertDtoValidator.ValidateAndThrow(bucketInsertDto);
         var bucketId = _bucketService.InsertBucket(bucketInsertDto);
 
-        return Created(Request.GetEncodedUrl() + "/" + bucketId, bucketInsertDto);
+        return Created(Request.GetEncodedUrl() + "/" + bucketId, _bucketService.GetBucket(bucketId));
     }
 
     [HttpPut("{id}")]
@@ -57,7 +57,7 @@ public class BucketController : ControllerBase
         _bucketInsertDtoValidator.ValidateAndThrow(bucketInsertDto);
         _bucketService.UpdateBucket(id, bucketInsertDto);
 
-        return Ok(bucketInsertDto);
+        return Ok(_bucketService.GetBucket(id));
     }
 
     [HttpDelete("{id}")]

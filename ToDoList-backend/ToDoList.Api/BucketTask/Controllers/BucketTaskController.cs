@@ -40,7 +40,7 @@ public class BucketTaskController : ControllerBase
         _bucketInsertTaskDtoValidator.ValidateAndThrow(bucketInsertTaskDto);
         var bucketTaskId = _bucketTaskService.InsertBucketTask(bucketInsertTaskDto);
 
-        return Created(Request.GetEncodedUrl() + "/" + bucketTaskId, bucketInsertTaskDto);
+        return Created(Request.GetEncodedUrl() + "/" + bucketTaskId, _bucketTaskService.GetBucketTask(bucketTaskId));
     }
 
     [HttpPut("{id}")]
@@ -49,7 +49,7 @@ public class BucketTaskController : ControllerBase
         _bucketInsertTaskDtoValidator.ValidateAndThrow(bucketTaskDto);
         _bucketTaskService.UpdateBucketTask(id, bucketTaskDto);
 
-        return Ok(bucketTaskDto);
+        return Ok(_bucketTaskService.GetBucketTask(id));
     }
 
     [HttpDelete("{id}")]

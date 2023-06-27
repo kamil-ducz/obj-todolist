@@ -40,7 +40,7 @@ public class AssigneeController : ControllerBase
         _assigneeInsertDtoValidator.ValidateAndThrow(assigneeInsertDto);
         var assigneeId = _assigneeService.InsertAssignee(assigneeInsertDto);
 
-        return Created(Request.GetEncodedUrl() + "/" + assigneeId, assigneeInsertDto);
+        return Created(Request.GetEncodedUrl() + "/" + assigneeId, _assigneeService.GetAssignee(assigneeId));
     }
 
     [HttpPut("{id}")]
@@ -49,7 +49,7 @@ public class AssigneeController : ControllerBase
         _assigneeInsertDtoValidator.ValidateAndThrow(assigneeInsertDTO);
         _assigneeService.UpdateAssignee(assigneeInsertDTO, id);
 
-        return Ok(assigneeInsertDTO);
+        return Ok(_assigneeService.GetAssignee(id));
     }
 
     [HttpDelete("{id}")]
