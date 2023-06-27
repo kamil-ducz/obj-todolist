@@ -48,9 +48,8 @@ public class BucketService : IBucketService
 
     public void UpdateBucket(int id, BucketInsertDto bucketDTO)
     {
-        var bucketToUpdate = bucketDTO;
-        bucketToUpdate.Id = id;
-        var mappedBucket = _mapper.Map<Domain.Models.Bucket>(bucketToUpdate);
+        var mappedBucket = _mapper.Map<Domain.Models.Bucket>(bucketDTO);
+        mappedBucket.Id = id;
 
         _bucketRepository.UpdateBucket(mappedBucket);
     }
