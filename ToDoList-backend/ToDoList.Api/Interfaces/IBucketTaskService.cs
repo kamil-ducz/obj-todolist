@@ -7,7 +7,7 @@ public interface IBucketTaskService
 {
     List<BucketTaskDto> GetBucketTasks();
     BucketTaskDto GetBucketTask(int taskId);
-    void InsertBucketTask(BucketInsertTaskDto task);
+    int InsertBucketTask(BucketInsertTaskDto task);
     void DeleteBucketTask(int taskId);
     void UpdateBucketTask(int id, BucketInsertTaskDto bucketTask);
 }

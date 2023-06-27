@@ -48,9 +48,9 @@ public class BucketController : ControllerBase
     {
         _bucketInsertDtoValidator.ValidateAndThrow(bucketInsertDto);
 
-        _bucketService.InsertBucket(bucketInsertDto);
+        var bucketId = _bucketService.InsertBucket(bucketInsertDto);
 
-        return Created(Request.GetEncodedUrl(), bucketInsertDto);
+        return Created(Request.GetEncodedUrl() + "/" + bucketId, bucketInsertDto);
     }
 
     [HttpPut("{id}")]

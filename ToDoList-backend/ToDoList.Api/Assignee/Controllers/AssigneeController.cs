@@ -39,9 +39,9 @@ public class AssigneeController : ControllerBase
     {
         _assigneeInsertDtoValidator.ValidateAndThrow(assigneeInsertDto);
 
-        _assigneeService.InsertAssignee(assigneeInsertDto);
+        var assigneeId = _assigneeService.InsertAssignee(assigneeInsertDto);
 
-        return Created(Request.GetEncodedUrl(), assigneeInsertDto);
+        return Created(Request.GetEncodedUrl() + "/" + assigneeId, assigneeInsertDto);
     }
 
     [HttpPut("{id}")]

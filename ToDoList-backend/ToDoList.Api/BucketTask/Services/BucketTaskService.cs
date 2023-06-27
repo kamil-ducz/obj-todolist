@@ -34,11 +34,12 @@ public class BucketTaskService : IBucketTaskService
         _bucketTaskRepository.DeleteBucketTask(bucketTaskToDelete);
     }
 
-    public void InsertBucketTask(BucketInsertTaskDto bucketTaskDTO)
+    public int InsertBucketTask(BucketInsertTaskDto bucketTaskDTO)
     {
         var mappedBucketTask = _mapper.Map<Domain.Models.BucketTask>(bucketTaskDTO);
-
         _bucketTaskRepository.InsertBucketTask(mappedBucketTask);
+
+        return mappedBucketTask.Id;
     }
 
     public void UpdateBucketTask(int bucketTaskId, BucketInsertTaskDto bucketTaskDTO)

@@ -32,18 +32,17 @@ public class AssigneeService : IAssigneeService
         _assigneeRepository.DeleteAssignee(assigneeId);
     }
 
-    public void InsertAssignee(AssigneeInsertDto assigneeDTO)
+    public int InsertAssignee(AssigneeInsertDto assigneeDTO)
     {
         var mappedAssignee = _mapper.Map<Domain.Models.Assignee>(assigneeDTO);
-
-        _assigneeRepository.InsertAssignee(mappedAssignee); ;
+        _assigneeRepository.InsertAssignee(mappedAssignee);
+        return mappedAssignee.Id;
     }
 
     public void UpdateAssignee(AssigneeInsertDto assigneeDTO, int assigneeId)
     {
         var assigneeToUpdate = _mapper.Map<Domain.Models.Assignee>(assigneeDTO);
         assigneeToUpdate.Id = assigneeId;
-
         _assigneeRepository.UpdateAssignee(assigneeToUpdate);
     }
 }

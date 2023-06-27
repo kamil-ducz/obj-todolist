@@ -39,9 +39,9 @@ public class BucketTaskController : ControllerBase
     {
         _bucketInsertTaskDtoValidator.ValidateAndThrow(bucketInsertTaskDto);
 
-        _bucketTaskService.InsertBucketTask(bucketInsertTaskDto);
+        var bucketTaskId = _bucketTaskService.InsertBucketTask(bucketInsertTaskDto);
 
-        return Created(Request.GetEncodedUrl(), bucketInsertTaskDto);
+        return Created(Request.GetEncodedUrl() + "/" + bucketTaskId, bucketInsertTaskDto);
     }
 
     [HttpPut("{id}")]
