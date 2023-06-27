@@ -17,9 +17,9 @@ public class AssigneeService : IAssigneeService
         _mapper = mapper;
     }
 
-    public List<AssigneeDto> GetAllAssignees()
+    public IReadOnlyCollection<AssigneeDto> GetAllAssignees()
     {
-        return _mapper.Map<List<AssigneeDto>>(_assigneeRepository.GetAllAssignees());
+        return _mapper.Map<IReadOnlyCollection<AssigneeDto>>(_assigneeRepository.GetAllAssignees());
     }
 
     public AssigneeDto GetAssignee(int assigneeId)

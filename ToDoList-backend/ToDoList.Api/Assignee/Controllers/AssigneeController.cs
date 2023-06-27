@@ -23,7 +23,7 @@ public class AssigneeController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<AssigneeDto> Get()
+    public IReadOnlyCollection<AssigneeDto> Get()
     {
         return _assigneeService.GetAllAssignees();
     }

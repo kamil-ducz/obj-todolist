@@ -25,7 +25,7 @@ public class BucketController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<BucketDto> Get()
+    public IReadOnlyCollection<BucketDto> Get()
     {
         return _bucketService.GetAllBuckets();
     }
@@ -37,7 +37,7 @@ public class BucketController : ControllerBase
     }
 
     [HttpGet("buckettask/{id}")]
-    public IEnumerable<BucketTaskDto> Get(int id, bool? cloghole)
+    public IReadOnlyCollection<BucketTaskDto> Get(int id, bool? cloghole)
     {
         return _bucketService.GetAllBucketsTasks(id).ToList();
     }

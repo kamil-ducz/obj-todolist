@@ -21,9 +21,9 @@ public class BucketService : IBucketService
         _mapper = mapper;
     }
 
-    public List<BucketDto> GetAllBuckets()
+    public IReadOnlyCollection<BucketDto> GetAllBuckets()
     {
-        return _mapper.Map<List<BucketDto>>(_bucketRepository.GetAllBuckets());
+        return _mapper.Map<IReadOnlyCollection<BucketDto>>(_bucketRepository.GetAllBuckets());
     }
 
     public BucketDto GetBucket(int bucketId)
@@ -54,10 +54,10 @@ public class BucketService : IBucketService
         _bucketRepository.UpdateBucket(mappedBucket);
     }
 
-    public IEnumerable<BucketTaskDto> GetAllBucketsTasks(int bucketId)
+    public IReadOnlyCollection<BucketTaskDto> GetAllBucketsTasks(int bucketId)
     {
         var bucketTasks = _bucketTaskRepository.GetAllBucketTasks().Where(b => b.BucketId == bucketId);
 
-        return _mapper.Map<IEnumerable<BucketTaskDto>>(bucketTasks);
+        return _mapper.Map<IReadOnlyCollection<BucketTaskDto>>(bucketTasks);
     }
 }
