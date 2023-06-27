@@ -26,7 +26,6 @@ public class BucketController : ControllerBase
 
     [HttpGet]
     public IEnumerable<BucketDto> Get()
-
     {
         return _bucketService.GetAllBuckets();
     }
@@ -47,7 +46,6 @@ public class BucketController : ControllerBase
     public IActionResult Post(BucketInsertDto bucketInsertDto)
     {
         _bucketInsertDtoValidator.ValidateAndThrow(bucketInsertDto);
-
         var bucketId = _bucketService.InsertBucket(bucketInsertDto);
 
         return Created(Request.GetEncodedUrl() + "/" + bucketId, bucketInsertDto);
@@ -57,7 +55,6 @@ public class BucketController : ControllerBase
     public IActionResult Put(int id, BucketInsertDto bucketInsertDto)
     {
         _bucketInsertDtoValidator.ValidateAndThrow(bucketInsertDto);
-
         _bucketService.UpdateBucket(id, bucketInsertDto);
 
         return Ok(bucketInsertDto);

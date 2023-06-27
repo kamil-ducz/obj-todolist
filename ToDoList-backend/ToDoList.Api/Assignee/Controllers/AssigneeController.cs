@@ -38,7 +38,6 @@ public class AssigneeController : ControllerBase
     public IActionResult Post(AssigneeInsertDto assigneeInsertDto)
     {
         _assigneeInsertDtoValidator.ValidateAndThrow(assigneeInsertDto);
-
         var assigneeId = _assigneeService.InsertAssignee(assigneeInsertDto);
 
         return Created(Request.GetEncodedUrl() + "/" + assigneeId, assigneeInsertDto);
@@ -48,7 +47,6 @@ public class AssigneeController : ControllerBase
     public IActionResult Put(AssigneeInsertDto assigneeInsertDTO, int id)
     {
         _assigneeInsertDtoValidator.ValidateAndThrow(assigneeInsertDTO);
-
         _assigneeService.UpdateAssignee(assigneeInsertDTO, id);
 
         return Ok(assigneeInsertDTO);

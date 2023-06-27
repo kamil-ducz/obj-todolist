@@ -3,6 +3,9 @@ using Microsoft.Extensions.Configuration;
 using ToDoList.Domain.Models;
 using ToDoList.Infrastructure.DbContextConfigs;
 
+// Declared db sets will never be null
+#pragma warning disable CS8618
+
 namespace ToDoList.Api;
 
 public class ToDoListDbContext : DbContext

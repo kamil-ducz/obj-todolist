@@ -38,7 +38,6 @@ public class BucketTaskController : ControllerBase
     public IActionResult Post(BucketInsertTaskDto bucketInsertTaskDto)
     {
         _bucketInsertTaskDtoValidator.ValidateAndThrow(bucketInsertTaskDto);
-
         var bucketTaskId = _bucketTaskService.InsertBucketTask(bucketInsertTaskDto);
 
         return Created(Request.GetEncodedUrl() + "/" + bucketTaskId, bucketInsertTaskDto);
@@ -48,7 +47,6 @@ public class BucketTaskController : ControllerBase
     public IActionResult Put(int id, BucketInsertTaskDto bucketTaskDto)
     {
         _bucketInsertTaskDtoValidator.ValidateAndThrow(bucketTaskDto);
-
         _bucketTaskService.UpdateBucketTask(id, bucketTaskDto);
 
         return Ok(bucketTaskDto);
