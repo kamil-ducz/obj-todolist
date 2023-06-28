@@ -32,6 +32,6 @@ public class ToDoListDbContext : DbContext
     }
 
     public DbSet<Assignees> Assignees { get; set; }
-    public DbSet<Bucket> Buckets { get; set; }
+    public DbSet<Buckets> Buckets { get; set; }
     public DbSet<BucketTask> BucketTasks { get; set; }
 }

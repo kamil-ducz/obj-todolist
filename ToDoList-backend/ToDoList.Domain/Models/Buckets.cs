@@ -3,7 +3,7 @@ using ToDoList.Domain.Enums;
 
 namespace ToDoList.Domain.Models;
 
-public class Bucket
+public class Buckets
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
