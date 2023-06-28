@@ -111,7 +111,7 @@ export class BucketComponent implements OnInit {
   }
 
   onSubmitNewBucketTask(newBucketTask: BucketTask) {
-    newBucketTask.bucketId = this.id;
+    newBucketTask.bucketsId = this.id;
     newBucketTask.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.addNewBucketTaskFormGroup.value.state);
     newBucketTask.taskPriority = this.bucketTaskService.mapBucketTaskPriorityStringToEnum(this.addNewBucketTaskFormGroup.value.priority);
     if (this.currentBucketBucketTasks.length < this.currentBucket.maxAmountOfTasks)
@@ -136,7 +136,7 @@ export class BucketComponent implements OnInit {
 
   onSubmitEditBucketTask(newBucketTask: BucketTask) {
     newBucketTask = this.editNewBucketTaskFormGroup.value;
-    newBucketTask.bucketId = this.id;
+    newBucketTask.bucketsId = this.id;
     newBucketTask.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.editNewBucketTaskFormGroup.value.state);
     newBucketTask.taskPriority = this.bucketTaskService.mapBucketTaskPriorityStringToEnum(this.editNewBucketTaskFormGroup.value.priority);
     this.bucketTaskService.putBucketTask(environment.bucketTaskEndpoint+this.currentBucketTask.id, newBucketTask).subscribe(

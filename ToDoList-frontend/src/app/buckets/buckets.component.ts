@@ -73,7 +73,7 @@ export class BucketsComponent implements OnInit {
   calculateTotalToDoForBucket(id: number) {
     if (this.bucketTasks)
     {
-      return this.bucketTasks.filter(task => task.bucketId === id && task.taskState === 0).length ?? 0;
+      return this.bucketTasks.filter(task => task.bucketsId === id && task.taskState === 0).length ?? 0;
     }
     else
     {

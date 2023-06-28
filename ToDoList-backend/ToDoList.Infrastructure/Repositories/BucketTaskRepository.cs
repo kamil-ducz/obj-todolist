@@ -13,29 +13,29 @@ public class BucketTaskRepository : IBucketTaskRepository
         this._toDoListDbContext = toDoListDbContext;
     }
 
-    public IReadOnlyList<BucketTask> GetAllBucketTasks()
+    public IReadOnlyList<BucketTasks> GetAllBucketTasks()
     {
         return _toDoListDbContext.BucketTasks!.ToList();
     }
 
-    public BucketTask GetBucketTask(int bucketTaskId)
+    public BucketTasks GetBucketTask(int bucketTaskId)
     {
         return _toDoListDbContext.BucketTasks!.First(a => a.Id == bucketTaskId);
     }
 
-    public void DeleteBucketTask(BucketTask bucketTaskToDelete)
+    public void DeleteBucketTask(BucketTasks bucketTaskToDelete)
     {
         _toDoListDbContext.BucketTasks!.Remove(bucketTaskToDelete);
         _toDoListDbContext.SaveChanges();
     }
 
-    public void InsertBucketTask(BucketTask bucketTask)
+    public void InsertBucketTask(BucketTasks bucketTask)
     {
         _toDoListDbContext.BucketTasks!.Add(bucketTask);
         _toDoListDbContext.SaveChanges();
     }
 
-    public void UpdateBucketTask(BucketTask bucketTaskToUpdate)
+    public void UpdateBucketTask(BucketTasks bucketTaskToUpdate)
     {
         _toDoListDbContext.BucketTasks!.Update(bucketTaskToUpdate);
         _toDoListDbContext.SaveChanges();

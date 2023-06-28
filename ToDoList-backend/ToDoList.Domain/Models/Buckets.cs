@@ -12,5 +12,5 @@ public class Buckets
     public BucketColor BucketColor { get; set; }
     public int MaxAmountOfTasks { get; set; }
     public bool IsActive { get; set; }
-    public List<BucketTask> BucketTasks { get; set; } = new List<BucketTask>();
+    public List<BucketTasks> BucketTasks { get; set; } = new List<BucketTasks>();
 }

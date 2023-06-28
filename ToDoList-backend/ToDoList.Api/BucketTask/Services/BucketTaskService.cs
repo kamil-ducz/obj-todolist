@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ToDoList.Api.BucketTask.Models;
+using ToDoList.Domain.Models;
 using ToDoList.Domain.Repositories;
 
 namespace ToDoList.Api.BucketTask.Services;
@@ -44,7 +45,7 @@ public class BucketTaskService : IBucketTaskService
 
     public int InsertBucketTask(BucketUpsertTaskDto bucketTaskDTO)
     {
-        var mappedBucketTask = _mapper.Map<Domain.Models.BucketTask>(bucketTaskDTO);
+        var mappedBucketTask = _mapper.Map<BucketTasks>(bucketTaskDTO);
         _bucketTaskRepository.InsertBucketTask(mappedBucketTask);
 
         return mappedBucketTask.Id;
@@ -52,7 +53,7 @@ public class BucketTaskService : IBucketTaskService
 
     public void UpdateBucketTask(int bucketTaskId, BucketUpsertTaskDto bucketTaskDTO)
     {
-        var mappedBucketTask = _mapper.Map<Domain.Models.BucketTask>(bucketTaskDTO);
+        var mappedBucketTask = _mapper.Map<BucketTasks>(bucketTaskDTO);
         mappedBucketTask.Id = bucketTaskId;
 
         _bucketTaskRepository.UpdateBucketTask(mappedBucketTask);
