@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using ToDoList.Domain.Enums;
 using ToDoList.Domain.Models;
 using ToDoList.Infrastructure.DbContextConfigs;
 
@@ -23,6 +24,8 @@ public class ToDoListDbContext : DbContext
 
         modelBuilder.ApplyConfiguration(new BucketConfiguration());
 
+        modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+
         modelBuilder.ApplyConfiguration(new BucketTaskConfiguration());
     }
 
@@ -34,4 +37,5 @@ public class ToDoListDbContext : DbContext
     public DbSet<Assignees> Assignees { get; set; }
     public DbSet<Buckets> Buckets { get; set; }
     public DbSet<BucketTasks> BucketTasks { get; set; }
+    public DbSet<BucketCategory> Category { get; set; }
 }
