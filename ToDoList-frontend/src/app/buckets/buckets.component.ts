@@ -73,9 +73,7 @@ export class BucketsComponent implements OnInit {
   calculateTotalToDoForBucket(id: number) {
     if (this.bucketTasks)
     {
-      const tasksForBucket = this.bucketTasks.filter(task => task.bucketId === id && task.taskState === 0);
-
-      return tasksForBucket.length;
+      return this.bucketTasks.filter(task => task.bucketId === id && task.taskState === 0).length ?? 0;
     }
     else
     {
@@ -86,15 +84,7 @@ export class BucketsComponent implements OnInit {
   elementToRemove: Bucket;
 
   findElementToRemoveById(id: number) {
-    const foundElement = this.buckets.find(element => element.id == id);
-    if(foundElement)
-    {
-      return foundElement;
-    }
-    else
-    {
-      return null;
-    }
+    return this.buckets.find(element => element.id == id) ?? null;
   }
 
   showModal = false;

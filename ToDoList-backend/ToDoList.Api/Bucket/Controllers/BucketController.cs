@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 using ToDoList.Api.Bucket.Models;
 using ToDoList.Api.Bucket.Services;
 using ToDoList.Api.BucketTask.Models;
@@ -36,10 +35,10 @@ public class BucketController : ControllerBase
         return _bucketService.GetBucket(id);
     }
 
-    [HttpGet("buckettask/{id}")]
-    public IReadOnlyCollection<BucketTaskDto> Get(int id, bool? cloghole)
+    [HttpGet("buckettask/{bucketId}")]
+    public IReadOnlyCollection<BucketTaskDto> Get(int bucketId, bool? cloghole)
     {
-        return _bucketService.GetAllBucketsTasks(id).ToList();
+        return _bucketService.GetAllBucketsTasks(bucketId);
     }
 
     [HttpPost]
