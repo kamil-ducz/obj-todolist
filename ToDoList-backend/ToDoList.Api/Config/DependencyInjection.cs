@@ -11,7 +11,7 @@ using ToDoList.Api.Bucket.Services;
 using ToDoList.Api.BucketTask;
 using ToDoList.Api.BucketTask.Models;
 using ToDoList.Api.BucketTask.Services;
-using ToDoList.Domain.Interfaces;
+using ToDoList.Domain.Repositories;
 using ToDoList.Infrastructure.Repositories;
 
 namespace ToDoList.Api.Config;

@@ -31,7 +31,7 @@ public class ToDoListDbContext : DbContext
         options.UseSqlServer(configuration.GetConnectionString("ToDoListDatabase"), b => b.MigrationsAssembly("ToDoList.Infrastructure"));
     }
 
-    public DbSet<Assignee> Assignees { get; set; }
+    public DbSet<Assignees> Assignees { get; set; }
     public DbSet<Bucket> Buckets { get; set; }
     public DbSet<BucketTask> BucketTasks { get; set; }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ToDoList.Api.Asignee.Models;
+using ToDoList.Domain.Models;
 
 namespace ToDoList.Api.MappingProfiles;
 
@@ -7,7 +8,7 @@ public class AssigneeServiceMappingProfile : Profile
 {
     public AssigneeServiceMappingProfile()
     {
-        CreateMap<Domain.Models.Assignee, AssigneeDto>().ReverseMap();
-        CreateMap<Domain.Models.Assignee, AssigneeUpsertDto>().ReverseMap();
+        CreateMap<Assignees, AssigneeDto>().ReverseMap();
+        CreateMap<Assignees, AssigneeUpsertDto>().ReverseMap();
     }
 }

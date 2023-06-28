@@ -1,6 +1,6 @@
 ﻿using ToDoList.Api;
-using ToDoList.Domain.Interfaces;
 using ToDoList.Domain.Models;
+using ToDoList.Domain.Repositories;
 
 namespace ToDoList.Infrastructure.Repositories;
 
@@ -13,12 +13,12 @@ public class AssigneeRepository : IAssigneeRepository
         this._toDoListDbContext = toDoListDbContext;
     }
 
-    public IReadOnlyList<Assignee> GetAllAssignees()
+    public IReadOnlyList<Assignees> GetAllAssignees()
     {
         return _toDoListDbContext.Assignees!.ToList();
     }
 
-    public Assignee GetAssignee(int assigneeId)
+    public Assignees GetAssignee(int assigneeId)
     {
         return _toDoListDbContext.Assignees!.First(a => a.Id == assigneeId);
     }
@@ -30,13 +30,13 @@ public class AssigneeRepository : IAssigneeRepository
         _toDoListDbContext.SaveChanges();
     }
 
-    public void InsertAssignee(Assignee assignee)
+    public void InsertAssignee(Assignees assignee)
     {
         _toDoListDbContext.Assignees!.Add(assignee);
         _toDoListDbContext.SaveChanges();
     }
 
-    public void UpdateAssignee(Assignee assigneeToUpdate)
+    public void UpdateAssignee(Assignees assigneeToUpdate)
     {
         _toDoListDbContext.Assignees!.Update(assigneeToUpdate);
         _toDoListDbContext.SaveChanges();

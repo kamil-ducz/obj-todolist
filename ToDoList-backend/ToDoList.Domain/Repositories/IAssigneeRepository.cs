@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using ToDoList.Domain.Models;
 
-namespace ToDoList.Domain.Interfaces;
+namespace ToDoList.Domain.Repositories;
 
 public interface IAssigneeRepository
 {
-    IReadOnlyList<Assignee> GetAllAssignees();
-    Assignee GetAssignee(int assigneeId);
-    void InsertAssignee(Assignee assignee);
+    IReadOnlyList<Assignees> GetAllAssignees();
+    Assignees GetAssignee(int assigneeId);
+    void InsertAssignee(Assignees assignee);
     void DeleteAssignee(int assigneeId);
-    void UpdateAssignee(Assignee assignee);
+    void UpdateAssignee(Assignees assignee);
 }

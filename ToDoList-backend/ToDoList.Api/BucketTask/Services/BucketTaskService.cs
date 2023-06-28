@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ToDoList.Api.BucketTask.Models;
-using ToDoList.Domain.Interfaces;
+using ToDoList.Domain.Repositories;
 
 namespace ToDoList.Api.BucketTask.Services;
 
