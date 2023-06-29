@@ -20,12 +20,12 @@
   <ng-container *ngFor="let item of buckets">
     <div 
     [routerLink]="['/bucket-details', item.id]"
-    [ngClass]="{'bg-yellow-900': item.bucketColor == 0,
-                'bg-red-500': item.bucketColor == 1, 
-                'bg-yellow-500': item.bucketColor == 2, 
-                'bg-blue-500': item.bucketColor == 3,
-                'bg-white': item.bucketColor == 4,
-                'bg-green-500': item.bucketColor == 5,
+    [ngClass]="{'bg-yellow-900': item.bucketColor.name == 'Brown',
+                'bg-red-500': item.bucketColor.name == 'Red', 
+                'bg-yellow-500': item.bucketColor.name == 'Yellow', 
+                'bg-blue-500': item.bucketColor.name == 'Blue',
+                'bg-white': item.bucketColor.name == 'White',
+                'bg-green-500': item.bucketColor.name == 'Green',
                 'border-2':true, 
                 'border-black text-center':true,
                 'cursor-pointer': true}"

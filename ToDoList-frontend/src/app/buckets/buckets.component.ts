@@ -26,6 +26,7 @@ export class BucketsComponent implements OnInit {
     this.bucketService.getBuckets(environment.bucketEndpoint).subscribe(
       (response: any) => {
         this.buckets = response;
+        console.log("this.buckets="+this.buckets[1].bucketColor.name);
       },
       (error: any) => {
         this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")

@@ -15,12 +15,19 @@ public class BucketRepository : IBucketRepository
 
     public IReadOnlyList<Buckets> GetAllBuckets()
     {
-        return _toDoListDbContext.Buckets!.ToList();
+        var buckets = _toDoListDbContext.Buckets!.ToList();
+        foreach (var bucket in buckets)
+        {
+            bucket.BucketColor = _toDoListDbContext.BucketColor.First(bc => bc.Id == bucket.BucketColorId);
+        }
+        return buckets;
     }
 
     public Buckets GetBucket(int bucketId)
     {
-        return _toDoListDbContext.Buckets!.First(a => a.Id == bucketId);
+        var bucket = _toDoListDbContext.Buckets!.First(a => a.Id == bucketId);
+        bucket.BucketColor = _toDoListDbContext.BucketColor.First(bc => bc.Id == bucket.BucketColorId);
+        return bucket;
     }
 
     public void DeleteBucket(Buckets bucketToDelete)
