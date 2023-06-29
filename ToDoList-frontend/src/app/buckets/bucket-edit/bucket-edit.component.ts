@@ -46,10 +46,10 @@ export class BucketEditComponent implements OnInit {
       description: new UntypedFormControl(this.currentBucket.description, [
         Validators.maxLength(50),
       ]),
-      category: new UntypedFormControl(this.currentBucket.bucketCategory.name, [
+      category: new UntypedFormControl(this.currentBucket.bucketCategoryId, [
         Validators.required,      
       ]),
-      bucketColor: new UntypedFormControl(this.currentBucket.bucketColor, [
+      bucketColor: new UntypedFormControl(this.currentBucket.bucketColorId, [
         Validators.required,
       ]),
       maxAmountOfTasks: new UntypedFormControl(this.currentBucket.maxAmountOfTasks.toString(), [

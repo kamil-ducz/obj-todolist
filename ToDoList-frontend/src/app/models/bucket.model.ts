@@ -2,14 +2,8 @@ export type Bucket = {
     id: number;
     name: string;
     description: string;
-    bucketCategory: {
-        id: number,
-        name: string
-    };
-    bucketColor: {
-        id: number,
-        name: string
-    };
+    bucketColorId: number;
+    bucketCategoryId: number;
     maxAmountOfTasks: number;
     isActive: boolean;
 }

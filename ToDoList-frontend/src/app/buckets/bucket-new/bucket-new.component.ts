@@ -25,10 +25,10 @@ export class BucketNewComponent implements OnInit {
     description: new FormControl('', [
       Validators.maxLength(50),
     ]),
-    bucketCategory: new FormControl('', [
+    bucketCategoryId: new FormControl('', [
       Validators.required,      
     ]),
-    bucketColor: new FormControl('', [
+    bucketColorId: new FormControl('', [
       Validators.required,
     ]),
     maxAmountOfTasks: new FormControl('1', [
@@ -44,7 +44,7 @@ export class BucketNewComponent implements OnInit {
   onSubmitNewBucket(newBucket: Bucket) {
     this.bucketService.postBucket(environment.bucketEndpoint, newBucket).subscribe(
       (response: any) => {
-        this.toastr.success(response);
+        this.toastr.success("Bucket ".concat(newBucket.name).concat(" added successfully."));
       },
       (error: any) => {
         this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")

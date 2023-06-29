@@ -9,7 +9,7 @@ public class BucketUpsertDto
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string? Description { get; set; }
-    public int CategoryId { get; set; }
+    public int BucketCategoryId { get; set; }
     public BucketCategory? BucketCategory { get; set; }
     public int BucketColorId { get; set; }
     public BucketColor? BucketColor { get; set; }
