@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ToDoList.Domain.Enums;
 
 namespace ToDoList.Infrastructure.DbContextConfigs;
-public class CategoryConfiguration : IEntityTypeConfiguration<BucketCategory>
+public class BucketCategoryConfiguration : IEntityTypeConfiguration<BucketCategory>
 {
     public void Configure(EntityTypeBuilder<BucketCategory> builder)
     {
