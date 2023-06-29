@@ -42,8 +42,6 @@ export class BucketNewComponent implements OnInit {
   });
 
   onSubmitNewBucketTask(newBucketTask: Bucket) {
-    newBucketTask.bucketColor = this.bucketService.mapBucketColorStringToEnum(newBucketTask.bucketColor);
-    newBucketTask.category = this.bucketService.mapBucketColorStringToEnum(newBucketTask.category);
 
     this.bucketService.postBucket(environment.bucketEndpoint, newBucketTask).subscribe(
       (response: any) => {

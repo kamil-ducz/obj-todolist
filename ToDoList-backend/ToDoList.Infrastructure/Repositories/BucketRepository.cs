@@ -19,6 +19,7 @@ public class BucketRepository : IBucketRepository
         foreach (var bucket in buckets)
         {
             bucket.BucketColor = _toDoListDbContext.BucketColor.First(bc => bc.Id == bucket.BucketColorId);
+            bucket.BucketCategory = _toDoListDbContext.BucketCategory.First(bcat => bcat.Id == bucket.BucketCategoryId);
         }
         return buckets;
     }
@@ -26,7 +27,10 @@ public class BucketRepository : IBucketRepository
     public Buckets GetBucket(int bucketId)
     {
         var bucket = _toDoListDbContext.Buckets!.First(a => a.Id == bucketId);
-        bucket.BucketColor = _toDoListDbContext.BucketColor.First(bc => bc.Id == bucket.BucketColorId);
+        {
+            bucket.BucketColor = _toDoListDbContext.BucketColor.First(bc => bc.Id == bucket.BucketColorId);
+            bucket.BucketCategory = _toDoListDbContext.BucketCategory.First(bcat => bcat.Id == bucket.BucketCategoryId);
+        }
         return bucket;
     }
 

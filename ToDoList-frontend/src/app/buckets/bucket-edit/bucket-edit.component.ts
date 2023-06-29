@@ -28,10 +28,7 @@ export class BucketEditComponent implements OnInit {
 
     this.bucketService.getBucket(environment.bucketEndpoint+this.id).subscribe(
       (response: any) => {
-        this.currentBucket = response;
-        this.currentBucket.bucketColor = this.bucketService.mapBucketColorEnumToString(this.currentBucket.bucketColor);
-        this.currentBucket.category = this.bucketService.mapBucketCategoryEnumToString(this.currentBucket.category);
-
+        this.currentBucket = response;        
         this.initializeForm();
       },
       (error: any) => {
@@ -49,7 +46,7 @@ export class BucketEditComponent implements OnInit {
       description: new UntypedFormControl(this.currentBucket.description, [
         Validators.maxLength(50),
       ]),
-      category: new UntypedFormControl(this.currentBucket.category, [
+      category: new UntypedFormControl(this.currentBucket.bucketCategory.name, [
         Validators.required,      
       ]),
       bucketColor: new UntypedFormControl(this.currentBucket.bucketColor, [
@@ -68,9 +65,6 @@ export class BucketEditComponent implements OnInit {
 
   onSubmitEditForm(bucketFromEditForm: Bucket) {
     this.currentBucket = bucketFromEditForm;
-    this.currentBucket.bucketColor = this.bucketService.mapBucketColorStringToEnum(bucketFromEditForm.bucketColor);
-    this.currentBucket.category = this.bucketService.mapBucketCategoryStringToEnum(bucketFromEditForm.category);
-
     this.bucketService.putBucket(environment.bucketEndpoint+this.id, this.currentBucket).subscribe(
       (response: any) => {
         console.log(response);
