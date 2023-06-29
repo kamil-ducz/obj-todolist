@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BucketService } from 'src/app/services/bucket-service';
 import { Bucket } from 'src/app/models/bucket.model';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 
@@ -17,35 +17,34 @@ export class BucketNewComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  newBucketFormGroup = new UntypedFormGroup({
-    name: new UntypedFormControl('', [
+  newBucketFormGroup = new FormGroup({
+    name: new FormControl('', [
       Validators.required,
       Validators.minLength(3),
     ]),
-    description: new UntypedFormControl('', [
+    description: new FormControl('', [
       Validators.maxLength(50),
     ]),
-    category: new UntypedFormControl('', [
+    bucketCategory: new FormControl('', [
       Validators.required,      
     ]),
-    bucketColor: new UntypedFormControl('', [
+    bucketColor: new FormControl('', [
       Validators.required,
     ]),
-    maxAmountOfTasks: new UntypedFormControl('3', [
+    maxAmountOfTasks: new FormControl('1', [
       Validators.required,
       Validators.min(1),
       Validators.max(15),
     ]),
-    isActive: new UntypedFormControl(true, [
+    isActive: new FormControl(true, [
       Validators.required,
     ])
   });
 
-  onSubmitNewBucketTask(newBucketTask: Bucket) {
-
-    this.bucketService.postBucket(environment.bucketEndpoint, newBucketTask).subscribe(
+  onSubmitNewBucket(newBucket: Bucket) {
+    this.bucketService.postBucket(environment.bucketEndpoint, newBucket).subscribe(
       (response: any) => {
-        console.log(response);
+        this.toastr.success(response);
       },
       (error: any) => {
         this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")

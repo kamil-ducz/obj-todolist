@@ -24,8 +24,8 @@ export class BucketService {
       return this.httpClient.get<BucketTask>(url);
   }
 
-    postBucket(url, data): Observable<Bucket> {
-      return this.httpClient.post<Bucket>(url, data);
+    postBucket(url, newBucketData): Observable<Bucket> {
+      return this.httpClient.post<Bucket>(url, newBucketData);
     }
 
     putBucket(url, data): Observable<any> {
