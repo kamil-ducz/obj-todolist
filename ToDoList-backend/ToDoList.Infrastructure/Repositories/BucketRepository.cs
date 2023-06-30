@@ -16,21 +16,12 @@ public class BucketRepository : IBucketRepository
     public IReadOnlyList<Buckets> GetAllBuckets()
     {
         var buckets = _toDoListDbContext.Buckets!.ToList();
-        foreach (var bucket in buckets)
-        {
-            bucket.BucketColor = _toDoListDbContext.BucketColor.First(bc => bc.Id == bucket.BucketColorId);
-            bucket.BucketCategory = _toDoListDbContext.BucketCategory.First(bcat => bcat.Id == bucket.BucketCategoryId);
-        }
         return buckets;
     }
 
     public Buckets GetBucket(int bucketId)
     {
         var bucket = _toDoListDbContext.Buckets!.First(a => a.Id == bucketId);
-        {
-            bucket.BucketColor = _toDoListDbContext.BucketColor.First(bc => bc.Id == bucket.BucketColorId);
-            bucket.BucketCategory = _toDoListDbContext.BucketCategory.First(bcat => bcat.Id == bucket.BucketCategoryId);
-        }
         return bucket;
     }
 

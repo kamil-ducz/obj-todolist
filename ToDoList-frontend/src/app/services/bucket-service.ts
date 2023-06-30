@@ -21,13 +21,9 @@ export class BucketService {
         return this.httpClient.get<Bucket>(url);
     }
 
-    getBucketColorName(url): Observable<BucketColor> {
-      return this.httpClient.get<BucketColor>(url);
-    }
-
     getBucketTasks(url): Observable<BucketTask> {
       return this.httpClient.get<BucketTask>(url);
-  }
+    }
 
     postBucket(url, newBucketData): Observable<Bucket> {
       return this.httpClient.post<Bucket>(url, newBucketData);

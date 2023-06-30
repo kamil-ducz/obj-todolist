@@ -1,15 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ToDoList.Api.Dictionaries.Services;
+using ToDoList.Domain.Enums;
 
 namespace ToDoList.Api.Dictionaries.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class BucketCategory : ControllerBase
+public class BucketCategoryController : ControllerBase
 {
     private readonly IBucketCategoryService _bucketCategoryService;
 
-    public BucketCategory(IBucketCategoryService bucketCategoryService)
+    public BucketCategoryController(IBucketCategoryService bucketCategoryService)
     {
         _bucketCategoryService = bucketCategoryService;
     }
@@ -21,8 +22,10 @@ public class BucketCategory : ControllerBase
     }
 
     [HttpGet("{bucketCategoryId}")]
-    public string GetBucketCategoryNameById(int bucketCategoryId)
+    public BucketCategory GetBucketCategoryNameById(int bucketCategoryId)
     {
-        return _bucketCategoryService.GetBucketCategoryNameById(bucketCategoryId);
+        var bucketCategory = new BucketCategory();
+        bucketCategory.Name = _bucketCategoryService.GetBucketCategoryNameById(bucketCategoryId);
+        return bucketCategory;
     }
 }

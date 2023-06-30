@@ -7,6 +7,7 @@ import { FormGroup, UntypedFormControl, UntypedFormGroup, Validators } from '@an
 import { BucketTask } from '../models/buckettask.model';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { DictionaryService } from '../services/dictionary.service';
 
 @Component({
   selector: 'app-bucket',
@@ -15,19 +16,36 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class BucketComponent implements OnInit {
 
+  constructor(private route: ActivatedRoute, private router: Router, 
+    private bucketService: BucketService, private bucketTaskService: BucketTaskService, 
+    private dictionaryService: DictionaryService, private toastr: ToastrService) { }
+
   id: number;
 
   currentBucket: Bucket;
+  currentBucketCategoryName: string;
 
   fetchCurrentBucket() {
     this.bucketService.getBucket(environment.bucketEndpoint+this.id).subscribe(
-      (response: any) => {
+      (response: Bucket) => {
         this.currentBucket = response;
+        this.fetchCurrentBucketCategoryName(response.bucketCategoryId);
       },
       (error: any) => {
         console.error(error);
       }
     );
+  }
+
+  fetchCurrentBucketCategoryName(id: number) {
+    this.dictionaryService.getBucketCategoryNameById(environment.bucketCategoryEndpoint+id).subscribe(
+      (response: any) => {
+        this.currentBucketCategoryName = response.name;
+      },
+      (error: any) => {
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
+      }
+    )
   }
 
   currentBucketBucketTasks: BucketTask[];
@@ -56,8 +74,7 @@ export class BucketComponent implements OnInit {
   addNewBucketTaskFormGroup: FormGroup;
   editNewBucketTaskFormGroup: FormGroup;
   
-  constructor(private route: ActivatedRoute, private router: Router, 
-              private bucketService: BucketService, private bucketTaskService: BucketTaskService, private toastr: ToastrService) { }
+
 
   refreshCurrentBucketBucketTasksComponents() {
     this.fetchCurrentBucket();
