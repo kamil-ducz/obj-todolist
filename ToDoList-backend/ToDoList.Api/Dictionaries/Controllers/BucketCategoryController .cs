@@ -16,16 +16,18 @@ public class BucketCategoryController : ControllerBase
     }
 
     [HttpGet]
-    public int GetBucketCategoryIdByName(string bucketCategoryName)
+    public BucketCategory GetBucketCategoryIdByName(string bucketCategoryName)
     {
-        return _bucketCategoryService.GetBucketCategoryIdByName(bucketCategoryName);
+        var bucket = new BucketCategory();
+        bucket.Id = _bucketCategoryService.GetBucketCategoryIdByName(bucketCategoryName);
+        return bucket;
     }
 
     [HttpGet("{bucketCategoryId}")]
     public BucketCategory GetBucketCategoryNameById(int bucketCategoryId)
     {
-        var bucketCategory = new BucketCategory();
-        bucketCategory.Name = _bucketCategoryService.GetBucketCategoryNameById(bucketCategoryId);
-        return bucketCategory;
+        var bucket = new BucketCategory();
+        bucket.Name = _bucketCategoryService.GetBucketCategoryNameById(bucketCategoryId);
+        return bucket;
     }
 }

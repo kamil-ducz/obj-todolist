@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { BucketCategory } from "../models/bucketCategory.model";
+import { BucketColor } from "../models/bucketColor.model";
 
 @Injectable ({
     providedIn: 'root'
@@ -11,16 +12,16 @@ export class DictionaryService {
 
     constructor(private httpClient: HttpClient) {}
 
-    getBucketColorIdByName(url, bucketColorName: string): Observable<number> {
-        return this.httpClient.get<number>(url, { params: { bucketColorName }});
+    getBucketColorIdByName(url): Observable<BucketColor> {
+        return this.httpClient.get<BucketColor>(url);
     }
     
-    getBucketColorNameById(url, bucketId: number): Observable<string> {
-        return this.httpClient.get<string>(url, { params: { bucketId }});
+    getBucketColorNameById(url): Observable<BucketColor> {
+        return this.httpClient.get<BucketColor>(url);
     }
 
-    getBucketCategoryIdByName(url, bucketCategoryName): Observable<number> {
-    return this.httpClient.get<number>(url, { params: { bucketCategoryName }});
+    getBucketCategoryIdByName(url): Observable<BucketCategory> {
+    return this.httpClient.get<BucketCategory>(url);
     }
 
     getBucketCategoryNameById(url): Observable<BucketCategory> {
