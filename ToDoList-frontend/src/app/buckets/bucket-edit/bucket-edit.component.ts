@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Bucket } from 'src/app/models/bucket.model';
@@ -15,6 +15,8 @@ export class BucketEditComponent implements OnInit {
 
   id: number;
   currentBucket: Bucket;
+  currentBucketColorName: string;
+  currentBucketCategoryName: string;
   editBucketFormGroup: FormGroup;
 
   constructor(private route: ActivatedRoute, private bucketService: BucketService, private toastr: ToastrService) {}
@@ -38,26 +40,26 @@ export class BucketEditComponent implements OnInit {
   }
 
   initializeForm() {
-    this.editBucketFormGroup = new UntypedFormGroup({
-      name: new UntypedFormControl(this.currentBucket.name, [
+    this.editBucketFormGroup = new FormGroup({
+      name: new FormControl(this.currentBucket.name, [
         Validators.required,
         Validators.minLength(3),
       ]),
-      description: new UntypedFormControl(this.currentBucket.description, [
+      description: new FormControl(this.currentBucket.description, [
         Validators.maxLength(50),
       ]),
-      category: new UntypedFormControl(this.currentBucket.bucketCategoryId, [
+      bucketCategory: new FormControl(this.currentBucket.bucketCategoryId, [
         Validators.required,      
       ]),
-      bucketColor: new UntypedFormControl(this.currentBucket.bucketColorId, [
+      bucketColor: new FormControl(this.currentBucket.bucketColorId, [
         Validators.required,
       ]),
-      maxAmountOfTasks: new UntypedFormControl(this.currentBucket.maxAmountOfTasks.toString(), [
+      maxAmountOfTasks: new FormControl(this.currentBucket.maxAmountOfTasks.toString(), [
         Validators.required,
         Validators.min(1),
         Validators.max(15),
       ]),
-      isActive: new UntypedFormControl(this.currentBucket.isActive, [
+      isActive: new FormControl(this.currentBucket.isActive, [
         Validators.required,
       ])
     });

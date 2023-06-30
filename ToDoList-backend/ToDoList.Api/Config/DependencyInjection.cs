@@ -11,6 +11,7 @@ using ToDoList.Api.Bucket.Services;
 using ToDoList.Api.BucketTask;
 using ToDoList.Api.BucketTask.Models;
 using ToDoList.Api.BucketTask.Services;
+using ToDoList.Api.Dictionaries.Services;
 using ToDoList.Domain.Repositories;
 using ToDoList.Infrastructure.Repositories;
 
@@ -31,10 +32,14 @@ public static class DependencyInjection
         services.AddScoped<IAssigneeService, AssigneeService>();
         services.AddScoped<IBucketService, BucketService>();
         services.AddScoped<IBucketTaskService, BucketTaskService>();
+        services.AddScoped<IBucketColorService, BucketColorService>();
+        services.AddScoped<IBucketCategoryService, BucketCategoryService>();
 
         services.AddScoped<IAssigneeRepository, AssigneeRepository>();
         services.AddScoped<IBucketRepository, BucketRepository>();
         services.AddScoped<IBucketTaskRepository, BucketTaskRepository>();
+        services.AddScoped<IBucketCategoryRepository, BucketCategoryRepository>();
+        services.AddScoped<IBucketColorRepository, BucketColorRepository>();
 
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
