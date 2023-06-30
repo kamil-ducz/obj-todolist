@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ToDoList.Api.Dictionaries.Services;
+using ToDoList.Domain.Enums;
 
 namespace ToDoList.Api.Dictionaries.Controllers;
 
@@ -15,14 +16,22 @@ public class BucketColorController : ControllerBase
     }
 
     [HttpGet]
-    public int GetBucketColorIdByName(string bucketColorName)
+    public BucketColor GetBucketColorIdByName(string bucketColorName)
     {
-        return _bucketColorService.GetBucketColorIdByName(bucketColorName);
+        var bucket = new BucketColor
+        {
+            Id = _bucketColorService.GetBucketColorIdByName(bucketColorName)
+        };
+        return bucket;
     }
 
     [HttpGet("{bucketColorId}")]
-    public string GetBucketColorNameById(int bucketColorId)
+    public BucketColor GetBucketColorNameById(int bucketColorId)
     {
-        return _bucketColorService.GetBucketColorNameById(bucketColorId);
+        var bucket = new BucketColor
+        {
+            Name = _bucketColorService.GetBucketColorNameById(bucketColorId)
+        };
+        return bucket;
     }
 }
