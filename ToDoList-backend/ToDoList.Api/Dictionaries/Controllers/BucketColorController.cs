@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using ToDoList.Api.Dictionaries.Services;
 using ToDoList.Domain.Enums;
 
@@ -15,7 +16,13 @@ public class BucketColorController : ControllerBase
         _bucketColorService = bucketColorService;
     }
 
-    [HttpGet]
+    [HttpGet("all")]
+    public IReadOnlyCollection<BucketColor> GetAllBucketColors()
+    {
+        return _bucketColorService.GetAllBucketColors();
+    }
+
+    [HttpGet("name/{bucketColorName}")]
     public BucketColor GetBucketColorIdByName(string bucketColorName)
     {
         var bucket = new BucketColor

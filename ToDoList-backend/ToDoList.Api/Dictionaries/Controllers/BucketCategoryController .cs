@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using ToDoList.Api.Dictionaries.Services;
 using ToDoList.Domain.Enums;
 
@@ -15,7 +16,13 @@ public class BucketCategoryController : ControllerBase
         _bucketCategoryService = bucketCategoryService;
     }
 
-    [HttpGet]
+    [HttpGet("all")]
+    public IReadOnlyCollection<BucketCategory> GetAllBucketCategories()
+    {
+        return _bucketCategoryService.GetAllBucketCategories();
+    }
+
+    [HttpGet("name/{bucketCategoryName}")]
     public BucketCategory GetBucketCategoryIdByName(string bucketCategoryName)
     {
         var bucket = new BucketCategory

@@ -12,6 +12,10 @@ export class DictionaryService {
 
     constructor(private httpClient: HttpClient) {}
 
+    getBucketColors(url): Observable<BucketColor[]> {
+        return this.httpClient.get<BucketColor[]>(url);
+    }
+
     getBucketColorIdByName(url): Observable<BucketColor> {
         return this.httpClient.get<BucketColor>(url);
     }
@@ -20,11 +24,17 @@ export class DictionaryService {
         return this.httpClient.get<BucketColor>(url);
     }
 
+    getBucketCategories(url): Observable<BucketCategory[]> {
+        return this.httpClient.get<BucketCategory[]>(url);
+    }
+
     getBucketCategoryIdByName(url): Observable<BucketCategory> {
-    return this.httpClient.get<BucketCategory>(url);
+        return this.httpClient.get<BucketCategory>(url);
     }
 
     getBucketCategoryNameById(url): Observable<BucketCategory> {
         return this.httpClient.get<BucketCategory>(url);
       }
+
+
 }

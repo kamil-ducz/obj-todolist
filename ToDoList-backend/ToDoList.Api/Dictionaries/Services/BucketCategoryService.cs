@@ -1,9 +1,12 @@
-﻿using ToDoList.Domain.Repositories;
+﻿using System.Collections.Generic;
+using ToDoList.Domain.Enums;
+using ToDoList.Domain.Repositories;
 
 namespace ToDoList.Api.Dictionaries.Services;
 
 public interface IBucketCategoryService
 {
+    IReadOnlyCollection<BucketCategory> GetAllBucketCategories();
     int GetBucketCategoryIdByName(string bucketCategoryName);
     string GetBucketCategoryNameById(int bucketCategoryId);
 }
@@ -16,6 +19,12 @@ public class BucketCategoryService : IBucketCategoryService
     {
         _bucketCategoryRepository = bucketCategoryRepository;
     }
+
+    public IReadOnlyCollection<BucketCategory> GetAllBucketCategories()
+    {
+        return _bucketCategoryRepository.GetAllBucketCategories();
+    }
+
     public int GetBucketCategoryIdByName(string bucketCategoryName)
     {
         return _bucketCategoryRepository.GetBucketCategoryIdByName(bucketCategoryName);
