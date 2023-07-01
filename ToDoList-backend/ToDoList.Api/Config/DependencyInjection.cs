@@ -32,6 +32,7 @@ public static class DependencyInjection
 
         services.AddScoped<IAssigneeService, AssigneeService>();
         services.AddScoped<IBucketService, BucketService>();
+        services.AddScoped<IBucketReadService, BucketReadService>();
         services.AddScoped<IBucketTaskService, BucketTaskService>();
         services.AddScoped<IDictionaryService, DictionaryService>();
 

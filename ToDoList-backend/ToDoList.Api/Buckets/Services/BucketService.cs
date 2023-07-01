@@ -10,8 +10,6 @@ namespace ToDoList.Api.Buckets.Services;
 
 public interface IBucketService
 {
-    IReadOnlyCollection<BucketDto> GetAllBuckets();
-    BucketDto GetBucket(int bucketId);
     IReadOnlyCollection<BucketTaskDto> GetAllBucketsTasks(int bucketId);
     int InsertBucket(BucketUpsertDto bucket);
     void UpdateBucket(int id, BucketUpsertDto bucket);
@@ -32,16 +30,6 @@ public class BucketService : IBucketService
         _bucketRepository = bucketRepository;
         _bucketTaskRepository = bucketTaskRepository;
         _mapper = mapper;
-    }
-
-    public IReadOnlyCollection<BucketDto> GetAllBuckets()
-    {
-        return _mapper.Map<IReadOnlyCollection<BucketDto>>(_bucketRepository.GetAllBuckets());
-    }
-
-    public BucketDto GetBucket(int bucketId)
-    {
-        return _mapper.Map<BucketDto>(_bucketRepository.GetBucket(bucketId));
     }
 
     public int InsertBucket(BucketUpsertDto bucketDto)
@@ -65,6 +53,7 @@ public class BucketService : IBucketService
         _bucketRepository.DeleteBucket(bucket);
     }
 
+    // TODO: This should be moved to BucketTaskReadService
     public IReadOnlyCollection<BucketTaskDto> GetAllBucketsTasks(int bucketId)
     {
         var bucketTasks = _bucketTaskRepository.GetAllBucketTasks().Where(b => b.BucketsId == bucketId);

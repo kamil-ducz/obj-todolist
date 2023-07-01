@@ -10,6 +10,7 @@ public class BucketDto
     public string Name { get; set; } = string.Empty;
     public string? Description { get; set; }
     public int BucketCategoryId { get; set; }
+    // TODO: Do not put entities in DTOs
     public BucketCategory? BucketCategory { get; set; }
     public int BucketColorId { get; set; }
     public BucketColor? BucketColor { get; set; }
