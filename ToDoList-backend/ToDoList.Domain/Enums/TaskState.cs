@@ -1,10 +1,8 @@
 ﻿namespace ToDoList.Domain.Enums;
-
 public enum TaskState
 {
-    None = 0,
-    ToDo = 1,
-    InProgress = 2,
-    Done = 3,
-    Cancelled = 4
+    ToDo = 0,
+    InProgress = 1,
+    Done = 2,
+    Cancelled = 3
 }

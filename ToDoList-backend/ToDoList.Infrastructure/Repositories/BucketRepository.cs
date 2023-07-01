@@ -1,5 +1,6 @@
-﻿using ToDoList.Domain.Models;
-using ToDoList.Domain.Repositories;
+﻿using ToDoList.Api;
+using ToDoList.Domain.Interfaces;
+using ToDoList.Domain.Models;
 
 namespace ToDoList.Infrastructure.Repositories;
 
@@ -14,14 +15,12 @@ public class BucketRepository : IBucketRepository
 
     public IReadOnlyList<Bucket> GetAllBuckets()
     {
-        var buckets = _toDoListDbContext.Buckets!.ToList();
-        return buckets;
+        return _toDoListDbContext.Buckets!.ToList();
     }
 
     public Bucket GetBucket(int bucketId)
     {
-        var bucket = _toDoListDbContext.Buckets!.First(a => a.Id == bucketId);
-        return bucket;
+        return _toDoListDbContext.Buckets!.First(a => a.Id == bucketId);
     }
 
     public void DeleteBucket(Bucket bucketToDelete)

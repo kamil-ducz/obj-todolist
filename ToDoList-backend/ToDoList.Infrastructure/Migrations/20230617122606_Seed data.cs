@@ -10,11 +10,11 @@ public partial class Seeddata : Migration
     {
         migrationBuilder.DropForeignKey(
             name: "FK_BucketTasks_Buckets_BucketId",
-            table: "BucketTask");
+            table: "BucketTasks");
 
         migrationBuilder.AlterColumn<int>(
             name: "BucketId",
-            table: "BucketTask",
+            table: "BucketTasks",
             type: "int",
             nullable: false,
             defaultValue: 0,
@@ -23,12 +23,12 @@ public partial class Seeddata : Migration
             oldNullable: true);
 
         migrationBuilder.InsertData(
-            table: "Assignee",
+            table: "Assignees",
             columns: new[] { "Id", "Name" },
             values: new object[] { 1, "John Doe" });
 
         migrationBuilder.InsertData(
-            table: "Bucket",
+            table: "Buckets",
             columns: new[] { "Id", "BucketColor", "Category", "Description", "IsActive", "MaxAmountOfTasks", "Name" },
             values: new object[,]
             {
@@ -43,7 +43,7 @@ public partial class Seeddata : Migration
             values: new object[] { 1, null, 0m, 0m, 0m, 0m });
 
         migrationBuilder.InsertData(
-            table: "BucketTask",
+            table: "BucketTasks",
             columns: new[] { "Id", "BucketId", "Description", "Name", "TaskPriority", "TaskState" },
             values: new object[,]
             {
@@ -57,9 +57,9 @@ public partial class Seeddata : Migration
 
         migrationBuilder.AddForeignKey(
             name: "FK_BucketTasks_Buckets_BucketId",
-            table: "BucketTask",
+            table: "BucketTasks",
             column: "BucketId",
-            principalTable: "Bucket",
+            principalTable: "Buckets",
             principalColumn: "Id",
             onDelete: ReferentialAction.Cascade);
     }
@@ -68,40 +68,40 @@ public partial class Seeddata : Migration
     {
         migrationBuilder.DropForeignKey(
             name: "FK_BucketTasks_Buckets_BucketId",
-            table: "BucketTask");
+            table: "BucketTasks");
 
         migrationBuilder.DeleteData(
-            table: "Assignee",
+            table: "Assignees",
             keyColumn: "Id",
             keyValue: 1);
 
         migrationBuilder.DeleteData(
-            table: "BucketTask",
+            table: "BucketTasks",
             keyColumn: "Id",
             keyValue: 1);
 
         migrationBuilder.DeleteData(
-            table: "BucketTask",
+            table: "BucketTasks",
             keyColumn: "Id",
             keyValue: 2);
 
         migrationBuilder.DeleteData(
-            table: "BucketTask",
+            table: "BucketTasks",
             keyColumn: "Id",
             keyValue: 3);
 
         migrationBuilder.DeleteData(
-            table: "BucketTask",
+            table: "BucketTasks",
             keyColumn: "Id",
             keyValue: 4);
 
         migrationBuilder.DeleteData(
-            table: "BucketTask",
+            table: "BucketTasks",
             keyColumn: "Id",
             keyValue: 5);
 
         migrationBuilder.DeleteData(
-            table: "BucketTask",
+            table: "BucketTasks",
             keyColumn: "Id",
             keyValue: 6);
 
@@ -111,23 +111,23 @@ public partial class Seeddata : Migration
             keyValue: 1);
 
         migrationBuilder.DeleteData(
-            table: "Bucket",
+            table: "Buckets",
             keyColumn: "Id",
             keyValue: 1);
 
         migrationBuilder.DeleteData(
-            table: "Bucket",
+            table: "Buckets",
             keyColumn: "Id",
             keyValue: 2);
 
         migrationBuilder.DeleteData(
-            table: "Bucket",
+            table: "Buckets",
             keyColumn: "Id",
             keyValue: 3);
 
         migrationBuilder.AlterColumn<int>(
             name: "BucketId",
-            table: "BucketTask",
+            table: "BucketTasks",
             type: "int",
             nullable: true,
             oldClrType: typeof(int),
@@ -135,9 +135,9 @@ public partial class Seeddata : Migration
 
         migrationBuilder.AddForeignKey(
             name: "FK_BucketTasks_Buckets_BucketId",
-            table: "BucketTask",
+            table: "BucketTasks",
             column: "BucketId",
-            principalTable: "Bucket",
+            principalTable: "Buckets",
             principalColumn: "Id");
     }
 }

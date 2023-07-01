@@ -10,15 +10,15 @@ public partial class AssigneeBucketTaskManyToMany : Migration
     {
         migrationBuilder.DropForeignKey(
             name: "FK_BucketTasks_Assignees_AssigneeId",
-            table: "BucketTask");
+            table: "BucketTasks");
 
         migrationBuilder.DropIndex(
             name: "IX_BucketTasks_AssigneeId",
-            table: "BucketTask");
+            table: "BucketTasks");
 
         migrationBuilder.DropColumn(
             name: "AssigneeId",
-            table: "BucketTask");
+            table: "BucketTasks");
 
         migrationBuilder.CreateTable(
             name: "AssigneeBucketTask",
@@ -33,13 +33,13 @@ public partial class AssigneeBucketTaskManyToMany : Migration
                 table.ForeignKey(
                     name: "FK_AssigneeBucketTask_Assignees_AssigneesId",
                     column: x => x.AssigneesId,
-                    principalTable: "Assignee",
+                    principalTable: "Assignees",
                     principalColumn: "Id",
                     onDelete: ReferentialAction.Cascade);
                 table.ForeignKey(
                     name: "FK_AssigneeBucketTask_BucketTasks_BucketTasksId",
                     column: x => x.BucketTasksId,
-                    principalTable: "BucketTask",
+                    principalTable: "BucketTasks",
                     principalColumn: "Id",
                     onDelete: ReferentialAction.Cascade);
             });
@@ -57,20 +57,20 @@ public partial class AssigneeBucketTaskManyToMany : Migration
 
         migrationBuilder.AddColumn<int>(
             name: "AssigneeId",
-            table: "BucketTask",
+            table: "BucketTasks",
             type: "int",
             nullable: true);
 
         migrationBuilder.CreateIndex(
             name: "IX_BucketTasks_AssigneeId",
-            table: "BucketTask",
+            table: "BucketTasks",
             column: "AssigneeId");
 
         migrationBuilder.AddForeignKey(
             name: "FK_BucketTasks_Assignees_AssigneeId",
-            table: "BucketTask",
+            table: "BucketTasks",
             column: "AssigneeId",
-            principalTable: "Assignee",
+            principalTable: "Assignees",
             principalColumn: "Id");
     }
 }

@@ -2,28 +2,36 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 using ToDoList.Api.Config;
 
-var builder = WebApplication.CreateBuilder(args);
+namespace ToDoList.Api;
 
-// Add services to the container.
-builder.Services.AddApplicationServices();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+public class Program
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    public static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
+
+        // Add services to the container.
+        DependencyInjection.AddApplicationServices(builder.Services);
+
+        var app = builder.Build();
+
+        // Configure the HTTP request pipeline.
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
+        app.UseHttpsRedirection();
+
+        app.UseAuthorization();
+
+        app.UseCors(
+            options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+            );
+
+        app.MapControllers();
+
+        app.Run();
+    }
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.UseCors(
-    options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
-    );
-
-app.MapControllers();
-
-app.Run();
