@@ -46,7 +46,6 @@ public class AssigneeService : IAssigneeService
     {
         var assignee = _assigneeRepository.GetAssignee(assigneeId);
         _mapper.Map(assigneeDto, assignee);
-        assignee.Id = assigneeId;
         _assigneeRepository.UpdateAssignee(assignee);
     }
     

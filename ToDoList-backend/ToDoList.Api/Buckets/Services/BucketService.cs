@@ -43,7 +43,6 @@ public class BucketService : IBucketService
     {
         var bucket = _bucketRepository.GetBucket(id);
         _mapper.Map(bucketDto, bucket);
-        bucket.Id = id;
         _bucketRepository.UpdateBucket(bucket);
     }
     
