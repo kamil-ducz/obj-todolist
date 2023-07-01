@@ -13,12 +13,12 @@ namespace ToDoList.Api.Buckets.Controllers;
 public class BucketController : ControllerBase
 {
     private readonly IBucketService _bucketService;
-    private readonly IValidator<BucketUpsertDto> _bucketInsertDtoValidator;
+    private readonly IValidator<BucketUpsertDto> _bucketUpsertDtoValidator;
 
-    public BucketController(IBucketService bucketService, IValidator<BucketUpsertDto> bucketInsertDtoValidator)
+    public BucketController(IBucketService bucketService, IValidator<BucketUpsertDto> bucketUpsertDtoValidator)
     {
         _bucketService = bucketService;
-        _bucketInsertDtoValidator = bucketInsertDtoValidator;
+        _bucketUpsertDtoValidator = bucketUpsertDtoValidator;
     }
 
     [HttpGet]
@@ -42,7 +42,7 @@ public class BucketController : ControllerBase
     [HttpPost]
     public IActionResult Post(BucketUpsertDto bucketInsertDto)
     {
-        _bucketInsertDtoValidator.ValidateAndThrow(bucketInsertDto);
+        _bucketUpsertDtoValidator.ValidateAndThrow(bucketInsertDto);
         var bucketId = _bucketService.InsertBucket(bucketInsertDto);
 
         return Created(Request.GetEncodedUrl() + "/" + bucketId, _bucketService.GetBucket(bucketId));
@@ -51,7 +51,7 @@ public class BucketController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(int id, BucketUpsertDto bucketInsertDto)
     {
-        _bucketInsertDtoValidator.ValidateAndThrow(bucketInsertDto);
+        _bucketUpsertDtoValidator.ValidateAndThrow(bucketInsertDto);
         _bucketService.UpdateBucket(id, bucketInsertDto);
 
         return Ok(_bucketService.GetBucket(id));

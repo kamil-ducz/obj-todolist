@@ -12,12 +12,12 @@ namespace ToDoList.Api.Assignees.Controllers;
 public class AssigneeController : ControllerBase
 {
     private readonly IAssigneeService _assigneeService;
-    private readonly IValidator<AssigneeUpsertDto> _assigneeInsertDtoValidator;
+    private readonly IValidator<AssigneeUpsertDto> _assigneeUpsertUpsertDtoValidator;
 
-    public AssigneeController(IAssigneeService assigneeService, IValidator<AssigneeUpsertDto> assigneeDtoValidator)
+    public AssigneeController(IAssigneeService assigneeService, IValidator<AssigneeUpsertDto> assigneeUpsertDtoValidator)
     {
         _assigneeService = assigneeService;
-        _assigneeInsertDtoValidator = assigneeDtoValidator;
+        _assigneeUpsertUpsertDtoValidator = assigneeUpsertDtoValidator;
     }
 
     [HttpGet]
@@ -35,7 +35,7 @@ public class AssigneeController : ControllerBase
     [HttpPost]
     public IActionResult Post(AssigneeUpsertDto assigneeInsertDto)
     {
-        _assigneeInsertDtoValidator.ValidateAndThrow(assigneeInsertDto);
+        _assigneeUpsertUpsertDtoValidator.ValidateAndThrow(assigneeInsertDto);
         var assigneeId = _assigneeService.InsertAssignee(assigneeInsertDto);
 
         return Created(Request.GetEncodedUrl() + "/" + assigneeId, _assigneeService.GetAssignee(assigneeId));
@@ -44,7 +44,7 @@ public class AssigneeController : ControllerBase
     [HttpPut("{id}")]
     public IActionResult Put(AssigneeUpsertDto assigneeInsertDto, int id)
     {
-        _assigneeInsertDtoValidator.ValidateAndThrow(assigneeInsertDto);
+        _assigneeUpsertUpsertDtoValidator.ValidateAndThrow(assigneeInsertDto);
         _assigneeService.UpdateAssignee(assigneeInsertDto, id);
 
         return Ok(_assigneeService.GetAssignee(id));
