@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using ToDoList.Api.BucketTask.Models;
 
-namespace ToDoList.Api.BucketTask;
+namespace ToDoList.Api.BucketTask.Validation;
 
 public class BucketTaskDtoValidator : AbstractValidator<BucketTaskDto>
 {

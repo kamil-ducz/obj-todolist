@@ -1,13 +1,13 @@
-﻿using FluentValidation;
+﻿using System.Collections.Generic;
+using FluentValidation;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using ToDoList.Api.Asignee.Models;
+using ToDoList.Api.Assignee.Models;
 using ToDoList.Api.Assignee.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace ToDoList.Api.Asignee.Controllers;
+namespace ToDoList.Api.Assignee.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

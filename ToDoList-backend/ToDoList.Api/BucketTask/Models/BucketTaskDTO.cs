@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using ToDoList.Api.Asignee.Models;
+using ToDoList.Api.Assignee.Models;
 using ToDoList.Domain.Enums;
 
 namespace ToDoList.Api.BucketTask.Models;

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ToDoList.Api.BucketTask.Models;
 
-namespace ToDoList.Api.Asignee.Models;
+namespace ToDoList.Api.Assignee.Models;
 
 public class AssigneeUpsertDto
 {

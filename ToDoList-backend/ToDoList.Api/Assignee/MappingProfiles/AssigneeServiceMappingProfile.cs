@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using ToDoList.Api.Asignee.Models;
+using ToDoList.Api.Assignee.Models;
 using ToDoList.Domain.Models;
 
-namespace ToDoList.Api.MappingProfiles;
+namespace ToDoList.Api.Assignee.MappingProfiles;
 
 public class AssigneeServiceMappingProfile : Profile
 {
