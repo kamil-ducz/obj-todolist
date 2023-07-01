@@ -1,4 +1,4 @@
-﻿namespace ToDoList.Domain.Enums;
+﻿namespace ToDoList.Domain.Models;
 
 public class BucketColor
 {

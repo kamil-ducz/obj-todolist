@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ToDoList.Domain.Enums;
+using ToDoList.Domain.Models;
 
 namespace ToDoList.Infrastructure.DbContextConfigs;
 public class BucketColorConfiguration : IEntityTypeConfiguration<BucketColor>

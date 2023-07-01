@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using ToDoList.Api.BucketTask.Models;
 using ToDoList.Domain.Enums;
+using ToDoList.Domain.Models;
 
 namespace ToDoList.Api.Bucket.Models;
 
