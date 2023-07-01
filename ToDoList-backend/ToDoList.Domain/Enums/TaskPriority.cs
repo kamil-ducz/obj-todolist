@@ -1,7 +1,9 @@
 ﻿namespace ToDoList.Domain.Enums;
+
 public enum TaskPriority
 {
-    High = 0,
-    Normal = 1,
-    Low = 2
+    None = 0,
+    High = 1,
+    Normal = 2,
+    Low = 3
 }

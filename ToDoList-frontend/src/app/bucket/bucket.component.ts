@@ -3,10 +3,11 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BucketService } from '../services/bucket-service';
 import { Bucket } from '../models/bucket.model';
 import { BucketTaskService } from '../services/buckettask-service';
-import { FormGroup, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BucketTask } from '../models/buckettask.model';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { DictionaryService } from '../services/dictionary.service';
 
 @Component({
   selector: 'app-bucket',
@@ -15,20 +16,36 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class BucketComponent implements OnInit {
 
+  constructor(private route: ActivatedRoute, private router: Router, 
+    private bucketService: BucketService, private bucketTaskService: BucketTaskService, 
+    private dictionaryService: DictionaryService, private toastr: ToastrService) { }
+
   id: number;
 
   currentBucket: Bucket;
+  currentBucketCategoryName: string;
 
   fetchCurrentBucket() {
     this.bucketService.getBucket(environment.bucketEndpoint+this.id).subscribe(
-      (response: any) => {
+      (response: Bucket) => {
         this.currentBucket = response;
-        this.currentBucket.category = this.bucketService.mapBucketCategoryEnumToString(this.currentBucket.category);
+        this.fetchCurrentBucketCategoryName(response.bucketCategoryId);
       },
       (error: any) => {
         console.error(error);
       }
     );
+  }
+
+  fetchCurrentBucketCategoryName(id: number) {
+    this.dictionaryService.getBucketCategoryNameById(environment.bucketCategoryEndpoint+id).subscribe(
+      (response: any) => {
+        this.currentBucketCategoryName = response.name;
+      },
+      (error: any) => {
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
+      }
+    )
   }
 
   currentBucketBucketTasks: BucketTask[];
@@ -57,9 +74,6 @@ export class BucketComponent implements OnInit {
   addNewBucketTaskFormGroup: FormGroup;
   editNewBucketTaskFormGroup: FormGroup;
   
-  constructor(private route: ActivatedRoute, private router: Router, 
-              private bucketService: BucketService, private bucketTaskService: BucketTaskService, private toastr: ToastrService) { }
-
   refreshCurrentBucketBucketTasksComponents() {
     this.fetchCurrentBucket();
     this.fetchBucketTasks();
@@ -75,45 +89,43 @@ export class BucketComponent implements OnInit {
   }
 
   initializeNewBucketTaskForm() {
-    this.addNewBucketTaskFormGroup = new UntypedFormGroup({
-      name: new UntypedFormControl('', [
+    this.addNewBucketTaskFormGroup = new FormGroup({
+      name: new FormControl('', [
         Validators.required,
         Validators.minLength(3),
       ]),
-      description: new UntypedFormControl('', [
+      description: new FormControl('', [
         Validators.maxLength(50),
       ]),
-      state: new UntypedFormControl('', [
+      state: new FormControl('', [
         Validators.required,      
       ]),
-      priority: new UntypedFormControl('', [
+      priority: new FormControl('', [
         Validators.required,
       ]),
     });
   }
 
   initializeEditBucketTaskForm() {
-    this.editNewBucketTaskFormGroup = new UntypedFormGroup({
-      name: new UntypedFormControl(this.currentBucketTask.name, [
+    this.editNewBucketTaskFormGroup = new FormGroup({
+      name: new FormControl(this.currentBucketTask.name, [
         Validators.required,
         Validators.minLength(3),
       ]),
-      description: new UntypedFormControl(this.currentBucketTask.description, [
+      description: new FormControl(this.currentBucketTask.description, [
         Validators.maxLength(50),
       ]),
-      state: new UntypedFormControl(this.currentBucketTask.taskState, [
+      state: new FormControl(this.currentBucketTask.taskState, [
         Validators.required,      
       ]),
-      priority: new UntypedFormControl(this.currentBucketTask.taskPriority, [
+      priority: new FormControl(this.currentBucketTask.taskPriority, [
         Validators.required,
       ]),
     });
   }
 
   onSubmitNewBucketTask(newBucketTask: BucketTask) {
-    newBucketTask.bucketId = this.id;
-    newBucketTask.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.addNewBucketTaskFormGroup.value.state);
-    newBucketTask.taskPriority = this.bucketTaskService.mapBucketTaskPriorityStringToEnum(this.addNewBucketTaskFormGroup.value.priority);
+    newBucketTask.bucketsId = this.id;
     if (this.currentBucketBucketTasks.length < this.currentBucket.maxAmountOfTasks)
     {
       this.bucketTaskService.postBucketTask(environment.bucketTaskEndpoint, newBucketTask).subscribe(
@@ -136,9 +148,7 @@ export class BucketComponent implements OnInit {
 
   onSubmitEditBucketTask(newBucketTask: BucketTask) {
     newBucketTask = this.editNewBucketTaskFormGroup.value;
-    newBucketTask.bucketId = this.id;
-    newBucketTask.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.editNewBucketTaskFormGroup.value.state);
-    newBucketTask.taskPriority = this.bucketTaskService.mapBucketTaskPriorityStringToEnum(this.editNewBucketTaskFormGroup.value.priority);
+    newBucketTask.bucketsId = this.id;
     this.bucketTaskService.putBucketTask(environment.bucketTaskEndpoint+this.currentBucketTask.id, newBucketTask).subscribe(
       (response: any) => {
         console.log(response);
@@ -214,8 +224,6 @@ export class BucketComponent implements OnInit {
   popEditBucketTaskForm(bucketTaskId: number) {
     this.showEditBucketTaskForm = !this.showEditBucketTaskForm;
     this.currentBucketTask = this.currentBucketBucketTasks.find(element => element.id == bucketTaskId);
-    this.currentBucketTask.taskState = this.bucketTaskService.mapBucketTaskStateEnumToString(this.currentBucketTask.taskState);
-    this.currentBucketTask.taskPriority = this.bucketTaskService.mapBucketTaskPriorityEnumToString(this.currentBucketTask.taskPriority);
     this.initializeEditBucketTaskForm();
   }
 

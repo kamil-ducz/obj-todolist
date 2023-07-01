@@ -10,15 +10,15 @@ public partial class Init3 : Migration
     {
         migrationBuilder.DropForeignKey(
             name: "FK_Assignees_Stats_StatsId",
-            table: "Assignees");
+            table: "Assignee");
 
         migrationBuilder.DropIndex(
             name: "IX_Assignees_StatsId",
-            table: "Assignees");
+            table: "Assignee");
 
         migrationBuilder.AlterColumn<int>(
             name: "StatsId",
-            table: "Assignees",
+            table: "Assignee",
             type: "int",
             nullable: true,
             oldClrType: typeof(int),
@@ -26,14 +26,14 @@ public partial class Init3 : Migration
 
         migrationBuilder.CreateIndex(
             name: "IX_Assignees_StatsId",
-            table: "Assignees",
+            table: "Assignee",
             column: "StatsId",
             unique: true,
             filter: "[StatsId] IS NOT NULL");
 
         migrationBuilder.AddForeignKey(
             name: "FK_Assignees_Stats_StatsId",
-            table: "Assignees",
+            table: "Assignee",
             column: "StatsId",
             principalTable: "Stats",
             principalColumn: "Id");
@@ -43,15 +43,15 @@ public partial class Init3 : Migration
     {
         migrationBuilder.DropForeignKey(
             name: "FK_Assignees_Stats_StatsId",
-            table: "Assignees");
+            table: "Assignee");
 
         migrationBuilder.DropIndex(
             name: "IX_Assignees_StatsId",
-            table: "Assignees");
+            table: "Assignee");
 
         migrationBuilder.AlterColumn<int>(
             name: "StatsId",
-            table: "Assignees",
+            table: "Assignee",
             type: "int",
             nullable: false,
             defaultValue: 0,
@@ -61,13 +61,13 @@ public partial class Init3 : Migration
 
         migrationBuilder.CreateIndex(
             name: "IX_Assignees_StatsId",
-            table: "Assignees",
+            table: "Assignee",
             column: "StatsId",
             unique: true);
 
         migrationBuilder.AddForeignKey(
             name: "FK_Assignees_Stats_StatsId",
-            table: "Assignees",
+            table: "Assignee",
             column: "StatsId",
             principalTable: "Stats",
             principalColumn: "Id",

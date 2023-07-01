@@ -1,6 +1,5 @@
-﻿using ToDoList.Api;
-using ToDoList.Domain.Interfaces;
-using ToDoList.Domain.Models;
+﻿using ToDoList.Domain.Models;
+using ToDoList.Domain.Repositories;
 
 namespace ToDoList.Infrastructure.Repositories;
 

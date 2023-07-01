@@ -2,16 +2,18 @@
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using ToDoList.Api.Asignee.Models;
-using ToDoList.Api.Assignee;
-using ToDoList.Api.Assignee.Services;
-using ToDoList.Api.Bucket;
-using ToDoList.Api.Bucket.Models;
-using ToDoList.Api.Bucket.Services;
-using ToDoList.Api.BucketTask;
-using ToDoList.Api.BucketTask.Models;
-using ToDoList.Api.BucketTask.Services;
-using ToDoList.Domain.Interfaces;
+using ToDoList.Api.Assignees.Models;
+using ToDoList.Api.Assignees.Services;
+using ToDoList.Api.Assignees.Validation;
+using ToDoList.Api.Buckets.Models;
+using ToDoList.Api.Buckets.Services;
+using ToDoList.Api.Buckets.Validation;
+using ToDoList.Api.BucketTasks.Models;
+using ToDoList.Api.BucketTasks.Services;
+using ToDoList.Api.BucketTasks.Validation;
+using ToDoList.Api.Dictionaries.Services;
+using ToDoList.Domain.Repositories;
+using ToDoList.Infrastructure;
 using ToDoList.Infrastructure.Repositories;
 
 namespace ToDoList.Api.Config;
@@ -30,20 +32,20 @@ public static class DependencyInjection
 
         services.AddScoped<IAssigneeService, AssigneeService>();
         services.AddScoped<IBucketService, BucketService>();
+        services.AddScoped<IBucketReadService, BucketReadService>();
         services.AddScoped<IBucketTaskService, BucketTaskService>();
+        services.AddScoped<IDictionaryService, DictionaryService>();
 
         services.AddScoped<IAssigneeRepository, AssigneeRepository>();
         services.AddScoped<IBucketRepository, BucketRepository>();
         services.AddScoped<IBucketTaskRepository, BucketTaskRepository>();
+        services.AddScoped<IDictionaryRepository, DictionaryRepository>();
 
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-        services.AddScoped<IValidator<AssigneeDto>, AssigneeDtoValidator>();
-        services.AddScoped<IValidator<AssigneeInsertDto>, AssigneeInsertDtoValidator>();
-        services.AddScoped<IValidator<BucketDto>, BucketDtoValidator>();
-        services.AddScoped<IValidator<BucketInsertDto>, BucketInsertDtoValidator>();
-        services.AddScoped<IValidator<BucketTaskDto>, BucketTaskDtoValidator>();
-        services.AddScoped<IValidator<BucketInsertTaskDto>, BucketInsertTaskDtoValidator>();
+        services.AddScoped<IValidator<AssigneeUpsertDto>, AssigneeUpsertDtoValidator>();
+        services.AddScoped<IValidator<BucketUpsertDto>, BucketUpsertDtoValidator>();
+        services.AddScoped<IValidator<BucketUpsertTaskDto>, BucketUpsertTaskDtoValidator>();
 
         services.AddDbContext<ToDoListDbContext>();
 

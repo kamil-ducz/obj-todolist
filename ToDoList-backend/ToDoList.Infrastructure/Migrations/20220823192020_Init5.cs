@@ -10,11 +10,11 @@ public partial class Init5 : Migration
     {
         migrationBuilder.DropForeignKey(
             name: "FK_BucketTasks_Buckets_BucketId",
-            table: "BucketTasks");
+            table: "BucketTask");
 
         migrationBuilder.DropIndex(
             name: "IX_Assignees_StatsId",
-            table: "Assignees");
+            table: "Assignee");
 
         migrationBuilder.DropColumn(
             name: "AsigneeId",
@@ -22,7 +22,7 @@ public partial class Init5 : Migration
 
         migrationBuilder.AlterColumn<int>(
             name: "BucketId",
-            table: "BucketTasks",
+            table: "BucketTask",
             type: "int",
             nullable: true,
             oldClrType: typeof(int),
@@ -30,14 +30,14 @@ public partial class Init5 : Migration
 
         migrationBuilder.CreateIndex(
             name: "IX_Assignees_StatsId",
-            table: "Assignees",
+            table: "Assignee",
             column: "StatsId");
 
         migrationBuilder.AddForeignKey(
             name: "FK_BucketTasks_Buckets_BucketId",
-            table: "BucketTasks",
+            table: "BucketTask",
             column: "BucketId",
-            principalTable: "Buckets",
+            principalTable: "Bucket",
             principalColumn: "Id");
     }
 
@@ -45,11 +45,11 @@ public partial class Init5 : Migration
     {
         migrationBuilder.DropForeignKey(
             name: "FK_BucketTasks_Buckets_BucketId",
-            table: "BucketTasks");
+            table: "BucketTask");
 
         migrationBuilder.DropIndex(
             name: "IX_Assignees_StatsId",
-            table: "Assignees");
+            table: "Assignee");
 
         migrationBuilder.AddColumn<int>(
             name: "AsigneeId",
@@ -60,7 +60,7 @@ public partial class Init5 : Migration
 
         migrationBuilder.AlterColumn<int>(
             name: "BucketId",
-            table: "BucketTasks",
+            table: "BucketTask",
             type: "int",
             nullable: false,
             defaultValue: 0,
@@ -70,15 +70,15 @@ public partial class Init5 : Migration
 
         migrationBuilder.CreateIndex(
             name: "IX_Assignees_StatsId",
-            table: "Assignees",
+            table: "Assignee",
             column: "StatsId",
             unique: true);
 
         migrationBuilder.AddForeignKey(
             name: "FK_BucketTasks_Buckets_BucketId",
-            table: "BucketTasks",
+            table: "BucketTask",
             column: "BucketId",
-            principalTable: "Buckets",
+            principalTable: "Bucket",
             principalColumn: "Id",
             onDelete: ReferentialAction.Cascade);
     }
