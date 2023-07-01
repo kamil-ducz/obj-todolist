@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
 using ToDoList.Api.BucketTasks.Models;
+using ToDoList.Domain.Models;
 using ToDoList.Domain.Repositories;
 
 namespace ToDoList.Api.BucketTasks.Services;
 
 public interface IBucketTaskService
 {
-    List<BucketTaskDto> GetBucketTasks();
+    IReadOnlyCollection<BucketTaskDto> GetBucketTasks();
     BucketTaskDto GetBucketTask(int taskId);
     int InsertBucketTask(BucketUpsertTaskDto task);
     void DeleteBucketTask(int taskId);
@@ -26,7 +26,7 @@ public class BucketTaskService : IBucketTaskService
         _mapper = mapper;
     }
 
-    public List<BucketTaskDto> GetBucketTasks()
+    public IReadOnlyCollection<BucketTaskDto> GetBucketTasks()
     {
         return _mapper.Map<List<BucketTaskDto>>(_bucketTaskRepository.GetAllBucketTasks());
     }
@@ -36,25 +36,23 @@ public class BucketTaskService : IBucketTaskService
         return _mapper.Map<BucketTaskDto>(_bucketTaskRepository.GetBucketTask(taskId));
     }
 
-    public void DeleteBucketTask(int taskId)
-    {
-        var bucketTaskToDelete = _bucketTaskRepository.GetAllBucketTasks().First(t => t.Id == taskId);
-        _bucketTaskRepository.DeleteBucketTask(bucketTaskToDelete);
-    }
-
     public int InsertBucketTask(BucketUpsertTaskDto bucketTaskDto)
     {
-        var mappedBucketTask = _mapper.Map<Domain.Models.BucketTask>(bucketTaskDto);
-        _bucketTaskRepository.InsertBucketTask(mappedBucketTask);
-
-        return mappedBucketTask.Id;
+        var bucketTask = _mapper.Map<BucketTask>(bucketTaskDto);
+        _bucketTaskRepository.InsertBucketTask(bucketTask);
+        return bucketTask.Id;
     }
 
     public void UpdateBucketTask(int bucketTaskId, BucketUpsertTaskDto bucketTaskDto)
     {
-        var mappedBucketTask = _mapper.Map<Domain.Models.BucketTask>(bucketTaskDto);
-        mappedBucketTask.Id = bucketTaskId;
-
-        _bucketTaskRepository.UpdateBucketTask(mappedBucketTask);
+        var bucketTask = _bucketTaskRepository.GetBucketTask(bucketTaskId);
+        _mapper.Map(bucketTaskDto, bucketTask);
+        _bucketTaskRepository.UpdateBucketTask(bucketTask);
+    }
+    
+    public void DeleteBucketTask(int taskId)
+    {
+        var bucketTask = _bucketTaskRepository.GetBucketTask(taskId);
+        _bucketTaskRepository.DeleteBucketTask(bucketTask);
     }
 }

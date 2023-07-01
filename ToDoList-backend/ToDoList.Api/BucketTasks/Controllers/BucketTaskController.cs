@@ -21,7 +21,7 @@ public class BucketTaskController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<BucketTaskDto> Get()
+    public IReadOnlyCollection<BucketTaskDto> Get()
     {
         return _bucketTaskService.GetBucketTasks();
     }
