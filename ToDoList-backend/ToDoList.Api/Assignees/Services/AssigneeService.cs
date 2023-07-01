@@ -35,24 +35,23 @@ public class AssigneeService : IAssigneeService
         return _mapper.Map<AssigneeDto>(_assigneeRepository.GetAssignee(assigneeId));
     }
 
-    public void DeleteAssignee(int assigneeId)
-    {
-        var assignee = _assigneeRepository.GetAssignee(assigneeId);
-        _assigneeRepository.DeleteAssignee(assignee);
-    }
-
     public int InsertAssignee(AssigneeUpsertDto assigneeDto)
     {
-        var mappedAssignee = _mapper.Map<Domain.Models.Assignee>(assigneeDto);
-        _assigneeRepository.InsertAssignee(mappedAssignee);
-        return mappedAssignee.Id;
+        var assignee = _mapper.Map<Domain.Models.Assignee>(assigneeDto);
+        _assigneeRepository.InsertAssignee(assignee);
+        return assignee.Id;
     }
 
     public void UpdateAssignee(AssigneeUpsertDto assigneeDto, int assigneeId)
     {
-        var mappedAssignee = _mapper.Map<Domain.Models.Assignee>(assigneeDto);
-        mappedAssignee.Id = assigneeId;
-
-        _assigneeRepository.UpdateAssignee(mappedAssignee);
+        var assignee = _assigneeRepository.GetAssignee(assigneeId);
+        _mapper.Map(assigneeDto, assignee);
+        _assigneeRepository.UpdateAssignee(assignee);
+    }
+    
+    public void DeleteAssignee(int assigneeId)
+    {
+        var assignee = _assigneeRepository.GetAssignee(assigneeId);
+        _assigneeRepository.DeleteAssignee(assignee);
     }
 }
