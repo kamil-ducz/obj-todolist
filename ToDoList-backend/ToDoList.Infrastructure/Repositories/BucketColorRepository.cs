@@ -1,5 +1,4 @@
-﻿using ToDoList.Domain.Enums;
-using ToDoList.Domain.Models;
+﻿using ToDoList.Domain.Models;
 using ToDoList.Domain.Repositories;
 
 namespace ToDoList.Infrastructure.Repositories;
@@ -18,13 +17,13 @@ public class BucketColorRepository : IBucketColorRepository
         return _toDoListDbContext.BucketColor.ToList();
     }
 
-    public int GetBucketColorIdByName(string bucketColorName)
+    public BucketColor GetBucketColorByName(string bucketColorName)
     {
-        return _toDoListDbContext.BucketColor.First(bc => bc.Name == bucketColorName).Id;
+        return _toDoListDbContext.BucketColor.First(bc => bc.Name == bucketColorName);
     }
 
-    public string GetBucketColorNameById(int bucketColorId)
+    public BucketColor GetBucketColorById(int bucketColorId)
     {
-        return _toDoListDbContext.BucketColor.First(bc => bc.Id == bucketColorId).Name;
+        return _toDoListDbContext.BucketColor.First(bc => bc.Id == bucketColorId);
     }
 }
