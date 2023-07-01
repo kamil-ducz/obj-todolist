@@ -10,15 +10,15 @@ public partial class Assignee_StatsRelationFix2 : Migration
     {
         migrationBuilder.DropForeignKey(
             name: "FK_Assignees_Stats_StatsId",
-            table: "Assignee");
+            table: "Assignees");
 
         migrationBuilder.DropIndex(
             name: "IX_Assignees_StatsId",
-            table: "Assignee");
+            table: "Assignees");
 
         migrationBuilder.DropColumn(
             name: "StatsId",
-            table: "Assignee");
+            table: "Assignees");
 
         migrationBuilder.AddColumn<int>(
             name: "AssigneeId",
@@ -35,7 +35,7 @@ public partial class Assignee_StatsRelationFix2 : Migration
             name: "FK_Stats_Assignees_AssigneeId",
             table: "Stats",
             column: "AssigneeId",
-            principalTable: "Assignee",
+            principalTable: "Assignees",
             principalColumn: "Id");
     }
 
@@ -55,18 +55,18 @@ public partial class Assignee_StatsRelationFix2 : Migration
 
         migrationBuilder.AddColumn<int>(
             name: "StatsId",
-            table: "Assignee",
+            table: "Assignees",
             type: "int",
             nullable: true);
 
         migrationBuilder.CreateIndex(
             name: "IX_Assignees_StatsId",
-            table: "Assignee",
+            table: "Assignees",
             column: "StatsId");
 
         migrationBuilder.AddForeignKey(
             name: "FK_Assignees_Stats_StatsId",
-            table: "Assignee",
+            table: "Assignees",
             column: "StatsId",
             principalTable: "Stats",
             principalColumn: "Id");

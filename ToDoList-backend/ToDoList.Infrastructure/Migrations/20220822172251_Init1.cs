@@ -9,7 +9,7 @@ public partial class Init1 : Migration
     protected override void Up(MigrationBuilder migrationBuilder)
     {
         migrationBuilder.CreateTable(
-            name: "Bucket",
+            name: "Buckets",
             columns: table => new
             {
                 Id = table.Column<int>(type: "int", nullable: false)
@@ -44,7 +44,7 @@ public partial class Init1 : Migration
             });
 
         migrationBuilder.CreateTable(
-            name: "Assignee",
+            name: "Assignees",
             columns: table => new
             {
                 Id = table.Column<int>(type: "int", nullable: false)
@@ -64,7 +64,7 @@ public partial class Init1 : Migration
             });
 
         migrationBuilder.CreateTable(
-            name: "BucketTask",
+            name: "BucketTasks",
             columns: table => new
             {
                 Id = table.Column<int>(type: "int", nullable: false)
@@ -82,43 +82,43 @@ public partial class Init1 : Migration
                 table.ForeignKey(
                     name: "FK_BucketTasks_Assignees_AssigneeId",
                     column: x => x.AssigneeId,
-                    principalTable: "Assignee",
+                    principalTable: "Assignees",
                     principalColumn: "Id");
                 table.ForeignKey(
                     name: "FK_BucketTasks_Buckets_BucketId",
                     column: x => x.BucketId,
-                    principalTable: "Bucket",
+                    principalTable: "Buckets",
                     principalColumn: "Id",
                     onDelete: ReferentialAction.Cascade);
             });
 
         migrationBuilder.CreateIndex(
             name: "IX_Assignees_StatsId",
-            table: "Assignee",
+            table: "Assignees",
             column: "StatsId",
             unique: true);
 
         migrationBuilder.CreateIndex(
             name: "IX_BucketTasks_AssigneeId",
-            table: "BucketTask",
+            table: "BucketTasks",
             column: "AssigneeId");
 
         migrationBuilder.CreateIndex(
             name: "IX_BucketTasks_BucketId",
-            table: "BucketTask",
+            table: "BucketTasks",
             column: "BucketId");
     }
 
     protected override void Down(MigrationBuilder migrationBuilder)
     {
         migrationBuilder.DropTable(
-            name: "BucketTask");
+            name: "BucketTasks");
 
         migrationBuilder.DropTable(
-            name: "Assignee");
+            name: "Assignees");
 
         migrationBuilder.DropTable(
-            name: "Bucket");
+            name: "Buckets");
 
         migrationBuilder.DropTable(
             name: "Stats");

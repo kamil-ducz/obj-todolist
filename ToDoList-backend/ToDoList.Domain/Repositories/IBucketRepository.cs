@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ToDoList.Domain.Models;
 
-namespace ToDoList.Domain.Repositories;
+namespace ToDoList.Domain.Interfaces;
 
 public interface IBucketRepository
 {

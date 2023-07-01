@@ -62,7 +62,6 @@ export class BucketsComponent implements OnInit {
     this.bucketService.deleteBucket(environment.bucketEndpoint+id).subscribe(
         (response: any) => {
           this.showModal = !this.showModal;
-          this.toastr.success("Bucket deleted successfully.");
           this.refreshBucketAndBucketsComponents();
         },
         (error: any) => {
@@ -74,7 +73,9 @@ export class BucketsComponent implements OnInit {
   calculateTotalToDoForBucket(id: number) {
     if (this.bucketTasks)
     {
-      return this.bucketTasks.filter(task => task.bucketsId === id && task.taskState === 0).length ?? 0;
+      const tasksForBucket = this.bucketTasks.filter(task => task.bucketId === id && task.taskState === 0);
+
+      return tasksForBucket.length;
     }
     else
     {
@@ -85,7 +86,15 @@ export class BucketsComponent implements OnInit {
   elementToRemove: Bucket;
 
   findElementToRemoveById(id: number) {
-    return this.buckets.find(element => element.id == id) ?? null;
+    const foundElement = this.buckets.find(element => element.id == id);
+    if(foundElement)
+    {
+      return foundElement;
+    }
+    else
+    {
+      return null;
+    }
   }
 
   showModal = false;

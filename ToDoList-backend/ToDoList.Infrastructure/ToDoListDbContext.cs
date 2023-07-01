@@ -6,7 +6,7 @@ using ToDoList.Infrastructure.DbContextConfigs;
 // Declared db sets will never be null
 #pragma warning disable CS8618
 
-namespace ToDoList.Infrastructure;
+namespace ToDoList.Api;
 
 public class ToDoListDbContext : DbContext
 {
@@ -19,7 +19,11 @@ public class ToDoListDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ToDoListDbContext).Assembly);
+        modelBuilder.ApplyConfiguration(new AssigneeConfiguration());
+
+        modelBuilder.ApplyConfiguration(new BucketConfiguration());
+
+        modelBuilder.ApplyConfiguration(new BucketTaskConfiguration());
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -30,8 +34,4 @@ public class ToDoListDbContext : DbContext
     public DbSet<Assignee> Assignees { get; set; }
     public DbSet<Bucket> Buckets { get; set; }
     public DbSet<BucketTask> BucketTasks { get; set; }
-    public DbSet<BucketCategory> BucketCategory { get; set; }
-    public DbSet<BucketColor> BucketColor { get; set; }
-    public DbSet<TaskPriority> TaskPriorities { get; set; }
-    public DbSet<TaskState> TaskStates { get; set; }
 }

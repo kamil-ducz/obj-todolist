@@ -10,11 +10,11 @@ public partial class StatsIdAllowNull : Migration
     {
         migrationBuilder.DropForeignKey(
             name: "FK_Assignees_Stats_StatsId",
-            table: "Assignee");
+            table: "Assignees");
 
         migrationBuilder.AddForeignKey(
             name: "FK_Assignees_Stats_StatsId",
-            table: "Assignee",
+            table: "Assignees",
             column: "StatsId",
             principalTable: "Stats",
             principalColumn: "Id");
@@ -24,11 +24,11 @@ public partial class StatsIdAllowNull : Migration
     {
         migrationBuilder.DropForeignKey(
             name: "FK_Assignees_Stats_StatsId",
-            table: "Assignee");
+            table: "Assignees");
 
         migrationBuilder.AddForeignKey(
             name: "FK_Assignees_Stats_StatsId",
-            table: "Assignee",
+            table: "Assignees",
             column: "StatsId",
             principalTable: "Stats",
             principalColumn: "Id",

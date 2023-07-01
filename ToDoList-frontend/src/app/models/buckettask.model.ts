@@ -4,5 +4,5 @@ export type BucketTask = {
     description: string;
     taskState: any;
     taskPriority: any;
-    bucketsId: number;
+    bucketId: number;
 }
