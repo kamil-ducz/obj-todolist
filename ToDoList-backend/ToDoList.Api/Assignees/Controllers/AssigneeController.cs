@@ -14,10 +14,10 @@ public class AssigneeController : ControllerBase
     private readonly IAssigneeService _assigneeService;
     private readonly IValidator<AssigneeUpsertDto> _assigneeInsertDtoValidator;
 
-    public AssigneeController(IAssigneeService assigneeService, IValidator<AssigneeUpsertDto> assigneeDTOValidator)
+    public AssigneeController(IAssigneeService assigneeService, IValidator<AssigneeUpsertDto> assigneeDtoValidator)
     {
         _assigneeService = assigneeService;
-        _assigneeInsertDtoValidator = assigneeDTOValidator;
+        _assigneeInsertDtoValidator = assigneeDtoValidator;
     }
 
     [HttpGet]
@@ -42,10 +42,10 @@ public class AssigneeController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public IActionResult Put(AssigneeUpsertDto assigneeInsertDTO, int id)
+    public IActionResult Put(AssigneeUpsertDto assigneeInsertDto, int id)
     {
-        _assigneeInsertDtoValidator.ValidateAndThrow(assigneeInsertDTO);
-        _assigneeService.UpdateAssignee(assigneeInsertDTO, id);
+        _assigneeInsertDtoValidator.ValidateAndThrow(assigneeInsertDto);
+        _assigneeService.UpdateAssignee(assigneeInsertDto, id);
 
         return Ok(_assigneeService.GetAssignee(id));
     }
