@@ -5,7 +5,7 @@ using ToDoList.Api.Config;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-DependencyInjection.AddApplicationServices(builder.Services);
+builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 
