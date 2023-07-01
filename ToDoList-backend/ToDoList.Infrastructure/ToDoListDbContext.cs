@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using ToDoList.Domain.Enums;
 using ToDoList.Domain.Models;
 using ToDoList.Infrastructure.DbContextConfigs;
 
@@ -25,6 +24,8 @@ public class ToDoListDbContext : DbContext
         modelBuilder.ApplyConfiguration(new BucketCategoryConfiguration());
         modelBuilder.ApplyConfiguration(new BucketColorConfiguration());
         modelBuilder.ApplyConfiguration(new BucketTaskConfiguration());
+        modelBuilder.ApplyConfiguration(new TaskPriorityConfiguration());
+        modelBuilder.ApplyConfiguration(new TaskStateConfiguration());
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -37,4 +38,6 @@ public class ToDoListDbContext : DbContext
     public DbSet<BucketTask> BucketTasks { get; set; }
     public DbSet<BucketCategory> BucketCategory { get; set; }
     public DbSet<BucketColor> BucketColor { get; set; }
+    public DbSet<TaskPriority> TaskPriorities { get; set; }
+    public DbSet<TaskState> TaskStates { get; set; }
 }
