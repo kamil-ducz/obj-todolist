@@ -12,12 +12,12 @@ public class AssigneeRepository : IAssigneeRepository
         this._toDoListDbContext = toDoListDbContext;
     }
 
-    public IReadOnlyList<Assignees> GetAllAssignees()
+    public IReadOnlyList<Assignee> GetAllAssignees()
     {
         return _toDoListDbContext.Assignees!.ToList();
     }
 
-    public Assignees GetAssignee(int assigneeId)
+    public Assignee GetAssignee(int assigneeId)
     {
         return _toDoListDbContext.Assignees!.First(a => a.Id == assigneeId);
     }
@@ -29,13 +29,13 @@ public class AssigneeRepository : IAssigneeRepository
         _toDoListDbContext.SaveChanges();
     }
 
-    public void InsertAssignee(Assignees assignee)
+    public void InsertAssignee(Assignee assignee)
     {
         _toDoListDbContext.Assignees!.Add(assignee);
         _toDoListDbContext.SaveChanges();
     }
 
-    public void UpdateAssignee(Assignees assigneeToUpdate)
+    public void UpdateAssignee(Assignee assigneeToUpdate)
     {
         _toDoListDbContext.Assignees!.Update(assigneeToUpdate);
         _toDoListDbContext.SaveChanges();

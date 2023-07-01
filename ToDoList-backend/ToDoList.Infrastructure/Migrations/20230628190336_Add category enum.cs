@@ -10,7 +10,7 @@ namespace ToDoList.Infrastructure.Migrations
         {
             migrationBuilder.RenameColumn(
                 name: "Category",
-                table: "Buckets",
+                table: "Bucket",
                 newName: "BucketCategoryId");
 
             migrationBuilder.CreateTable(
@@ -42,21 +42,21 @@ namespace ToDoList.Infrastructure.Migrations
                 values: new object[] { 3, "Hobby" });
 
             migrationBuilder.UpdateData(
-                table: "Buckets",
+                table: "Bucket",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "BucketCategoryId",
                 value: 1);
 
             migrationBuilder.UpdateData(
-                table: "Buckets",
+                table: "Bucket",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "BucketCategoryId",
                 value: 2);
 
             migrationBuilder.UpdateData(
-                table: "Buckets",
+                table: "Bucket",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "BucketCategoryId",
@@ -64,12 +64,12 @@ namespace ToDoList.Infrastructure.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Buckets_BucketCategoryId",
-                table: "Buckets",
+                table: "Bucket",
                 column: "BucketCategoryId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Buckets_Category_BucketCategoryId",
-                table: "Buckets",
+                table: "Bucket",
                 column: "BucketCategoryId",
                 principalTable: "Category",
                 principalColumn: "Id",
@@ -80,36 +80,36 @@ namespace ToDoList.Infrastructure.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_Buckets_Category_BucketCategoryId",
-                table: "Buckets");
+                table: "Bucket");
 
             migrationBuilder.DropTable(
                 name: "Category");
 
             migrationBuilder.DropIndex(
                 name: "IX_Buckets_BucketCategoryId",
-                table: "Buckets");
+                table: "Bucket");
 
             migrationBuilder.RenameColumn(
                 name: "BucketCategoryId",
-                table: "Buckets",
+                table: "Bucket",
                 newName: "Category");
 
             migrationBuilder.UpdateData(
-                table: "Buckets",
+                table: "Bucket",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Category",
                 value: 0);
 
             migrationBuilder.UpdateData(
-                table: "Buckets",
+                table: "Bucket",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "Category",
                 value: 0);
 
             migrationBuilder.UpdateData(
-                table: "Buckets",
+                table: "Bucket",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "Category",

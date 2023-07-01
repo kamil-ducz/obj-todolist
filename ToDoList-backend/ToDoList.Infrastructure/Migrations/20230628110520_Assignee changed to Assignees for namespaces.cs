@@ -13,7 +13,7 @@ namespace ToDoList.Infrastructure.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "Name",
-                table: "BucketTasks",
+                table: "BucketTask",
                 type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "",
@@ -23,7 +23,7 @@ namespace ToDoList.Infrastructure.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "Name",
-                table: "Buckets",
+                table: "Bucket",
                 type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "",
@@ -33,7 +33,7 @@ namespace ToDoList.Infrastructure.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "Name",
-                table: "Assignees",
+                table: "Assignee",
                 type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "",
@@ -54,13 +54,13 @@ namespace ToDoList.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_AssigneesBucketTask_Assignees_AssigneesId",
                         column: x => x.AssigneesId,
-                        principalTable: "Assignees",
+                        principalTable: "Assignee",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AssigneesBucketTask_BucketTasks_BucketTasksId",
                         column: x => x.BucketTasksId,
-                        principalTable: "BucketTasks",
+                        principalTable: "BucketTask",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -78,7 +78,7 @@ namespace ToDoList.Infrastructure.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "Name",
-                table: "BucketTasks",
+                table: "BucketTask",
                 type: "nvarchar(max)",
                 nullable: true,
                 oldClrType: typeof(string),
@@ -86,7 +86,7 @@ namespace ToDoList.Infrastructure.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "Name",
-                table: "Buckets",
+                table: "Bucket",
                 type: "nvarchar(max)",
                 nullable: true,
                 oldClrType: typeof(string),
@@ -94,7 +94,7 @@ namespace ToDoList.Infrastructure.Migrations
 
             migrationBuilder.AlterColumn<string>(
                 name: "Name",
-                table: "Assignees",
+                table: "Assignee",
                 type: "nvarchar(max)",
                 nullable: true,
                 oldClrType: typeof(string),
@@ -113,13 +113,13 @@ namespace ToDoList.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_AssigneeBucketTask_Assignees_AssigneesId",
                         column: x => x.AssigneesId,
-                        principalTable: "Assignees",
+                        principalTable: "Assignee",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AssigneeBucketTask_BucketTasks_BucketTasksId",
                         column: x => x.BucketTasksId,
-                        principalTable: "BucketTasks",
+                        principalTable: "BucketTask",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });

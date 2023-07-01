@@ -32,7 +32,7 @@ public partial class Removestatsentity : Migration
                 table.ForeignKey(
                     name: "FK_Stats_Assignees_AssigneeId",
                     column: x => x.AssigneeId,
-                    principalTable: "Assignees",
+                    principalTable: "Assignee",
                     principalColumn: "Id");
             });
 

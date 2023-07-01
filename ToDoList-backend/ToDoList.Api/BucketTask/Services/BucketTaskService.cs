@@ -45,7 +45,7 @@ public class BucketTaskService : IBucketTaskService
 
     public int InsertBucketTask(BucketUpsertTaskDto bucketTaskDTO)
     {
-        var mappedBucketTask = _mapper.Map<BucketTasks>(bucketTaskDTO);
+        var mappedBucketTask = _mapper.Map<Domain.Models.BucketTask>(bucketTaskDTO);
         _bucketTaskRepository.InsertBucketTask(mappedBucketTask);
 
         return mappedBucketTask.Id;
@@ -53,7 +53,7 @@ public class BucketTaskService : IBucketTaskService
 
     public void UpdateBucketTask(int bucketTaskId, BucketUpsertTaskDto bucketTaskDTO)
     {
-        var mappedBucketTask = _mapper.Map<BucketTasks>(bucketTaskDTO);
+        var mappedBucketTask = _mapper.Map<Domain.Models.BucketTask>(bucketTaskDTO);
         mappedBucketTask.Id = bucketTaskId;
 
         _bucketTaskRepository.UpdateBucketTask(mappedBucketTask);

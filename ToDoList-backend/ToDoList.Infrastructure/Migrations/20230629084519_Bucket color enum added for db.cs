@@ -10,7 +10,7 @@ namespace ToDoList.Infrastructure.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_Buckets_Category_BucketCategoryId",
-                table: "Buckets");
+                table: "Bucket");
 
             migrationBuilder.DropPrimaryKey(
                 name: "PK_Category",
@@ -22,7 +22,7 @@ namespace ToDoList.Infrastructure.Migrations
 
             migrationBuilder.RenameColumn(
                 name: "BucketColor",
-                table: "Buckets",
+                table: "Bucket",
                 newName: "BucketColorId");
 
             migrationBuilder.AddPrimaryKey(
@@ -57,21 +57,21 @@ namespace ToDoList.Infrastructure.Migrations
                 });
 
             migrationBuilder.UpdateData(
-                table: "Buckets",
+                table: "Bucket",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "BucketColorId",
                 value: 1);
 
             migrationBuilder.UpdateData(
-                table: "Buckets",
+                table: "Bucket",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "BucketColorId",
                 value: 2);
 
             migrationBuilder.UpdateData(
-                table: "Buckets",
+                table: "Bucket",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "BucketColorId",
@@ -79,12 +79,12 @@ namespace ToDoList.Infrastructure.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Buckets_BucketColorId",
-                table: "Buckets",
+                table: "Bucket",
                 column: "BucketColorId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Buckets_BucketCategory_BucketCategoryId",
-                table: "Buckets",
+                table: "Bucket",
                 column: "BucketCategoryId",
                 principalTable: "BucketCategory",
                 principalColumn: "Id",
@@ -92,7 +92,7 @@ namespace ToDoList.Infrastructure.Migrations
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Buckets_BucketColor_BucketColorId",
-                table: "Buckets",
+                table: "Bucket",
                 column: "BucketColorId",
                 principalTable: "BucketColor",
                 principalColumn: "Id",
@@ -103,18 +103,18 @@ namespace ToDoList.Infrastructure.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_Buckets_BucketCategory_BucketCategoryId",
-                table: "Buckets");
+                table: "Bucket");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Buckets_BucketColor_BucketColorId",
-                table: "Buckets");
+                table: "Bucket");
 
             migrationBuilder.DropTable(
                 name: "BucketColor");
 
             migrationBuilder.DropIndex(
                 name: "IX_Buckets_BucketColorId",
-                table: "Buckets");
+                table: "Bucket");
 
             migrationBuilder.DropPrimaryKey(
                 name: "PK_BucketCategory",
@@ -126,7 +126,7 @@ namespace ToDoList.Infrastructure.Migrations
 
             migrationBuilder.RenameColumn(
                 name: "BucketColorId",
-                table: "Buckets",
+                table: "Bucket",
                 newName: "BucketColor");
 
             migrationBuilder.AddPrimaryKey(
@@ -135,21 +135,21 @@ namespace ToDoList.Infrastructure.Migrations
                 column: "Id");
 
             migrationBuilder.UpdateData(
-                table: "Buckets",
+                table: "Bucket",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "BucketColor",
                 value: 0);
 
             migrationBuilder.UpdateData(
-                table: "Buckets",
+                table: "Bucket",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "BucketColor",
                 value: 0);
 
             migrationBuilder.UpdateData(
-                table: "Buckets",
+                table: "Bucket",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "BucketColor",
@@ -157,7 +157,7 @@ namespace ToDoList.Infrastructure.Migrations
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Buckets_Category_BucketCategoryId",
-                table: "Buckets",
+                table: "Bucket",
                 column: "BucketCategoryId",
                 principalTable: "Category",
                 principalColumn: "Id",

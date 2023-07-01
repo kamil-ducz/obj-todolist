@@ -10,23 +10,23 @@ namespace ToDoList.Infrastructure.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_BucketTasks_Buckets_BucketId",
-                table: "BucketTasks");
+                table: "BucketTask");
 
             migrationBuilder.RenameColumn(
                 name: "BucketId",
-                table: "BucketTasks",
+                table: "BucketTask",
                 newName: "BucketsId");
 
             migrationBuilder.RenameIndex(
                 name: "IX_BucketTasks_BucketId",
-                table: "BucketTasks",
+                table: "BucketTask",
                 newName: "IX_BucketTasks_BucketsId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_BucketTasks_Buckets_BucketsId",
-                table: "BucketTasks",
+                table: "BucketTask",
                 column: "BucketsId",
-                principalTable: "Buckets",
+                principalTable: "Bucket",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }
@@ -35,23 +35,23 @@ namespace ToDoList.Infrastructure.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_BucketTasks_Buckets_BucketsId",
-                table: "BucketTasks");
+                table: "BucketTask");
 
             migrationBuilder.RenameColumn(
                 name: "BucketsId",
-                table: "BucketTasks",
+                table: "BucketTask",
                 newName: "BucketId");
 
             migrationBuilder.RenameIndex(
                 name: "IX_BucketTasks_BucketsId",
-                table: "BucketTasks",
+                table: "BucketTask",
                 newName: "IX_BucketTasks_BucketId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_BucketTasks_Buckets_BucketId",
-                table: "BucketTasks",
+                table: "BucketTask",
                 column: "BucketId",
-                principalTable: "Buckets",
+                principalTable: "Bucket",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
         }

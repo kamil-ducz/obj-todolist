@@ -118,7 +118,7 @@ namespace ToDoList.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ToDoList.Domain.Models.Assignees", b =>
+            modelBuilder.Entity("ToDoList.Domain.Models.Assignee", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -132,7 +132,7 @@ namespace ToDoList.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Assignees");
+                    b.ToTable("Assignee");
 
                     b.HasData(
                         new
@@ -142,7 +142,7 @@ namespace ToDoList.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ToDoList.Domain.Models.Buckets", b =>
+            modelBuilder.Entity("ToDoList.Domain.Models.Bucket", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -175,7 +175,7 @@ namespace ToDoList.Infrastructure.Migrations
 
                     b.HasIndex("BucketColorId");
 
-                    b.ToTable("Buckets");
+                    b.ToTable("Bucket");
 
                     b.HasData(
                         new
@@ -207,7 +207,7 @@ namespace ToDoList.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ToDoList.Domain.Models.BucketTasks", b =>
+            modelBuilder.Entity("ToDoList.Domain.Models.BucketTask", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -235,7 +235,7 @@ namespace ToDoList.Infrastructure.Migrations
 
                     b.HasIndex("BucketsId");
 
-                    b.ToTable("BucketTasks");
+                    b.ToTable("BucketTask");
 
                     b.HasData(
                         new
@@ -290,20 +290,20 @@ namespace ToDoList.Infrastructure.Migrations
 
             modelBuilder.Entity("AssigneesBucketTasks", b =>
                 {
-                    b.HasOne("ToDoList.Domain.Models.Assignees", null)
+                    b.HasOne("ToDoList.Domain.Models.Assignee", null)
                         .WithMany()
                         .HasForeignKey("AssigneesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ToDoList.Domain.Models.BucketTasks", null)
+                    b.HasOne("ToDoList.Domain.Models.BucketTask", null)
                         .WithMany()
                         .HasForeignKey("BucketTasksId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ToDoList.Domain.Models.Buckets", b =>
+            modelBuilder.Entity("ToDoList.Domain.Models.Bucket", b =>
                 {
                     b.HasOne("ToDoList.Domain.Enums.BucketCategory", "BucketCategory")
                         .WithMany()
@@ -322,18 +322,18 @@ namespace ToDoList.Infrastructure.Migrations
                     b.Navigation("BucketColor");
                 });
 
-            modelBuilder.Entity("ToDoList.Domain.Models.BucketTasks", b =>
+            modelBuilder.Entity("ToDoList.Domain.Models.BucketTask", b =>
                 {
-                    b.HasOne("ToDoList.Domain.Models.Buckets", null)
-                        .WithMany("BucketTasks")
+                    b.HasOne("ToDoList.Domain.Models.Bucket", null)
+                        .WithMany("BucketTask")
                         .HasForeignKey("BucketsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ToDoList.Domain.Models.Buckets", b =>
+            modelBuilder.Entity("ToDoList.Domain.Models.Bucket", b =>
                 {
-                    b.Navigation("BucketTasks");
+                    b.Navigation("BucketTask");
                 });
 #pragma warning restore 612, 618
         }

@@ -24,13 +24,13 @@ namespace ToDoList.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_AssigneesBucketTasks_Assignees_AssigneesId",
                         column: x => x.AssigneesId,
-                        principalTable: "Assignees",
+                        principalTable: "Assignee",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AssigneesBucketTasks_BucketTasks_BucketTasksId",
                         column: x => x.BucketTasksId,
-                        principalTable: "BucketTasks",
+                        principalTable: "BucketTask",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -59,13 +59,13 @@ namespace ToDoList.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_AssigneesBucketTask_Assignees_AssigneesId",
                         column: x => x.AssigneesId,
-                        principalTable: "Assignees",
+                        principalTable: "Assignee",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AssigneesBucketTask_BucketTasks_BucketTasksId",
                         column: x => x.BucketTasksId,
-                        principalTable: "BucketTasks",
+                        principalTable: "BucketTask",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });

@@ -9,21 +9,21 @@ namespace ToDoList.Infrastructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.UpdateData(
-                table: "Buckets",
+                table: "Bucket",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Name",
                 value: "Objectivity");
 
             migrationBuilder.UpdateData(
-                table: "Buckets",
+                table: "Bucket",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "Name",
                 value: "Kitchen");
 
             migrationBuilder.UpdateData(
-                table: "Buckets",
+                table: "Bucket",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "Name",
@@ -33,21 +33,21 @@ namespace ToDoList.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.UpdateData(
-                table: "Buckets",
+                table: "Bucket",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "Name",
                 value: "Work");
 
             migrationBuilder.UpdateData(
-                table: "Buckets",
+                table: "Bucket",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "Name",
                 value: "Home");
 
             migrationBuilder.UpdateData(
-                table: "Buckets",
+                table: "Bucket",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "Name",

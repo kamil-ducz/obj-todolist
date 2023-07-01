@@ -55,7 +55,7 @@ public class BucketService : IBucketService
 
     public int InsertBucket(BucketUpsertDto bucketDTO)
     {
-        var mappedBucket = _mapper.Map<Buckets>(bucketDTO);
+        var mappedBucket = _mapper.Map<Domain.Models.Bucket>(bucketDTO);
         _bucketRepository.InsertBucket(mappedBucket);
 
         return mappedBucket.Id;
@@ -63,7 +63,7 @@ public class BucketService : IBucketService
 
     public void UpdateBucket(int id, BucketUpsertDto bucketDTO)
     {
-        var mappedBucket = _mapper.Map<Buckets>(bucketDTO);
+        var mappedBucket = _mapper.Map<Domain.Models.Bucket>(bucketDTO);
         mappedBucket.Id = id;
 
         _bucketRepository.UpdateBucket(mappedBucket);
