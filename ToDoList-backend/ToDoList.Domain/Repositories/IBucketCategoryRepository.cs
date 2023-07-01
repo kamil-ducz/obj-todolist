@@ -6,6 +6,6 @@ namespace ToDoList.Domain.Repositories;
 public interface IBucketCategoryRepository
 {
     IReadOnlyList<BucketCategory> GetAllBucketCategories();
-    int GetBucketCategoryIdByName(string bucketCategoryName);
-    string GetBucketCategoryNameById(int bucketCategoryId);
+    BucketCategory GetBucketCategoryByName(string bucketCategoryName);
+    BucketCategory GetBucketCategoryById(int bucketCategoryId);
 }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using ToDoList.Api.Dictionaries.Services;
-using ToDoList.Domain.Enums;
 using ToDoList.Domain.Models;
 
 namespace ToDoList.Api.Dictionaries.Controllers;
@@ -24,22 +23,14 @@ public class BucketCategoryController : ControllerBase
     }
 
     [HttpGet("name/{bucketCategoryName}")]
-    public BucketCategory GetBucketCategoryIdByName(string bucketCategoryName)
+    public BucketCategory GetBucketCategoryByName(string bucketCategoryName)
     {
-        var bucket = new BucketCategory
-        {
-            Id = _bucketCategoryService.GetBucketCategoryIdByName(bucketCategoryName)
-        };
-        return bucket;
+        return _bucketCategoryService.GetBucketCategoryByName(bucketCategoryName);
     }
 
     [HttpGet("{bucketCategoryId}")]
-    public BucketCategory GetBucketCategoryNameById(int bucketCategoryId)
+    public BucketCategory GetBucketCategoryById(int bucketCategoryId)
     {
-        var bucket = new BucketCategory
-        {
-            Name = _bucketCategoryService.GetBucketCategoryNameById(bucketCategoryId)
-        };
-        return bucket;
+        return _bucketCategoryService.GetBucketCategoryById(bucketCategoryId);
     }
 }

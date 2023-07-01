@@ -1,5 +1,4 @@
-﻿using ToDoList.Domain.Enums;
-using ToDoList.Domain.Models;
+﻿using ToDoList.Domain.Models;
 using ToDoList.Domain.Repositories;
 
 namespace ToDoList.Infrastructure.Repositories;
@@ -18,13 +17,13 @@ public class BucketCategoryRepository : IBucketCategoryRepository
         return _toDoListDbContext.BucketCategory.ToList();
     }
 
-    public int GetBucketCategoryIdByName(string bucketCategoryName)
+    public BucketCategory GetBucketCategoryByName(string bucketCategoryName)
     {
-        return _toDoListDbContext.BucketCategory.First(bcat => bcat.Name == bucketCategoryName).Id;
+        return _toDoListDbContext.BucketCategory.First(x => x.Name == bucketCategoryName);
     }
 
-    public string GetBucketCategoryNameById(int bucketCategoryId)
+    public BucketCategory GetBucketCategoryById(int bucketCategoryId)
     {
-        return _toDoListDbContext.BucketCategory.First(bcat => bcat.Id == bucketCategoryId).Name;
+        return _toDoListDbContext.BucketCategory.First(x => x.Id == bucketCategoryId);
     }
 }
