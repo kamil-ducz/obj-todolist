@@ -22,21 +22,15 @@ public class BucketService : IBucketService
 {
     private readonly IBucketRepository _bucketRepository;
     private readonly IBucketTaskRepository _bucketTaskRepository;
-    private readonly IBucketColorRepository _bucketColorRepository;
-    private readonly IBucketCategoryRepository _bucketCategoryRepository;
     private readonly IMapper _mapper;
 
     public BucketService(
         IBucketRepository bucketRepository,
         IBucketTaskRepository bucketTaskRepository,
-        IBucketColorRepository bucketColorRepository,
-        IBucketCategoryRepository bucketCategoryRepository,
         IMapper mapper)
     {
         _bucketRepository = bucketRepository;
         _bucketTaskRepository = bucketTaskRepository;
-        _bucketColorRepository = bucketColorRepository;
-        _bucketCategoryRepository = bucketCategoryRepository;
         _mapper = mapper;
     }
 

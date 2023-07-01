@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using ToDoList.Api.Dictionaries.Models;
 using ToDoList.Api.Dictionaries.Services;
-using ToDoList.Domain.Enums;
-using ToDoList.Domain.Models;
 
 namespace ToDoList.Api.Dictionaries.Controllers;
 
@@ -10,28 +9,16 @@ namespace ToDoList.Api.Dictionaries.Controllers;
 [ApiController]
 public class BucketColorController : ControllerBase
 {
-    private readonly IBucketColorService _bucketColorService;
+    private readonly IDictionaryService _dictionaryService;
 
-    public BucketColorController(IBucketColorService bucketColorService)
+    public BucketColorController(IDictionaryService dictionaryService)
     {
-        _bucketColorService = bucketColorService;
+        _dictionaryService = dictionaryService;
     }
 
-    [HttpGet("all")]
-    public IReadOnlyCollection<BucketColor> GetAllBucketColors()
+    [HttpGet]
+    public IReadOnlyCollection<BucketColorDto> GetAllBucketColors()
     {
-        return _bucketColorService.GetAllBucketColors();
-    }
-
-    [HttpGet("name/{bucketColorName}")]
-    public BucketColor GetBucketColorIdByName(string bucketColorName)
-    {
-        return _bucketColorService.GetBucketColorByName(bucketColorName);
-    }
-
-    [HttpGet("{bucketColorId}")]
-    public BucketColor GetBucketColorNameById(int bucketColorId)
-    {
-        return _bucketColorService.GetBucketColorById(bucketColorId);
+        return _dictionaryService.GetBucketColors();
     }
 }
