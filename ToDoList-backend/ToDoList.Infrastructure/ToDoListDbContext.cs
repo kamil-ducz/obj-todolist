@@ -19,13 +19,7 @@ public class ToDoListDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfiguration(new AssigneeConfiguration());
-        modelBuilder.ApplyConfiguration(new BucketConfiguration());
-        modelBuilder.ApplyConfiguration(new BucketCategoryConfiguration());
-        modelBuilder.ApplyConfiguration(new BucketColorConfiguration());
-        modelBuilder.ApplyConfiguration(new BucketTaskConfiguration());
-        modelBuilder.ApplyConfiguration(new TaskPriorityConfiguration());
-        modelBuilder.ApplyConfiguration(new TaskStateConfiguration());
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ToDoListDbContext).Assembly);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
