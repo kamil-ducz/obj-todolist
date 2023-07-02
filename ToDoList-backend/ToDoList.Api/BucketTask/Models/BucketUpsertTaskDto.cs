@@ -10,7 +10,8 @@ public class BucketUpsertTaskDto
     public string Name { get; set; } = string.Empty;
     public string? Description { get; set; }
     public TaskState TaskState { get; set; }
-    public TaskPriority TaskPriority { get; set; }
+    public BucketTaskPriority? BucketTaskPriority { get; set; }
+    public int BucketTaskPriorityId { get; set; }
     public int BucketsId { get; set; }
     public List<AssigneeDto> Assignees { get; set; } = new List<AssigneeDto>();
 

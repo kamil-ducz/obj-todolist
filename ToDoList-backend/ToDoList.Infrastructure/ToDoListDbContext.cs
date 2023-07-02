@@ -25,6 +25,7 @@ public class ToDoListDbContext : DbContext
         modelBuilder.ApplyConfiguration(new BucketCategoryConfiguration());
         modelBuilder.ApplyConfiguration(new BucketColorConfiguration());
         modelBuilder.ApplyConfiguration(new BucketTaskConfiguration());
+        modelBuilder.ApplyConfiguration(new BucketTaskPriorityConfiguration());
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
@@ -33,8 +34,9 @@ public class ToDoListDbContext : DbContext
     }
 
     public DbSet<Assignees> Assignees { get; set; }
-    public DbSet<Buckets> Buckets { get; set; }
     public DbSet<BucketTasks> BucketTasks { get; set; }
+    public DbSet<BucketTaskPriority> BucketTaskPriority { get; set; }
+    public DbSet<Buckets> Buckets { get; set; }
     public DbSet<BucketCategory> BucketCategory { get; set; }
     public DbSet<BucketColor> BucketColor { get; set; }
 }
