@@ -54,11 +54,10 @@ export class BucketsComponent implements OnInit {
     this.bucketTaskService.getBucketTasks(environment.bucketTaskEndpoint).subscribe(
       (response: any) => {
         this.bucketTasks = response;
-        console.log("this.bucketTasks" + this.bucketTasks);
-        this.bucketTasksToDo = this.bucketTasks.filter(element => element.taskState == 1);
-        this.bucketTasksInProgress = this.bucketTasks.filter(element => element.taskState == 2);
-        this.bucketTasksDone = this.bucketTasks.filter(element => element.taskState == 3);
-        this.bucketTasksCancelled = this.bucketTasks.filter(element => element.taskState == 4);
+        this.bucketTasksToDo = this.bucketTasks.filter(element => element.bucketTaskStateId === 1);
+        this.bucketTasksInProgress = this.bucketTasks.filter(element => element.bucketTaskStateId === 2);
+        this.bucketTasksDone = this.bucketTasks.filter(element => element.bucketTaskStateId === 3);
+        this.bucketTasksCancelled = this.bucketTasks.filter(element => element.bucketTaskStateId === 4);
       },
       (error: any) => {
         this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
@@ -108,7 +107,7 @@ export class BucketsComponent implements OnInit {
   calculateTotalToDoForBucket(id: number) {
     if (this.bucketTasks)
     {
-      return this.bucketTasks.filter(task => task.bucketsId === id && task.taskState === 0).length ?? 0;
+      return this.bucketTasks.filter(task => task.bucketsId === id && task.bucketTaskStateId === 1).length ?? 0;
     }
     else
     {

@@ -59,10 +59,10 @@ export class BucketComponent implements OnInit {
     this.bucketService.getBucketTasks(environment.buckeTasksForBucketEndpoint+this.id).subscribe(
       (response: any) => {
         this.currentBucketBucketTasks = response;
-        this.bucketTasksToDo = this.currentBucketBucketTasks.filter(element => element.taskState == 0);
-        this.bucketTasksInProgress = this.currentBucketBucketTasks.filter(element => element.taskState == 1);
-        this.bucketTasksDone = this.currentBucketBucketTasks.filter(element => element.taskState == 2);
-        this.bucketTasksCancelled = this.currentBucketBucketTasks.filter(element => element.taskState == 3);
+        this.bucketTasksToDo = this.currentBucketBucketTasks.filter(element => element.bucketTaskStateId == 1);
+        this.bucketTasksInProgress = this.currentBucketBucketTasks.filter(element => element.bucketTaskStateId == 2);
+        this.bucketTasksDone = this.currentBucketBucketTasks.filter(element => element.bucketTaskStateId == 3);
+        this.bucketTasksCancelled = this.currentBucketBucketTasks.filter(element => element.bucketTaskStateId == 4);
       },
       (error: any) => {
         console.error(error);
@@ -115,10 +115,10 @@ export class BucketComponent implements OnInit {
       description: new FormControl(this.currentBucketTask.description, [
         Validators.maxLength(50),
       ]),
-      state: new FormControl(this.currentBucketTask.taskState, [
+      state: new FormControl(this.currentBucketTask.bucketTaskStateId, [
         Validators.required,      
       ]),
-      priority: new FormControl(this.currentBucketTask.taskPriority, [
+      priority: new FormControl(this.currentBucketTask.bucketTaskPriorityId, [
         Validators.required,
       ]),
     });
