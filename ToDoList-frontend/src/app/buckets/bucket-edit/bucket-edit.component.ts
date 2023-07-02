@@ -103,10 +103,6 @@ export class BucketEditComponent implements OnInit {
     });
   }
 
-  patchBucketEditForm() {
-    this.editBucketFormGroup.patchValue({ name: this.currentBucket.name });
-  }
-
   onSubmitEditForm(bucketFromEditForm: Bucket) {
     this.currentBucket = bucketFromEditForm;
     this.currentBucket.bucketCategory = null;
