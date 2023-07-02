@@ -12,10 +12,10 @@ public class BucketTaskDtoValidator : AbstractValidator<BucketTaskDto>
             .WithMessage("Bucket task cannot be empty");
         RuleFor(n => n.Name)
             .MinimumLength(2)
-            .MaximumLength(15)
+            .MaximumLength(30)
             .WithMessage("Bucket task name has to be between 2-15 characters");
         RuleFor(d => d.Description)
-            .MaximumLength(20)
+            .MaximumLength(50)
             .WithMessage("Bucket task description has to be max 20 characters");
     }
 }
