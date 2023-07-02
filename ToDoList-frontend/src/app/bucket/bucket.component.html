@@ -156,7 +156,7 @@
           <h3 class="text-3xl font-semibold">
             Confirm delete
           </h3>
-          <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="!showModal">
+          <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="showModal=false">
             <span class="text-black">
               ×
             </span>
@@ -173,7 +173,7 @@
           <button class="text-red-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="removeBucket(this.currentBucketId)">
             Delete
           </button>
-          <button class="text-emerald-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="!showModal">
+          <button class="text-emerald-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="showModal=false">
             Cancel
           </button>
         </div>
