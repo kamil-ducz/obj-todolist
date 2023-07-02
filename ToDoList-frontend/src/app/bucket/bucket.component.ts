@@ -8,6 +8,8 @@ import { BucketTask } from '../models/bucketTask.model';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { DictionaryService } from '../services/dictionary.service';
+import { BucketTaskState } from '../models/bucketTaskState.model';
+import { BucketTaskPriority } from '../models/bucketTaskPriority.model';
 
 @Component({
   selector: 'app-bucket',
@@ -31,6 +33,8 @@ export class BucketComponent implements OnInit {
 
   currentBucketBucketTasks: BucketTask[];
   currentBucketTask: BucketTask;
+  bucketTaskStates: BucketTaskState[];
+  bucketTaskPriorities: BucketTaskPriority[];
   bucketTasksToDo: BucketTask[];
   bucketTasksInProgress: BucketTask[];
   bucketTasksDone: BucketTask[];
@@ -48,6 +52,8 @@ export class BucketComponent implements OnInit {
   refreshCurrentBucketBucketTasksComponents() {
     this.fetchCurrentBucket();
     this.fetchBucketTasks();
+    this.fetchBucketTasksStates();
+    this.fetchBucketTaskPriorities();
   }
 
   fetchCurrentBucket() {
@@ -88,6 +94,28 @@ export class BucketComponent implements OnInit {
     );
   }
 
+  fetchBucketTasksStates() {
+    this.dictionaryService.getBucketTaskStates(environment.bucketTaskStatesEndpoint).subscribe(
+      (response: BucketTaskState[]) => {
+        this.bucketTaskStates = response;
+      },
+      (error: any) => {
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
+      }
+    );
+  }
+
+  fetchBucketTaskPriorities() {
+    this.dictionaryService.getBucketTaskPriorities(environment.bucketTaskPrioritiesEndoint).subscribe(
+      (response: BucketTaskPriority[]) => {
+        this.bucketTaskPriorities = response;
+      },
+      (error: any) => {
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
+      }
+    );
+  }
+
   newBucketTaskToCreate: BucketTask;
   addNewBucketTaskFormGroup: FormGroup;
   editNewBucketTaskFormGroup: FormGroup;
@@ -101,10 +129,10 @@ export class BucketComponent implements OnInit {
       description: new FormControl('', [
         Validators.maxLength(50),
       ]),
-      state: new FormControl('', [
+      bucketTaskState: new FormControl('', [
         Validators.required,      
       ]),
-      priority: new FormControl('', [
+      bucketTaskPriority: new FormControl('', [
         Validators.required,
       ]),
     });
@@ -119,29 +147,35 @@ export class BucketComponent implements OnInit {
       description: new FormControl(this.currentBucketTask.description, [
         Validators.maxLength(50),
       ]),
-      state: new FormControl(this.currentBucketTask.bucketTaskStateId, [
+      bucketTaskState: new FormControl(this.currentBucketTask.bucketTaskStateId, [
         Validators.required,      
       ]),
-      priority: new FormControl(this.currentBucketTask.bucketTaskPriorityId, [
+      bucketTaskPriority: new FormControl(this.currentBucketTask.bucketTaskPriorityId, [
         Validators.required,
       ]),
     });
   }
 
   onSubmitNewBucketTask(newBucketTask: BucketTask) {
-    newBucketTask.bucketsId = this.currentBucketId;
+    this.refreshCurrentBucketBucketTasksComponents();
+    this.currentBucketTask = newBucketTask;
+    this.currentBucketTask.bucketTaskStateId = this.bucketTaskStates.find(bs => bs.name.toLowerCase().replace(' ', '') === this.currentBucketTask.bucketTaskState.toLowerCase().replace(' ', '')).id;
+    this.currentBucketTask.bucketTaskPriorityId = this.bucketTaskPriorities.find(bp => bp.name.toLowerCase().replace(' ', '') === this.currentBucketTask.bucketTaskPriority.toLowerCase().replace(' ', '')).id;
+    this.currentBucketTask.bucketTaskState = null;
+    this.currentBucketTask.bucketTaskPriority = null;
+    this.currentBucketTask.bucketsId = this.currentBucketId;
+    console.log("this.currentBucketTask " + JSON.stringify(this.currentBucketTask));
+  
     if (this.currentBucketBucketTasks.length < this.currentBucket.maxAmountOfTasks)
     {
-      this.bucketTaskService.postBucketTask(environment.bucketTaskEndpoint, newBucketTask).subscribe(
+      this.bucketTaskService.postBucketTask(environment.bucketTaskEndpoint, this.currentBucketTask).subscribe(
         (response) => {
-          console.log(response);
+          this.toastr.success("Bucket task " + this.currentBucketTask.name + " created successfully.");
         },
         (error: any) => {
           this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
         }
       );
-  
-      this.popNewBucketTaskConfirmationModal();
     }
     else 
     {
@@ -198,7 +232,6 @@ export class BucketComponent implements OnInit {
 
   showNewBucketTaskForm = false;
   showEditBucketTaskForm = false;
-  bucketTaskNewConfirmationModal = false;
   bucketTaskEditConfirmationModal = false;
   bucketTaskDeleteConfirmationModal = false;
 
@@ -212,12 +245,7 @@ export class BucketComponent implements OnInit {
     this.refreshCurrentBucketBucketTasksComponents();
   }
 
-  popNewBucketTaskConfirmationModal() {
-    this.bucketTaskNewConfirmationModal = !this.bucketTaskNewConfirmationModal;
-  }
-
   exitNewBucketTaskConfirmationModal() {
-    this.bucketTaskNewConfirmationModal = !this.bucketTaskNewConfirmationModal;
     this.exitNewBucketTaskForm();
   }
 

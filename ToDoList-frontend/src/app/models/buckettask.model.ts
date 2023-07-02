@@ -3,6 +3,8 @@ export type BucketTask = {
     name: string;
     description: string;
     bucketTaskStateId: number;
+    bucketTaskState: string;
     bucketTaskPriorityId: number;
+    bucketTaskPriority: string;
     bucketsId: number;
 }
