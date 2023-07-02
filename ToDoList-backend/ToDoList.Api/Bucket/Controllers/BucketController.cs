@@ -6,8 +6,6 @@ using ToDoList.Api.Bucket.Models;
 using ToDoList.Api.Bucket.Services;
 using ToDoList.Api.BucketTask.Models;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace ToDoList.Api.Bucket.Controllers;
 
 [Route("api/[controller]")]

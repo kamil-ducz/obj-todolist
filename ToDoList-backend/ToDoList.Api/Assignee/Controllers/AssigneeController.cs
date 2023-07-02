@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using ToDoList.Api.Assignee.Models;
 using ToDoList.Api.Assignee.Services;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace ToDoList.Api.Assignee.Controllers;
 
 [Route("api/[controller]")]
