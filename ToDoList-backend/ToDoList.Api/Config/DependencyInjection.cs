@@ -31,15 +31,17 @@ public static class DependencyInjection
 
         services.AddScoped<IAssigneeService, AssigneeService>();
         services.AddScoped<IBucketService, BucketService>();
-        services.AddScoped<IBucketTaskService, BucketTaskService>();
-        services.AddScoped<IBucketColorService, BucketColorService>();
         services.AddScoped<IBucketCategoryService, BucketCategoryService>();
+        services.AddScoped<IBucketColorService, BucketColorService>();
+        services.AddScoped<IBucketTaskService, BucketTaskService>();
+        services.AddScoped<IBucketTaskStateService, BucketTaskStateService>();
 
         services.AddScoped<IAssigneeRepository, AssigneeRepository>();
         services.AddScoped<IBucketRepository, BucketRepository>();
-        services.AddScoped<IBucketTaskRepository, BucketTaskRepository>();
         services.AddScoped<IBucketCategoryRepository, BucketCategoryRepository>();
         services.AddScoped<IBucketColorRepository, BucketColorRepository>();
+        services.AddScoped<IBucketTaskRepository, BucketTaskRepository>();
+        services.AddScoped<IBucketTaskStateRepository, BucketTaskStateRepository>();
 
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

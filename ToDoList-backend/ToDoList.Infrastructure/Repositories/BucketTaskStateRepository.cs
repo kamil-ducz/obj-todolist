@@ -1,0 +1,18 @@
+﻿using ToDoList.Api;
+using ToDoList.Domain.Enums;
+using ToDoList.Domain.Repositories;
+
+namespace ToDoList.Infrastructure.Repositories;
+public class BucketTaskStateRepository : IBucketTaskStateRepository
+{
+    private readonly ToDoListDbContext _toDoListDbContext;
+
+    public BucketTaskStateRepository(ToDoListDbContext toDoListDbContext)
+    {
+        _toDoListDbContext = toDoListDbContext;
+    }
+    public IReadOnlyList<BucketTaskState> GetAllBucketTaskStates()
+    {
+        return _toDoListDbContext.BucketTaskState.ToList();
+    }
+}
