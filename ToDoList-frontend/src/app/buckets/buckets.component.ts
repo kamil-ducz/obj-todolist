@@ -3,7 +3,7 @@ import { BucketService } from '../services/bucket-service';
 import { BucketTaskService } from '../services/buckettask-service';
 import { environment } from 'src/environments/environment';
 import { Bucket } from '../models/bucket.model';
-import { BucketTask } from '../models/buckettask.model';
+import { BucketTask } from '../models/bucketTask.model';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BucketTask } from "../models/buckettask.model";
+import { BucketTask } from "../models/bucketTask.model";
 import { Observable } from "rxjs";
 
 @Injectable ({

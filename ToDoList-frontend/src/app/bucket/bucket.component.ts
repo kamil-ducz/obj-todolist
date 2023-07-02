@@ -4,7 +4,7 @@ import { BucketService } from '../services/bucket-service';
 import { Bucket } from '../models/bucket.model';
 import { BucketTaskService } from '../services/buckettask-service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BucketTask } from '../models/buckettask.model';
+import { BucketTask } from '../models/bucketTask.model';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { DictionaryService } from '../services/dictionary.service';
