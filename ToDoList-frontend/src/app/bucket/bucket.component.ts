@@ -75,7 +75,7 @@ export class BucketComponent implements OnInit {
   }
 
   fetchBucketCategories() {
-    this.dictionaryService.getBucketCategories(environment.bucketCategoryEndpoint.concat("all")).subscribe(
+    this.dictionaryService.getBucketCategories(environment.bucketCategoryEndpoint).subscribe(
       (response: BucketCategory[]) => {
         this.bucketCategories = response;
       },

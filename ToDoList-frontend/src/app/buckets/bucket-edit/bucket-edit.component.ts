@@ -52,7 +52,7 @@ export class BucketEditComponent implements OnInit {
   }
 
   loadBucketCategories() {
-      this.dictionaryService.getBucketCategories(environment.bucketCategoryEndpoint.concat("all")).subscribe(
+      this.dictionaryService.getBucketCategories(environment.bucketCategoryEndpoint).subscribe(
         (response: BucketCategory[]) => {
           this.bucketCategories = response;
           console.log("this.currentBucketCategories" + JSON.stringify(this.bucketCategories));
@@ -64,7 +64,7 @@ export class BucketEditComponent implements OnInit {
   }
 
   loadBucketColors() {
-      this.dictionaryService.getBucketColors(environment.bucketColorEndpoint.concat("all")).subscribe(
+      this.dictionaryService.getBucketColors(environment.bucketColorEndpoint).subscribe(
         (response: BucketColor[]) => {
           this.bucketColors = response;
           console.log("this.currentBucketColors" + JSON.stringify(this.bucketColors));
