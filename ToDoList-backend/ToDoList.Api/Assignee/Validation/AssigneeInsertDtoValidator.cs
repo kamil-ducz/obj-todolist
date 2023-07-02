@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using ToDoList.Api.Asignee.Models;
+using ToDoList.Api.Assignee.Models;
 
-namespace ToDoList.Api.Assignee;
+namespace ToDoList.Api.Assignee.Validation;
 
 public class AssigneeUpsertDtoValidator : AbstractValidator<AssigneeUpsertDto>
 {

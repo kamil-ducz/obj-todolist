@@ -2,7 +2,7 @@
 using ToDoList.Api.Bucket.Models;
 using ToDoList.Domain.Models;
 
-namespace ToDoList.Api.MappingProfiles;
+namespace ToDoList.Api.Bucket.MappingProfiles;
 
 public class BucketServiceMappingProfile : Profile
 {
