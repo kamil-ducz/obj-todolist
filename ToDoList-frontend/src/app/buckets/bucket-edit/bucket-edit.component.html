@@ -47,37 +47,4 @@
     </button>
   </form>
   <br>
-  <button [routerLink]="['/bucket-details', this.id]" class="m-8 mt-8 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">Return to the bucket</button>
-
-                <!-- addition modal start -->
-                <div *ngIf="showEditModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
-                  <div class="relative w-auto my-6 mx-auto max-w-6xl">
-                    <!--content-->
-                    <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                      <!--header-->
-                      <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                        <h3 class="text-3xl font-semibold">
-                          Confirm edit
-                        </h3>
-                        <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="toggleEditModal()">
-                          <span class="text-black">
-                            ×
-                          </span>
-                        </button>
-                      </div>
-                      <!--body-->
-                      <div class="relative p-6 flex-auto">
-                        <p class="my-4 text-slate-500 text-lg leading-relaxed">
-                          Saved changes for bucket {{ editBucketFormGroup.value.name }}
-                        </p>
-                      </div>
-                      <!--footer-->
-                      <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                        <button class="text-emerald-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="toggleEditModal()">
-                          OK
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- addition modal end -->
+  <button [routerLink]="['/bucket-details', this.id]" class="m-8 mt-8 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">Return to the bucket view</button>

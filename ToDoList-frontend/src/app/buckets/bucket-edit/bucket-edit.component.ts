@@ -17,6 +17,8 @@ import { environment } from 'src/environments/environment';
 export class BucketEditComponent implements OnInit {
   id: number;
   currentBucket: Bucket;
+  bucketColors: BucketColor[];
+  bucketCategories: BucketCategory[];
   currentBucketColorName: string;
   currentBucketCategoryName: string;
   editBucketFormGroup: FormGroup;
@@ -31,17 +33,43 @@ export class BucketEditComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
-
-      this.bucketService.getBucket(environment.bucketEndpoint + this.id).subscribe(
-        (response: any) => {
-          this.currentBucket = response;
-          this.initializeForm();
-        },
-        (error: any) => {
-          this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name);
-        }
-      );
+      this.loadCurrentBucket();
     });
+  }
+
+  loadCurrentBucket() {
+    this.bucketService.getBucket(environment.bucketEndpoint + this.id).subscribe(
+      (response: any) => {
+        this.currentBucket = response;
+        this.loadBucketsData();
+        this.initializeForm();
+      },
+      (error: any) => {
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name);
+      }
+    );
+  }
+
+  loadBucketCategories() {
+    this.dictionaryService.getBucketCategories(environment.bucketCategoryEndpoint.concat("all")).subscribe(
+      (response: BucketCategory[]) => {
+        this.bucketCategories = response;
+      },
+      (error: any) => {
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name);
+      }
+    );
+  }
+
+  loadBucketColors() {
+    this.dictionaryService.getBucketColors(environment.bucketColorEndpoint.concat("all")).subscribe(
+      (response: BucketColor[]) => {
+        this.bucketColors = response;
+      },
+      (error: any) => {
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name);
+      }
+    );
   }
 
   convertBucketColorIdToName(bucketColorId: number): void {
@@ -119,23 +147,35 @@ export class BucketEditComponent implements OnInit {
       );
   }
 
+  loadBucketsData() {
+    this.loadBucketCategories();
+    this.loadBucketColors();
+  }
+
   onSubmitEditForm(bucketFromEditForm: Bucket) {
     this.currentBucket = bucketFromEditForm;
+    this.currentBucket.bucketCategory = null;
+    this.currentBucket.bucketColor = null;
+    const currentBucketCategory = this.editBucketFormGroup.get("bucketCategory").value;
+    const currentBucketColor = this.editBucketFormGroup.get("bucketColor").value;
+    const matchedCategory = this.bucketCategories.find(bcat => bcat.name.toLowerCase() === currentBucketCategory.toLowerCase());
+    const matchedColor = this.bucketColors.find(bcol => bcol.name.toLowerCase() === currentBucketColor.toLowerCase());
+
+    if (matchedCategory) {
+      this.currentBucket.bucketCategoryId = matchedCategory.id;
+    }
+
+    if (matchedColor) {
+      this.currentBucket.bucketColorId = matchedColor.id;
+    }
+
     this.bucketService.putBucket(environment.bucketEndpoint + this.id, this.currentBucket).subscribe(
-      (response: any) => {
-        console.log(response);
+      (response: Bucket) => {
+        this.toastr.success("Bucket " + response.name + " edit successfull.");
       },
       (error: any) => {
         this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
       }
     );
-
-    this.toggleEditModal();
-  }
-
-  showEditModal = false;
-
-  toggleEditModal() {
-    this.showEditModal = !this.showEditModal;
   }
 }
