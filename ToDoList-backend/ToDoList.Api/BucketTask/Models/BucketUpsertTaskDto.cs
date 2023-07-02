@@ -13,7 +13,7 @@ public class BucketUpsertTaskDto
     public int BucketTaskStateId { get; set; }
     public BucketTaskPriority? BucketTaskPriority { get; set; }
     public int BucketTaskPriorityId { get; set; }
-    public int BucketsId { get; set; }
+    public int BucketId { get; set; }
     public List<AssigneeDto> Assignees { get; set; } = new List<AssigneeDto>();
 
 }

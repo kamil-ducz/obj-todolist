@@ -171,7 +171,7 @@ export class BucketComponent implements OnInit {
     this.currentBucketTask.bucketTaskPriorityId = this.bucketTaskPriorities.find(bp => bp.name === this.currentBucketTask.bucketTaskPriority).id;
     this.currentBucketTask.bucketTaskState = null;
     this.currentBucketTask.bucketTaskPriority = null;
-    this.currentBucketTask.bucketsId = this.currentBucketId;
+    this.currentBucketTask.bucketId = this.currentBucketId;
 
     if (this.currentBucketBucketTasks.length < this.currentBucket.maxAmountOfTasks)
     {
@@ -194,7 +194,7 @@ export class BucketComponent implements OnInit {
 
   onSubmitEditBucketTask(newBucketTask: BucketTask) {
     this.currentBucketTask = this.editNewBucketTaskFormGroup.value;
-    this.currentBucketTask.bucketsId = this.currentBucketId;
+    this.currentBucketTask.bucketId = this.currentBucketId;
     this.currentBucketTask.bucketTaskStateId = this.bucketTaskStates.find(bts => bts.name === newBucketTask.bucketTaskState).id;
     this.currentBucketTask.bucketTaskPriorityId = this.bucketTaskPriorities.find(btps => btps.name === newBucketTask.bucketTaskPriority).id;
     this.currentBucketTask.bucketTaskState = null;
