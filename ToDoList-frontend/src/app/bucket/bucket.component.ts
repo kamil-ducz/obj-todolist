@@ -33,6 +33,7 @@ export class BucketComponent implements OnInit {
 
   currentBucketBucketTasks: BucketTask[];
   currentBucketTask: BucketTask;
+  bucketTaskForEditSaveId: number;
   bucketTaskStates: BucketTaskState[];
   bucketTaskPriorities: BucketTaskPriority[];
   bucketTasksToDo: BucketTask[];
@@ -162,8 +163,8 @@ export class BucketComponent implements OnInit {
   onSubmitNewBucketTask(newBucketTask: BucketTask) {
     this.refreshCurrentBucketBucketTasksComponents();
     this.currentBucketTask = newBucketTask;
-    this.currentBucketTask.bucketTaskStateId = this.bucketTaskStates.find(bs => bs.name.toLowerCase().replace(' ', '') === this.currentBucketTask.bucketTaskState.toLowerCase().replace(' ', '')).id;
-    this.currentBucketTask.bucketTaskPriorityId = this.bucketTaskPriorities.find(bp => bp.name.toLowerCase().replace(' ', '') === this.currentBucketTask.bucketTaskPriority.toLowerCase().replace(' ', '')).id;
+    this.currentBucketTask.bucketTaskStateId = this.bucketTaskStates.find(bs => bs.name === this.currentBucketTask.bucketTaskState).id;
+    this.currentBucketTask.bucketTaskPriorityId = this.bucketTaskPriorities.find(bp => bp.name === this.currentBucketTask.bucketTaskPriority).id;
     this.currentBucketTask.bucketTaskState = null;
     this.currentBucketTask.bucketTaskPriority = null;
     this.currentBucketTask.bucketsId = this.currentBucketId;
@@ -187,18 +188,21 @@ export class BucketComponent implements OnInit {
   }
 
   onSubmitEditBucketTask(newBucketTask: BucketTask) {
-    newBucketTask = this.editNewBucketTaskFormGroup.value;
-    newBucketTask.bucketsId = this.currentBucketId;
-    this.bucketTaskService.putBucketTask(environment.bucketTaskEndpoint+this.currentBucketTask.id, newBucketTask).subscribe(
+    this.currentBucketTask = this.editNewBucketTaskFormGroup.value;
+    this.currentBucketTask.bucketsId = this.currentBucketId;
+    this.currentBucketTask.bucketTaskStateId = this.bucketTaskStates.find(bts => bts.name === newBucketTask.bucketTaskState).id;
+    this.currentBucketTask.bucketTaskPriorityId = this.bucketTaskPriorities.find(btps => btps.name === newBucketTask.bucketTaskPriority).id;
+    this.currentBucketTask.bucketTaskState = null;
+    this.currentBucketTask.bucketTaskPriority = null;
+
+    this.bucketTaskService.putBucketTask(environment.bucketTaskEndpoint+this.bucketTaskForEditSaveId, newBucketTask).subscribe(
       (response: any) => {
-        console.log(response);
+        this.toastr.success("Bucket task " + this.currentBucketTask.name + " changes saved successfully.");
       },
       (error: any) => {
         console.error(error);
       }
     );
-
-    this.popEditBucketTaskConfirmationModal();
   }
 
   removeBucket(id: any) {
@@ -217,6 +221,7 @@ export class BucketComponent implements OnInit {
     this.bucketTaskService.deleteBucketTask(environment.bucketTaskEndpoint+bucketTaskId).subscribe(
       (response: any) => {
         this.fetchBucketTasks();
+        this.toastr.success("Bucket task " + this.currentBucketTask.name + " deleted successfully.");
         this.exitDeleteBucketTaskConfirmationModal();
       },
       (error: any) => {
@@ -254,16 +259,13 @@ export class BucketComponent implements OnInit {
   popEditBucketTaskForm(bucketTaskId: number) {
     this.showEditBucketTaskForm = !this.showEditBucketTaskForm;
     this.currentBucketTask = this.currentBucketBucketTasks.find(element => element.id == bucketTaskId);
+    this.bucketTaskForEditSaveId = bucketTaskId;
     this.initializeEditBucketTaskForm();
   }
 
   exitEditBucketTaskForm() {
     this.showEditBucketTaskForm = false;
     this.refreshCurrentBucketBucketTasksComponents();
-  }
-
-  popEditBucketTaskConfirmationModal() {
-    this.bucketTaskEditConfirmationModal = !this.bucketTaskEditConfirmationModal;
   }
 
   exitEditBucketTaskConfirmationModal() {
