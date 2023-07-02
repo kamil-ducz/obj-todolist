@@ -11,7 +11,7 @@ public class BucketTaskStateRepository : IBucketTaskStateRepository
     {
         _toDoListDbContext = toDoListDbContext;
     }
-    public IReadOnlyList<BucketTaskState> GetAllBucketTaskStates()
+    public IReadOnlyCollection<BucketTaskState> GetAllBucketTaskStates()
     {
         return _toDoListDbContext.BucketTaskState.ToList();
     }
