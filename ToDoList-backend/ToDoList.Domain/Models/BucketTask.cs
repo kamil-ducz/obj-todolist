@@ -3,7 +3,7 @@ using ToDoList.Domain.Enums;
 
 namespace ToDoList.Domain.Models;
 
-public class BucketTasks
+public class BucketTask
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
@@ -13,5 +13,5 @@ public class BucketTasks
     public BucketTaskPriority? BucketTaskPriority { get; set; }
     public int BucketTaskPriorityId { get; set; }
     public int BucketsId { get; set; }
-    public List<Assignees> Assignees { get; set; } = new List<Assignees>();
+    public List<Assignee> Assignees { get; set; } = new List<Assignee>();
 }

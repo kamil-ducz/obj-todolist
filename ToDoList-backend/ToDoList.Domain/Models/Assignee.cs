@@ -2,9 +2,9 @@
 
 namespace ToDoList.Domain.Models;
 
-public class Assignees
+public class Assignee
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
-    public List<BucketTasks> BucketTasks { get; set; } = new List<BucketTasks>();
+    public List<BucketTask> BucketTasks { get; set; } = new List<BucketTask>();
 }

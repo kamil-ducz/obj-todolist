@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ToDoList.Domain.Models;
 
 namespace ToDoList.Infrastructure.DbContextConfigs;
-public class AssigneeConfiguration : IEntityTypeConfiguration<Assignees>
+public class AssigneeConfiguration : IEntityTypeConfiguration<Assignee>
 {
-    public void Configure(EntityTypeBuilder<Assignees> builder)
+    public void Configure(EntityTypeBuilder<Assignee> builder)
     {
         builder.HasData(
-            new Assignees { Id = 1, Name = "John Doe" }
+            new Assignee { Id = 1, Name = "John Doe" }
         );
     }
 }
