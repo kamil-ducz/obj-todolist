@@ -5,6 +5,4 @@ namespace ToDoList.Domain.Repositories;
 public interface IBucketColorRepository
 {
     IReadOnlyList<BucketColor> GetAllBucketColors();
-    int GetBucketColorIdByName(string bucketColorName);
-    string GetBucketColorNameById(int bucketColorId);
 }

@@ -21,24 +21,4 @@ public class BucketColorController : ControllerBase
     {
         return _bucketColorService.GetAllBucketColors();
     }
-
-    [HttpGet("name/{bucketColorName}")]
-    public BucketColor GetBucketColorIdByName(string bucketColorName)
-    {
-        var bucket = new BucketColor
-        {
-            Id = _bucketColorService.GetBucketColorIdByName(bucketColorName)
-        };
-        return bucket;
-    }
-
-    [HttpGet("{bucketColorId}")]
-    public BucketColor GetBucketColorNameById(int bucketColorId)
-    {
-        var bucket = new BucketColor
-        {
-            Name = _bucketColorService.GetBucketColorNameById(bucketColorId)
-        };
-        return bucket;
-    }
 }

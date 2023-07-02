@@ -10,6 +10,8 @@ import { ToastrService } from 'ngx-toastr';
 import { DictionaryService } from '../services/dictionary.service';
 import { BucketTaskState } from '../models/bucketTaskState.model';
 import { BucketTaskPriority } from '../models/bucketTaskPriority.model';
+import { BucketCategory } from '../models/bucketCategory.model';
+import { BucketColor } from '../models/bucketColor.model';
 
 @Component({
   selector: 'app-bucket',
@@ -30,6 +32,8 @@ export class BucketComponent implements OnInit {
   currentBucketId: number;
   currentBucket: Bucket;
   currentBucketCategoryName: string;
+  bucketCategories: BucketCategory[];
+  bucketColors: BucketColor[];
 
   currentBucketBucketTasks: BucketTask[];
   currentBucketTask: BucketTask;
@@ -51,6 +55,7 @@ export class BucketComponent implements OnInit {
   }
   
   refreshCurrentBucketBucketTasksComponents() {
+    this.fetchBucketCategories();
     this.fetchCurrentBucket();
     this.fetchBucketTasks();
     this.fetchBucketTasksStates();
@@ -61,7 +66,7 @@ export class BucketComponent implements OnInit {
     this.bucketService.getBucket(environment.bucketEndpoint+this.currentBucketId).subscribe(
       (response: Bucket) => {
         this.currentBucket = response;
-        this.fetchCurrentBucketCategoryName(response.bucketCategoryId);
+        this.currentBucketCategoryName = this.bucketCategories.find(bcat => bcat.id === this.currentBucket.bucketCategoryId).name;
       },
       (error: any) => {
         console.error(error);
@@ -69,15 +74,15 @@ export class BucketComponent implements OnInit {
     );
   }
 
-  fetchCurrentBucketCategoryName(id: number) {
-    this.dictionaryService.getBucketCategoryNameById(environment.bucketCategoryEndpoint+id).subscribe(
-      (response: any) => {
-        this.currentBucketCategoryName = response.name;
+  fetchBucketCategories() {
+    this.dictionaryService.getBucketCategories(environment.bucketCategoryEndpoint.concat("all")).subscribe(
+      (response: BucketCategory[]) => {
+        this.bucketCategories = response;
       },
       (error: any) => {
-        this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
       }
-    )
+    );
   }
 
   fetchBucketTasks() {

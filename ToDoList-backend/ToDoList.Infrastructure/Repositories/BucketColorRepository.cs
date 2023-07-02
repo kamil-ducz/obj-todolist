@@ -17,14 +17,4 @@ public class BucketColorRepository : IBucketColorRepository
     {
         return _toDoListDbContext.BucketColor.ToList();
     }
-
-    public int GetBucketColorIdByName(string bucketColorName)
-    {
-        return _toDoListDbContext.BucketColor.First(bc => bc.Name == bucketColorName).Id;
-    }
-
-    public string GetBucketColorNameById(int bucketColorId)
-    {
-        return _toDoListDbContext.BucketColor.First(bc => bc.Id == bucketColorId).Name;
-    }
 }

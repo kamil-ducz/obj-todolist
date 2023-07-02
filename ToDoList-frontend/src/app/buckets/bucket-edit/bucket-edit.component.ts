@@ -31,58 +31,55 @@ export class BucketEditComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.currentBucketId = +params['id'];
-      this.loadCurrentBucket();
+      this.refreshComponent();
     });
   }
 
-  async loadCurrentBucket() {
-    try {
-      const response = await this.bucketService.getBucket(environment.bucketEndpoint + this.currentBucketId).toPromise();
-      this.currentBucket = response;
-      await this.loadBucketsData();
-      this.initializeEditForm();
-    } catch (error) {
-      this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name);
-    }
+  async refreshComponent() {
+    await this.loadCurrentBucket();
+    await this.loadBucketCategories();
+    await this.loadBucketColors();
+    await this.initializeEditForm();
   }
 
-  async loadBucketCategories() {
-    try {
-      this.bucketCategories = await this.dictionaryService.getBucketCategories(environment.bucketCategoryEndpoint.concat("all")).toPromise();
-    } catch (error) {
-      this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name);
-    }
+  async loadCurrentBucket(): Promise<Bucket> {
+    return new Promise<Bucket>((resolve) => {
+      this.bucketService.getBucket(environment.bucketEndpoint + this.currentBucketId).subscribe(
+        (response: Bucket) => {
+          resolve(response);
+        });
+      });
   }
 
-  async loadBucketColors() {
-    try {
-      this.bucketColors = await this.dictionaryService.getBucketColors(environment.bucketColorEndpoint.concat("all")).toPromise();
-    } catch (error) {
-      this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name);
-    }
+  loadBucketCategories() {
+      this.dictionaryService.getBucketCategories(environment.bucketCategoryEndpoint.concat("all")).subscribe(
+        (response: BucketCategory[]) => {
+          this.bucketCategories = response;
+          console.log("this.currentBucketCategories" + JSON.stringify(this.bucketCategories));
+        },
+        (error: any) => {
+          this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name);
+        }
+      );
   }
 
-  convertBucketColorIdToName(bucketColorId: number): void {
-    this.dictionaryService.getBucketColorNameById(environment.bucketColorEndpoint + bucketColorId).subscribe(
-      (response: any) => {
-      },
-      (error: any) => {
-        this.toastr.error("Request failed. Check console logs and network tab to identify the issue.");
-      }
-    );
+  loadBucketColors() {
+      this.dictionaryService.getBucketColors(environment.bucketColorEndpoint.concat("all")).subscribe(
+        (response: BucketColor[]) => {
+          this.bucketColors = response;
+          console.log("this.currentBucketColors" + JSON.stringify(this.bucketColors));
+        },
+        (error: any) => {
+          this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name);
+        }
+      );
   }
 
-  convertBucketCategoryIdToName(bucketCategoryId: number): void {
-    this.dictionaryService.getBucketCategoryNameById(environment.bucketCategoryEndpoint + bucketCategoryId).subscribe(
-      (response: any) => {
-      },
-      (error: any) => {
-        this.toastr.error("Request failed. Check console logs and network tab to identify the issue.");
-      }
-    );
-  }
+  async initializeEditForm() {
+    this.currentBucket = await this.loadCurrentBucket();
+    const bucketCategory = this.bucketCategories.find(bc => bc.id === this.currentBucket.bucketCategoryId).name;
+    const bucketColor = this.bucketColors.find(bcol => bcol.id === this.currentBucket.bucketColorId).name;
 
-  initializeEditForm() {
     this.editBucketFormGroup = new FormGroup({
       name: new FormControl(this.currentBucket.name, [
         Validators.required,
@@ -91,13 +88,13 @@ export class BucketEditComponent implements OnInit {
       description: new FormControl(this.currentBucket.description, [
         Validators.maxLength(50),
       ]),
-      bucketCategory: new FormControl('', [
+      bucketCategory: new FormControl(bucketCategory, [
         Validators.required,      
       ]),
-      bucketColor: new FormControl('', [
+      bucketColor: new FormControl(bucketColor, [
         Validators.required,
       ]),
-      maxAmountOfTasks: new FormControl(this.currentBucket.maxAmountOfTasks.toString(), [
+      maxAmountOfTasks: new FormControl(this.currentBucket.maxAmountOfTasks, [
         Validators.required,
         Validators.min(1),
         Validators.max(15),
@@ -106,38 +103,10 @@ export class BucketEditComponent implements OnInit {
         Validators.required,
       ])
     });
-
-    this.loadBucketCategoryName(this.currentBucket.bucketCategoryId);
-    this.loadBucketColorName(this.currentBucket.bucketColorId);
   }
 
-  loadBucketCategoryName(bucketCategoryId: number) {
-    this.dictionaryService.getBucketCategoryNameById(environment.bucketCategoryEndpoint + bucketCategoryId)
-      .subscribe(
-        (response: BucketCategory) => {
-          this.editBucketFormGroup.patchValue({ bucketCategory: response.name });
-        },
-        (error: any) => {
-          this.toastr.error("Failed to retrieve bucket category name. Check console logs and network tab to identify the issue.");
-        }
-      );
-  }
-  
-  loadBucketColorName(bucketColorId: number) {
-    this.dictionaryService.getBucketColorNameById(environment.bucketColorEndpoint + bucketColorId)
-      .subscribe(
-        (response: BucketColor) => {
-          this.editBucketFormGroup.patchValue({ bucketColor: response.name });
-        },
-        (error: any) => {
-          this.toastr.error("Failed to retrieve bucket color name. Check console logs and network tab to identify the issue.");
-        }
-      );
-  }
-
-  loadBucketsData() {
-    this.loadBucketCategories();
-    this.loadBucketColors();
+  patchBucketEditForm() {
+    this.editBucketFormGroup.patchValue({ name: this.currentBucket.name });
   }
 
   onSubmitEditForm(bucketFromEditForm: Bucket) {

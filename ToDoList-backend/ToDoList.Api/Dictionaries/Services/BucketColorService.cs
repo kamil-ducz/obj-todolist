@@ -7,8 +7,6 @@ namespace ToDoList.Api.Dictionaries.Services;
 public interface IBucketColorService
 {
     IReadOnlyCollection<BucketColor> GetAllBucketColors();
-    int GetBucketColorIdByName(string bucketColorName);
-    string GetBucketColorNameById(int bucketColorId);
 }
 
 public class BucketColorService : IBucketColorService
@@ -23,15 +21,5 @@ public class BucketColorService : IBucketColorService
     public IReadOnlyCollection<BucketColor> GetAllBucketColors()
     {
         return _bucketColorRepository.GetAllBucketColors();
-    }
-
-    public int GetBucketColorIdByName(string bucketColorName)
-    {
-        return _bucketColorRepository.GetBucketColorIdByName(bucketColorName);
-    }
-
-    public string GetBucketColorNameById(int bucketColorId)
-    {
-        return _bucketColorRepository.GetBucketColorNameById(bucketColorId);
     }
 }

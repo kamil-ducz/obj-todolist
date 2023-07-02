@@ -20,25 +20,9 @@ export class DictionaryService {
         return this.httpClient.get<BucketColor[]>(url);
     }
 
-    getBucketColorIdByName(url): Observable<BucketColor> {
-        return this.httpClient.get<BucketColor>(url);
-    }
-    
-    getBucketColorNameById(url): Observable<BucketColor> {
-        return this.httpClient.get<BucketColor>(url);
-    }
-
     getBucketCategories(url): Observable<BucketCategory[]> {
         return this.httpClient.get<BucketCategory[]>(url);
     }
-
-    getBucketCategoryIdByName(url): Observable<BucketCategory> {
-        return this.httpClient.get<BucketCategory>(url);
-    }
-
-    getBucketCategoryNameById(url): Observable<BucketCategory> {
-        return this.httpClient.get<BucketCategory>(url);
-      }
 
     getBucketTaskStates(url): Observable<BucketTaskState[]> {
         return this.httpClient.get<BucketTaskState[]>(url);
