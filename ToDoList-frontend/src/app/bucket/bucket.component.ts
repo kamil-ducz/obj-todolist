@@ -166,18 +166,18 @@ export class BucketComponent implements OnInit {
   }
 
   onSubmitNewBucketTask(newBucketTask: BucketTask) {
-    this.refreshCurrentBucketBucketTasksComponents();
     this.currentBucketTask = newBucketTask;
     this.currentBucketTask.bucketTaskStateId = this.bucketTaskStates.find(bs => bs.name === this.currentBucketTask.bucketTaskState).id;
     this.currentBucketTask.bucketTaskPriorityId = this.bucketTaskPriorities.find(bp => bp.name === this.currentBucketTask.bucketTaskPriority).id;
     this.currentBucketTask.bucketTaskState = null;
     this.currentBucketTask.bucketTaskPriority = null;
     this.currentBucketTask.bucketsId = this.currentBucketId;
-  
+
     if (this.currentBucketBucketTasks.length < this.currentBucket.maxAmountOfTasks)
     {
       this.bucketTaskService.postBucketTask(environment.bucketTaskEndpoint, this.currentBucketTask).subscribe(
         (response) => {
+          this.addNewBucketTaskFormGroup.patchValue({ });
           this.toastr.success("Bucket task " + this.currentBucketTask.name + " created successfully.");
         },
         (error: any) => {
@@ -200,9 +200,10 @@ export class BucketComponent implements OnInit {
     this.currentBucketTask.bucketTaskState = null;
     this.currentBucketTask.bucketTaskPriority = null;
 
-    this.bucketTaskService.putBucketTask(environment.bucketTaskEndpoint+this.bucketTaskForEditSaveId, newBucketTask).subscribe(
+    this.bucketTaskService.putBucketTask(environment.bucketTaskEndpoint+this.bucketTaskForEditSaveId, this.currentBucketTask).subscribe(
       (response: any) => {
         this.toastr.success("Bucket task " + this.currentBucketTask.name + " changes saved successfully.");
+        this.editNewBucketTaskFormGroup.patchValue({ });
       },
       (error: any) => {
         console.error(error);
