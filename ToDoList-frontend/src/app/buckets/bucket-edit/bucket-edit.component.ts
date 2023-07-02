@@ -19,8 +19,6 @@ export class BucketEditComponent implements OnInit {
   currentBucket: Bucket;
   bucketColors: BucketColor[];
   bucketCategories: BucketCategory[];
-  currentBucketColorName: string;
-  currentBucketCategoryName: string;
   editBucketFormGroup: FormGroup;
 
   constructor(
@@ -37,45 +35,36 @@ export class BucketEditComponent implements OnInit {
     });
   }
 
-  loadCurrentBucket() {
-    this.bucketService.getBucket(environment.bucketEndpoint + this.id).subscribe(
-      (response: any) => {
-        this.currentBucket = response;
-        this.loadBucketsData();
-        this.initializeForm();
-      },
-      (error: any) => {
-        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name);
-      }
-    );
+  async loadCurrentBucket() {
+    try {
+      const response = await this.bucketService.getBucket(environment.bucketEndpoint + this.id).toPromise();
+      this.currentBucket = response;
+      await this.loadBucketsData();
+      this.initializeEditForm();
+    } catch (error) {
+      this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name);
+    }
   }
 
-  loadBucketCategories() {
-    this.dictionaryService.getBucketCategories(environment.bucketCategoryEndpoint.concat("all")).subscribe(
-      (response: BucketCategory[]) => {
-        this.bucketCategories = response;
-      },
-      (error: any) => {
-        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name);
-      }
-    );
+  async loadBucketCategories() {
+    try {
+      this.bucketCategories = await this.dictionaryService.getBucketCategories(environment.bucketCategoryEndpoint.concat("all")).toPromise();
+    } catch (error) {
+      this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name);
+    }
   }
 
-  loadBucketColors() {
-    this.dictionaryService.getBucketColors(environment.bucketColorEndpoint.concat("all")).subscribe(
-      (response: BucketColor[]) => {
-        this.bucketColors = response;
-      },
-      (error: any) => {
-        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name);
-      }
-    );
+  async loadBucketColors() {
+    try {
+      this.bucketColors = await this.dictionaryService.getBucketColors(environment.bucketColorEndpoint.concat("all")).toPromise();
+    } catch (error) {
+      this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name);
+    }
   }
 
   convertBucketColorIdToName(bucketColorId: number): void {
     this.dictionaryService.getBucketColorNameById(environment.bucketColorEndpoint + bucketColorId).subscribe(
       (response: any) => {
-        this.currentBucketColorName = response.name;
       },
       (error: any) => {
         this.toastr.error("Request failed. Check console logs and network tab to identify the issue.");
@@ -86,7 +75,6 @@ export class BucketEditComponent implements OnInit {
   convertBucketCategoryIdToName(bucketCategoryId: number): void {
     this.dictionaryService.getBucketCategoryNameById(environment.bucketCategoryEndpoint + bucketCategoryId).subscribe(
       (response: any) => {
-        this.currentBucketCategoryName = response.name;
       },
       (error: any) => {
         this.toastr.error("Request failed. Check console logs and network tab to identify the issue.");
@@ -94,7 +82,7 @@ export class BucketEditComponent implements OnInit {
     );
   }
 
-  initializeForm() {
+  initializeEditForm() {
     this.editBucketFormGroup = new FormGroup({
       name: new FormControl(this.currentBucket.name, [
         Validators.required,
