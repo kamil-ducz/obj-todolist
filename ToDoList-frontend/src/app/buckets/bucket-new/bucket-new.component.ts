@@ -12,7 +12,11 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class BucketNewComponent implements OnInit {
 
-  constructor(private bucketService: BucketService, private toastr: ToastrService) { }
+  constructor(
+    private bucketService: 
+    BucketService, 
+    private toastr: ToastrService
+    ) { }
 
   ngOnInit(): void {
   }
@@ -50,13 +54,5 @@ export class BucketNewComponent implements OnInit {
         this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
       }
     );
-    
-    this.toggleAdditionModal();
-  }
-
-  showAddBucketModal = false;
-
-  toggleAdditionModal() {
-    this.showAddBucketModal = !this.showAddBucketModal;
   }
 }

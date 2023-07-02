@@ -11,7 +11,9 @@ import { BucketColor } from "../models/bucketColor.model";
 
 export class BucketService {
         
-    constructor(private httpClient: HttpClient) {}
+    constructor(
+        private httpClient: HttpClient
+    ) {}
 
     getBuckets(url): Observable<Bucket> {
         return this.httpClient.get<Bucket>(url);

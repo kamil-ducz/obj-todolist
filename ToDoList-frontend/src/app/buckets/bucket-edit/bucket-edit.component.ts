@@ -15,12 +15,6 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./bucket-edit.component.css']
 })
 export class BucketEditComponent implements OnInit {
-  id: number;
-  currentBucket: Bucket;
-  bucketColors: BucketColor[];
-  bucketCategories: BucketCategory[];
-  editBucketFormGroup: FormGroup;
-
   constructor(
     private route: ActivatedRoute,
     private bucketService: BucketService,
@@ -28,16 +22,22 @@ export class BucketEditComponent implements OnInit {
     private toastr: ToastrService
   ) {}
 
+  currentBucketId: number;
+  currentBucket: Bucket;
+  bucketColors: BucketColor[];
+  bucketCategories: BucketCategory[];
+  editBucketFormGroup: FormGroup;
+
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.id = +params['id'];
+      this.currentBucketId = +params['id'];
       this.loadCurrentBucket();
     });
   }
 
   async loadCurrentBucket() {
     try {
-      const response = await this.bucketService.getBucket(environment.bucketEndpoint + this.id).toPromise();
+      const response = await this.bucketService.getBucket(environment.bucketEndpoint + this.currentBucketId).toPromise();
       this.currentBucket = response;
       await this.loadBucketsData();
       this.initializeEditForm();
@@ -157,7 +157,7 @@ export class BucketEditComponent implements OnInit {
       this.currentBucket.bucketColorId = matchedColor.id;
     }
 
-    this.bucketService.putBucket(environment.bucketEndpoint + this.id, this.currentBucket).subscribe(
+    this.bucketService.putBucket(environment.bucketEndpoint + this.currentBucketId, this.currentBucket).subscribe(
       (response: Bucket) => {
         this.toastr.success("Bucket " + response.name + " edit successfull.");
       },

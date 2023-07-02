@@ -9,7 +9,9 @@ import { Observable } from "rxjs";
 
 export class BucketTaskService {
         
-    constructor(private httpClient: HttpClient) {}
+    constructor(
+        private httpClient: HttpClient
+    ) {}
 
     getBucketTasks(url): Observable<BucketTask> {
         return this.httpClient.get<BucketTask>(url);

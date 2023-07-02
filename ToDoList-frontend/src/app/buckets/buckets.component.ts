@@ -32,6 +32,10 @@ export class BucketsComponent implements OnInit {
   bucketTasksDone: BucketTask[];
   bucketTasksCancelled: BucketTask[];
 
+  ngOnInit() {
+    this.refreshBucketAndBucketsComponents();
+  }
+
   refreshBucketAndBucketsComponents() {
     this.fetchBuckets();
     this.fetchBucketTasks();
@@ -87,15 +91,11 @@ export class BucketsComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
-    this.refreshBucketAndBucketsComponents();
-  }
-
   RemoveBucket(id: any) {
     this.bucketService.deleteBucket(environment.bucketEndpoint+id).subscribe(
         (response: any) => {
-          this.showModal = !this.showModal;
-          this.toastr.success("Bucket deleted successfully.");
+          this.showModal = false;
+          this.toastr.success("Bucket " +this.buckets.find(b => b.id === id).name + " deleted successfully.");
           this.refreshBucketAndBucketsComponents();
         },
         (error: any) => {

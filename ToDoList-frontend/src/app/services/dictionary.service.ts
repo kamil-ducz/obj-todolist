@@ -12,7 +12,9 @@ import { BucketTaskPriority } from "../models/bucketTaskPriority.model";
 
 export class DictionaryService {
 
-    constructor(private httpClient: HttpClient) {}
+    constructor(
+        private httpClient: HttpClient
+    ) {}
 
     getBucketColors(url): Observable<BucketColor[]> {
         return this.httpClient.get<BucketColor[]>(url);

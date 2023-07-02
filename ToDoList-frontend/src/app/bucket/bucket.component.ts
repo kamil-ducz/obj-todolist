@@ -16,17 +16,42 @@ import { DictionaryService } from '../services/dictionary.service';
 })
 export class BucketComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private router: Router, 
-    private bucketService: BucketService, private bucketTaskService: BucketTaskService, 
-    private dictionaryService: DictionaryService, private toastr: ToastrService) { }
+  constructor(
+    private route: ActivatedRoute, 
+    private router: Router, 
+    private bucketService: BucketService, 
+    private bucketTaskService: BucketTaskService, 
+    private dictionaryService: DictionaryService, 
+    private toastr: ToastrService
+    ) { }
 
-  id: number;
-
+  currentBucketId: number;
   currentBucket: Bucket;
   currentBucketCategoryName: string;
 
+  currentBucketBucketTasks: BucketTask[];
+  currentBucketTask: BucketTask;
+  bucketTasksToDo: BucketTask[];
+  bucketTasksInProgress: BucketTask[];
+  bucketTasksDone: BucketTask[];
+  bucketTasksCancelled: BucketTask[];
+
+  ngOnInit(): void {
+    this.route.params.subscribe(
+      (params: Params) => {
+        this.currentBucketId = +params['id'];
+      }
+    );
+    this.refreshCurrentBucketBucketTasksComponents();
+  }
+  
+  refreshCurrentBucketBucketTasksComponents() {
+    this.fetchCurrentBucket();
+    this.fetchBucketTasks();
+  }
+
   fetchCurrentBucket() {
-    this.bucketService.getBucket(environment.bucketEndpoint+this.id).subscribe(
+    this.bucketService.getBucket(environment.bucketEndpoint+this.currentBucketId).subscribe(
       (response: Bucket) => {
         this.currentBucket = response;
         this.fetchCurrentBucketCategoryName(response.bucketCategoryId);
@@ -48,15 +73,8 @@ export class BucketComponent implements OnInit {
     )
   }
 
-  currentBucketBucketTasks: BucketTask[];
-  currentBucketTask: BucketTask;
-  bucketTasksToDo: BucketTask[];
-  bucketTasksInProgress: BucketTask[];
-  bucketTasksDone: BucketTask[];
-  bucketTasksCancelled: BucketTask[];
-
   fetchBucketTasks() {
-    this.bucketService.getBucketTasks(environment.buckeTasksForBucketEndpoint+this.id).subscribe(
+    this.bucketService.getBucketTasks(environment.buckeTasksForBucketEndpoint+this.currentBucketId).subscribe(
       (response: any) => {
         this.currentBucketBucketTasks = response;
         this.bucketTasksToDo = this.currentBucketBucketTasks.filter(element => element.bucketTaskStateId == 1);
@@ -73,20 +91,6 @@ export class BucketComponent implements OnInit {
   newBucketTaskToCreate: BucketTask;
   addNewBucketTaskFormGroup: FormGroup;
   editNewBucketTaskFormGroup: FormGroup;
-  
-  refreshCurrentBucketBucketTasksComponents() {
-    this.fetchCurrentBucket();
-    this.fetchBucketTasks();
-  }
-
-  ngOnInit(): void {
-    this.route.params.subscribe(
-      (params: Params) => {
-        this.id = +params['id'];
-      }
-    );
-    this.refreshCurrentBucketBucketTasksComponents();
-  }
 
   initializeNewBucketTaskForm() {
     this.addNewBucketTaskFormGroup = new FormGroup({
@@ -125,7 +129,7 @@ export class BucketComponent implements OnInit {
   }
 
   onSubmitNewBucketTask(newBucketTask: BucketTask) {
-    newBucketTask.bucketsId = this.id;
+    newBucketTask.bucketsId = this.currentBucketId;
     if (this.currentBucketBucketTasks.length < this.currentBucket.maxAmountOfTasks)
     {
       this.bucketTaskService.postBucketTask(environment.bucketTaskEndpoint, newBucketTask).subscribe(
@@ -148,7 +152,7 @@ export class BucketComponent implements OnInit {
 
   onSubmitEditBucketTask(newBucketTask: BucketTask) {
     newBucketTask = this.editNewBucketTaskFormGroup.value;
-    newBucketTask.bucketsId = this.id;
+    newBucketTask.bucketsId = this.currentBucketId;
     this.bucketTaskService.putBucketTask(environment.bucketTaskEndpoint+this.currentBucketTask.id, newBucketTask).subscribe(
       (response: any) => {
         console.log(response);
@@ -164,7 +168,7 @@ export class BucketComponent implements OnInit {
   removeBucket(id: any) {
     this.bucketService.deleteBucket(environment.bucketEndpoint+id).subscribe(
         (response: any) => {
-          this.exitDeleteModal();
+          this.toastr.success("Bucket " +this.currentBucket.name + " deleted successfully.");
           this.router.navigate(['/buckets']);
         },
         (error: any) => {
@@ -190,10 +194,6 @@ export class BucketComponent implements OnInit {
   toggleDeleteModal(i: number, e: Event) {
     this.showModal = !this.showModal;
     event.stopPropagation();
-  }
-
-  exitDeleteModal() {
-    this.showModal = !this.showModal;
   }
 
   showNewBucketTaskForm = false;

@@ -5,7 +5,7 @@
       </div>
     </div>
     <div class="grid grid-cols-2 float-right">
-        <div [routerLink]="['/bucket-edit', this.id]"  class="text-center m-1 flex bg-white border-2 border-violet-400 cursor-pointer">
+        <div [routerLink]="['/bucket-edit', this.currentBucketId]"  class="text-center m-1 flex bg-white border-2 border-violet-400 cursor-pointer">
             <span>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
@@ -13,7 +13,7 @@
             </span>      
             <span>Edit</span>
         </div>
-        <div (click)="toggleDeleteModal(this.id, $event)" class="text-center m-1 flex bg-white border-2 border-violet-400 cursor-pointer">
+        <div (click)="toggleDeleteModal(this.currentBucketId, $event)" class="text-center m-1 flex bg-white border-2 border-violet-400 cursor-pointer">
             <span>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m6 4.125l2.25 2.25m0 0l2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
@@ -145,7 +145,7 @@
 
 <a href="#" class="m-8 mt-8 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">Return to main page</a>
 
-<!-- deletion modal start -->
+<!-- confirm bucket delete modal start -->
 <div *ngIf="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
     <div class="relative w-auto my-6 mx-auto max-w-6xl">
       <!--content-->
@@ -155,7 +155,7 @@
           <h3 class="text-3xl font-semibold">
             Confirm delete
           </h3>
-          <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="exitDeleteModal()">
+          <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="!showModal">
             <span class="text-black">
               ×
             </span>
@@ -169,17 +169,17 @@
         </div>
         <!--footer-->
         <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-          <button class="text-red-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="removeBucket(this.id)">
+          <button class="text-red-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="removeBucket(this.currentBucketId)">
             Delete
           </button>
-          <button class="text-emerald-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="exitDeleteModal()">
+          <button class="text-emerald-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="!showModal">
             Cancel
           </button>
         </div>
       </div>
     </div>
   </div>
-  <!-- deletion modal end -->
+  <!-- confirm bucket delete modal end -->
 
   <!-- new task modal start -->
   <div *ngIf="showNewBucketTaskForm" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
