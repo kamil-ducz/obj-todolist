@@ -55,7 +55,6 @@ export class BucketEditComponent implements OnInit {
       this.dictionaryService.getBucketCategories(environment.bucketCategoryEndpoint).subscribe(
         (response: BucketCategory[]) => {
           this.bucketCategories = response;
-          console.log("this.currentBucketCategories" + JSON.stringify(this.bucketCategories));
         },
         (error: any) => {
           this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name);
@@ -67,7 +66,6 @@ export class BucketEditComponent implements OnInit {
       this.dictionaryService.getBucketColors(environment.bucketColorEndpoint).subscribe(
         (response: BucketColor[]) => {
           this.bucketColors = response;
-          console.log("this.currentBucketColors" + JSON.stringify(this.bucketColors));
         },
         (error: any) => {
           this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name);
