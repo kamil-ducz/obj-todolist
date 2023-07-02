@@ -139,6 +139,9 @@ export class BucketComponent implements OnInit {
   }
 
   initializeEditBucketTaskForm() {
+    const bucketTaskState = this.bucketTaskStates.find(bts => bts.id === this.currentBucketTask.bucketTaskStateId).name;
+    const bucketTaskPriority = this.bucketTaskPriorities.find(btps => btps.id === this.currentBucketTask.bucketTaskPriorityId).name;
+
     this.editNewBucketTaskFormGroup = new FormGroup({
       name: new FormControl(this.currentBucketTask.name, [
         Validators.required,
@@ -147,10 +150,10 @@ export class BucketComponent implements OnInit {
       description: new FormControl(this.currentBucketTask.description, [
         Validators.maxLength(50),
       ]),
-      bucketTaskState: new FormControl(this.currentBucketTask.bucketTaskStateId, [
+      bucketTaskState: new FormControl(bucketTaskState, [
         Validators.required,      
       ]),
-      bucketTaskPriority: new FormControl(this.currentBucketTask.bucketTaskPriorityId, [
+      bucketTaskPriority: new FormControl(bucketTaskPriority, [
         Validators.required,
       ]),
     });
@@ -164,7 +167,6 @@ export class BucketComponent implements OnInit {
     this.currentBucketTask.bucketTaskState = null;
     this.currentBucketTask.bucketTaskPriority = null;
     this.currentBucketTask.bucketsId = this.currentBucketId;
-    console.log("this.currentBucketTask " + JSON.stringify(this.currentBucketTask));
   
     if (this.currentBucketBucketTasks.length < this.currentBucket.maxAmountOfTasks)
     {
@@ -173,7 +175,7 @@ export class BucketComponent implements OnInit {
           this.toastr.success("Bucket task " + this.currentBucketTask.name + " created successfully.");
         },
         (error: any) => {
-          this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
+          this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
         }
       );
     }

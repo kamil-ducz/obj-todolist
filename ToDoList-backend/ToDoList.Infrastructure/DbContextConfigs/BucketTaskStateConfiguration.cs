@@ -8,8 +8,8 @@ public class BucketTaskStateConfiguration : IEntityTypeConfiguration<BucketTaskS
     public void Configure(EntityTypeBuilder<BucketTaskState> builder)
     {
         builder.HasData(
-            new BucketTaskState() { Id = 1, Name = "ToDo" },
-            new BucketTaskState() { Id = 2, Name = "InProgress" },
+            new BucketTaskState() { Id = 1, Name = "To do" },
+            new BucketTaskState() { Id = 2, Name = "In progress" },
             new BucketTaskState() { Id = 3, Name = "Done" },
             new BucketTaskState() { Id = 4, Name = "Cancelled" }
             );

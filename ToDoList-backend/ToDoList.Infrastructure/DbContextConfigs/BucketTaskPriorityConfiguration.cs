@@ -9,7 +9,7 @@ public class BucketTaskPriorityConfiguration : IEntityTypeConfiguration<BucketTa
     {
         builder.HasData(
             new BucketTaskPriority() { Id = 1, Name = "High" },
-            new BucketTaskPriority() { Id = 2, Name = "Normal" },
+            new BucketTaskPriority() { Id = 2, Name = "Medium" },
             new BucketTaskPriority() { Id = 3, Name = "Low" }
             );
     }
