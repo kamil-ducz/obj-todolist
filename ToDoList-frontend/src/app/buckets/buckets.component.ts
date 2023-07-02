@@ -5,6 +5,9 @@ import { environment } from 'src/environments/environment';
 import { Bucket } from '../models/bucket.model';
 import { BucketTask } from '../models/bucketTask.model';
 import { ToastrService } from 'ngx-toastr';
+import { BucketTaskState } from '../models/bucketTaskState.model';
+import { BucketTaskPriority } from '../models/bucketTaskPriority.model';
+import { DictionaryService } from '../services/dictionary.service';
 
 @Component({
   selector: 'app-buckets',
@@ -13,14 +16,28 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class BucketsComponent implements OnInit {
 
-  constructor(private bucketService: BucketService, private bucketTaskService: BucketTaskService, private toastr: ToastrService) { }
+  constructor(
+    private bucketService: BucketService, 
+    private bucketTaskService: BucketTaskService, 
+    private dictionaryService: DictionaryService, 
+    private toastr: ToastrService
+    ) { }
+
+  buckets: Bucket[];
+  bucketTasks: BucketTask[];
+  bucketTaskStates: BucketTaskState[];
+  bucketTaskPriorities: BucketTaskPriority[];
+  bucketTasksToDo: BucketTask[];
+  bucketTasksInProgress: BucketTask[];
+  bucketTasksDone: BucketTask[];
+  bucketTasksCancelled: BucketTask[];
 
   refreshBucketAndBucketsComponents() {
     this.fetchBuckets();
     this.fetchBucketTasks();
+    this.fetchBucketTasksStates();
+    this.fetchBucketTaskPriorities();
   }
-
-  buckets: Bucket[];
   
   fetchBuckets() {
     this.bucketService.getBuckets(environment.bucketEndpoint).subscribe(
@@ -28,28 +45,45 @@ export class BucketsComponent implements OnInit {
         this.buckets = response;
       },
       (error: any) => {
-        this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
       }
     );
   }
-
-  bucketTasks: BucketTask[];
-  bucketTasksToDo: BucketTask[];
-  bucketTasksInProgress: BucketTask[];
-  bucketTasksDone: BucketTask[];
-  bucketTasksCancelled: BucketTask[];
 
   fetchBucketTasks() {
     this.bucketTaskService.getBucketTasks(environment.bucketTaskEndpoint).subscribe(
       (response: any) => {
         this.bucketTasks = response;
-        this.bucketTasksToDo = this.bucketTasks.filter(element => element.taskState == 0);
-        this.bucketTasksInProgress = this.bucketTasks.filter(element => element.taskState == 1);
-        this.bucketTasksDone = this.bucketTasks.filter(element => element.taskState == 2);
-        this.bucketTasksCancelled = this.bucketTasks.filter(element => element.taskState == 3);
+        console.log("this.bucketTasks" + this.bucketTasks);
+        this.bucketTasksToDo = this.bucketTasks.filter(element => element.taskState == 1);
+        this.bucketTasksInProgress = this.bucketTasks.filter(element => element.taskState == 2);
+        this.bucketTasksDone = this.bucketTasks.filter(element => element.taskState == 3);
+        this.bucketTasksCancelled = this.bucketTasks.filter(element => element.taskState == 4);
       },
       (error: any) => {
-        this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
+      }
+    );
+  }
+
+  fetchBucketTasksStates() {
+    this.dictionaryService.getBucketTaskStates(environment.bucketTaskStatesEndpoint).subscribe(
+      (response: BucketTaskState[]) => {
+        this.bucketTaskStates = response;
+      },
+      (error: any) => {
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
+      }
+    );
+  }
+
+  fetchBucketTaskPriorities() {
+    this.dictionaryService.getBucketTaskPriorities(environment.bucketTaskPrioritiesEndoint).subscribe(
+      (response: BucketTaskPriority[]) => {
+        this.bucketTaskPriorities = response;
+      },
+      (error: any) => {
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
       }
     );
   }
@@ -66,7 +100,7 @@ export class BucketsComponent implements OnInit {
           this.refreshBucketAndBucketsComponents();
         },
         (error: any) => {
-          this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
+          this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
         }
     );
   }
