@@ -15,5 +15,5 @@ public class BucketUpsertDto
     public BucketColor? BucketColor { get; set; }
     public int MaxAmountOfTasks { get; set; } = 1;
     public bool IsActive { get; set; }
-    public List<BucketTaskDto> BucketTasks { get; set; } = new List<BucketTaskDto>();
+    public List<BucketTaskDto> BucketTask { get; set; } = new List<BucketTaskDto>();
 }

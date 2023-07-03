@@ -14,5 +14,5 @@ public class BucketTaskDto
     public BucketTaskPriority? BucketTaskPriority { get; set; }
     public int BucketTaskPriorityId { get; set; }
     public int BucketId { get; set; }
-    public List<AssigneeDto> Assignees { get; set; } = new List<AssigneeDto>();
+    public List<AssigneeDto> Assignee { get; set; } = new List<AssigneeDto>();
 }

@@ -7,5 +7,5 @@ public class AssigneeUpsertDto
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
-    public List<BucketTaskDto> BucketTasks { get; set; } = new List<BucketTaskDto>();
+    public List<BucketTaskDto> BucketTask { get; set; } = new List<BucketTaskDto>();
 }

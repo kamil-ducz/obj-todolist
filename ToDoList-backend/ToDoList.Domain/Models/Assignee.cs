@@ -6,5 +6,5 @@ public class Assignee
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
-    public List<BucketTask> BucketTasks { get; set; } = new List<BucketTask>();
+    public List<BucketTask> BucketTask { get; set; } = new List<BucketTask>();
 }
