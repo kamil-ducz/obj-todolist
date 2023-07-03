@@ -10,35 +10,34 @@ public class AssigneeRepository : IAssigneeRepository
 
     public AssigneeRepository(ToDoListDbContext toDoListDbContext)
     {
-        this._toDoListDbContext = toDoListDbContext;
+        _toDoListDbContext = toDoListDbContext;
     }
 
     public IReadOnlyList<Assignee> GetAllAssignees()
     {
-        return _toDoListDbContext.Assignees!.ToList();
+        return _toDoListDbContext.Assignees.ToList();
     }
 
     public Assignee GetAssignee(int assigneeId)
     {
-        return _toDoListDbContext.Assignees!.First(a => a.Id == assigneeId);
+        return _toDoListDbContext.Assignees.First(a => a.Id == assigneeId);
     }
 
-    public void DeleteAssignee(int assigneeId)
+    public void DeleteAssignee(Assignee assignee)
     {
-        var assigneeToDelete = _toDoListDbContext.Assignees!.First(a => a.Id == assigneeId);
-        _toDoListDbContext.Assignees!.Remove(assigneeToDelete);
+        _toDoListDbContext.Assignees.Remove(assignee);
         _toDoListDbContext.SaveChanges();
     }
 
     public void InsertAssignee(Assignee assignee)
     {
-        _toDoListDbContext.Assignees!.Add(assignee);
+        _toDoListDbContext.Assignees.Add(assignee);
         _toDoListDbContext.SaveChanges();
     }
 
-    public void UpdateAssignee(Assignee assigneeToUpdate)
+    public void UpdateAssignee(Assignee assignee)
     {
-        _toDoListDbContext.Assignees!.Update(assigneeToUpdate);
+        _toDoListDbContext.Assignees.Update(assignee);
         _toDoListDbContext.SaveChanges();
     }
 }

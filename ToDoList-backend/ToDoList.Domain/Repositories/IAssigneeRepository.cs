@@ -8,6 +8,6 @@ public interface IAssigneeRepository
     IReadOnlyList<Assignee> GetAllAssignees();
     Assignee GetAssignee(int assigneeId);
     void InsertAssignee(Assignee assignee);
-    void DeleteAssignee(int assigneeId);
+    void DeleteAssignee(Assignee assignee);
     void UpdateAssignee(Assignee assignee);
 }

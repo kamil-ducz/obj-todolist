@@ -37,7 +37,8 @@ public class AssigneeService : IAssigneeService
 
     public void DeleteAssignee(int assigneeId)
     {
-        _assigneeRepository.DeleteAssignee(assigneeId);
+        var assignee = _assigneeRepository.GetAssignee(assigneeId);
+        _assigneeRepository.DeleteAssignee(assignee);
     }
 
     public int InsertAssignee(AssigneeUpsertDto assigneeDTO)
