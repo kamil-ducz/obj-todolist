@@ -8,10 +8,10 @@ public class BucketTaskStateConfiguration : IEntityTypeConfiguration<BucketTaskS
     public void Configure(EntityTypeBuilder<BucketTaskState> builder)
     {
         builder.HasData(
-            new BucketTaskState() { Id = 1, Name = "To do" },
-            new BucketTaskState() { Id = 2, Name = "In progress" },
-            new BucketTaskState() { Id = 3, Name = "Done" },
-            new BucketTaskState() { Id = 4, Name = "Cancelled" }
+            new BucketTaskState() { Id = (int)Domain.Enums.BucketTaskState.ToDo, Name = "To do" },
+            new BucketTaskState() { Id = (int)Domain.Enums.BucketTaskState.InProgress, Name = "In progress" },
+            new BucketTaskState() { Id = (int)Domain.Enums.BucketTaskState.Done, Name = "Done" },
+            new BucketTaskState() { Id = (int)Domain.Enums.BucketTaskState.Cancelled, Name = "Cancelled" }
             );
     }
 }

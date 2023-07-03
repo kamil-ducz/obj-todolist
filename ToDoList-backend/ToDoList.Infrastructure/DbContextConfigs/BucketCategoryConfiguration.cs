@@ -8,9 +8,9 @@ public class BucketCategoryConfiguration : IEntityTypeConfiguration<BucketCatego
     public void Configure(EntityTypeBuilder<BucketCategory> builder)
     {
         builder.HasData(
-            new BucketCategory() { Id = 1, Name = "Work" },
-            new BucketCategory() { Id = 2, Name = "Home" },
-            new BucketCategory() { Id = 3, Name = "Hobby" }
+            new BucketCategory() { Id = (int)Domain.Enums.BucketCategory.Work, Name = "Work" },
+            new BucketCategory() { Id = (int)Domain.Enums.BucketCategory.Home, Name = "Home" },
+            new BucketCategory() { Id = (int)Domain.Enums.BucketCategory.Hobby, Name = "Hobby" }
         );
     }
 }

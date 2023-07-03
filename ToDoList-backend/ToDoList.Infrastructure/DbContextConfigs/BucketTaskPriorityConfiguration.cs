@@ -8,9 +8,9 @@ public class BucketTaskPriorityConfiguration : IEntityTypeConfiguration<BucketTa
     public void Configure(EntityTypeBuilder<BucketTaskPriority> builder)
     {
         builder.HasData(
-            new BucketTaskPriority() { Id = 1, Name = "High" },
-            new BucketTaskPriority() { Id = 2, Name = "Medium" },
-            new BucketTaskPriority() { Id = 3, Name = "Low" }
+            new BucketTaskPriority() { Id = (int)Domain.Enums.BucketTaskPriority.High, Name = "High" },
+            new BucketTaskPriority() { Id = (int)Domain.Enums.BucketTaskPriority.Normal, Name = "Medium" },
+            new BucketTaskPriority() { Id = (int)Domain.Enums.BucketTaskPriority.Low, Name = "Low" }
             );
     }
 }
