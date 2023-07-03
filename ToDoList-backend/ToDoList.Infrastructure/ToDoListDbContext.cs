@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ToDoList.Domain.Models;
-using ToDoList.Infrastructure.DbContextConfigs;
 
 // Declared db sets will never be null
 #pragma warning disable CS8618
@@ -19,13 +18,7 @@ public class ToDoListDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfiguration(new AssigneeConfiguration());
-        modelBuilder.ApplyConfiguration(new BucketConfiguration());
-        modelBuilder.ApplyConfiguration(new BucketCategoryConfiguration());
-        modelBuilder.ApplyConfiguration(new BucketColorConfiguration());
-        modelBuilder.ApplyConfiguration(new BucketTaskConfiguration());
-        modelBuilder.ApplyConfiguration(new BucketTaskStateConfiguration());
-        modelBuilder.ApplyConfiguration(new BucketTaskPriorityConfiguration());
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ToDoListDbContext).Assembly);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
