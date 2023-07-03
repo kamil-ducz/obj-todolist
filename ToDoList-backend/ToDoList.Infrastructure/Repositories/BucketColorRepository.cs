@@ -1,5 +1,5 @@
 ﻿using ToDoList.Api;
-using ToDoList.Domain.Enums;
+using ToDoList.Domain.Models;
 using ToDoList.Domain.Repositories;
 
 namespace ToDoList.Infrastructure.Repositories;

@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using ToDoList.Domain.Enums;
 using ToDoList.Domain.Models;
 using ToDoList.Infrastructure.DbContextConfigs;
 

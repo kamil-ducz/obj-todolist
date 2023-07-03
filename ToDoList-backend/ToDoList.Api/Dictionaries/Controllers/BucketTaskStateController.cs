@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using ToDoList.Api.Dictionaries.Services;
-using ToDoList.Domain.Enums;
+using ToDoList.Domain.Models;
 
 namespace ToDoList.Api.Dictionaries.Controllers;
 

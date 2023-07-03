@@ -1,6 +1,6 @@
-﻿namespace ToDoList.Domain.Enums;
+﻿namespace ToDoList.Domain.Models;
 
-public class BucketTaskPriority
+public class BucketTaskState
 {
     public int Id { get; set; }
     public string? Name { get; set; }
