@@ -13,6 +13,6 @@ public class BucketTaskStateRepository : IBucketTaskStateRepository
     }
     public IReadOnlyCollection<BucketTaskState> GetAllBucketTaskStates()
     {
-        return _toDoListDbContext.BucketTaskState.ToList();
+        return _toDoListDbContext.BucketTaskStates.ToList();
     }
 }

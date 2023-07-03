@@ -15,6 +15,6 @@ public class BucketColorRepository : IBucketColorRepository
 
     public IReadOnlyList<BucketColor> GetAllBucketColors()
     {
-        return _toDoListDbContext.BucketColor.ToList();
+        return _toDoListDbContext.BucketColors.ToList();
     }
 }

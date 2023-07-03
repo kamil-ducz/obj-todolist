@@ -15,16 +15,16 @@ public class BucketCategoryRepository : IBucketCategoryRepository
 
     public IReadOnlyList<BucketCategory> GetAllBucketCategories()
     {
-        return _toDoListDbContext.BucketCategory.ToList();
+        return _toDoListDbContext.BucketCategories.ToList();
     }
 
     public int GetBucketCategoryIdByName(string bucketCategoryName)
     {
-        return _toDoListDbContext.BucketCategory.First(bcat => bcat.Name == bucketCategoryName).Id;
+        return _toDoListDbContext.BucketCategories.First(bcat => bcat.Name == bucketCategoryName).Id;
     }
 
     public string GetBucketCategoryNameById(int bucketCategoryId)
     {
-        return _toDoListDbContext.BucketCategory.First(bcat => bcat.Id == bucketCategoryId).Name;
+        return _toDoListDbContext.BucketCategories.First(bcat => bcat.Id == bucketCategoryId).Name;
     }
 }

@@ -13,6 +13,6 @@ public class BucketTaskPriorityRepository : IBucketTaskPriorityRepository
     }
     public IReadOnlyCollection<BucketTaskPriority> GetAllBucketTaskPriorities()
     {
-        return _toDoListDbContext.BucketTaskPriority.ToList();
+        return _toDoListDbContext.BucketTaskPriorities.ToList();
     }
 }
