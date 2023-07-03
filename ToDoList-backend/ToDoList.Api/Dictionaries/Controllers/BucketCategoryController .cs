@@ -21,24 +21,4 @@ public class BucketCategoryController : ControllerBase
     {
         return _bucketCategoryService.GetAllBucketCategories();
     }
-
-    [HttpGet("name/{bucketCategoryName}")]
-    public BucketCategory GetBucketCategoryIdByName(string bucketCategoryName)
-    {
-        var bucket = new BucketCategory
-        {
-            Id = _bucketCategoryService.GetBucketCategoryIdByName(bucketCategoryName)
-        };
-        return bucket;
-    }
-
-    [HttpGet("{bucketCategoryId}")]
-    public BucketCategory GetBucketCategoryNameById(int bucketCategoryId)
-    {
-        var bucket = new BucketCategory
-        {
-            Name = _bucketCategoryService.GetBucketCategoryNameById(bucketCategoryId)
-        };
-        return bucket;
-    }
 }

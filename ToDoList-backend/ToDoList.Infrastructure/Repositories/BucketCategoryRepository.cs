@@ -17,14 +17,4 @@ public class BucketCategoryRepository : IBucketCategoryRepository
     {
         return _toDoListDbContext.BucketCategories.ToList();
     }
-
-    public int GetBucketCategoryIdByName(string bucketCategoryName)
-    {
-        return _toDoListDbContext.BucketCategories.First(bcat => bcat.Name == bucketCategoryName).Id;
-    }
-
-    public string GetBucketCategoryNameById(int bucketCategoryId)
-    {
-        return _toDoListDbContext.BucketCategories.First(bcat => bcat.Id == bucketCategoryId).Name;
-    }
 }

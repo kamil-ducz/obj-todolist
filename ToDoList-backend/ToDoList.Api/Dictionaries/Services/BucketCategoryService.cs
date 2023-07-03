@@ -7,8 +7,6 @@ namespace ToDoList.Api.Dictionaries.Services;
 public interface IBucketCategoryService
 {
     IReadOnlyCollection<BucketCategory> GetAllBucketCategories();
-    int GetBucketCategoryIdByName(string bucketCategoryName);
-    string GetBucketCategoryNameById(int bucketCategoryId);
 }
 
 public class BucketCategoryService : IBucketCategoryService
@@ -23,15 +21,5 @@ public class BucketCategoryService : IBucketCategoryService
     public IReadOnlyCollection<BucketCategory> GetAllBucketCategories()
     {
         return _bucketCategoryRepository.GetAllBucketCategories();
-    }
-
-    public int GetBucketCategoryIdByName(string bucketCategoryName)
-    {
-        return _bucketCategoryRepository.GetBucketCategoryIdByName(bucketCategoryName);
-    }
-
-    public string GetBucketCategoryNameById(int bucketCategoryId)
-    {
-        return _bucketCategoryRepository.GetBucketCategoryNameById(bucketCategoryId);
     }
 }
