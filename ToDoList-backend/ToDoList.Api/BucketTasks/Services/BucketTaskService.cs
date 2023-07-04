@@ -53,9 +53,8 @@ public class BucketTaskService : IBucketTaskService
 
     public void UpdateBucketTask(int bucketTaskId, BucketUpsertTaskDto bucketTaskDTO)
     {
-        var bucketTask = _mapper.Map<BucketTask>(bucketTaskDTO);
-        bucketTask.Id = bucketTaskId;
-
+        var bucketTask = _bucketTaskRepository.GetBucketTask(bucketTaskId);
+        _mapper.Map(bucketTaskDTO, bucketTask);
         _bucketTaskRepository.UpdateBucketTask(bucketTask);
     }
 }

@@ -51,22 +51,19 @@ public class BucketService : IBucketService
     {
         var mappedBucket = _mapper.Map<Domain.Models.Bucket>(bucketDTO);
         _bucketRepository.InsertBucket(mappedBucket);
-
         return mappedBucket.Id;
     }
 
-    public void UpdateBucket(int id, BucketUpsertDto bucketDTO)
+    public void UpdateBucket(int bucketId, BucketUpsertDto bucketDTO)
     {
-        var bucket = _mapper.Map<Domain.Models.Bucket>(bucketDTO);
-        bucket.Id = id;
-
+        var bucket = _bucketRepository.GetBucket(bucketId);
+        _mapper.Map(bucketDTO, bucket);
         _bucketRepository.UpdateBucket(bucket);
     }
 
     public IReadOnlyCollection<BucketTaskDto> GetAllBucketsTasks(int bucketId)
     {
         var bucketTasks = _bucketTaskRepository.GetAllBucketTasks().Where(b => b.BucketId == bucketId);
-
         return _mapper.Map<IReadOnlyCollection<BucketTaskDto>>(bucketTasks);
     }
 }
