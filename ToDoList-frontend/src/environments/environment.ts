@@ -7,12 +7,12 @@ export const environment = {
   localhostUrl: 'https://localhost:7247/api/',
   
   bucketEndpoint: 'https://localhost:7247/api/Bucket/',
-  bucketColorEndpoint: 'https://localhost:7247/api/BucketColor/all',
-  bucketCategoryEndpoint: 'https://localhost:7247/api/BucketCategory/all',
+  bucketColorEndpoint: 'https://localhost:7247/api/Dictionary/bucketColors/all',
+  bucketCategoryEndpoint: 'https://localhost:7247/api/Dictionary/bucketCategories/all',
 
   bucketTaskEndpoint: 'https://localhost:7247/api/BucketTask/',
-  bucketTaskStatesEndpoint: 'https://localhost:7247/api/BucketTaskState/all',
-  bucketTaskPrioritiesEndoint: 'https://localhost:7247/api/BucketTaskPriority/all',
+  bucketTaskStatesEndpoint: 'https://localhost:7247/api/Dictionary/bucketTaskStates/all',
+  bucketTaskPrioritiesEndoint: 'https://localhost:7247/api/Dictionary/bucketTaskPriorities/all',
 
   buckeTasksForBucketEndpoint: 'https://localhost:7247/api/Bucket/buckettask/',
 };
