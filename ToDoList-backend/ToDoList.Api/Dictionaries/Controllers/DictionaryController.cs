@@ -4,6 +4,9 @@ using ToDoList.Api.Dictionaries.Services;
 using ToDoList.Domain.Models;
 
 namespace ToDoList.Api.Dictionaries.Controllers;
+[Route("api/[controller]")]
+[ApiController]
+
 public class DictionaryController : Controller
 {
     private readonly IDictionaryService _dictionaryService;
