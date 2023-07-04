@@ -36,6 +36,7 @@ public static class DependencyInjection
         services.AddScoped<IBucketTaskService, BucketTaskService>();
         services.AddScoped<IBucketTaskStateService, BucketTaskStateService>();
         services.AddScoped<IBucketTaskPriorityService, BucketTaskPriorityService>();
+        services.AddScoped<IDictionaryService, DictionaryService>();
 
         services.AddScoped<IAssigneeRepository, AssigneeRepository>();
         services.AddScoped<IBucketRepository, BucketRepository>();
@@ -44,6 +45,7 @@ public static class DependencyInjection
         services.AddScoped<IBucketTaskRepository, BucketTaskRepository>();
         services.AddScoped<IBucketTaskStateRepository, BucketTaskStateRepository>();
         services.AddScoped<IBucketTaskPriorityRepository, BucketTaskPriorityRepository>();
+        services.AddScoped<IDictionaryRepository, DictionaryRepository>();
 
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
