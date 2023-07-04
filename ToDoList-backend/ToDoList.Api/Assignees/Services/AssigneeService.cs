@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
 using ToDoList.Api.Assignees.Models;
+using ToDoList.Domain.Models;
 using ToDoList.Domain.Repositories;
 
 namespace ToDoList.Api.Assignees.Services;
@@ -43,16 +44,16 @@ public class AssigneeService : IAssigneeService
 
     public int InsertAssignee(AssigneeUpsertDto assigneeDTO)
     {
-        var mappedAssignee = _mapper.Map<Domain.Models.Assignee>(assigneeDTO);
-        _assigneeRepository.InsertAssignee(mappedAssignee);
-        return mappedAssignee.Id;
+        var assignee = _mapper.Map<Assignee>(assigneeDTO);
+        _assigneeRepository.InsertAssignee(assignee);
+        return assignee.Id;
     }
 
     public void UpdateAssignee(AssigneeUpsertDto assigneeDTO, int assigneeId)
     {
-        var mappedAssignee = _mapper.Map<Domain.Models.Assignee>(assigneeDTO);
-        mappedAssignee.Id = assigneeId;
+        var assignee = _mapper.Map<Assignee>(assigneeDTO);
+        assignee.Id = assigneeId;
 
-        _assigneeRepository.UpdateAssignee(mappedAssignee);
+        _assigneeRepository.UpdateAssignee(assignee);
     }
 }
