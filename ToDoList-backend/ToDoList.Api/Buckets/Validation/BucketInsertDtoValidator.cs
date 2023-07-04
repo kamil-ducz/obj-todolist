@@ -9,8 +9,7 @@ public class BucketUpsertDtoValidator : AbstractValidator<BucketUpsertDto>
     {
         RuleFor(x => x.Name)
             .NotEmpty()
-            .WithMessage("Bucket name cannot be empty");
-        RuleFor(x => x.Name)
+            .WithMessage("Bucket name cannot be empty")
             .MinimumLength(2)
             .MaximumLength(30)
             .WithMessage("Bucket name has to be between 2-15 characters");
@@ -19,8 +18,7 @@ public class BucketUpsertDtoValidator : AbstractValidator<BucketUpsertDto>
             .WithMessage("Maximum description length is 15 characters");
         RuleFor(t => t.MaxAmountOfTasks)
             .NotEmpty()
-            .WithMessage("Max amount of tasks cannot be empty");
-        RuleFor(t => t.MaxAmountOfTasks)
+            .WithMessage("Max amount of tasks cannot be empty")
             .GreaterThanOrEqualTo(1)
             .LessThanOrEqualTo(15)
             .WithMessage("Max amount of tasks has to be between 1-15");
