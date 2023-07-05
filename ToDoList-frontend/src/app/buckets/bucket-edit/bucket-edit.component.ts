@@ -27,7 +27,7 @@ export class BucketEditComponent implements OnInit {
   bucketColors: BucketColor[];
   bucketCategories: BucketCategory[];
   editBucketFormGroup: FormGroup;
-
+  
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
       this.currentBucketId = +params['id'];

@@ -15,7 +15,6 @@ import { DictionaryService } from '../services/dictionary.service';
   styleUrls: ['./buckets.component.css']
 })
 export class BucketsComponent implements OnInit {
-
   constructor(
     private bucketService: BucketService, 
     private bucketTaskService: BucketTaskService, 
@@ -49,7 +48,6 @@ export class BucketsComponent implements OnInit {
         this.buckets = response;
       },
       (error: any) => {
-        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
       }
     );
   }

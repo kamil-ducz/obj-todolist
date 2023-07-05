@@ -109,6 +109,16 @@ export class BucketComponent implements OnInit {
         this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
       }
     );
+  newBucketTaskToCreate: BucketTask;
+  addNewBucketTaskFormGroup: FormGroup;
+  editNewBucketTaskFormGroup: FormGroup;
+  
+  constructor(private route: ActivatedRoute, private router: Router, 
+              private bucketService: BucketService, private bucketTaskService: BucketTaskService, private toastr: ToastrService) { }
+
+  refreshCurrentBucketBucketTasksComponents() {
+    this.fetchCurrentBucket();
+    this.fetchBucketTasks();
   }
 
   fetchBucketTaskPriorities() {
