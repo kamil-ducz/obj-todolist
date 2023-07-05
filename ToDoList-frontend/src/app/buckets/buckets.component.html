@@ -1,4 +1,5 @@
-<h1 class="mt-2 mb-2 text-center text-xl">Browse your buckets</h1>
+<div class="bg-gray-300 h-max">
+<h1 class="text-center text-xl">Browse your buckets</h1>
 <h1 class="font-small leading-tight text-lg mt-2 mb-2 text-black-300 text-left ml-5">Tasks from buckets - overall statistics:</h1>
 <div *ngIf="bucketTasks" class="m-4 gap-8 flex cursor-pointer">
   <div class="flex"><li class="text-yellow-400 w-2 h-1"></li>To do: {{ bucketTasksToDo.length }}</div>
@@ -20,12 +21,12 @@
   <ng-container *ngFor="let item of buckets">
     <div 
     [routerLink]="['/bucket-details', item.id]"
-    [ngClass]="{'bg-yellow-900': item.bucketColor == 0,
-                'bg-red-500': item.bucketColor == 1, 
-                'bg-yellow-500': item.bucketColor == 2, 
-                'bg-blue-500': item.bucketColor == 3,
-                'bg-white': item.bucketColor == 4,
-                'bg-green-500': item.bucketColor == 5,
+    [ngClass]="{'bg-yellow-900': item.bucketColorId == 1,
+                'bg-red-500': item.bucketColorId == 2, 
+                'bg-yellow-500': item.bucketColorId == 3, 
+                'bg-blue-500': item.bucketColorId == 4,
+                'bg-white': item.bucketColorId == 5,
+                'bg-green-500': item.bucketColorId == 6,
                 'border-2':true, 
                 'border-black text-center':true,
                 'cursor-pointer': true}"
@@ -92,3 +93,4 @@
                 </div>
               </div>
               <!-- deletion modal end -->
+</div>

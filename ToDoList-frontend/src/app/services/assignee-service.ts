@@ -9,26 +9,27 @@ import { Observable } from "rxjs";
 
 export class AssigneeService {
 
-    constructor(private httpClient: HttpClient) {}
+    constructor(
+        private httpClient: HttpClient
+    ) {}
 
-    getAssignees(): Observable<Assignee> {
-        return this.httpClient.get<Assignee>('https://localhost:7247/api/Assignee');
+    getAssignees(url): Observable<Assignee> {
+        return this.httpClient.get<Assignee>(url);
     }
 
-    getAssignee(id:number) {
-        return this.httpClient.get('https://localhost:7247/api/Assignee/{id}');
+    getAssignee(url) {
+        return this.httpClient.get(url);
     }
 
-    postAssignee(id:number) {
-        return this.httpClient.post('https://localhost:7247/api/Assignee', null); //2nd argument to work out TODO
+    postAssignee(url) {
+        return this.httpClient.post(url, null);
     }
 
-    putAssignee(id:number) {
-        return this.httpClient.put('https://localhost:7247/api/Assignee', null);
+    putAssignee(url) {
+        return this.httpClient.put(url, null);
     }
     
-    deleteAssignee(id:number) {
-        return this.httpClient.delete('https://localhost:7247/api/Assignee');
-    }
-    
+    deleteAssignee(url) {
+        return this.httpClient.delete(url);
+    }  
 }

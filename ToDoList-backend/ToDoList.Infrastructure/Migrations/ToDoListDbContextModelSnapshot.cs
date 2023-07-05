@@ -23,15 +23,15 @@ namespace ToDoList.Infrastructure.Migrations
 
             modelBuilder.Entity("AssigneeBucketTask", b =>
                 {
-                    b.Property<int>("AssigneesId")
+                    b.Property<int>("AssigneeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("BucketTasksId")
+                    b.Property<int>("BucketTaskId")
                         .HasColumnType("int");
 
-                    b.HasKey("AssigneesId", "BucketTasksId");
+                    b.HasKey("AssigneeId", "BucketTaskId");
 
-                    b.HasIndex("BucketTasksId");
+                    b.HasIndex("BucketTaskId");
 
                     b.ToTable("AssigneeBucketTask");
                 });
@@ -45,6 +45,7 @@ namespace ToDoList.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -67,10 +68,10 @@ namespace ToDoList.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("BucketColor")
+                    b.Property<int>("BucketCategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Category")
+                    b.Property<int>("BucketColorId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -83,9 +84,14 @@ namespace ToDoList.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BucketCategoryId");
+
+                    b.HasIndex("BucketColorId");
 
                     b.ToTable("Buckets");
 
@@ -93,29 +99,110 @@ namespace ToDoList.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            BucketColor = 0,
-                            Category = 0,
+                            BucketCategoryId = 2,
+                            BucketColorId = 1,
                             IsActive = true,
                             MaxAmountOfTasks = 15,
+                            Name = "Objectivity"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BucketCategoryId = 2,
+                            BucketColorId = 2,
+                            IsActive = true,
+                            MaxAmountOfTasks = 15,
+                            Name = "Kitchen"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            BucketCategoryId = 2,
+                            BucketColorId = 4,
+                            IsActive = true,
+                            MaxAmountOfTasks = 15,
+                            Name = "Gym"
+                        });
+                });
+
+            modelBuilder.Entity("ToDoList.Domain.Models.BucketCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BucketCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
                             Name = "Work"
                         },
                         new
                         {
                             Id = 2,
-                            BucketColor = 0,
-                            Category = 0,
-                            IsActive = true,
-                            MaxAmountOfTasks = 15,
                             Name = "Home"
                         },
                         new
                         {
                             Id = 3,
-                            BucketColor = 0,
-                            Category = 0,
-                            IsActive = true,
-                            MaxAmountOfTasks = 15,
                             Name = "Hobby"
+                        });
+                });
+
+            modelBuilder.Entity("ToDoList.Domain.Models.BucketColor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BucketColors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Brown"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Red"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Yellow"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Blue"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "White"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Green"
                         });
                 });
 
@@ -130,21 +217,26 @@ namespace ToDoList.Infrastructure.Migrations
                     b.Property<int>("BucketId")
                         .HasColumnType("int");
 
+                    b.Property<int>("BucketTaskPriorityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BucketTaskStateId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TaskPriority")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TaskState")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BucketId");
+
+                    b.HasIndex("BucketTaskPriorityId");
+
+                    b.HasIndex("BucketTaskStateId");
 
                     b.ToTable("BucketTasks");
 
@@ -153,49 +245,120 @@ namespace ToDoList.Infrastructure.Migrations
                         {
                             Id = 1,
                             BucketId = 1,
-                            Name = "Speak to manager",
-                            TaskPriority = 0,
-                            TaskState = 0
+                            BucketTaskPriorityId = 3,
+                            BucketTaskStateId = 1,
+                            Name = "1:1 leader"
                         },
                         new
                         {
                             Id = 2,
                             BucketId = 1,
-                            Name = "Organize desk",
-                            TaskPriority = 0,
-                            TaskState = 1
+                            BucketTaskPriorityId = 2,
+                            BucketTaskStateId = 3,
+                            Name = "Organize desk"
                         },
                         new
                         {
                             Id = 3,
                             BucketId = 2,
-                            Name = "Water plants",
-                            TaskPriority = 0,
-                            TaskState = 3
+                            BucketTaskPriorityId = 1,
+                            BucketTaskStateId = 4,
+                            Name = "Water plants"
                         },
                         new
                         {
                             Id = 4,
                             BucketId = 2,
-                            Name = "Clean bedroom",
-                            TaskPriority = 0,
-                            TaskState = 2
+                            BucketTaskPriorityId = 1,
+                            BucketTaskStateId = 2,
+                            Name = "Clean bedroom"
                         },
                         new
                         {
                             Id = 5,
                             BucketId = 3,
-                            Name = "Organize diet",
-                            TaskPriority = 0,
-                            TaskState = 2
+                            BucketTaskPriorityId = 1,
+                            BucketTaskStateId = 1,
+                            Name = "Organize diet"
                         },
                         new
                         {
                             Id = 6,
                             BucketId = 3,
-                            Name = "Update training plan",
-                            TaskPriority = 0,
-                            TaskState = 1
+                            BucketTaskPriorityId = 2,
+                            BucketTaskStateId = 3,
+                            Name = "Training plan"
+                        });
+                });
+
+            modelBuilder.Entity("ToDoList.Domain.Models.BucketTaskPriority", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BucketTaskPriorities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "High"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Medium"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Low"
+                        });
+                });
+
+            modelBuilder.Entity("ToDoList.Domain.Models.BucketTaskState", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BucketTaskStates");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "To do"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "In progress"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Done"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Cancelled"
                         });
                 });
 
@@ -203,29 +366,64 @@ namespace ToDoList.Infrastructure.Migrations
                 {
                     b.HasOne("ToDoList.Domain.Models.Assignee", null)
                         .WithMany()
-                        .HasForeignKey("AssigneesId")
+                        .HasForeignKey("AssigneeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ToDoList.Domain.Models.BucketTask", null)
                         .WithMany()
-                        .HasForeignKey("BucketTasksId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ToDoList.Domain.Models.BucketTask", b =>
-                {
-                    b.HasOne("ToDoList.Domain.Models.Bucket", null)
-                        .WithMany("BucketTasks")
-                        .HasForeignKey("BucketId")
+                        .HasForeignKey("BucketTaskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("ToDoList.Domain.Models.Bucket", b =>
                 {
-                    b.Navigation("BucketTasks");
+                    b.HasOne("ToDoList.Domain.Models.BucketCategory", "BucketCategory")
+                        .WithMany()
+                        .HasForeignKey("BucketCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ToDoList.Domain.Models.BucketColor", "BucketColor")
+                        .WithMany()
+                        .HasForeignKey("BucketColorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BucketCategory");
+
+                    b.Navigation("BucketColor");
+                });
+
+            modelBuilder.Entity("ToDoList.Domain.Models.BucketTask", b =>
+                {
+                    b.HasOne("ToDoList.Domain.Models.Bucket", null)
+                        .WithMany("BucketTask")
+                        .HasForeignKey("BucketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ToDoList.Domain.Models.BucketTaskPriority", "BucketTaskPriority")
+                        .WithMany()
+                        .HasForeignKey("BucketTaskPriorityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ToDoList.Domain.Models.BucketTaskState", "BucketTaskState")
+                        .WithMany()
+                        .HasForeignKey("BucketTaskStateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BucketTaskPriority");
+
+                    b.Navigation("BucketTaskState");
+                });
+
+            modelBuilder.Entity("ToDoList.Domain.Models.Bucket", b =>
+                {
+                    b.Navigation("BucketTask");
                 });
 #pragma warning restore 612, 618
         }

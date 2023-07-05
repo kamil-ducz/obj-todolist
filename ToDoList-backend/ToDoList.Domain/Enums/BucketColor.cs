@@ -1,10 +1,11 @@
 ﻿namespace ToDoList.Domain.Enums;
 public enum BucketColor
 {
-    Brown = 0,
-    Red = 1,
-    Yellow = 2,
-    Blue = 3,
-    White = 4,
-    Green = 5
+    None = 0,
+    Brown = 1,
+    Red = 2,
+    Yellow = 3,
+    Blue = 4,
+    White = 5,
+    Green = 6
 }

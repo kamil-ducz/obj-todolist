@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AssigneeService } from '../services/assignee-service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-assignees',
@@ -13,7 +14,7 @@ export class AssigneesComponent implements OnInit {
   assigness: any;
 
   ngOnInit(): void {
-    this.assigneeService.getAssignees().subscribe(
+    this.assigneeService.getAssignees(environment.localhostUrl).subscribe(
       (response: any) => {
         this.assigness = response;
       },

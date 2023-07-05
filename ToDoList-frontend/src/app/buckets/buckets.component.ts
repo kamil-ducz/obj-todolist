@@ -3,8 +3,11 @@ import { BucketService } from '../services/bucket-service';
 import { BucketTaskService } from '../services/buckettask-service';
 import { environment } from 'src/environments/environment';
 import { Bucket } from '../models/bucket.model';
-import { BucketTask } from '../models/buckettask.model';
+import { BucketTask } from '../models/bucketTask.model';
 import { ToastrService } from 'ngx-toastr';
+import { BucketTaskState } from '../models/bucketTaskState.model';
+import { BucketTaskPriority } from '../models/bucketTaskPriority.model';
+import { DictionaryService } from '../services/dictionary.service';
 
 @Component({
   selector: 'app-buckets',
@@ -13,14 +16,32 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class BucketsComponent implements OnInit {
 
-  constructor(private bucketService: BucketService, private bucketTaskService: BucketTaskService, private toastr: ToastrService) { }
+  constructor(
+    private bucketService: BucketService, 
+    private bucketTaskService: BucketTaskService, 
+    private dictionaryService: DictionaryService, 
+    private toastr: ToastrService
+    ) { }
+
+  buckets: Bucket[];
+  bucketTasks: BucketTask[];
+  bucketTaskStates: BucketTaskState[];
+  bucketTaskPriorities: BucketTaskPriority[];
+  bucketTasksToDo: BucketTask[];
+  bucketTasksInProgress: BucketTask[];
+  bucketTasksDone: BucketTask[];
+  bucketTasksCancelled: BucketTask[];
+
+  ngOnInit() {
+    this.refreshBucketAndBucketsComponents();
+  }
 
   refreshBucketAndBucketsComponents() {
     this.fetchBuckets();
     this.fetchBucketTasks();
+    this.fetchBucketTasksStates();
+    this.fetchBucketTaskPriorities();
   }
-
-  buckets: Bucket[];
   
   fetchBuckets() {
     this.bucketService.getBuckets(environment.bucketEndpoint).subscribe(
@@ -28,44 +49,57 @@ export class BucketsComponent implements OnInit {
         this.buckets = response;
       },
       (error: any) => {
-        this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
       }
     );
   }
-
-  bucketTasks: BucketTask[];
-  bucketTasksToDo: BucketTask[];
-  bucketTasksInProgress: BucketTask[];
-  bucketTasksDone: BucketTask[];
-  bucketTasksCancelled: BucketTask[];
 
   fetchBucketTasks() {
     this.bucketTaskService.getBucketTasks(environment.bucketTaskEndpoint).subscribe(
       (response: any) => {
         this.bucketTasks = response;
-        this.bucketTasksToDo = this.bucketTasks.filter(element => element.taskState == 0);
-        this.bucketTasksInProgress = this.bucketTasks.filter(element => element.taskState == 1);
-        this.bucketTasksDone = this.bucketTasks.filter(element => element.taskState == 2);
-        this.bucketTasksCancelled = this.bucketTasks.filter(element => element.taskState == 3);
+        this.bucketTasksToDo = this.bucketTasks.filter(element => element.bucketTaskStateId === 1);
+        this.bucketTasksInProgress = this.bucketTasks.filter(element => element.bucketTaskStateId === 2);
+        this.bucketTasksDone = this.bucketTasks.filter(element => element.bucketTaskStateId === 3);
+        this.bucketTasksCancelled = this.bucketTasks.filter(element => element.bucketTaskStateId === 4);
       },
       (error: any) => {
-        this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
       }
     );
   }
 
-  ngOnInit() {
-    this.refreshBucketAndBucketsComponents();
+  fetchBucketTasksStates() {
+    this.dictionaryService.getBucketTaskStates(environment.bucketTaskStatesEndpoint).subscribe(
+      (response: BucketTaskState[]) => {
+        this.bucketTaskStates = response;
+      },
+      (error: any) => {
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
+      }
+    );
+  }
+
+  fetchBucketTaskPriorities() {
+    this.dictionaryService.getBucketTaskPriorities(environment.bucketTaskPrioritiesEndoint).subscribe(
+      (response: BucketTaskPriority[]) => {
+        this.bucketTaskPriorities = response;
+      },
+      (error: any) => {
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
+      }
+    );
   }
 
   RemoveBucket(id: any) {
     this.bucketService.deleteBucket(environment.bucketEndpoint+id).subscribe(
         (response: any) => {
-          this.showModal = !this.showModal;
+          this.showModal = false;
+          this.toastr.success("Bucket " +this.buckets.find(b => b.id === id).name + " deleted successfully.");
           this.refreshBucketAndBucketsComponents();
         },
         (error: any) => {
-          this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
+          this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
         }
     );
   }
@@ -73,9 +107,7 @@ export class BucketsComponent implements OnInit {
   calculateTotalToDoForBucket(id: number) {
     if (this.bucketTasks)
     {
-      const tasksForBucket = this.bucketTasks.filter(task => task.bucketId === id && task.taskState === 0);
-
-      return tasksForBucket.length;
+      return this.bucketTasks.filter(task => task.bucketId === id && task.bucketTaskStateId === 1).length ?? 0;
     }
     else
     {
@@ -86,15 +118,7 @@ export class BucketsComponent implements OnInit {
   elementToRemove: Bucket;
 
   findElementToRemoveById(id: number) {
-    const foundElement = this.buckets.find(element => element.id == id);
-    if(foundElement)
-    {
-      return foundElement;
-    }
-    else
-    {
-      return null;
-    }
+    return this.buckets.find(element => element.id == id) ?? null;
   }
 
   showModal = false;

@@ -3,10 +3,15 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BucketService } from '../services/bucket-service';
 import { Bucket } from '../models/bucket.model';
 import { BucketTaskService } from '../services/buckettask-service';
-import { FormGroup, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { BucketTask } from '../models/buckettask.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BucketTask } from '../models/bucketTask.model';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { DictionaryService } from '../services/dictionary.service';
+import { BucketTaskState } from '../models/bucketTaskState.model';
+import { BucketTaskPriority } from '../models/bucketTaskPriority.model';
+import { BucketCategory } from '../models/bucketCategory.model';
+import { BucketColor } from '../models/bucketColor.model';
 
 @Component({
   selector: 'app-bucket',
@@ -15,15 +20,53 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class BucketComponent implements OnInit {
 
-  id: number;
+  constructor(
+    private route: ActivatedRoute, 
+    private router: Router, 
+    private bucketService: BucketService, 
+    private bucketTaskService: BucketTaskService, 
+    private dictionaryService: DictionaryService, 
+    private toastr: ToastrService
+    ) { }
 
+  currentBucketId: number;
   currentBucket: Bucket;
+  currentBucketCategoryName: string;
+  bucketCategories: BucketCategory[];
+  bucketColors: BucketColor[];
+
+  currentBucketBucketTasks: BucketTask[];
+  currentBucketTask: BucketTask;
+  bucketTaskForEditSaveId: number;
+  bucketTaskStates: BucketTaskState[];
+  bucketTaskPriorities: BucketTaskPriority[];
+  bucketTasksToDo: BucketTask[];
+  bucketTasksInProgress: BucketTask[];
+  bucketTasksDone: BucketTask[];
+  bucketTasksCancelled: BucketTask[];
+
+  ngOnInit(): void {
+    this.route.params.subscribe(
+      (params: Params) => {
+        this.currentBucketId = +params['id'];
+      }
+    );
+    this.refreshCurrentBucketBucketTasksComponents();
+  }
+  
+  refreshCurrentBucketBucketTasksComponents() {
+    this.fetchBucketCategories();
+    this.fetchCurrentBucket();
+    this.fetchBucketTasks();
+    this.fetchBucketTasksStates();
+    this.fetchBucketTaskPriorities();
+  }
 
   fetchCurrentBucket() {
-    this.bucketService.getBucket(environment.bucketEndpoint+this.id).subscribe(
-      (response: any) => {
+    this.bucketService.getBucket(environment.bucketEndpoint+this.currentBucketId).subscribe(
+      (response: Bucket) => {
         this.currentBucket = response;
-        this.currentBucket.category = this.bucketService.mapBucketCategoryEnumToString(this.currentBucket.category);
+        this.currentBucketCategoryName = this.bucketCategories.find(bcat => bcat.id === this.currentBucket.bucketCategoryId).name;
       },
       (error: any) => {
         console.error(error);
@@ -31,24 +74,50 @@ export class BucketComponent implements OnInit {
     );
   }
 
-  currentBucketBucketTasks: BucketTask[];
-  currentBucketTask: BucketTask;
-  bucketTasksToDo: BucketTask[];
-  bucketTasksInProgress: BucketTask[];
-  bucketTasksDone: BucketTask[];
-  bucketTasksCancelled: BucketTask[];
+  fetchBucketCategories() {
+    this.dictionaryService.getBucketCategories(environment.bucketCategoryEndpoint).subscribe(
+      (response: BucketCategory[]) => {
+        this.bucketCategories = response;
+      },
+      (error: any) => {
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
+      }
+    );
+  }
 
   fetchBucketTasks() {
-    this.bucketService.getBucketTasks(environment.buckeTasksForBucketEndpoint+this.id).subscribe(
+    this.bucketService.getBucketTasks(environment.buckeTasksForBucketEndpoint+this.currentBucketId).subscribe(
       (response: any) => {
         this.currentBucketBucketTasks = response;
-        this.bucketTasksToDo = this.currentBucketBucketTasks.filter(element => element.taskState == 0);
-        this.bucketTasksInProgress = this.currentBucketBucketTasks.filter(element => element.taskState == 1);
-        this.bucketTasksDone = this.currentBucketBucketTasks.filter(element => element.taskState == 2);
-        this.bucketTasksCancelled = this.currentBucketBucketTasks.filter(element => element.taskState == 3);
+        this.bucketTasksToDo = this.currentBucketBucketTasks.filter(element => element.bucketTaskStateId == 1);
+        this.bucketTasksInProgress = this.currentBucketBucketTasks.filter(element => element.bucketTaskStateId == 2);
+        this.bucketTasksDone = this.currentBucketBucketTasks.filter(element => element.bucketTaskStateId == 3);
+        this.bucketTasksCancelled = this.currentBucketBucketTasks.filter(element => element.bucketTaskStateId == 4);
       },
       (error: any) => {
         console.error(error);
+      }
+    );
+  }
+
+  fetchBucketTasksStates() {
+    this.dictionaryService.getBucketTaskStates(environment.bucketTaskStatesEndpoint).subscribe(
+      (response: BucketTaskState[]) => {
+        this.bucketTaskStates = response;
+      },
+      (error: any) => {
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
+      }
+    );
+  }
+
+  fetchBucketTaskPriorities() {
+    this.dictionaryService.getBucketTaskPriorities(environment.bucketTaskPrioritiesEndoint).subscribe(
+      (response: BucketTaskPriority[]) => {
+        this.bucketTaskPriorities = response;
+      },
+      (error: any) => {
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
       }
     );
   }
@@ -56,76 +125,65 @@ export class BucketComponent implements OnInit {
   newBucketTaskToCreate: BucketTask;
   addNewBucketTaskFormGroup: FormGroup;
   editNewBucketTaskFormGroup: FormGroup;
-  
-  constructor(private route: ActivatedRoute, private router: Router, 
-              private bucketService: BucketService, private bucketTaskService: BucketTaskService, private toastr: ToastrService) { }
-
-  refreshCurrentBucketBucketTasksComponents() {
-    this.fetchCurrentBucket();
-    this.fetchBucketTasks();
-  }
-
-  ngOnInit(): void {
-    this.route.params.subscribe(
-      (params: Params) => {
-        this.id = +params['id'];
-      }
-    );
-    this.refreshCurrentBucketBucketTasksComponents();
-  }
 
   initializeNewBucketTaskForm() {
-    this.addNewBucketTaskFormGroup = new UntypedFormGroup({
-      name: new UntypedFormControl('', [
+    this.addNewBucketTaskFormGroup = new FormGroup({
+      name: new FormControl('', [
         Validators.required,
         Validators.minLength(3),
       ]),
-      description: new UntypedFormControl('', [
+      description: new FormControl('', [
         Validators.maxLength(50),
       ]),
-      state: new UntypedFormControl('', [
+      bucketTaskState: new FormControl('', [
         Validators.required,      
       ]),
-      priority: new UntypedFormControl('', [
+      bucketTaskPriority: new FormControl('', [
         Validators.required,
       ]),
     });
   }
 
   initializeEditBucketTaskForm() {
-    this.editNewBucketTaskFormGroup = new UntypedFormGroup({
-      name: new UntypedFormControl(this.currentBucketTask.name, [
+    const bucketTaskState = this.bucketTaskStates.find(bts => bts.id === this.currentBucketTask.bucketTaskStateId).name;
+    const bucketTaskPriority = this.bucketTaskPriorities.find(btps => btps.id === this.currentBucketTask.bucketTaskPriorityId).name;
+
+    this.editNewBucketTaskFormGroup = new FormGroup({
+      name: new FormControl(this.currentBucketTask.name, [
         Validators.required,
         Validators.minLength(3),
       ]),
-      description: new UntypedFormControl(this.currentBucketTask.description, [
+      description: new FormControl(this.currentBucketTask.description, [
         Validators.maxLength(50),
       ]),
-      state: new UntypedFormControl(this.currentBucketTask.taskState, [
+      bucketTaskState: new FormControl(bucketTaskState, [
         Validators.required,      
       ]),
-      priority: new UntypedFormControl(this.currentBucketTask.taskPriority, [
+      bucketTaskPriority: new FormControl(bucketTaskPriority, [
         Validators.required,
       ]),
     });
   }
 
   onSubmitNewBucketTask(newBucketTask: BucketTask) {
-    newBucketTask.bucketId = this.id;
-    newBucketTask.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.addNewBucketTaskFormGroup.value.state);
-    newBucketTask.taskPriority = this.bucketTaskService.mapBucketTaskPriorityStringToEnum(this.addNewBucketTaskFormGroup.value.priority);
+    this.currentBucketTask = newBucketTask;
+    this.currentBucketTask.bucketTaskStateId = this.bucketTaskStates.find(bs => bs.name === this.currentBucketTask.bucketTaskState).id;
+    this.currentBucketTask.bucketTaskPriorityId = this.bucketTaskPriorities.find(bp => bp.name === this.currentBucketTask.bucketTaskPriority).id;
+    this.currentBucketTask.bucketTaskState = null;
+    this.currentBucketTask.bucketTaskPriority = null;
+    this.currentBucketTask.bucketId = this.currentBucketId;
+
     if (this.currentBucketBucketTasks.length < this.currentBucket.maxAmountOfTasks)
     {
-      this.bucketTaskService.postBucketTask(environment.bucketTaskEndpoint, newBucketTask).subscribe(
+      this.bucketTaskService.postBucketTask(environment.bucketTaskEndpoint, this.currentBucketTask).subscribe(
         (response) => {
-          console.log(response);
+          this.addNewBucketTaskFormGroup.patchValue({ });
+          this.toastr.success("Bucket task " + this.currentBucketTask.name + " created successfully.");
         },
         (error: any) => {
-          this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
+          this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
         }
       );
-  
-      this.popNewBucketTaskConfirmationModal();
     }
     else 
     {
@@ -135,26 +193,28 @@ export class BucketComponent implements OnInit {
   }
 
   onSubmitEditBucketTask(newBucketTask: BucketTask) {
-    newBucketTask = this.editNewBucketTaskFormGroup.value;
-    newBucketTask.bucketId = this.id;
-    newBucketTask.taskState = this.bucketTaskService.mapBucketTaskStateStringToEnum(this.editNewBucketTaskFormGroup.value.state);
-    newBucketTask.taskPriority = this.bucketTaskService.mapBucketTaskPriorityStringToEnum(this.editNewBucketTaskFormGroup.value.priority);
-    this.bucketTaskService.putBucketTask(environment.bucketTaskEndpoint+this.currentBucketTask.id, newBucketTask).subscribe(
+    this.currentBucketTask = this.editNewBucketTaskFormGroup.value;
+    this.currentBucketTask.bucketId = this.currentBucketId;
+    this.currentBucketTask.bucketTaskStateId = this.bucketTaskStates.find(bts => bts.name === newBucketTask.bucketTaskState).id;
+    this.currentBucketTask.bucketTaskPriorityId = this.bucketTaskPriorities.find(btps => btps.name === newBucketTask.bucketTaskPriority).id;
+    this.currentBucketTask.bucketTaskState = null;
+    this.currentBucketTask.bucketTaskPriority = null;
+
+    this.bucketTaskService.putBucketTask(environment.bucketTaskEndpoint+this.bucketTaskForEditSaveId, this.currentBucketTask).subscribe(
       (response: any) => {
-        console.log(response);
+        this.toastr.success("Bucket task " + this.currentBucketTask.name + " changes saved successfully.");
+        this.editNewBucketTaskFormGroup.patchValue({ });
       },
       (error: any) => {
         console.error(error);
       }
     );
-
-    this.popEditBucketTaskConfirmationModal();
   }
 
   removeBucket(id: any) {
     this.bucketService.deleteBucket(environment.bucketEndpoint+id).subscribe(
         (response: any) => {
-          this.exitDeleteModal();
+          this.toastr.success("Bucket " +this.currentBucket.name + " deleted successfully.");
           this.router.navigate(['/buckets']);
         },
         (error: any) => {
@@ -167,6 +227,7 @@ export class BucketComponent implements OnInit {
     this.bucketTaskService.deleteBucketTask(environment.bucketTaskEndpoint+bucketTaskId).subscribe(
       (response: any) => {
         this.fetchBucketTasks();
+        this.toastr.success("Bucket task " + this.currentBucketTask.name + " deleted successfully.");
         this.exitDeleteBucketTaskConfirmationModal();
       },
       (error: any) => {
@@ -182,13 +243,8 @@ export class BucketComponent implements OnInit {
     event.stopPropagation();
   }
 
-  exitDeleteModal() {
-    this.showModal = !this.showModal;
-  }
-
   showNewBucketTaskForm = false;
   showEditBucketTaskForm = false;
-  bucketTaskNewConfirmationModal = false;
   bucketTaskEditConfirmationModal = false;
   bucketTaskDeleteConfirmationModal = false;
 
@@ -202,30 +258,20 @@ export class BucketComponent implements OnInit {
     this.refreshCurrentBucketBucketTasksComponents();
   }
 
-  popNewBucketTaskConfirmationModal() {
-    this.bucketTaskNewConfirmationModal = !this.bucketTaskNewConfirmationModal;
-  }
-
   exitNewBucketTaskConfirmationModal() {
-    this.bucketTaskNewConfirmationModal = !this.bucketTaskNewConfirmationModal;
     this.exitNewBucketTaskForm();
   }
 
   popEditBucketTaskForm(bucketTaskId: number) {
     this.showEditBucketTaskForm = !this.showEditBucketTaskForm;
     this.currentBucketTask = this.currentBucketBucketTasks.find(element => element.id == bucketTaskId);
-    this.currentBucketTask.taskState = this.bucketTaskService.mapBucketTaskStateEnumToString(this.currentBucketTask.taskState);
-    this.currentBucketTask.taskPriority = this.bucketTaskService.mapBucketTaskPriorityEnumToString(this.currentBucketTask.taskPriority);
+    this.bucketTaskForEditSaveId = bucketTaskId;
     this.initializeEditBucketTaskForm();
   }
 
   exitEditBucketTaskForm() {
     this.showEditBucketTaskForm = false;
     this.refreshCurrentBucketBucketTasksComponents();
-  }
-
-  popEditBucketTaskConfirmationModal() {
-    this.bucketTaskEditConfirmationModal = !this.bucketTaskEditConfirmationModal;
   }
 
   exitEditBucketTaskConfirmationModal() {
