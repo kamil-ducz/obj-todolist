@@ -1,213 +1,271 @@
 <div class="bg-gray-300 h-max">
-<nav *ngIf="currentBucket" class="p-3 border-gray-200 rounded dark:border-gray-700">
-    <div class="container flex flex-wrap items-center justify-between mx-auto">
-      <div class="flex items-center cursor-pointer">
-          <span [ngClass]="{'line-through': !currentBucket.isActive}" class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Bucket {{ currentBucket.name }}</span>
-      </div>
-    </div>
-    <div class="grid grid-cols-2 float-right">
-        <div [routerLink]="['/bucket-edit', this.currentBucketId]"  class="text-center m-1 flex bg-white border-2 border-violet-400 cursor-pointer">
-            <span>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
-                </svg>
-            </span>      
-            <span>Edit</span>
-        </div>
-        <div (click)="toggleDeleteModal(this.currentBucketId, $event)" class="text-center m-1 flex bg-white border-2 border-violet-400 cursor-pointer">
-            <span>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m6 4.125l2.25 2.25m0 0l2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
-                  </svg>                     
-                </span>      
-            <span>Delete</span>
-        </div>
-    </div>
-    <br>
-    <h2><b>Description: </b>{{ currentBucket.description }}</h2>
-    <h2><b>Category: </b>{{ currentBucketCategoryName }}</h2>
-    <br>
-    <h1 class="font-small leading-tight text-lg mt-2 mb-2 text-black-300 text-left ml-5">Statistics</h1>
-    <div *ngIf="currentBucketBucketTasks" class="grid grid-cols-5 gap-8 content-start cursor-pointer">
-      <div class="flex"><li class="text-yellow-400 w-2 h-1"></li>To do: {{ bucketTasksToDo.length }}</div>
-      <div class="flex"><li class="text-blue-400 w-2 h-1"></li>In progress: {{ bucketTasksInProgress.length }}</div>
-      <div class="flex"><li class="text-green-400 w-2 h-1"></li>Done: {{ bucketTasksDone.length }}</div>
-      <div class="flex"><li class="text-pink-600 w-2 h-1"></li>Cancelled: {{ bucketTasksCancelled.length }}</div>
-      <div (click)="popupNewBucketTaskForm()" class="float-right text-center mr-5 bg-white border-2 border-violet-400">
-        <button>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
-              </svg>            
-        </button>      
-        Add new task
-    </div>
-    </div>
-</nav>
-</div>
-
-<br><br>
-<div class="grid grid-cols-4 gap-8 m-10 h-128">
-    <div class="border-2 bg-yellow-400 border-black text-center cursor-pointer">
-        To do: 
-        <li *ngFor="let bucketTask of bucketTasksToDo" class="p-2 flex w-full">
-          <span class="bg-white text-left">{{ bucketTask.name }}</span>
-          <span *ngIf="bucketTask.bucketTaskPriorityId == 1" class="bg-white p-1" name="taskPriorityHigh">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-pink-700 rounded">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15 11.25l-3-3m0 0l-3 3m3-3v7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </span>
-          <span *ngIf="bucketTask.bucketTaskPriorityId == 2" class="bg-white p-1" name="taskPriorityMiddle">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-blue-700">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>            
-          </span>
-          <span *ngIf="bucketTask.bucketTaskPriorityId == 3" class="bg-white p-1" name="taskPriorityLow">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6 bg-green-700">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75l3 3m0 0l3-3m-3 3v-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </span>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" name="editTaskButton" (click)="popEditBucketTaskForm(bucketTask.id)">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-          </svg>          
-        </li>
-    </div>
-    <div class="border-2 bg-blue-400 border-black text-center cursor-pointer">
-        In progress:
-        <li *ngFor="let bucketTask of bucketTasksInProgress" class="p-2 flex w-full">
-          <span class="bg-white text-left">{{ bucketTask.name }}</span>
-          <span *ngIf="bucketTask.bucketTaskPriorityId == 1" class="bg-white p-1" name="taskPriorityHigh">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-pink-700 rounded">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15 11.25l-3-3m0 0l-3 3m3-3v7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </span>
-          <span *ngIf="bucketTask.bucketTaskPriorityId == 2" class="bg-white p-1" name="taskPriorityMiddle">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-blue-700">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>            
-          </span>
-          <span *ngIf="bucketTask.bucketTaskPriorityId == 3" class="bg-white p-1" name="taskPriorityLow">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6 bg-green-700">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75l3 3m0 0l3-3m-3 3v-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </span>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" name="editTaskButton" (click)="popEditBucketTaskForm(bucketTask.id)">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-          </svg>  
-        </li>
-    </div>
-    <div class="border-2 bg-green-400 border-black text-center cursor-pointer">
-        Done:
-        <li *ngFor="let bucketTask of bucketTasksDone" class="p-2 flex w-full">
-          <span class="bg-white text-left">{{ bucketTask.name }}</span>
-          <span *ngIf="bucketTask.bucketTaskPriorityId == 1" class="bg-white p-1" name="taskPriorityHigh">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-pink-700 rounded">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15 11.25l-3-3m0 0l-3 3m3-3v7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </span>
-          <span *ngIf="bucketTask.bucketTaskPriorityId == 2" class="bg-white p-1" name="taskPriorityMiddle">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-blue-700">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>            
-          </span>
-          <span *ngIf="bucketTask.bucketTaskPriorityId == 3" class="bg-white p-1" name="taskPriorityLow">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6 bg-green-700">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75l3 3m0 0l3-3m-3 3v-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </span>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" name="editTaskButton" (click)="popEditBucketTaskForm(bucketTask.id)">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-          </svg>  
-        </li>
-    </div>
-    <div class="border-2 bg-pink-600 border-black text-center cursor-pointer">
-        Cancelled:
-        <li *ngFor="let bucketTask of bucketTasksCancelled" class="p-2 flex w-full">
-          <span class="bg-white text-left">{{ bucketTask.name }}</span>
-          <span *ngIf="bucketTask.bucketTaskPriorityId == 1" class="bg-white p-1" name="taskPriorityHigh">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-pink-700 rounded">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15 11.25l-3-3m0 0l-3 3m3-3v7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </span>
-          <span *ngIf="bucketTask.bucketTaskPriorityId == 2" class="bg-white p-1" name="taskPriorityMiddle">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-blue-700">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>            
-          </span>
-          <span *ngIf="bucketTask.bucketTaskPriorityId == 3" class="bg-white p-1" name="taskPriorityLow">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6 bg-green-700">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75l3 3m0 0l3-3m-3 3v-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </span>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" name="editTaskButton" (click)="popEditBucketTaskForm(bucketTask.id)">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-          </svg>  
-        </li>
-    </div>
-</div>
-
-<a href="#" class="m-8 mt-8 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">Return to main page</a>
-
-<!-- confirm bucket delete modal start -->
-<div *ngIf="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
-    <div class="relative w-auto my-6 mx-auto max-w-6xl">
-      <!--content-->
-      <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-        <!--header-->
-        <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-          <h3 class="text-3xl font-semibold">
-            Confirm delete
-          </h3>
-          <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="showModal=false">
-            <span class="text-black">
-              ×
-            </span>
-          </button>
-        </div>
-        <!--body-->
-        <div class="relative p-6 flex-auto">
-          <p class="my-4 text-slate-500 text-lg leading-relaxed">
-            Are you sure you want to delete bucket {{ currentBucket.name }}?
-          </p>
-        </div>
-        <!--footer-->
-        <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-          <button class="text-red-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="removeBucket(this.currentBucketId)">
-            Delete
-          </button>
-          <button class="text-emerald-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="showModal=false">
-            Cancel
-          </button>
+  <nav *ngIf="currentBucket" class="p-3 border-gray-200 rounded dark:border-gray-700">
+      <div class="container flex flex-wrap items-center justify-between mx-auto">
+        <div class="flex items-center cursor-pointer">
+            <span [ngClass]="{'line-through': !currentBucket.isActive}" class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Bucket {{ currentBucket.name }}</span>
         </div>
       </div>
-    </div>
+      <div class="grid grid-cols-2 float-right">
+          <div [routerLink]="['/bucket-edit', this.currentBucketId]"  class="text-center m-1 flex bg-white border-2 border-violet-400 cursor-pointer">
+              <span>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                  </svg>
+              </span>      
+              <span>Edit</span>
+          </div>
+          <div (click)="toggleDeleteModal(this.currentBucketId, $event)" class="text-center m-1 flex bg-white border-2 border-violet-400 cursor-pointer">
+              <span>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5m6 4.125l2.25 2.25m0 0l2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                    </svg>                     
+                  </span>      
+              <span>Delete</span>
+          </div>
+      </div>
+      <br>
+      <h2><b>Description: </b>{{ currentBucket.description }}</h2>
+      <h2><b>Category: </b>{{ currentBucketCategoryName }}</h2>
+      <br>
+      <h1 class="font-small leading-tight text-lg mt-2 mb-2 text-black-300 text-left ml-5">Statistics</h1>
+      <div *ngIf="currentBucketBucketTasks" class="grid grid-cols-5 gap-8 content-start cursor-pointer">
+        <div class="flex"><li class="text-yellow-400 w-2 h-1"></li>To do: {{ bucketTasksToDo.length }}</div>
+        <div class="flex"><li class="text-blue-400 w-2 h-1"></li>In progress: {{ bucketTasksInProgress.length }}</div>
+        <div class="flex"><li class="text-green-400 w-2 h-1"></li>Done: {{ bucketTasksDone.length }}</div>
+        <div class="flex"><li class="text-pink-600 w-2 h-1"></li>Cancelled: {{ bucketTasksCancelled.length }}</div>
+        <div (click)="popupNewBucketTaskForm()" class="float-right text-center mr-5 bg-white border-2 border-violet-400">
+          <button>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />
+                </svg>            
+          </button>      
+          Add new task
+      </div>
+      </div>
+  </nav>
   </div>
-  <!-- confirm bucket delete modal end -->
-
-  <!-- new task modal start -->
-  <div *ngIf="showNewBucketTaskForm" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+  
+  <br><br>
+  <div class="grid grid-cols-4 gap-8 m-10 h-128">
+      <div class="border-2 bg-yellow-400 border-black text-center cursor-pointer">
+          To do: 
+          <li *ngFor="let bucketTask of bucketTasksToDo" class="p-2 flex w-full">
+            <span class="bg-white text-left">{{ bucketTask.name }}</span>
+            <span *ngIf="bucketTask.bucketTaskPriorityId == 1" class="bg-white p-1" name="taskPriorityHigh">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-pink-700 rounded">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11.25l-3-3m0 0l-3 3m3-3v7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </span>
+            <span *ngIf="bucketTask.bucketTaskPriorityId == 2" class="bg-white p-1" name="taskPriorityMiddle">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-blue-700">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>            
+            </span>
+            <span *ngIf="bucketTask.bucketTaskPriorityId == 3" class="bg-white p-1" name="taskPriorityLow">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6 bg-green-700">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75l3 3m0 0l3-3m-3 3v-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" name="editTaskButton" (click)="popEditBucketTaskForm(bucketTask.id)">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>          
+          </li>
+      </div>
+      <div class="border-2 bg-blue-400 border-black text-center cursor-pointer">
+          In progress:
+          <li *ngFor="let bucketTask of bucketTasksInProgress" class="p-2 flex w-full">
+            <span class="bg-white text-left">{{ bucketTask.name }}</span>
+            <span *ngIf="bucketTask.bucketTaskPriorityId == 1" class="bg-white p-1" name="taskPriorityHigh">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-pink-700 rounded">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11.25l-3-3m0 0l-3 3m3-3v7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </span>
+            <span *ngIf="bucketTask.bucketTaskPriorityId == 2" class="bg-white p-1" name="taskPriorityMiddle">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-blue-700">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>            
+            </span>
+            <span *ngIf="bucketTask.bucketTaskPriorityId == 3" class="bg-white p-1" name="taskPriorityLow">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6 bg-green-700">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75l3 3m0 0l3-3m-3 3v-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" name="editTaskButton" (click)="popEditBucketTaskForm(bucketTask.id)">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>  
+          </li>
+      </div>
+      <div class="border-2 bg-green-400 border-black text-center cursor-pointer">
+          Done:
+          <li *ngFor="let bucketTask of bucketTasksDone" class="p-2 flex w-full">
+            <span class="bg-white text-left">{{ bucketTask.name }}</span>
+            <span *ngIf="bucketTask.bucketTaskPriorityId == 1" class="bg-white p-1" name="taskPriorityHigh">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-pink-700 rounded">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11.25l-3-3m0 0l-3 3m3-3v7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </span>
+            <span *ngIf="bucketTask.bucketTaskPriorityId == 2" class="bg-white p-1" name="taskPriorityMiddle">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-blue-700">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>            
+            </span>
+            <span *ngIf="bucketTask.bucketTaskPriorityId == 3" class="bg-white p-1" name="taskPriorityLow">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6 bg-green-700">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75l3 3m0 0l3-3m-3 3v-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" name="editTaskButton" (click)="popEditBucketTaskForm(bucketTask.id)">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>  
+          </li>
+      </div>
+      <div class="border-2 bg-pink-600 border-black text-center cursor-pointer">
+          Cancelled:
+          <li *ngFor="let bucketTask of bucketTasksCancelled" class="p-2 flex w-full">
+            <span class="bg-white text-left">{{ bucketTask.name }}</span>
+            <span *ngIf="bucketTask.bucketTaskPriorityId == 1" class="bg-white p-1" name="taskPriorityHigh">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-pink-700 rounded">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11.25l-3-3m0 0l-3 3m3-3v7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </span>
+            <span *ngIf="bucketTask.bucketTaskPriorityId == 2" class="bg-white p-1" name="taskPriorityMiddle">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 bg-blue-700">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 9l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>            
+            </span>
+            <span *ngIf="bucketTask.bucketTaskPriorityId == 3" class="bg-white p-1" name="taskPriorityLow">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6 bg-green-700">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75l3 3m0 0l3-3m-3 3v-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" name="editTaskButton" (click)="popEditBucketTaskForm(bucketTask.id)">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+            </svg>  
+          </li>
+      </div>
+  </div>
+  
+  <a href="#" class="m-8 mt-8 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">Return to main page</a>
+  
+  <!-- confirm bucket delete modal start -->
+  <div *ngIf="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+      <div class="relative w-auto my-6 mx-auto max-w-6xl">
+        <!--content-->
+        <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+          <!--header-->
+          <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+            <h3 class="text-3xl font-semibold">
+              Confirm delete
+            </h3>
+            <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="showModal=false">
+              <span class="text-black">
+                ×
+              </span>
+            </button>
+          </div>
+          <!--body-->
+          <div class="relative p-6 flex-auto">
+            <p class="my-4 text-slate-500 text-lg leading-relaxed">
+              Are you sure you want to delete bucket {{ currentBucket.name }}?
+            </p>
+          </div>
+          <!--footer-->
+          <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+            <button class="text-red-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="removeBucket(this.currentBucketId)">
+              Delete
+            </button>
+            <button class="text-emerald-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="showModal=false">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- confirm bucket delete modal end -->
+  
+    <!-- new task modal start -->
+    <div *ngIf="showNewBucketTaskForm" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+      <div class="relative w-auto my-6 mx-auto max-w-6xl">
+        <!--content-->
+        <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+          <!--header-->
+          <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+            <h3 class="text-3xl font-semibold">
+              Add new bucket task
+            </h3>
+            <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="exitNewBucketTaskForm()">
+              <span class="text-black">
+                ×
+              </span>
+            </button>
+          </div>
+          <!--body-->
+          <form #bucketTaskNewForm="ngForm" [formGroup]="addNewBucketTaskFormGroup" class="mx-10 my-5" (ngSubmit)="onSubmitNewBucketTask(bucketTaskNewForm.value)">
+            <div class="mb-6">
+              <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+              <input type="text" id="name" name="name" minlength="2" maxlength="15" formControlName="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket name e.x. Office">
+            </div>
+            <div class="mb-6">
+              <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+              <input type="text" id="description" name="description" maxlength="20" formControlName="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket description, e.x. Organize the office errands">
+            </div>
+            <div class="mb-6">
+                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">State</label>
+                <select id="bucketTaskState" name="bucketTaskState" formControlName="bucketTaskState" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  <option>To do</option>
+                  <option>In progress</option>
+                  <option>Done</option>
+                  <option>Cancelled</option>
+                </select>      
+            </div>
+              <div class="mb-6">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Priority</label>
+                <select id="bucketTaskPriority" name="bucketTaskPriority" formControlName="bucketTaskPriority" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option>Low</option>
+                    <option>Medium</option>
+                    <option>High</option>
+                </select>
+            </div>
+            <button type="submit" [disabled]="!bucketTaskNewForm.valid" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              Create new bucket task
+            </button>
+          </form>
+          <!--footer-->
+          <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+            <button class="text-amber-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="exitNewBucketTaskForm()">
+              Return to bucket
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- new task modal end -->
+  
+  <!-- edit task modal start -->
+  <div *ngIf="showEditBucketTaskForm" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
     <div class="relative w-auto my-6 mx-auto max-w-6xl">
       <!--content-->
       <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
         <!--header-->
         <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
           <h3 class="text-3xl font-semibold">
-            Add new bucket task
+            Edit bucket task
           </h3>
-          <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="exitNewBucketTaskForm()">
+          <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="exitEditBucketTaskForm()">
             <span class="text-black">
               ×
             </span>
           </button>
         </div>
         <!--body-->
-        <form #bucketTaskNewForm="ngForm" [formGroup]="addNewBucketTaskFormGroup" class="mx-10 my-5" (ngSubmit)="onSubmitNewBucketTask(bucketTaskNewForm.value)">
+        <form #bucketTaskEditForm="ngForm" [formGroup]="editNewBucketTaskFormGroup" class="mx-10 my-5" (ngSubmit)="onSubmitEditBucketTask(bucketTaskEditForm.value)">
           <div class="mb-6">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-            <input type="text" id="name" name="name" minlength="2" maxlength="15" formControlName="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket name e.x. Office">
+            <input type="text" id="name" name="name" formControlName="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket name e.x. Office">
           </div>
           <div class="mb-6">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-            <input type="text" id="description" name="description" maxlength="20" formControlName="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket description, e.x. Organize the office errands">
+            <input type="text" id="description" name="description" formControlName="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket description, e.x. Organize the office errands">
           </div>
           <div class="mb-6">
               <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">State</label>
@@ -226,181 +284,123 @@
                   <option>High</option>
               </select>
           </div>
-          <button type="submit" [disabled]="!bucketTaskNewForm.valid" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            Create new bucket task
-          </button>
+          <div class="flex gap-4">
+            <button type="button" (click)="popDeleteBucketTaskConfirmationModal()" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+              Delete task
+            </button>
+            <button type="submit" [disabled]="!bucketTaskEditForm.valid" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              Save changes
+            </button>
+          </div>
         </form>
         <!--footer-->
         <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-          <button class="text-amber-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="exitNewBucketTaskForm()">
+          <button class="text-amber-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="exitEditBucketTaskForm()">
             Return to bucket
           </button>
         </div>
       </div>
     </div>
   </div>
-  <!-- new task modal end -->
-
-<!-- edit task modal start -->
-<div *ngIf="showEditBucketTaskForm" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
-  <div class="relative w-auto my-6 mx-auto max-w-6xl">
-    <!--content-->
-    <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-      <!--header-->
-      <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-        <h3 class="text-3xl font-semibold">
-          Edit bucket task
-        </h3>
-        <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="exitEditBucketTaskForm()">
-          <span class="text-black">
-            ×
-          </span>
-        </button>
-      </div>
-      <!--body-->
-      <form #bucketTaskEditForm="ngForm" [formGroup]="editNewBucketTaskFormGroup" class="mx-10 my-5" (ngSubmit)="onSubmitEditBucketTask(bucketTaskEditForm.value)">
-        <div class="mb-6">
-          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-          <input type="text" id="name" name="name" formControlName="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket name e.x. Office">
-        </div>
-        <div class="mb-6">
-          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-          <input type="text" id="description" name="description" formControlName="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket description, e.x. Organize the office errands">
-        </div>
-        <div class="mb-6">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">State</label>
-            <select id="bucketTaskState" name="bucketTaskState" formControlName="bucketTaskState" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <option>To do</option>
-              <option>In progress</option>
-              <option>Done</option>
-              <option>Cancelled</option>
-            </select>      
-        </div>
-          <div class="mb-6">
-        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Priority</label>
-            <select id="bucketTaskPriority" name="bucketTaskPriority" formControlName="bucketTaskPriority" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option>Low</option>
-                <option>Medium</option>
-                <option>High</option>
-            </select>
-        </div>
-        <div class="flex gap-4">
-          <button type="button" (click)="popDeleteBucketTaskConfirmationModal()" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
-            Delete task
-          </button>
-          <button type="submit" [disabled]="!bucketTaskEditForm.valid" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            Save changes
+  <!-- edit task modal end -->
+  
+  <!-- confirm edit bucket task modal start -->
+  <div *ngIf="bucketTaskEditConfirmationModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+    <div class="relative w-auto my-6 mx-auto max-w-6xl">
+      <!--content-->
+      <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+        <!--header-->
+        <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+          <h3 class="text-3xl font-semibold">
+            Confirm edit
+          </h3>
+          <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="exitEditBucketTaskConfirmationModal()">
+            <span class="text-black">
+              ×
+            </span>
           </button>
         </div>
-      </form>
-      <!--footer-->
-      <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-        <button class="text-amber-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="exitEditBucketTaskForm()">
-          Return to bucket
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- edit task modal end -->
-
-<!-- confirm edit bucket task modal start -->
-<div *ngIf="bucketTaskEditConfirmationModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
-  <div class="relative w-auto my-6 mx-auto max-w-6xl">
-    <!--content-->
-    <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-      <!--header-->
-      <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-        <h3 class="text-3xl font-semibold">
-          Confirm edit
-        </h3>
-        <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="exitEditBucketTaskConfirmationModal()">
-          <span class="text-black">
-            ×
-          </span>
-        </button>
-      </div>
-      <!--body-->
-      <div class="relative p-6 flex-auto">
-        <p class="my-4 text-slate-500 text-lg leading-relaxed">
-          Bucket task {{ currentBucketTask.name }}  successfully changed.
-        </p>
-      </div>
-      <!--footer-->
-      <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-        <button class="text-emerald-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="exitEditBucketTaskConfirmationModal()">
-          OK
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- confirm edit bucket task modal end -->
-
-<!-- delete bucket task modal start -->
-<div *ngIf="bucketTaskDeleteConfirmationModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
-  <div class="relative w-auto my-6 mx-auto max-w-6xl">
-    <!--content-->
-    <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-      <!--header-->
-      <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-        <h3 class="text-3xl font-semibold">
-          Confirm delete
-        </h3>
-        <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="exitDeleteBucketTaskConfirmationModal()">
-          <span class="text-black">
-            ×
-          </span>
-        </button>
-      </div>
-      <!--body-->
-      <div class="relative p-4 flex-auto">
-        <p class="p-4 text-slate-500 text-lg leading-relaxed">
-          Do you want to delete bucket task {{ currentBucketTask.name }}?
-        </p>
-        <div class="flex items-center gap-4">
-          <button (click)="removeBucketTask(currentBucketTask.id)" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
-            Yes
-          </button>
-          <button (click)="exitDeleteBucketTaskConfirmationModal()" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            Cancel
+        <!--body-->
+        <div class="relative p-6 flex-auto">
+          <p class="my-4 text-slate-500 text-lg leading-relaxed">
+            Bucket task {{ currentBucketTask.name }}  successfully changed.
+          </p>
+        </div>
+        <!--footer-->
+        <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+          <button class="text-emerald-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="exitEditBucketTaskConfirmationModal()">
+            OK
           </button>
         </div>
       </div>
     </div>
   </div>
-</div>
-<!-- delete bucket task modal end -->
-
-<!-- max tasks reached bucket task modal start -->
-<div *ngIf="MaxAmountOfTasksReachedWarningModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
-  <div class="relative w-auto my-6 mx-auto max-w-6xl">
-    <!--content-->
-    <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-      <!--header-->
-      <div class="flex items-start justify-between p-5 border-b border-solid border-red-200 rounded-t">
-        <h3 class="text-3xl font-semibold">
-          Warning!
-        </h3>
-        <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="exitNewBucketTaskMaxAmountOfTasksReachedWarning()">
-          <span class="text-black">
-            ×
-          </span>
-        </button>
-      </div>
-      <!--body-->
-      <div class="relative p-6 flex-auto">
-        <p class="my-4 text-slate-500 text-lg leading-relaxed">
-          Maximum amount of tasks for bucket {{ this.currentBucket.name }} reached! Delete tasks or increase max amount.
-        </p>
-      </div>
-      <!--footer-->
-      <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-        <button class="text-emerald-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="exitNewBucketTaskMaxAmountOfTasksReachedWarning()">
-          OK
-        </button>
+  <!-- confirm edit bucket task modal end -->
+  
+  <!-- delete bucket task modal start -->
+  <div *ngIf="bucketTaskDeleteConfirmationModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+    <div class="relative w-auto my-6 mx-auto max-w-6xl">
+      <!--content-->
+      <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+        <!--header-->
+        <div class="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
+          <h3 class="text-3xl font-semibold">
+            Confirm delete
+          </h3>
+          <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="exitDeleteBucketTaskConfirmationModal()">
+            <span class="text-black">
+              ×
+            </span>
+          </button>
+        </div>
+        <!--body-->
+        <div class="relative p-4 flex-auto">
+          <p class="p-4 text-slate-500 text-lg leading-relaxed">
+            Do you want to delete bucket task {{ currentBucketTask.name }}?
+          </p>
+          <div class="flex items-center gap-4">
+            <button (click)="removeBucketTask(currentBucketTask.id)" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+              Yes
+            </button>
+            <button (click)="exitDeleteBucketTaskConfirmationModal()" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              Cancel
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<!-- max tasks reached bucket task modal end -->
+  <!-- delete bucket task modal end -->
+  
+  <!-- max tasks reached bucket task modal start -->
+  <div *ngIf="MaxAmountOfTasksReachedWarningModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+    <div class="relative w-auto my-6 mx-auto max-w-6xl">
+      <!--content-->
+      <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+        <!--header-->
+        <div class="flex items-start justify-between p-5 border-b border-solid border-red-200 rounded-t">
+          <h3 class="text-3xl font-semibold">
+            Warning!
+          </h3>
+          <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="exitNewBucketTaskMaxAmountOfTasksReachedWarning()">
+            <span class="text-black">
+              ×
+            </span>
+          </button>
+        </div>
+        <!--body-->
+        <div class="relative p-6 flex-auto">
+          <p class="my-4 text-slate-500 text-lg leading-relaxed">
+            Maximum amount of tasks for bucket {{ this.currentBucket.name }} reached! Delete tasks or increase max amount.
+          </p>
+        </div>
+        <!--footer-->
+        <div class="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
+          <button class="text-emerald-500 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" (click)="exitNewBucketTaskMaxAmountOfTasksReachedWarning()">
+            OK
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- max tasks reached bucket task modal end -->
