@@ -48,7 +48,7 @@ export class BucketComponent implements OnInit {
   bucketTasksDone: BucketTask[];
   bucketTasksCancelled: BucketTask[];
 
-  assigness: Assignee[];
+  assignees: Assignee[];
 
   ngOnInit(): void {
     this.route.params.subscribe(
@@ -131,8 +131,9 @@ export class BucketComponent implements OnInit {
   fetchAssigness() {
     this.assigneeService.getAssignees(environment.assigneeEndpoint).subscribe(
       (response: Assignee[]) => {
-        const assigneeNames = response.map(assignee => assignee.name).join(', ');
-        this.toastr.success("Assignee list:" + assigneeNames);
+        this.assignees = response;
+        // const assigneeNames = response.map(assignee => assignee.name).join(', ');
+        // this.toastr.success("Assignee list:" + assigneeNames);
       },
       (error: any) => {
         this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
@@ -276,6 +277,8 @@ export class BucketComponent implements OnInit {
   popupNewBucketTaskForm() {
     this.showNewBucketTaskForm = !this.showNewBucketTaskForm;
     this.initializeNewBucketTaskForm();
+    const assigneeList = this.assignees.map(a => a.name);
+    this.addNewBucketTaskFormGroup.patchValue({ assignee: assigneeList });
   }
 
   exitNewBucketTaskForm() {
