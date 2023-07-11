@@ -141,6 +141,9 @@ export class BucketComponent implements OnInit {
       bucketTaskPriority: new FormControl('', [
         Validators.required,
       ]),
+      assignee: new FormControl('', [
+        Validators.required,
+      ])
     });
   }
 
@@ -162,6 +165,9 @@ export class BucketComponent implements OnInit {
       bucketTaskPriority: new FormControl(bucketTaskPriority, [
         Validators.required,
       ]),
+      assignee: new FormControl('fit2', [
+        Validators.required,
+      ])
     });
   }
 
@@ -237,6 +243,7 @@ export class BucketComponent implements OnInit {
   }
 
   showModal = false;
+  searchIcon: string = 'search-icon';
 
   toggleDeleteModal(i: number, e: Event) {
     this.showModal = !this.showModal;
@@ -251,6 +258,7 @@ export class BucketComponent implements OnInit {
   popupNewBucketTaskForm() {
     this.showNewBucketTaskForm = !this.showNewBucketTaskForm;
     this.initializeNewBucketTaskForm();
+    //this.addNewBucketTaskFormGroup.patchValue({ assignee: 'hej' });
   }
 
   exitNewBucketTaskForm() {
