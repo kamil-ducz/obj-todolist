@@ -13,8 +13,8 @@ export class AssigneeService {
         private httpClient: HttpClient
     ) {}
 
-    getAssignees(url): Observable<Assignee> {
-        return this.httpClient.get<Assignee>(url);
+    getAssignees(url): Observable<Assignee[]> {
+        return this.httpClient.get<Assignee[]>(url);
     }
 
     getAssignee(url) {

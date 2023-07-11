@@ -12,6 +12,8 @@ import { BucketTaskState } from '../models/bucketTaskState.model';
 import { BucketTaskPriority } from '../models/bucketTaskPriority.model';
 import { BucketCategory } from '../models/bucketCategory.model';
 import { BucketColor } from '../models/bucketColor.model';
+import { Assignee } from '../models/assignee.model';
+import { AssigneeService } from '../services/assignee-service';
 
 @Component({
   selector: 'app-bucket',
@@ -26,7 +28,8 @@ export class BucketComponent implements OnInit {
     private bucketService: BucketService, 
     private bucketTaskService: BucketTaskService, 
     private dictionaryService: DictionaryService, 
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private assigneeService: AssigneeService
     ) { }
 
   currentBucketId: number;
@@ -45,6 +48,8 @@ export class BucketComponent implements OnInit {
   bucketTasksDone: BucketTask[];
   bucketTasksCancelled: BucketTask[];
 
+  assigness: Assignee[];
+
   ngOnInit(): void {
     this.route.params.subscribe(
       (params: Params) => {
@@ -60,6 +65,7 @@ export class BucketComponent implements OnInit {
     this.fetchBucketTasks();
     this.fetchBucketTasksStates();
     this.fetchBucketTaskPriorities();
+    this.fetchAssigness();
   }
 
   fetchCurrentBucket() {
@@ -115,6 +121,18 @@ export class BucketComponent implements OnInit {
     this.dictionaryService.getBucketTaskPriorities(environment.bucketTaskPrioritiesEndoint).subscribe(
       (response: BucketTaskPriority[]) => {
         this.bucketTaskPriorities = response;
+      },
+      (error: any) => {
+        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
+      }
+    );
+  }
+
+  fetchAssigness() {
+    this.assigneeService.getAssignees(environment.assigneeEndpoint).subscribe(
+      (response: Assignee[]) => {
+        const assigneeNames = response.map(assignee => assignee.name).join(', ');
+        this.toastr.success("Assignee list:" + assigneeNames);
       },
       (error: any) => {
         this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
@@ -258,7 +276,6 @@ export class BucketComponent implements OnInit {
   popupNewBucketTaskForm() {
     this.showNewBucketTaskForm = !this.showNewBucketTaskForm;
     this.initializeNewBucketTaskForm();
-    //this.addNewBucketTaskFormGroup.patchValue({ assignee: 'hej' });
   }
 
   exitNewBucketTaskForm() {

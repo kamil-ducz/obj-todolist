@@ -5,6 +5,8 @@
 export const environment = {
   production: false,
   localhostUrl: 'https://localhost:7247/api/',
+
+  assigneeEndpoint: 'https://localhost:7247/api/Assignee',
   
   bucketEndpoint: 'https://localhost:7247/api/Bucket/',
   bucketColorEndpoint: 'https://localhost:7247/api/Dictionary/bucketColors/all',
