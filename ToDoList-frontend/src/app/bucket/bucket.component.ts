@@ -160,7 +160,7 @@ export class BucketComponent implements OnInit {
       bucketTaskPriority: new FormControl('', [
         Validators.required,
       ]),
-      assignee: new FormControl('', [
+      assigneeControl: new FormControl('', [
         Validators.required,
       ])
     });
@@ -184,7 +184,7 @@ export class BucketComponent implements OnInit {
       bucketTaskPriority: new FormControl(bucketTaskPriority, [
         Validators.required,
       ]),
-      assignee: new FormControl('fit2', [
+      assigneeControl: new FormControl('fit2', [
         Validators.required,
       ])
     });
