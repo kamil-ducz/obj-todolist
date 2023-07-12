@@ -209,11 +209,10 @@ export class BucketComponent implements OnInit {
     this.currentBucketTask = newBucketTask;
     this.currentBucketTask.bucketTaskStateId = this.bucketTaskStates.find(bs => bs.name === this.currentBucketTask.bucketTaskState).id;
     this.currentBucketTask.bucketTaskPriorityId = this.bucketTaskPriorities.find(bp => bp.name === this.currentBucketTask.bucketTaskPriority).id;
+    this.currentBucketTask.assigneeId = this.assignees.find(a => a.name === this.addNewBucketTaskFormGroup.value.assigneeControl).id;
     this.currentBucketTask.bucketTaskState = null;
     this.currentBucketTask.bucketTaskPriority = null;
-    this.currentBucketTask.bucketId = this.currentBucketId;
-    //this.currentBucketTask.assigneeControl = null;
-    this.currentBucketTask.assigneeId = 4;
+    this.currentBucketTask.bucketId = this.currentBucketId;    
 
     if (this.currentBucketBucketTasks.length < this.currentBucket.maxAmountOfTasks)
     {
@@ -239,13 +238,13 @@ export class BucketComponent implements OnInit {
     this.currentBucketTask.bucketId = this.currentBucketId;
     this.currentBucketTask.bucketTaskStateId = this.bucketTaskStates.find(bts => bts.name === newBucketTask.bucketTaskState).id;
     this.currentBucketTask.bucketTaskPriorityId = this.bucketTaskPriorities.find(btps => btps.name === newBucketTask.bucketTaskPriority).id;
+    this.currentBucketTask.assigneeId = this.assignees.find(a => a.name === this.editNewBucketTaskFormGroup.value.assigneeControl).id;
     this.currentBucketTask.bucketTaskState = null;
     this.currentBucketTask.bucketTaskPriority = null;
 
     this.bucketTaskService.putBucketTask(environment.bucketTaskEndpoint+this.bucketTaskForEditSaveId, this.currentBucketTask).subscribe(
       (response: any) => {
         this.toastr.success("Bucket task " + this.currentBucketTask.name + " changes saved successfully.");
-        this.editNewBucketTaskFormGroup.patchValue({ });
       },
       (error: any) => {
         console.error(error);
