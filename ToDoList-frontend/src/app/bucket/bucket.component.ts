@@ -182,6 +182,8 @@ export class BucketComponent implements OnInit {
   initializeEditBucketTaskForm() {
     const bucketTaskState = this.bucketTaskStates.find(bts => bts.id === this.currentBucketTask.bucketTaskStateId).name;
     const bucketTaskPriority = this.bucketTaskPriorities.find(btps => btps.id === this.currentBucketTask.bucketTaskPriorityId).name;
+    const assigneeName = this.assignees.find(a => a.id == this.currentBucketTask.assigneeId).name;
+    console.log("I'm in initializeEditBucketTaskForm and assigneeName now = " + assigneeName);
 
     this.editNewBucketTaskFormGroup = new FormGroup({
       name: new FormControl(this.currentBucketTask.name, [
@@ -197,7 +199,7 @@ export class BucketComponent implements OnInit {
       bucketTaskPriority: new FormControl(bucketTaskPriority, [
         Validators.required,
       ]),
-      assigneeControl: new FormControl('fit2', [
+      assigneeControl: new FormControl(assigneeName, [
         Validators.required,
       ])
     });
@@ -210,6 +212,8 @@ export class BucketComponent implements OnInit {
     this.currentBucketTask.bucketTaskState = null;
     this.currentBucketTask.bucketTaskPriority = null;
     this.currentBucketTask.bucketId = this.currentBucketId;
+    //this.currentBucketTask.assigneeControl = null;
+    this.currentBucketTask.assigneeId = 4;
 
     if (this.currentBucketBucketTasks.length < this.currentBucket.maxAmountOfTasks)
     {
