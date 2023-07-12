@@ -49,6 +49,8 @@ export class BucketComponent implements OnInit {
   bucketTasksCancelled: BucketTask[];
 
   assignees: Assignee[];
+  showAssigneeListItems = false;
+  assigneeControl = new FormControl();
 
   ngOnInit(): void {
     this.route.params.subscribe(
@@ -66,6 +68,19 @@ export class BucketComponent implements OnInit {
     this.fetchBucketTasksStates();
     this.fetchBucketTaskPriorities();
     this.fetchAssigness();
+  }
+
+  showAssigneeList() {
+    this.showAssigneeListItems = !this.showAssigneeListItems;
+  }
+
+  selectAssignee(assignee: Assignee) {
+    console.log("selectAssignee triggered! passed assignee = " + assignee.name);
+    setTimeout(() => {
+      console.log("is this.assigneeControl undefined? " + this.assigneeControl.value);
+      this.assigneeControl.setValue(assignee.name);
+    });
+    this.showAssigneeListItems = false;
   }
 
   fetchCurrentBucket() {
@@ -132,8 +147,6 @@ export class BucketComponent implements OnInit {
     this.assigneeService.getAssignees(environment.assigneeEndpoint).subscribe(
       (response: Assignee[]) => {
         this.assignees = response;
-        // const assigneeNames = response.map(assignee => assignee.name).join(', ');
-        // this.toastr.success("Assignee list:" + assigneeNames);
       },
       (error: any) => {
         this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
@@ -277,8 +290,7 @@ export class BucketComponent implements OnInit {
   popupNewBucketTaskForm() {
     this.showNewBucketTaskForm = !this.showNewBucketTaskForm;
     this.initializeNewBucketTaskForm();
-    const assigneeList = this.assignees.map(a => a.name);
-    this.addNewBucketTaskFormGroup.patchValue({ assignee: assigneeList });
+    //this.addNewBucketTaskFormGroup.patchValue({ assigneeControl: this.selectAssignee() });
   }
 
   exitNewBucketTaskForm() {
