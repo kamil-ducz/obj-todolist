@@ -9,5 +9,8 @@ public class BucketTask
     public int BucketTaskStateId { get; set; }
     public BucketTaskPriority? BucketTaskPriority { get; set; }
     public int BucketTaskPriorityId { get; set; }
+    public Bucket Bucket { get; set; }
     public int BucketId { get; set; }
+    public Assignee Assignee { get; set; }
+    public int AssigneeId { get; set; }
 }
