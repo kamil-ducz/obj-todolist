@@ -75,10 +75,15 @@ export class BucketComponent implements OnInit {
   }
 
   selectAssignee(assignee: Assignee) {
-    console.log("selectAssignee triggered! passed assignee = " + assignee.name);
     setTimeout(() => {
-      console.log("is this.assigneeControl undefined? " + this.assigneeControl.value);
-      this.assigneeControl.setValue(assignee.name);
+      if (this.showNewBucketTaskForm)
+      {
+        this.addNewBucketTaskFormGroup.patchValue({ assigneeControl:assignee.name });
+      }
+      if (this.showEditBucketTaskForm)
+      {
+        this.editNewBucketTaskFormGroup.patchValue({ assigneeControl:assignee.name });
+      }
     });
     this.showAssigneeListItems = false;
   }
@@ -183,7 +188,6 @@ export class BucketComponent implements OnInit {
     const bucketTaskState = this.bucketTaskStates.find(bts => bts.id === this.currentBucketTask.bucketTaskStateId).name;
     const bucketTaskPriority = this.bucketTaskPriorities.find(btps => btps.id === this.currentBucketTask.bucketTaskPriorityId).name;
     const assigneeName = this.assignees.find(a => a.id == this.currentBucketTask.assigneeId).name;
-    console.log("I'm in initializeEditBucketTaskForm and assigneeName now = " + assigneeName);
 
     this.editNewBucketTaskFormGroup = new FormGroup({
       name: new FormControl(this.currentBucketTask.name, [
