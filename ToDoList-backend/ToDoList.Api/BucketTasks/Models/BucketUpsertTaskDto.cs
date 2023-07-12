@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using ToDoList.Api.Assignees.Models;
-using ToDoList.Domain.Models;
+﻿using ToDoList.Domain.Models;
 
 namespace ToDoList.Api.BucketTasks.Models;
 
@@ -13,6 +11,4 @@ public class BucketUpsertTaskDto
     public BucketTaskPriority? BucketTaskPriority { get; set; }
     public int BucketTaskPriorityId { get; set; }
     public int BucketId { get; set; }
-    public List<AssigneeDto> Assignee { get; set; } = new List<AssigneeDto>();
-
 }
