@@ -7,4 +7,5 @@ export type BucketTask = {
     bucketTaskPriorityId: number;
     bucketTaskPriority: string;
     bucketId: number;
+    assigneeId: number;
 }
