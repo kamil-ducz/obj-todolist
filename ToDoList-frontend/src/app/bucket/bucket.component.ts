@@ -50,7 +50,7 @@ export class BucketComponent implements OnInit {
 
   assignees: Assignee[];
   showAssignees = false;
-  assigneeControl = new FormControl();
+  assignee = new FormControl();
 
   ngOnInit(): void {
     this.route.params.subscribe(
@@ -146,7 +146,7 @@ export class BucketComponent implements OnInit {
   }
 
   selectAssignee(assignee: Assignee) {
-    this.bucketTaskFormGroup.patchValue({ assigneeControl:assignee.name });
+    this.bucketTaskFormGroup.patchValue({ assignee:assignee.name });
     this.showAssignees = false;
   }
 
@@ -178,7 +178,7 @@ export class BucketComponent implements OnInit {
       bucketTaskPriority: new FormControl('', [
         Validators.required,
       ]),
-      assigneeControl: new FormControl('', [
+      assignee: new FormControl('', [
         Validators.required,
       ])
     });
@@ -194,7 +194,7 @@ export class BucketComponent implements OnInit {
       this.bucketTaskFormGroup.patchValue({ description: bucketTaskDescription });
       this.bucketTaskFormGroup.patchValue({ bucketTaskState: bucketTaskState });
       this.bucketTaskFormGroup.patchValue({ bucketTaskPriority: bucketTaskPriority });
-      this.bucketTaskFormGroup.patchValue({ assigneeControl: assigneeName });
+      this.bucketTaskFormGroup.patchValue({ assignee: assigneeName });
     }
   }
 
@@ -202,7 +202,7 @@ export class BucketComponent implements OnInit {
     this.currentBucketTask = newBucketTask;
     this.currentBucketTask.bucketTaskStateId = this.bucketTaskStates.find(bs => bs.name === this.currentBucketTask.bucketTaskState).id;
     this.currentBucketTask.bucketTaskPriorityId = this.bucketTaskPriorities.find(bp => bp.name === this.currentBucketTask.bucketTaskPriority).id;
-    this.currentBucketTask.assigneeId = this.findAssigneeByName(this.assignees, this.bucketTaskFormGroup.value.assigneeControl);
+    this.currentBucketTask.assigneeId = this.findAssigneeByName(this.assignees, this.bucketTaskFormGroup.value.assignee);
     this.currentBucketTask.bucketTaskState = null;
     this.currentBucketTask.bucketTaskPriority = null;
     this.currentBucketTask.bucketId = this.currentBucketId;    
@@ -230,7 +230,7 @@ export class BucketComponent implements OnInit {
     this.currentBucketTask.bucketId = this.currentBucketId;
     this.currentBucketTask.bucketTaskStateId = this.bucketTaskStates.find(bts => bts.name === newBucketTask.bucketTaskState).id;
     this.currentBucketTask.bucketTaskPriorityId = this.bucketTaskPriorities.find(btps => btps.name === newBucketTask.bucketTaskPriority).id;
-    this.currentBucketTask.assigneeId = this.assignees.find(a => a.name === this.bucketTaskFormGroup.value.assigneeControl).id;
+    this.currentBucketTask.assigneeId = this.assignees.find(a => a.name === this.bucketTaskFormGroup.value.assignee).id;
     this.currentBucketTask.bucketTaskState = null;
     this.currentBucketTask.bucketTaskPriority = null;
 
