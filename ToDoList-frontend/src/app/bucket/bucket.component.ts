@@ -49,7 +49,7 @@ export class BucketComponent implements OnInit {
   bucketTasksCancelled: BucketTask[];
 
   assignees: Assignee[];
-  showAssigneeListItems = false;
+  showAssignees = false;
   assigneeControl = new FormControl();
 
   ngOnInit(): void {
@@ -70,12 +70,11 @@ export class BucketComponent implements OnInit {
     this.fetchAssigness();
   }
 
-  showAssigneeList() {
-    this.showAssigneeListItems = !this.showAssigneeListItems;
+  toggleShowAssignees() {
+    this.showAssignees = !this.showAssignees;
   }
 
   selectAssignee(assignee: Assignee) {
-    setTimeout(() => {
       if (this.showNewBucketTaskForm)
       {
         this.addNewBucketTaskFormGroup.patchValue({ assigneeControl:assignee.name });
@@ -84,8 +83,7 @@ export class BucketComponent implements OnInit {
       {
         this.editNewBucketTaskFormGroup.patchValue({ assigneeControl:assignee.name });
       }
-    });
-    this.showAssigneeListItems = false;
+    this.showAssignees = false;
   }
 
   fetchCurrentBucket() {
