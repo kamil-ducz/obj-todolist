@@ -212,7 +212,7 @@ export class BucketComponent implements OnInit {
     {
       this.bucketTaskService.postBucketTask(environment.bucketTaskEndpoint, this.currentBucketTask).subscribe(
         (response) => {
-          this.toastr.success("Bucket task " + this.currentBucketTask.name + " created successfully.");
+          this.toastr.success(`Bucket task ${this.currentBucketTask.name} created successfully`);
         },
         (error: any) => {
           this.toastr.error("Request failed")
@@ -237,7 +237,7 @@ export class BucketComponent implements OnInit {
 
     this.bucketTaskService.putBucketTask(environment.bucketTaskEndpoint+this.bucketTaskForEditSaveId, this.currentBucketTask).subscribe(
       (response: any) => {
-        this.toastr.success("Bucket task " + this.currentBucketTask.name + " changes saved successfully.");
+        this.toastr.success(`Bucket task ${this.currentBucketTask.name} changes saved successfully.`);
       },
       (error: any) => {
         console.error(error);
@@ -248,7 +248,7 @@ export class BucketComponent implements OnInit {
   removeBucket(id: any) {
     this.bucketService.deleteBucket(environment.bucketEndpoint+id).subscribe(
         (response: any) => {
-          this.toastr.success("Bucket " +this.currentBucket.name + " deleted successfully.");
+          this.toastr.success(`Bucket ${this.currentBucket.name} deleted successfully.`);
           this.router.navigate(['/buckets']);
         },
         (error: any) => {
@@ -261,7 +261,7 @@ export class BucketComponent implements OnInit {
     this.bucketTaskService.deleteBucketTask(environment.bucketTaskEndpoint+bucketTaskId).subscribe(
       (response: any) => {
         this.fetchBucketTasks();
-        this.toastr.success("Bucket task " + this.currentBucketTask.name + " deleted successfully.");
+        this.toastr.success(`Bucket task ${this.currentBucketTask.name} deleted successfully.`);
         this.exitDeleteBucketTaskConfirmationModal();
       },
       (error: any) => {

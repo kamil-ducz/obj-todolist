@@ -93,7 +93,7 @@ export class BucketsComponent implements OnInit {
     this.bucketService.deleteBucket(environment.bucketEndpoint+id).subscribe(
         (response: any) => {
           this.showModal = false;
-          this.toastr.success("Bucket " +this.buckets.find(b => b.id === id).name + " deleted successfully.");
+          this.toastr.success(`Bucket ${this.buckets.find(b => b.id === id).name} deleted successfully.`);
           this.refreshBucketAndBucketsComponents();
         },
         (error: any) => {
