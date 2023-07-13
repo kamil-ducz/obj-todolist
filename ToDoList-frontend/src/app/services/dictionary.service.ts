@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { BucketCategory } from "../models/bucketCategory.model";
-import { BucketColor } from "../models/bucketColor.model";
-import { BucketTaskState } from "../models/bucketTaskState.model";
-import { BucketTaskPriority } from "../models/bucketTaskPriority.model";
+import { BucketCategory } from "../models/bucket-category.model";
+import { BucketColor } from "../models/bucket-color.model";
+import { BucketTaskState } from "../models/bucket-task-state.model";
+import { BucketTaskPriority } from "../models/bucket-task-priority.model";
 
 @Injectable ({
     providedIn: 'root'

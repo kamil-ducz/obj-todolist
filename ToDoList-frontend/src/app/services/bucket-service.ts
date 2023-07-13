@@ -2,8 +2,8 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Bucket } from "../models/bucket.model";
-import { BucketTask } from "../models/bucketTask.model";
-import { BucketColor } from "../models/bucketColor.model";
+import { BucketTask } from "../models/bucket-task.model";
+import { BucketColor } from "../models/bucket-color.model";
 
 @Injectable ({
     providedIn: 'root'

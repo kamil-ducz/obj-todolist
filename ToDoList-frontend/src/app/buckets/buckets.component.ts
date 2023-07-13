@@ -3,10 +3,10 @@ import { BucketService } from '../services/bucket-service';
 import { BucketTaskService } from '../services/buckettask-service';
 import { environment } from 'src/environments/environment';
 import { Bucket } from '../models/bucket.model';
-import { BucketTask } from '../models/bucketTask.model';
+import { BucketTask } from '../models/bucket-task.model';
 import { ToastrService } from 'ngx-toastr';
-import { BucketTaskState } from '../models/bucketTaskState.model';
-import { BucketTaskPriority } from '../models/bucketTaskPriority.model';
+import { BucketTaskState } from '../models/bucket-task-state.model';
+import { BucketTaskPriority } from '../models/bucket-task-priority.model';
 import { DictionaryService } from '../services/dictionary.service';
 
 @Component({
