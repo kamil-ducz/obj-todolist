@@ -51,7 +51,7 @@ export class BucketNewComponent implements OnInit {
         this.toastr.success("Bucket ".concat(newBucket.name).concat(" added successfully."));
       },
       (error: any) => {
-        this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
+        this.toastr.error("Request failed.")
       }
     );
   }

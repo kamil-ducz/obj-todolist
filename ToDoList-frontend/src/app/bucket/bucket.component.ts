@@ -189,9 +189,7 @@ export class BucketComponent implements OnInit {
       const bucketTaskDescription = this.currentBucketTask.description;   
 
       const bucketTaskState = this.bucketTaskStates.find(bts => bts.id === this.currentBucketTask.bucketTaskStateId).name;
-      const bucketTaskPriority = this.bucketTaskPriorities.find(btps => btps.id === this.currentBucketTask.bucketTaskPriorityId).name;
-      console.log("bucketTaskState" + bucketTaskState);
-      console.log("bucketTaskPriority" + bucketTaskPriority);   
+      const bucketTaskPriority = this.bucketTaskPriorities.find(btps => btps.id === this.currentBucketTask.bucketTaskPriorityId).name;  
       const assigneeName = this.findAssigneeById(this.assignees, this.currentBucketTask.assigneeId);
       this.bucketTaskFormGroup.patchValue({ name: bucketTaskName });
       this.bucketTaskFormGroup.patchValue({ description: bucketTaskDescription });
@@ -254,7 +252,7 @@ export class BucketComponent implements OnInit {
           this.router.navigate(['/buckets']);
         },
         (error: any) => {
-          this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
+          this.toastr.error("Request failed.")
         }
     );
   }
@@ -267,7 +265,7 @@ export class BucketComponent implements OnInit {
         this.exitDeleteBucketTaskConfirmationModal();
       },
       (error: any) => {
-        this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
+        this.toastr.error("Request failed.")
       }
     );
   }

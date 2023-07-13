@@ -125,7 +125,7 @@ export class BucketEditComponent implements OnInit {
         this.toastr.success("Bucket " + response.name + " edit successfull.");
       },
       (error: any) => {
-        this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
+        this.toastr.error("Request failed.")
       }
     );
   }
