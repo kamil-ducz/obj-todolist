@@ -59,7 +59,7 @@
 </div>
 
               <!-- deletion modal start -->
-              <div *ngIf="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+              <div *ngIf="showModal" class="bucket-task-modal">
                 <div class="relative w-auto my-6 mx-auto max-w-6xl">
                   <!--content-->
                   <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
@@ -68,7 +68,7 @@
                       <h3 class="text-3xl font-semibold">
                         Confirm delete
                       </h3>
-                      <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="exitDeleteModal()">
+                      <button class="close-modal" (click)="exitDeleteModal()">
                         <span class="text-black">
                           ×
                         </span>
