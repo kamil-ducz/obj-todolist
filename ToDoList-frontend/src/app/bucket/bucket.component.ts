@@ -150,6 +150,14 @@ export class BucketComponent implements OnInit {
     this.showAssignees = false;
   }
 
+  findAssigneeById(assignees: Assignee[], assigneeIdKey: number): string {
+    return assignees.find(a => a.id == assigneeIdKey).name;
+  }
+
+  findAssigneeByName(assignees: Assignee[], assigneeNameKey: string): number {
+    return assignees.find(a => a.name === assigneeNameKey).id;
+  }
+
   newBucketTaskToCreate: BucketTask;
   addNewBucketTaskFormGroup: FormGroup;
   editNewBucketTaskFormGroup: FormGroup;
@@ -181,7 +189,7 @@ export class BucketComponent implements OnInit {
       const bucketTaskDescription = this.currentBucketTask.description;      
       const bucketTaskState = this.bucketTaskStates.find(bts => bts.id === this.currentBucketTask.bucketTaskStateId).name;
       const bucketTaskPriority = this.bucketTaskPriorities.find(btps => btps.id === this.currentBucketTask.bucketTaskPriorityId).name;
-      const assigneeName = this.assignees.find(a => a.id == this.currentBucketTask.assigneeId).name;
+      const assigneeName = this.findAssigneeById(this.assignees, this.currentBucketTask.assigneeId);
       this.bucketTaskFormGroup.patchValue({ name: bucketTaskName });
       this.bucketTaskFormGroup.patchValue({ description: bucketTaskDescription });
       this.bucketTaskFormGroup.patchValue({ bucketTaskState: bucketTaskState });
@@ -194,7 +202,7 @@ export class BucketComponent implements OnInit {
     this.currentBucketTask = newBucketTask;
     this.currentBucketTask.bucketTaskStateId = this.bucketTaskStates.find(bs => bs.name === this.currentBucketTask.bucketTaskState).id;
     this.currentBucketTask.bucketTaskPriorityId = this.bucketTaskPriorities.find(bp => bp.name === this.currentBucketTask.bucketTaskPriority).id;
-    this.currentBucketTask.assigneeId = this.assignees.find(a => a.name === this.bucketTaskFormGroup.value.assigneeControl).id;
+    this.currentBucketTask.assigneeId = this.findAssigneeByName(this.assignees, this.bucketTaskFormGroup.value.assigneeControl);
     this.currentBucketTask.bucketTaskState = null;
     this.currentBucketTask.bucketTaskPriority = null;
     this.currentBucketTask.bucketId = this.currentBucketId;    
