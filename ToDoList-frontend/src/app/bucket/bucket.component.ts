@@ -70,22 +70,6 @@ export class BucketComponent implements OnInit {
     this.fetchAssigness();
   }
 
-  toggleShowAssignees() {
-    this.showAssignees = !this.showAssignees;
-  }
-
-  selectAssignee(assignee: Assignee) {
-      if (this.showNewBucketTaskForm)
-      {
-        this.addNewBucketTaskFormGroup.patchValue({ assigneeControl:assignee.name });
-      }
-      if (this.showEditBucketTaskForm)
-      {
-        this.editNewBucketTaskFormGroup.patchValue({ assigneeControl:assignee.name });
-      }
-    this.showAssignees = false;
-  }
-
   fetchCurrentBucket() {
     this.bucketService.getBucket(environment.bucketEndpoint+this.currentBucketId).subscribe(
       (response: Bucket) => {
@@ -157,12 +141,22 @@ export class BucketComponent implements OnInit {
     );
   }
 
+  toggleShowAssignees() {
+    this.showAssignees = !this.showAssignees;
+  }
+
+  selectAssignee(assignee: Assignee) {
+    this.bucketTaskFormGroup.patchValue({ assigneeControl:assignee.name });
+    this.showAssignees = false;
+  }
+
   newBucketTaskToCreate: BucketTask;
   addNewBucketTaskFormGroup: FormGroup;
   editNewBucketTaskFormGroup: FormGroup;
+  bucketTaskFormGroup: FormGroup;
 
-  initializeNewBucketTaskForm() {
-    this.addNewBucketTaskFormGroup = new FormGroup({
+  initializeBucketTaskForm() {
+    this.bucketTaskFormGroup = new FormGroup({
       name: new FormControl('', [
         Validators.required,
         Validators.minLength(3),
@@ -180,38 +174,27 @@ export class BucketComponent implements OnInit {
         Validators.required,
       ])
     });
+
+    if (this.showEditBucketTaskForm === true)
+    {
+      const bucketTaskName = this.currentBucketTask.name;
+      const bucketTaskDescription = this.currentBucketTask.description;      
+      const bucketTaskState = this.bucketTaskStates.find(bts => bts.id === this.currentBucketTask.bucketTaskStateId).name;
+      const bucketTaskPriority = this.bucketTaskPriorities.find(btps => btps.id === this.currentBucketTask.bucketTaskPriorityId).name;
+      const assigneeName = this.assignees.find(a => a.id == this.currentBucketTask.assigneeId).name;
+      this.bucketTaskFormGroup.patchValue({ name: bucketTaskName });
+      this.bucketTaskFormGroup.patchValue({ description: bucketTaskDescription });
+      this.bucketTaskFormGroup.patchValue({ bucketTaskState: bucketTaskState });
+      this.bucketTaskFormGroup.patchValue({ bucketTaskPriority: bucketTaskPriority });
+      this.bucketTaskFormGroup.patchValue({ assigneeControl: assigneeName });
+    }
   }
 
-  initializeEditBucketTaskForm() {
-    const bucketTaskState = this.bucketTaskStates.find(bts => bts.id === this.currentBucketTask.bucketTaskStateId).name;
-    const bucketTaskPriority = this.bucketTaskPriorities.find(btps => btps.id === this.currentBucketTask.bucketTaskPriorityId).name;
-    const assigneeName = this.assignees.find(a => a.id == this.currentBucketTask.assigneeId).name;
-
-    this.editNewBucketTaskFormGroup = new FormGroup({
-      name: new FormControl(this.currentBucketTask.name, [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-      description: new FormControl(this.currentBucketTask.description, [
-        Validators.maxLength(50),
-      ]),
-      bucketTaskState: new FormControl(bucketTaskState, [
-        Validators.required,      
-      ]),
-      bucketTaskPriority: new FormControl(bucketTaskPriority, [
-        Validators.required,
-      ]),
-      assigneeControl: new FormControl(assigneeName, [
-        Validators.required,
-      ])
-    });
-  }
-
-  onSubmitNewBucketTask(newBucketTask: BucketTask) {
+  onSubmitBucketTask(newBucketTask: BucketTask) {
     this.currentBucketTask = newBucketTask;
     this.currentBucketTask.bucketTaskStateId = this.bucketTaskStates.find(bs => bs.name === this.currentBucketTask.bucketTaskState).id;
     this.currentBucketTask.bucketTaskPriorityId = this.bucketTaskPriorities.find(bp => bp.name === this.currentBucketTask.bucketTaskPriority).id;
-    this.currentBucketTask.assigneeId = this.assignees.find(a => a.name === this.addNewBucketTaskFormGroup.value.assigneeControl).id;
+    this.currentBucketTask.assigneeId = this.assignees.find(a => a.name === this.bucketTaskFormGroup.value.assigneeControl).id;
     this.currentBucketTask.bucketTaskState = null;
     this.currentBucketTask.bucketTaskPriority = null;
     this.currentBucketTask.bucketId = this.currentBucketId;    
@@ -220,7 +203,6 @@ export class BucketComponent implements OnInit {
     {
       this.bucketTaskService.postBucketTask(environment.bucketTaskEndpoint, this.currentBucketTask).subscribe(
         (response) => {
-          this.addNewBucketTaskFormGroup.patchValue({ });
           this.toastr.success("Bucket task " + this.currentBucketTask.name + " created successfully.");
         },
         (error: any) => {
@@ -236,11 +218,11 @@ export class BucketComponent implements OnInit {
   }
 
   onSubmitEditBucketTask(newBucketTask: BucketTask) {
-    this.currentBucketTask = this.editNewBucketTaskFormGroup.value;
+    this.currentBucketTask = this.bucketTaskFormGroup.value;
     this.currentBucketTask.bucketId = this.currentBucketId;
     this.currentBucketTask.bucketTaskStateId = this.bucketTaskStates.find(bts => bts.name === newBucketTask.bucketTaskState).id;
     this.currentBucketTask.bucketTaskPriorityId = this.bucketTaskPriorities.find(btps => btps.name === newBucketTask.bucketTaskPriority).id;
-    this.currentBucketTask.assigneeId = this.assignees.find(a => a.name === this.editNewBucketTaskFormGroup.value.assigneeControl).id;
+    this.currentBucketTask.assigneeId = this.assignees.find(a => a.name === this.bucketTaskFormGroup.value.assigneeControl).id;
     this.currentBucketTask.bucketTaskState = null;
     this.currentBucketTask.bucketTaskPriority = null;
 
@@ -294,8 +276,7 @@ export class BucketComponent implements OnInit {
 
   popupNewBucketTaskForm() {
     this.showNewBucketTaskForm = !this.showNewBucketTaskForm;
-    this.initializeNewBucketTaskForm();
-    //this.addNewBucketTaskFormGroup.patchValue({ assigneeControl: this.selectAssignee() });
+    this.initializeBucketTaskForm();
   }
 
   exitNewBucketTaskForm() {
@@ -311,7 +292,7 @@ export class BucketComponent implements OnInit {
     this.showEditBucketTaskForm = !this.showEditBucketTaskForm;
     this.currentBucketTask = this.currentBucketBucketTasks.find(element => element.id == bucketTaskId);
     this.bucketTaskForEditSaveId = bucketTaskId;
-    this.initializeEditBucketTaskForm();
+    this.initializeBucketTaskForm();
   }
 
   exitEditBucketTaskForm() {
