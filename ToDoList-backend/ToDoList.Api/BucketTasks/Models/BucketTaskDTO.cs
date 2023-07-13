@@ -1,18 +1,3 @@
-﻿using ToDoList.Domain.Models;
+﻿namespace ToDoList.Api.BucketTasks.Models;
 
-namespace ToDoList.Api.BucketTasks.Models;
-
-public class BucketTaskDto
-{
-    public int Id { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public string? Description { get; set; }
-    public BucketTaskState? TaskState { get; set; }
-    public int BucketTaskStateId { get; set; }
-    public BucketTaskPriority? BucketTaskPriority { get; set; }
-    public int BucketTaskPriorityId { get; set; }
-    public Bucket? Bucket { get; set; }
-    public int BucketId { get; set; }
-    public Assignee? Assignee { get; set; }
-    public int AssigneeId { get; set; }
-}
+public record BucketTaskDto(int Id, string Name, string? Description, int BucketTaskStateId, int BucketTaskPriorityId, int BucketId, int AssigneeId);
