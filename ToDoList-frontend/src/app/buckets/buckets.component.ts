@@ -62,7 +62,7 @@ export class BucketsComponent implements OnInit {
         this.bucketTasksCancelled = this.bucketTasks.filter(element => element.bucketTaskStateId === 4);
       },
       (error: any) => {
-        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
+        this.toastr.error("Request failed")
       }
     );
   }
@@ -73,7 +73,7 @@ export class BucketsComponent implements OnInit {
         this.bucketTaskStates = response;
       },
       (error: any) => {
-        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
+        this.toastr.error("Request failed")
       }
     );
   }
@@ -84,7 +84,7 @@ export class BucketsComponent implements OnInit {
         this.bucketTaskPriorities = response;
       },
       (error: any) => {
-        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
+        this.toastr.error("Request failed")
       }
     );
   }
@@ -97,7 +97,7 @@ export class BucketsComponent implements OnInit {
           this.refreshBucketAndBucketsComponents();
         },
         (error: any) => {
-          this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
+          this.toastr.error("Request failed")
         }
     );
   }

@@ -57,7 +57,7 @@ export class BucketEditComponent implements OnInit {
           this.bucketCategories = response;
         },
         (error: any) => {
-          this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name);
+          this.toastr.error("Request failed");
         }
       );
   }
@@ -68,7 +68,7 @@ export class BucketEditComponent implements OnInit {
           this.bucketColors = response;
         },
         (error: any) => {
-          this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name);
+          this.toastr.error("Request failed");
         }
       );
   }
