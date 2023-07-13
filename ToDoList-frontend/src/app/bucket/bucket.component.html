@@ -212,18 +212,13 @@
             <div class="mb-6">
                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">State</label>
                 <select id="bucketTaskState" name="bucketTaskState" formControlName="bucketTaskState" class="bucket-task-input">
-                  <option>To do</option>
-                  <option>In progress</option>
-                  <option>Done</option>
-                  <option>Cancelled</option>
+                  <option *ngFor="let state of bucketTaskStates" [value]="state.name">{{ state.name }}</option>
                 </select>      
             </div>
               <div class="mb-6">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Priority</label>
                 <select id="bucketTaskPriority" name="bucketTaskPriority" formControlName="bucketTaskPriority" class="bucket-task-input">
-                    <option>Low</option>
-                    <option>Medium</option>
-                    <option>High</option>
+                  <option *ngFor="let priority of bucketTaskPriorities" [value]="priority.name">{{ priority.name }}</option>
                 </select>
             </div>
             <div class="mb-6">
@@ -283,18 +278,13 @@
           <div class="mb-6">
               <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">State</label>
               <select id="bucketTaskState" name="bucketTaskState" formControlName="bucketTaskState" class="bucket-task-input">
-                <option>To do</option>
-                <option>In progress</option>
-                <option>Done</option>
-                <option>Cancelled</option>
+                <option *ngFor="let state of bucketTaskStates" [value]="state.name">{{ state.name }}</option>
               </select>      
           </div>
           <div class="mb-6">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Priority</label>
             <select id="bucketTaskPriority" name="bucketTaskPriority" formControlName="bucketTaskPriority" class="bucket-task-input">
-                <option>Low</option>
-                <option>Medium</option>
-                <option>High</option>
+                <option *ngFor="let priority of bucketTaskPriorities" [value]="priority.name">{{ priority.name }}</option>
             </select>
           </div>
           <div class="mb-6">

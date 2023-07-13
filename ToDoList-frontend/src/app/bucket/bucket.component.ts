@@ -186,9 +186,12 @@ export class BucketComponent implements OnInit {
     if (this.showEditBucketTaskForm === true)
     {
       const bucketTaskName = this.currentBucketTask.name;
-      const bucketTaskDescription = this.currentBucketTask.description;      
+      const bucketTaskDescription = this.currentBucketTask.description;   
+
       const bucketTaskState = this.bucketTaskStates.find(bts => bts.id === this.currentBucketTask.bucketTaskStateId).name;
       const bucketTaskPriority = this.bucketTaskPriorities.find(btps => btps.id === this.currentBucketTask.bucketTaskPriorityId).name;
+      console.log("bucketTaskState" + bucketTaskState);
+      console.log("bucketTaskPriority" + bucketTaskPriority);   
       const assigneeName = this.findAssigneeById(this.assignees, this.currentBucketTask.assigneeId);
       this.bucketTaskFormGroup.patchValue({ name: bucketTaskName });
       this.bucketTaskFormGroup.patchValue({ description: bucketTaskDescription });
