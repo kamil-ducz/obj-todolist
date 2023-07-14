@@ -48,10 +48,10 @@ export class BucketNewComponent implements OnInit {
   onSubmitNewBucket(newBucket: Bucket) {
     this.bucketService.postBucket(environment.bucketEndpoint, newBucket).subscribe(
       (response: any) => {
-        this.toastr.success("Bucket ".concat(newBucket.name).concat(" added successfully."));
+        this.toastr.success(`Bucket ${newBucket.name} added successfully.`);
       },
       (error: any) => {
-        this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
+        this.toastr.error("Request failed.")
       }
     );
   }

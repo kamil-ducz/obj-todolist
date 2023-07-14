@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ToDoList.Api;
 
@@ -10,9 +11,10 @@ using ToDoList.Api;
 namespace ToDoList.Infrastructure.Migrations
 {
     [DbContext(typeof(ToDoListDbContext))]
-    partial class ToDoListDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230711062936_Add more assignees to seed")]
+    partial class Addmoreassigneestoseed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,6 +22,21 @@ namespace ToDoList.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("AssigneeBucketTask", b =>
+                {
+                    b.Property<int>("AssigneeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BucketTaskId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AssigneeId", "BucketTaskId");
+
+                    b.HasIndex("BucketTaskId");
+
+                    b.ToTable("AssigneeBucketTask");
+                });
 
             modelBuilder.Entity("ToDoList.Domain.Models.Assignee", b =>
                 {
@@ -244,9 +261,6 @@ namespace ToDoList.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("AssigneeId")
-                        .HasColumnType("int");
-
                     b.Property<int>("BucketId")
                         .HasColumnType("int");
 
@@ -265,8 +279,6 @@ namespace ToDoList.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AssigneeId");
-
                     b.HasIndex("BucketId");
 
                     b.HasIndex("BucketTaskPriorityId");
@@ -279,7 +291,6 @@ namespace ToDoList.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            AssigneeId = 1,
                             BucketId = 1,
                             BucketTaskPriorityId = 3,
                             BucketTaskStateId = 1,
@@ -288,7 +299,6 @@ namespace ToDoList.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            AssigneeId = 2,
                             BucketId = 1,
                             BucketTaskPriorityId = 2,
                             BucketTaskStateId = 3,
@@ -297,7 +307,6 @@ namespace ToDoList.Infrastructure.Migrations
                         new
                         {
                             Id = 3,
-                            AssigneeId = 3,
                             BucketId = 2,
                             BucketTaskPriorityId = 1,
                             BucketTaskStateId = 4,
@@ -306,7 +315,6 @@ namespace ToDoList.Infrastructure.Migrations
                         new
                         {
                             Id = 4,
-                            AssigneeId = 4,
                             BucketId = 2,
                             BucketTaskPriorityId = 1,
                             BucketTaskStateId = 2,
@@ -315,7 +323,6 @@ namespace ToDoList.Infrastructure.Migrations
                         new
                         {
                             Id = 5,
-                            AssigneeId = 5,
                             BucketId = 3,
                             BucketTaskPriorityId = 1,
                             BucketTaskStateId = 1,
@@ -324,7 +331,6 @@ namespace ToDoList.Infrastructure.Migrations
                         new
                         {
                             Id = 6,
-                            AssigneeId = 6,
                             BucketId = 3,
                             BucketTaskPriorityId = 2,
                             BucketTaskStateId = 3,
@@ -403,6 +409,21 @@ namespace ToDoList.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("AssigneeBucketTask", b =>
+                {
+                    b.HasOne("ToDoList.Domain.Models.Assignee", null)
+                        .WithMany()
+                        .HasForeignKey("AssigneeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ToDoList.Domain.Models.BucketTask", null)
+                        .WithMany()
+                        .HasForeignKey("BucketTaskId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ToDoList.Domain.Models.Bucket", b =>
                 {
                     b.HasOne("ToDoList.Domain.Models.BucketCategory", "BucketCategory")
@@ -424,13 +445,7 @@ namespace ToDoList.Infrastructure.Migrations
 
             modelBuilder.Entity("ToDoList.Domain.Models.BucketTask", b =>
                 {
-                    b.HasOne("ToDoList.Domain.Models.Assignee", "Assignee")
-                        .WithMany("BucketTask")
-                        .HasForeignKey("AssigneeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ToDoList.Domain.Models.Bucket", "Bucket")
+                    b.HasOne("ToDoList.Domain.Models.Bucket", null)
                         .WithMany("BucketTask")
                         .HasForeignKey("BucketId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -448,18 +463,9 @@ namespace ToDoList.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Assignee");
-
-                    b.Navigation("Bucket");
-
                     b.Navigation("BucketTaskPriority");
 
                     b.Navigation("BucketTaskState");
-                });
-
-            modelBuilder.Entity("ToDoList.Domain.Models.Assignee", b =>
-                {
-                    b.Navigation("BucketTask");
                 });
 
             modelBuilder.Entity("ToDoList.Domain.Models.Bucket", b =>

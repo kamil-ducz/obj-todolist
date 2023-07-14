@@ -3,8 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Bucket } from 'src/app/models/bucket.model';
-import { BucketCategory } from 'src/app/models/bucketCategory.model';
-import { BucketColor } from 'src/app/models/bucketColor.model';
+import { BucketCategory } from 'src/app/models/bucket-category.model';
+import { BucketColor } from 'src/app/models/bucket-color.model';
 import { BucketService } from 'src/app/services/bucket-service';
 import { DictionaryService } from 'src/app/services/dictionary.service';
 import { environment } from 'src/environments/environment';
@@ -57,7 +57,7 @@ export class BucketEditComponent implements OnInit {
           this.bucketCategories = response;
         },
         (error: any) => {
-          this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name);
+          this.toastr.error("Request failed");
         }
       );
   }
@@ -68,7 +68,7 @@ export class BucketEditComponent implements OnInit {
           this.bucketColors = response;
         },
         (error: any) => {
-          this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name);
+          this.toastr.error("Request failed");
         }
       );
   }
@@ -122,10 +122,10 @@ export class BucketEditComponent implements OnInit {
 
     this.bucketService.putBucket(environment.bucketEndpoint + this.currentBucketId, this.currentBucket).subscribe(
       (response: Bucket) => {
-        this.toastr.success("Bucket " + response.name + " edit successfull.");
+        this.toastr.success(`Bucket ${response.name} edit successfull.`);
       },
       (error: any) => {
-        this.toastr.error("Request failed. Check console logs and network tab to identify the issue.")
+        this.toastr.error("Request failed.")
       }
     );
   }

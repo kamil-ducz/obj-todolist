@@ -1,18 +1,10 @@
-﻿using System.Collections.Generic;
-using ToDoList.Api.Assignees.Models;
-using ToDoList.Domain.Models;
+﻿namespace ToDoList.Api.BucketTasks.Models;
 
-namespace ToDoList.Api.BucketTasks.Models;
-
-public class BucketUpsertTaskDto
-{
-    public string Name { get; set; } = string.Empty;
-    public string? Description { get; set; }
-    public BucketTaskState? TaskState { get; set; }
-    public int BucketTaskStateId { get; set; }
-    public BucketTaskPriority? BucketTaskPriority { get; set; }
-    public int BucketTaskPriorityId { get; set; }
-    public int BucketId { get; set; }
-    public List<AssigneeDto> Assignee { get; set; } = new List<AssigneeDto>();
-
-}
+public record BucketUpsertTaskDto(
+    string Name,
+    string? Description,
+    int BucketTaskStateId,
+    int BucketTaskPriorityId,
+    int BucketId,
+    int AssigneeId
+    );

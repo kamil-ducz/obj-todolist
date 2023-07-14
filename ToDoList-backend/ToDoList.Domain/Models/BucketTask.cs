@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ToDoList.Domain.Models;
+﻿namespace ToDoList.Domain.Models;
 
 public class BucketTask
 {
@@ -11,6 +9,8 @@ public class BucketTask
     public int BucketTaskStateId { get; set; }
     public BucketTaskPriority? BucketTaskPriority { get; set; }
     public int BucketTaskPriorityId { get; set; }
+    public Bucket? Bucket { get; set; }
     public int BucketId { get; set; }
-    public List<Assignee> Assignee { get; set; } = new List<Assignee>();
+    public Assignee? Assignee { get; set; }
+    public int AssigneeId { get; set; }
 }

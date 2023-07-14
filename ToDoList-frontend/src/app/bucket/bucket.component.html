@@ -145,10 +145,10 @@
       </div>
   </div>
   
-  <a href="#" class="m-8 mt-8 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">Return to main page</a>
+  <a href="#" class="main-page-button">Return to main page</a>
   
   <!-- confirm bucket delete modal start -->
-  <div *ngIf="showModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+  <div *ngIf="showModal" class="bucket-task-modal">
       <div class="relative w-auto my-6 mx-auto max-w-6xl">
         <!--content-->
         <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
@@ -157,7 +157,7 @@
             <h3 class="text-3xl font-semibold">
               Confirm delete
             </h3>
-            <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="showModal=false">
+            <button class="close-modal" (click)="showModal=false">
               <span class="text-black">
                 ×
               </span>
@@ -183,8 +183,8 @@
     </div>
     <!-- confirm bucket delete modal end -->
   
-    <!-- new task modal start -->
-    <div *ngIf="showNewBucketTaskForm" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+    <!-- new bucket task modal start -->
+    <div *ngIf="showNewBucketTaskForm" class="bucket-task-modal">
       <div class="relative w-auto my-6 mx-auto max-w-6xl">
         <!--content-->
         <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
@@ -193,40 +193,48 @@
             <h3 class="text-3xl font-semibold">
               Add new bucket task
             </h3>
-            <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="exitNewBucketTaskForm()">
+            <button class="close-modal" (click)="exitNewBucketTaskForm()">
               <span class="text-black">
                 ×
               </span>
             </button>
           </div>
           <!--body-->
-          <form #bucketTaskNewForm="ngForm" [formGroup]="addNewBucketTaskFormGroup" class="mx-10 my-5" (ngSubmit)="onSubmitNewBucketTask(bucketTaskNewForm.value)">
+          <form #bucketTaskNewForm="ngForm" [formGroup]="bucketTaskFormGroup" class="mx-10 my-5" (ngSubmit)="onSubmitBucketTask(bucketTaskNewForm.value)">
             <div class="mb-6">
               <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-              <input type="text" id="name" name="name" minlength="2" maxlength="15" formControlName="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket name e.x. Office">
+              <input type="text" id="name" name="name" minlength="2" maxlength="15" formControlName="name" class="bucket-task-input" placeholder="Type in bucket name e.x. Office">
             </div>
             <div class="mb-6">
               <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-              <input type="text" id="description" name="description" maxlength="20" formControlName="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket description, e.x. Organize the office errands">
+              <input type="text" id="description" name="description" maxlength="20" formControlName="description" class="bucket-task-input" placeholder="Type in bucket description, e.x. Organize the office errands">
             </div>
             <div class="mb-6">
                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">State</label>
-                <select id="bucketTaskState" name="bucketTaskState" formControlName="bucketTaskState" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                  <option>To do</option>
-                  <option>In progress</option>
-                  <option>Done</option>
-                  <option>Cancelled</option>
+                <select id="bucketTaskState" name="bucketTaskState" formControlName="bucketTaskState" class="bucket-task-input">
+                  <option *ngFor="let state of bucketTaskStates" [value]="state.name">{{ state.name }}</option>
                 </select>      
             </div>
               <div class="mb-6">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Priority</label>
-                <select id="bucketTaskPriority" name="bucketTaskPriority" formControlName="bucketTaskPriority" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option>Low</option>
-                    <option>Medium</option>
-                    <option>High</option>
+                <select id="bucketTaskPriority" name="bucketTaskPriority" formControlName="bucketTaskPriority" class="bucket-task-input">
+                  <option *ngFor="let priority of bucketTaskPriorities" [value]="priority.name">{{ priority.name }}</option>
                 </select>
             </div>
-            <button type="submit" [disabled]="!bucketTaskNewForm.valid" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            <div class="mb-6">
+              <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Assignee</label>
+              <input type="text" id="assignee" name="assignee" formControlName="assignee" 
+              class="search-icon bucket-task-input" 
+              placeholder="Search" autocomplete="off" readonly
+              (click)="toggleShowAssignees()"           
+              >
+              <div class="assignee-list" *ngIf="showAssignees">
+                <ul class="cursor-pointer">
+                  <li *ngFor="let assignee of assignees" (click)="selectAssignee(assignee)">{{ assignee.name }}</li>
+                </ul>
+              </div>
+            </div>
+            <button type="submit" [disabled]="!bucketTaskNewForm.valid" class="bucket-task-submit">
               Create new bucket task
             </button>
           </form>
@@ -239,10 +247,10 @@
         </div>
       </div>
     </div>
-    <!-- new task modal end -->
+    <!-- new bucket task modal end -->
   
   <!-- edit task modal start -->
-  <div *ngIf="showEditBucketTaskForm" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+  <div *ngIf="showEditBucketTaskForm" class="bucket-task-modal">
     <div class="relative w-auto my-6 mx-auto max-w-6xl">
       <!--content-->
       <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
@@ -251,44 +259,52 @@
           <h3 class="text-3xl font-semibold">
             Edit bucket task
           </h3>
-          <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="exitEditBucketTaskForm()">
+          <button class="close-modal" (click)="exitEditBucketTaskForm()">
             <span class="text-black">
               ×
             </span>
           </button>
         </div>
         <!--body-->
-        <form #bucketTaskEditForm="ngForm" [formGroup]="editNewBucketTaskFormGroup" class="mx-10 my-5" (ngSubmit)="onSubmitEditBucketTask(bucketTaskEditForm.value)">
+        <form #bucketTaskEditForm="ngForm" [formGroup]="bucketTaskFormGroup" class="mx-10 my-5" (ngSubmit)="onSubmitEditBucketTask(bucketTaskEditForm.value)">
           <div class="mb-6">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-            <input type="text" id="name" name="name" formControlName="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket name e.x. Office">
+            <input type="text" id="name" name="name" formControlName="name" class="bucket-task-input" placeholder="Type in bucket name e.x. Office">
           </div>
           <div class="mb-6">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-            <input type="text" id="description" name="description" formControlName="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket description, e.x. Organize the office errands">
+            <input type="text" id="description" name="description" formControlName="description" class="bucket-task-input" placeholder="Type in bucket description, e.x. Organize the office errands">
           </div>
           <div class="mb-6">
               <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">State</label>
-              <select id="bucketTaskState" name="bucketTaskState" formControlName="bucketTaskState" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option>To do</option>
-                <option>In progress</option>
-                <option>Done</option>
-                <option>Cancelled</option>
+              <select id="bucketTaskState" name="bucketTaskState" formControlName="bucketTaskState" class="bucket-task-input">
+                <option *ngFor="let state of bucketTaskStates" [value]="state.name">{{ state.name }}</option>
               </select>      
           </div>
-            <div class="mb-6">
-          <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Priority</label>
-              <select id="bucketTaskPriority" name="bucketTaskPriority" formControlName="bucketTaskPriority" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                  <option>Low</option>
-                  <option>Medium</option>
-                  <option>High</option>
-              </select>
+          <div class="mb-6">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Priority</label>
+            <select id="bucketTaskPriority" name="bucketTaskPriority" formControlName="bucketTaskPriority" class="bucket-task-input">
+                <option *ngFor="let priority of bucketTaskPriorities" [value]="priority.name">{{ priority.name }}</option>
+            </select>
+          </div>
+          <div class="mb-6">
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Assignee</label>
+            <input type="text" id="assignee" name="assignee" formControlName="assignee" 
+            class="search-icon bucket-task-input" 
+            placeholder="Search" autocomplete="off" readonly         
+            (click)="toggleShowAssignees()"          
+            >
+            <div class="assignee-list" *ngIf="showAssignees">
+              <ul class="cursor-pointer">
+                <li *ngFor="let assignee of assignees" (click)="selectAssignee(assignee)">{{ assignee.name }}</li>
+              </ul>
+            </div>
           </div>
           <div class="flex gap-4">
             <button type="button" (click)="popDeleteBucketTaskConfirmationModal()" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
               Delete task
             </button>
-            <button type="submit" [disabled]="!bucketTaskEditForm.valid" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            <button type="submit" [disabled]="!bucketTaskEditForm.valid" class="bucket-task-submit">
               Save changes
             </button>
           </div>
@@ -305,7 +321,7 @@
   <!-- edit task modal end -->
   
   <!-- confirm edit bucket task modal start -->
-  <div *ngIf="bucketTaskEditConfirmationModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+  <div *ngIf="bucketTaskEditConfirmationModal" class="bucket-task-modal">
     <div class="relative w-auto my-6 mx-auto max-w-6xl">
       <!--content-->
       <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
@@ -314,7 +330,7 @@
           <h3 class="text-3xl font-semibold">
             Confirm edit
           </h3>
-          <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="exitEditBucketTaskConfirmationModal()">
+          <button class="close-modal" (click)="exitEditBucketTaskConfirmationModal()">
             <span class="text-black">
               ×
             </span>
@@ -338,7 +354,7 @@
   <!-- confirm edit bucket task modal end -->
   
   <!-- delete bucket task modal start -->
-  <div *ngIf="bucketTaskDeleteConfirmationModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+  <div *ngIf="bucketTaskDeleteConfirmationModal" class="bucket-task-modal">
     <div class="relative w-auto my-6 mx-auto max-w-6xl">
       <!--content-->
       <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
@@ -347,7 +363,7 @@
           <h3 class="text-3xl font-semibold">
             Confirm delete
           </h3>
-          <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="exitDeleteBucketTaskConfirmationModal()">
+          <button class="close-modal" (click)="exitDeleteBucketTaskConfirmationModal()">
             <span class="text-black">
               ×
             </span>
@@ -362,7 +378,7 @@
             <button (click)="removeBucketTask(currentBucketTask.id)" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
               Yes
             </button>
-            <button (click)="exitDeleteBucketTaskConfirmationModal()" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            <button (click)="exitDeleteBucketTaskConfirmationModal()" class="bucket-task-submit">
               Cancel
             </button>
           </div>
@@ -373,7 +389,7 @@
   <!-- delete bucket task modal end -->
   
   <!-- max tasks reached bucket task modal start -->
-  <div *ngIf="MaxAmountOfTasksReachedWarningModal" class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+  <div *ngIf="MaxAmountOfTasksReachedWarningModal" class="bucket-task-modal">
     <div class="relative w-auto my-6 mx-auto max-w-6xl">
       <!--content-->
       <div class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
@@ -382,7 +398,7 @@
           <h3 class="text-3xl font-semibold">
             Warning!
           </h3>
-          <button class="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none" (click)="exitNewBucketTaskMaxAmountOfTasksReachedWarning()">
+          <button class="close-modal" (click)="exitNewBucketTaskMaxAmountOfTasksReachedWarning()">
             <span class="text-black">
               ×
             </span>

@@ -3,10 +3,10 @@ import { BucketService } from '../services/bucket-service';
 import { BucketTaskService } from '../services/buckettask-service';
 import { environment } from 'src/environments/environment';
 import { Bucket } from '../models/bucket.model';
-import { BucketTask } from '../models/bucketTask.model';
+import { BucketTask } from '../models/bucket-task.model';
 import { ToastrService } from 'ngx-toastr';
-import { BucketTaskState } from '../models/bucketTaskState.model';
-import { BucketTaskPriority } from '../models/bucketTaskPriority.model';
+import { BucketTaskState } from '../models/bucket-task-state.model';
+import { BucketTaskPriority } from '../models/bucket-task-priority.model';
 import { DictionaryService } from '../services/dictionary.service';
 
 @Component({
@@ -62,7 +62,7 @@ export class BucketsComponent implements OnInit {
         this.bucketTasksCancelled = this.bucketTasks.filter(element => element.bucketTaskStateId === 4);
       },
       (error: any) => {
-        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
+        this.toastr.error("Request failed")
       }
     );
   }
@@ -73,7 +73,7 @@ export class BucketsComponent implements OnInit {
         this.bucketTaskStates = response;
       },
       (error: any) => {
-        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
+        this.toastr.error("Request failed")
       }
     );
   }
@@ -84,7 +84,7 @@ export class BucketsComponent implements OnInit {
         this.bucketTaskPriorities = response;
       },
       (error: any) => {
-        this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
+        this.toastr.error("Request failed")
       }
     );
   }
@@ -93,11 +93,11 @@ export class BucketsComponent implements OnInit {
     this.bucketService.deleteBucket(environment.bucketEndpoint+id).subscribe(
         (response: any) => {
           this.showModal = false;
-          this.toastr.success("Bucket " +this.buckets.find(b => b.id === id).name + " deleted successfully.");
+          this.toastr.success(`Bucket ${this.buckets.find(b => b.id === id).name} deleted successfully.`);
           this.refreshBucketAndBucketsComponents();
         },
         (error: any) => {
-          this.toastr.error("Request failed. Check console logs and network tab to identify the issue." + error.name)
+          this.toastr.error("Request failed")
         }
     );
   }
