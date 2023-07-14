@@ -150,12 +150,12 @@ export class BucketComponent implements OnInit {
     this.showAssignees = false;
   }
 
-  findAssigneeById(assignees: Assignee[], assigneeIdKey: number): string {
-    return assignees.find(a => a.id == assigneeIdKey).name;
+  findAssigneeById(assignees: Assignee[], id: number): string {
+    return assignees.find(a => a.id == id).name;
   }
 
-  findAssigneeByName(assignees: Assignee[], assigneeNameKey: string): number {
-    return assignees.find(a => a.name === assigneeNameKey).id;
+  findAssigneeByName(assignees: Assignee[], name: string): number {
+    return assignees.find(a => a.name === name).id;
   }
 
   newBucketTaskToCreate: BucketTask;
