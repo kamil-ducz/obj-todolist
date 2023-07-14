@@ -12,9 +12,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BucketEditComponent } from './buckets/bucket-edit/bucket-edit.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ApiInterceptor } from './interceptors/api.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 
@@ -35,10 +32,7 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
-    MatFormFieldModule,
-    MatInputModule, 
-    MatAutocompleteModule   
+    ToastrModule.forRoot()
   ],
   providers: [
     // { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
