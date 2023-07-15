@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { BucketService } from '../services/bucket-service';
-import { Bucket } from '../models/bucket.model';
-import { BucketTaskService } from '../services/buckettask-service';
+import { BucketService } from '../../services/bucket-service';
+import { Bucket } from '../../models/bucket.model';
+import { BucketTaskService } from '../../services/buckettask-service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BucketTask } from '../models/bucket-task.model';
+import { BucketTask } from '../../models/bucket-task.model';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
-import { DictionaryService } from '../services/dictionary.service';
-import { BucketTaskState } from '../models/bucket-task-state.model';
-import { BucketTaskPriority } from '../models/bucket-task-priority.model';
-import { BucketCategory } from '../models/bucket-category.model';
-import { BucketColor } from '../models/bucket-color.model';
-import { Assignee } from '../models/assignee.model';
-import { AssigneeService } from '../services/assignee-service';
+import { DictionaryService } from '../../services/dictionary.service';
+import { BucketTaskState } from '../../models/bucket-task-state.model';
+import { BucketTaskPriority } from '../../models/bucket-task-priority.model';
+import { BucketCategory } from '../../models/bucket-category.model';
+import { BucketColor } from '../../models/bucket-color.model';
+import { Assignee } from '../../models/assignee.model';
+import { AssigneeService } from '../../services/assignee-service';
 
 @Component({
   selector: 'app-bucket',
