@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { BucketComponent } from './bucket/bucket.component';
+import { BucketComponent } from './buckets/bucket/bucket.component';
 import { BucketsComponent } from './buckets/buckets.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AssigneesComponent } from './assignees/assignees.component';
