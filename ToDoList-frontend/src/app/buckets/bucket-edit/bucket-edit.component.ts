@@ -36,10 +36,16 @@ export class BucketEditComponent implements OnInit {
   }
 
   async refreshComponent() {
-    await this.loadCurrentBucket();
-    await this.loadBucketCategories();
-    await this.loadBucketColors();
-    await this.initializeEditForm();
+    const [currentBucket, bucketCategories, bucketColors] = await Promise.all([
+      this.loadCurrentBucket(),
+      this.loadBucketCategories(),
+      this.loadBucketColors()
+    ]);  
+    this.currentBucket = currentBucket;
+    this.bucketCategories = bucketCategories;
+    this.bucketColors = bucketColors;
+  
+    this.initializeEditForm();
   }
 
   async loadCurrentBucket(): Promise<Bucket> {
@@ -51,30 +57,25 @@ export class BucketEditComponent implements OnInit {
       });
   }
 
-  loadBucketCategories() {
+  async loadBucketCategories() {
+    return new Promise<BucketCategory[]>((resolve) => {
       this.dictionaryService.getBucketCategories(environment.bucketCategoryEndpoint).subscribe(
         (response: BucketCategory[]) => {
-          this.bucketCategories = response;
-        },
-        (error: any) => {
-          this.toastr.error("Request failed");
-        }
-      );
+          resolve(response);
+        });
+    });
   }
 
-  loadBucketColors() {
+  async loadBucketColors() {
+    return new Promise<BucketColor[]>((resolve) => {
       this.dictionaryService.getBucketColors(environment.bucketColorEndpoint).subscribe(
         (response: BucketColor[]) => {
-          this.bucketColors = response;
-        },
-        (error: any) => {
-          this.toastr.error("Request failed");
-        }
-      );
+          resolve(response);
+        });
+    });
   }
 
   async initializeEditForm() {
-    this.currentBucket = await this.loadCurrentBucket();
     const bucketCategory = this.bucketCategories.find(bc => bc.id === this.currentBucket.bucketCategoryId).name;
     const bucketColor = this.bucketColors.find(bcol => bcol.id === this.currentBucket.bucketColorId).name;
 
