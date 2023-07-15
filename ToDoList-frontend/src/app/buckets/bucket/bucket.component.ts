@@ -49,6 +49,7 @@ export class BucketComponent implements OnInit {
   bucketTasksCancelled: BucketTask[];
 
   assignees: Assignee[];
+  filteredAssignees: Assignee[];
   showAssignees = false;
   assignee = new FormControl();
 
@@ -148,6 +149,16 @@ export class BucketComponent implements OnInit {
   selectAssignee(assignee: Assignee) {
     this.bucketTaskFormGroup.patchValue({ assignee:assignee.name });
     this.showAssignees = false;
+  }
+
+  filterAssignees(value: string) {
+    this.filteredAssignees = this.assignees.filter(assignee => assignee.name.toLowerCase().includes(value.toLowerCase()));
+  }
+
+  onAssigneeInputChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const value = inputElement.value;
+    this.filterAssignees(value);
   }
 
   findAssigneeById(assignees: Assignee[], id: number): string {

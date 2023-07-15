@@ -225,12 +225,13 @@
               <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Assignee</label>
               <input type="text" id="assignee" name="assignee" formControlName="assignee" 
               class="search-icon bucket-task-input" 
-              placeholder="Search" autocomplete="off" readonly
-              (click)="toggleShowAssignees()"           
+              placeholder="Search" autocomplete="off"
+              (click)="toggleShowAssignees()"
+              (input)="onAssigneeInputChange($event)"     
               >
               <div class="assignee-list" *ngIf="showAssignees">
                 <ul class="cursor-pointer">
-                  <li *ngFor="let assignee of assignees" (click)="selectAssignee(assignee)">{{ assignee.name }}</li>
+                  <li *ngFor="let assignee of filteredAssignees" (click)="selectAssignee(assignee)">{{ assignee.name }}</li>
                 </ul>
               </div>
             </div>
@@ -291,12 +292,13 @@
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Assignee</label>
             <input type="text" id="assignee" name="assignee" formControlName="assignee" 
             class="search-icon bucket-task-input" 
-            placeholder="Search" autocomplete="off" readonly         
-            (click)="toggleShowAssignees()"          
+            placeholder="Search" autocomplete="off"         
+            (click)="toggleShowAssignees()"
+            (input)="onAssigneeInputChange($event)"          
             >
             <div class="assignee-list" *ngIf="showAssignees">
               <ul class="cursor-pointer">
-                <li *ngFor="let assignee of assignees" (click)="selectAssignee(assignee)">{{ assignee.name }}</li>
+                <li *ngFor="let assignee of filteredAssignees" (click)="selectAssignee(assignee)">{{ assignee.name }}</li>
               </ul>
             </div>
           </div>
