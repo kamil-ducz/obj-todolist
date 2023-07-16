@@ -143,6 +143,7 @@ export class BucketComponent implements OnInit {
   }
 
   toggleShowAssignees() {
+    this.filteredAssignees = this.assignees;
     this.showAssignees = !this.showAssignees;
   }
 
