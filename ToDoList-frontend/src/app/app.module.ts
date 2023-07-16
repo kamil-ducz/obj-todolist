@@ -35,8 +35,8 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     ToastrModule.forRoot()
   ],
   providers: [
-    // { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
-    // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

@@ -124,9 +124,6 @@ export class BucketEditComponent implements OnInit {
     this.bucketService.putBucket(environment.bucketEndpoint + this.currentBucketId, this.currentBucket).subscribe(
       (response: Bucket) => {
         this.toastr.success(`Bucket ${response.name} edit successfull.`);
-      },
-      (error: any) => {
-        this.toastr.error("Request failed.")
       }
     );
   }

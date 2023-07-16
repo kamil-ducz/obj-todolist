@@ -46,8 +46,6 @@ export class BucketsComponent implements OnInit {
     this.bucketService.getBuckets(environment.bucketEndpoint).subscribe(
       (response: any) => {
         this.buckets = response;
-      },
-      (error: any) => {
       }
     );
   }
@@ -60,9 +58,6 @@ export class BucketsComponent implements OnInit {
         this.bucketTasksInProgress = this.bucketTasks.filter(element => element.bucketTaskStateId === 2);
         this.bucketTasksDone = this.bucketTasks.filter(element => element.bucketTaskStateId === 3);
         this.bucketTasksCancelled = this.bucketTasks.filter(element => element.bucketTaskStateId === 4);
-      },
-      (error: any) => {
-        this.toastr.error("Request failed")
       }
     );
   }
@@ -71,9 +66,6 @@ export class BucketsComponent implements OnInit {
     this.dictionaryService.getBucketTaskStates(environment.bucketTaskStatesEndpoint).subscribe(
       (response: BucketTaskState[]) => {
         this.bucketTaskStates = response;
-      },
-      (error: any) => {
-        this.toastr.error("Request failed")
       }
     );
   }
@@ -82,9 +74,6 @@ export class BucketsComponent implements OnInit {
     this.dictionaryService.getBucketTaskPriorities(environment.bucketTaskPrioritiesEndoint).subscribe(
       (response: BucketTaskPriority[]) => {
         this.bucketTaskPriorities = response;
-      },
-      (error: any) => {
-        this.toastr.error("Request failed")
       }
     );
   }
@@ -95,9 +84,6 @@ export class BucketsComponent implements OnInit {
           this.showModal = false;
           this.toastr.success(`Bucket ${this.buckets.find(b => b.id === id).name} deleted successfully.`);
           this.refreshBucketAndBucketsComponents();
-        },
-        (error: any) => {
-          this.toastr.error("Request failed")
         }
     );
   }
