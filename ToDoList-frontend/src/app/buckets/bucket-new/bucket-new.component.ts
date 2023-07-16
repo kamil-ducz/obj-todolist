@@ -49,9 +49,6 @@ export class BucketNewComponent implements OnInit {
     this.bucketService.postBucket(environment.bucketEndpoint, newBucket).subscribe(
       (response: any) => {
         this.toastr.success(`Bucket ${newBucket.name} added successfully.`);
-      },
-      (error: any) => {
-        this.toastr.error("Request failed.")
       }
     );
   }

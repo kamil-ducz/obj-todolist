@@ -4,19 +4,18 @@
 
 export const environment = {
   production: false,
-  localhostUrl: 'https://localhost:7247/api/',
 
-  assigneeEndpoint: 'https://localhost:7247/api/Assignee',
+  assigneeEndpoint: 'Assignee/',
   
-  bucketEndpoint: 'https://localhost:7247/api/Bucket/',
-  bucketColorEndpoint: 'https://localhost:7247/api/Dictionary/bucketColors/all',
-  bucketCategoryEndpoint: 'https://localhost:7247/api/Dictionary/bucketCategories/all',
+  bucketEndpoint: 'Bucket/',
+  bucketColorEndpoint: 'Dictionary/bucketColors/all/',
+  bucketCategoryEndpoint: 'Dictionary/bucketCategories/all/',
 
-  bucketTaskEndpoint: 'https://localhost:7247/api/BucketTask/',
-  bucketTaskStatesEndpoint: 'https://localhost:7247/api/Dictionary/bucketTaskStates/all',
-  bucketTaskPrioritiesEndoint: 'https://localhost:7247/api/Dictionary/bucketTaskPriorities/all',
+  bucketTaskEndpoint: 'BucketTask/',
+  bucketTaskStatesEndpoint: 'Dictionary/bucketTaskStates/all/',
+  bucketTaskPrioritiesEndoint: 'Dictionary/bucketTaskPriorities/all/',
 
-  buckeTasksForBucketEndpoint: 'https://localhost:7247/api/Bucket/buckettask/',
+  buckeTasksForBucketEndpoint: 'Bucket/buckettask/',
 };
 
 /*

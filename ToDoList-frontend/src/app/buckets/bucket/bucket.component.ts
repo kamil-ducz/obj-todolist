@@ -76,9 +76,6 @@ export class BucketComponent implements OnInit {
       (response: Bucket) => {
         this.currentBucket = response;
         this.currentBucketCategoryName = this.bucketCategories.find(bcat => bcat.id === this.currentBucket.bucketCategoryId).name;
-      },
-      (error: any) => {
-        console.error(error);
       }
     );
   }
@@ -87,9 +84,6 @@ export class BucketComponent implements OnInit {
     this.dictionaryService.getBucketCategories(environment.bucketCategoryEndpoint).subscribe(
       (response: BucketCategory[]) => {
         this.bucketCategories = response;
-      },
-      (error: any) => {
-        this.toastr.error("Request failed")
       }
     );
   }
@@ -102,9 +96,6 @@ export class BucketComponent implements OnInit {
         this.bucketTasksInProgress = this.currentBucketBucketTasks.filter(element => element.bucketTaskStateId == 2);
         this.bucketTasksDone = this.currentBucketBucketTasks.filter(element => element.bucketTaskStateId == 3);
         this.bucketTasksCancelled = this.currentBucketBucketTasks.filter(element => element.bucketTaskStateId == 4);
-      },
-      (error: any) => {
-        console.error(error);
       }
     );
   }
@@ -113,9 +104,6 @@ export class BucketComponent implements OnInit {
     this.dictionaryService.getBucketTaskStates(environment.bucketTaskStatesEndpoint).subscribe(
       (response: BucketTaskState[]) => {
         this.bucketTaskStates = response;
-      },
-      (error: any) => {
-        this.toastr.error("Request failed")
       }
     );
   }
@@ -124,9 +112,6 @@ export class BucketComponent implements OnInit {
     this.dictionaryService.getBucketTaskPriorities(environment.bucketTaskPrioritiesEndoint).subscribe(
       (response: BucketTaskPriority[]) => {
         this.bucketTaskPriorities = response;
-      },
-      (error: any) => {
-        this.toastr.error("Request failed")
       }
     );
   }
@@ -135,9 +120,6 @@ export class BucketComponent implements OnInit {
     this.assigneeService.getAssignees(environment.assigneeEndpoint).subscribe(
       (response: Assignee[]) => {
         this.assignees = response;
-      },
-      (error: any) => {
-        this.toastr.error("Request failed")
       }
     );
   }
@@ -225,9 +207,6 @@ export class BucketComponent implements OnInit {
       this.bucketTaskService.postBucketTask(environment.bucketTaskEndpoint, this.currentBucketTask).subscribe(
         (response) => {
           this.toastr.success(`Bucket task ${this.currentBucketTask.name} created successfully`);
-        },
-        (error: any) => {
-          this.toastr.error("Request failed")
         }
       );
     }
@@ -250,9 +229,6 @@ export class BucketComponent implements OnInit {
     this.bucketTaskService.putBucketTask(environment.bucketTaskEndpoint+this.bucketTaskForEditSaveId, this.currentBucketTask).subscribe(
       (response: any) => {
         this.toastr.success(`Bucket task ${this.currentBucketTask.name} changes saved successfully.`);
-      },
-      (error: any) => {
-        console.error(error);
       }
     );
   }
@@ -262,9 +238,6 @@ export class BucketComponent implements OnInit {
         (response: any) => {
           this.toastr.success(`Bucket ${this.currentBucket.name} deleted successfully.`);
           this.router.navigate(['/buckets']);
-        },
-        (error: any) => {
-          this.toastr.error("Request failed.")
         }
     );
   }
@@ -275,9 +248,6 @@ export class BucketComponent implements OnInit {
         this.fetchBucketTasks();
         this.toastr.success(`Bucket task ${this.currentBucketTask.name} deleted successfully.`);
         this.exitDeleteBucketTaskConfirmationModal();
-      },
-      (error: any) => {
-        this.toastr.error("Request failed.")
       }
     );
   }

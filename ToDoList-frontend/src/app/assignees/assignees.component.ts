@@ -14,12 +14,9 @@ export class AssigneesComponent implements OnInit {
   assigness: any;
 
   ngOnInit(): void {
-    this.assigneeService.getAssignees(environment.localhostUrl).subscribe(
+    this.assigneeService.getAssignees(environment.assigneeEndpoint).subscribe(
       (response: any) => {
         this.assigness = response;
-      },
-      (error: any) => {
-        console.error(error);
       }
     );
   }
