@@ -152,6 +152,23 @@ export class BucketComponent implements OnInit {
     return assignees.find(a => a.name === name).id;
   }
 
+  incrementBucketTaskState(bucketTask: BucketTask) {
+    event.stopPropagation();
+    const incrementedBucketTask = bucketTask;
+    if (incrementedBucketTask.bucketTaskStateId === 4) {
+      incrementedBucketTask.bucketTaskStateId = 1;
+    }
+    else {
+      incrementedBucketTask.bucketTaskStateId++;
+    }
+    this.bucketTaskService.putBucketTask(environment.bucketTaskEndpoint + bucketTask.id, incrementedBucketTask).subscribe(
+      () => {
+        this.toastr.success("Increased bucket task state. Congratulations on good work friend!");
+        this.refreshCurrentBucketBucketTasksComponents();
+      }
+    )
+  }
+
   newBucketTaskToCreate: BucketTask;
   addNewBucketTaskFormGroup: FormGroup;
   editNewBucketTaskFormGroup: FormGroup;
