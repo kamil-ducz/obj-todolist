@@ -14,6 +14,7 @@ import { BucketCategory } from '../../models/bucket-category.model';
 import { BucketColor } from '../../models/bucket-color.model';
 import { Assignee } from '../../models/assignee.model';
 import { AssigneeService } from '../../services/assignee-service';
+import { empty } from 'rxjs';
 
 @Component({
   selector: 'app-bucket',
@@ -145,11 +146,21 @@ export class BucketComponent implements OnInit {
   }
 
   findAssigneeById(assignees: Assignee[], id: number): string {
-    return assignees.find(a => a.id == id).name;
+    if (id) {
+      return assignees.find(a => a.id == id).name;
+    }
+    else {
+      return null;
+    }
   }
 
   findAssigneeByName(assignees: Assignee[], name: string): number {
-    return assignees.find(a => a.name === name).id;
+    if (name) {
+      return assignees.find(a => a.name === name).id;
+    }
+    else {
+      return null;
+    }
   }
 
   incrementBucketTaskState(bucketTask: BucketTask) {
@@ -189,9 +200,7 @@ export class BucketComponent implements OnInit {
       bucketTaskPriority: new FormControl('', [
         Validators.required,
       ]),
-      assignee: new FormControl('', [
-        Validators.required,
-      ])
+      assignee: new FormControl('')
     });
 
     if (this.showEditBucketTaskForm === true)
@@ -239,7 +248,7 @@ export class BucketComponent implements OnInit {
     this.currentBucketTask.bucketId = this.currentBucketId;
     this.currentBucketTask.bucketTaskStateId = this.bucketTaskStates.find(bts => bts.name === newBucketTask.bucketTaskState).id;
     this.currentBucketTask.bucketTaskPriorityId = this.bucketTaskPriorities.find(btps => btps.name === newBucketTask.bucketTaskPriority).id;
-    this.currentBucketTask.assigneeId = this.assignees.find(a => a.name === this.bucketTaskFormGroup.value.assignee).id;
+    this.currentBucketTask.assigneeId = this.findAssigneeByName(this.assignees, this.bucketTaskFormGroup.value.assignee);
     this.currentBucketTask.bucketTaskState = null;
     this.currentBucketTask.bucketTaskPriority = null;
 

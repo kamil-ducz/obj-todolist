@@ -6,5 +6,5 @@ public record BucketUpsertTaskDto(
     int BucketTaskStateId,
     int BucketTaskPriorityId,
     int BucketId,
-    int AssigneeId
+    int? AssigneeId
     );
