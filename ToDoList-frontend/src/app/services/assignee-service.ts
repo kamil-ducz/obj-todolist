@@ -17,19 +17,19 @@ export class AssigneeService {
         return this.httpClient.get<Assignee[]>(url);
     }
 
-    getAssignee(url) {
-        return this.httpClient.get(url);
+    getAssignee(url): Observable<Assignee> {
+        return this.httpClient.get<Assignee>(url);
     }
 
-    postAssignee(url) {
-        return this.httpClient.post(url, null);
+    postAssignee(url, assignee: Assignee): Observable<Assignee> {
+        return this.httpClient.post<Assignee>(url, assignee);
     }
 
-    putAssignee(url) {
-        return this.httpClient.put(url, null);
+    putAssignee(url): Observable<Assignee> {
+        return this.httpClient.put<Assignee>(url, null);
     }
     
-    deleteAssignee(url) {
-        return this.httpClient.delete(url);
+    deleteAssignee(url): Observable<Assignee> {
+        return this.httpClient.delete<Assignee>(url);
     }  
 }
