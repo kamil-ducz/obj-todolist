@@ -7,7 +7,7 @@ import { FormControl, FormGroup, UntypedFormBuilder, Validators } from '@angular
 import { BucketTask } from '../../models/bucket-task.model';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
-import { DictionaryService } from '../../services/dictionary.service';
+import { DictionaryService } from '../../services/dictionary-service';
 import { BucketTaskState } from '../../models/bucket-task-state.model';
 import { BucketTaskPriority } from '../../models/bucket-task-priority.model';
 import { BucketCategory } from '../../models/bucket-category.model';

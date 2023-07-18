@@ -7,7 +7,7 @@ import { BucketTask } from '../models/bucket-task.model';
 import { ToastrService } from 'ngx-toastr';
 import { BucketTaskState } from '../models/bucket-task-state.model';
 import { BucketTaskPriority } from '../models/bucket-task-priority.model';
-import { DictionaryService } from '../services/dictionary.service';
+import { DictionaryService } from '../services/dictionary-service';
 
 @Component({
   selector: 'app-buckets',
