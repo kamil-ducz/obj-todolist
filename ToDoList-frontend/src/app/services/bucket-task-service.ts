@@ -13,20 +13,20 @@ export class BucketTaskService {
         private httpClient: HttpClient
     ) {}
 
-    getBucketTasks(url): Observable<BucketTask> {
-        return this.httpClient.get<BucketTask>(url);
+    getBucketTasks(url): Observable<BucketTask[]> {
+        return this.httpClient.get<BucketTask[]>(url);
     }
 
     getBucketTask(url): Observable<BucketTask> {
         return this.httpClient.get<BucketTask>(url);
     }
 
-    postBucketTask(url, data): Observable<BucketTask> {
-        return this.httpClient.post<BucketTask>(url, data);
+    postBucketTask(url, newBucketTask): Observable<BucketTask> {
+        return this.httpClient.post<BucketTask>(url, newBucketTask);
     }
 
-    putBucketTask(url, data: BucketTask): Observable<BucketTask> {
-        return this.httpClient.put<BucketTask>(url, data);
+    putBucketTask(url, updatedBucketTask): Observable<BucketTask> {
+        return this.httpClient.put<BucketTask>(url, updatedBucketTask);
     }
 
     deleteBucketTask(url): Observable<BucketTask> {

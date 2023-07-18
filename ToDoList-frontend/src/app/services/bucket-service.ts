@@ -27,12 +27,12 @@ export class BucketService {
       return this.httpClient.get<BucketTask[]>(url);
     }
 
-    postBucket(url, newBucketData): Observable<Bucket> {
-      return this.httpClient.post<Bucket>(url, newBucketData);
+    postBucket(url, newBucket): Observable<Bucket> {
+      return this.httpClient.post<Bucket>(url, newBucket);
     }
 
-    putBucket(url, updateBucketData): Observable<any> {
-        return this.httpClient.put<any>(url, updateBucketData);
+    putBucket(url, updatedBucket): Observable<any> {
+        return this.httpClient.put<any>(url, updatedBucket);
     }
 
     deleteBucket(url): Observable<Bucket> {
