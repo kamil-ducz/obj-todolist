@@ -62,8 +62,8 @@ export class BucketComponent implements OnInit {
     this.refreshCurrentBucketBucketTasksComponents();
   }
   
-  refreshCurrentBucketBucketTasksComponents() {
-    this.fetchBucketCategories();
+  async refreshCurrentBucketBucketTasksComponents() {
+    await this.fetchBucketCategories();
     this.fetchCurrentBucket();
     this.fetchBucketTasks();
     this.fetchBucketTasksStates();
@@ -80,7 +80,7 @@ export class BucketComponent implements OnInit {
     );
   }
 
-  fetchBucketCategories() {
+  async fetchBucketCategories() {
     this.dictionaryService.getBucketCategories(environment.bucketCategoryEndpoint).subscribe(
       (response: BucketCategory[]) => {
         this.bucketCategories = response;
