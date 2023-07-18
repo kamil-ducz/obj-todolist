@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BucketService } from '../../services/bucket-service';
 import { Bucket } from '../../models/bucket.model';
-import { BucketTaskService } from '../../services/buckettask-service';
+import { BucketTaskService } from '../../services/bucket-task-service';
 import { FormControl, FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { BucketTask } from '../../models/bucket-task.model';
 import { environment } from 'src/environments/environment';

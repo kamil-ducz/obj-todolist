@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BucketService } from '../services/bucket-service';
-import { BucketTaskService } from '../services/buckettask-service';
+import { BucketTaskService } from '../services/bucket-task-service';
 import { environment } from 'src/environments/environment';
 import { Bucket } from '../models/bucket.model';
 import { BucketTask } from '../models/bucket-task.model';
