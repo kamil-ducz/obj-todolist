@@ -23,8 +23,8 @@ export class BucketService {
         return this.httpClient.get<Bucket>(url);
     }
 
-    getBucketTasks(url): Observable<BucketTask> {
-      return this.httpClient.get<BucketTask>(url);
+    getBucketTasks(url): Observable<BucketTask[]> {
+      return this.httpClient.get<BucketTask[]>(url);
     }
 
     postBucket(url, newBucketData): Observable<Bucket> {

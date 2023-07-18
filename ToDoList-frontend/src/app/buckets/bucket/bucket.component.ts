@@ -90,7 +90,7 @@ export class BucketComponent implements OnInit {
 
   fetchBucketTasks() {
     this.bucketService.getBucketTasks(environment.buckeTasksForBucketEndpoint+this.currentBucketId).subscribe(
-      (response: any) => {
+      (response: BucketTask[]) => {
         this.currentBucketBucketTasks = response;
         this.bucketTasksToDo = this.currentBucketBucketTasks.filter(element => element.bucketTaskStateId == 1);
         this.bucketTasksInProgress = this.currentBucketBucketTasks.filter(element => element.bucketTaskStateId == 2);
