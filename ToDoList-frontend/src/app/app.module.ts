@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { ApiInterceptor } from './interceptors/api.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     BucketsComponent,
     AssigneesComponent,
     BucketNewComponent,
-    BucketEditComponent
+    BucketEditComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
