@@ -31,8 +31,8 @@ export class BucketService {
       return this.httpClient.post<Bucket>(url, newBucketData);
     }
 
-    putBucket(url, data): Observable<any> {
-        return this.httpClient.put<any>(url, data);
+    putBucket(url, updateBucketData): Observable<any> {
+        return this.httpClient.put<any>(url, updateBucketData);
     }
 
     deleteBucket(url): Observable<Bucket> {
