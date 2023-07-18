@@ -14,7 +14,6 @@ import { BucketCategory } from '../../models/bucket-category.model';
 import { BucketColor } from '../../models/bucket-color.model';
 import { Assignee } from '../../models/assignee.model';
 import { AssigneeService } from '../../services/assignee-service';
-import { Observable, Subject, empty, map, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-bucket',
@@ -156,29 +155,28 @@ export class BucketComponent implements OnInit {
 
   async findAssigneeByName(assignees: Assignee[], name: string): Promise<number> {
     const foundAssignee = assignees.find(a => a.name === name);
-    if (!foundAssignee && name === '' || foundAssignee == null) {
+    if (!foundAssignee && name === '' || foundAssignee == null && name === '') {
       return null;
     }
     if (foundAssignee) {
         return assignees.find(a => a.name === name).id;
       }
     else {
-        await this.createNewAdHocAssignee(name);
-        return this.assignees.find(a => a.name === name).id;
+        const newAssigneeId = await this.createNewAdHocAssignee(name);
+        return newAssigneeId;
     }
   }
 
-  createNewAdHocAssignee(name:string): Promise<void> {
+  createNewAdHocAssignee(name:string): Promise<number> {
     var newAssignee: Assignee = {
       id: null,
       name: name
     }
-    return new Promise<void>((resolve) => {
+    return new Promise<number>((resolve) => {
       this.assigneeService.postAssignee(environment.assigneeEndpoint, newAssignee).subscribe(
-        () => {
+        (response: Assignee) => {
           this.toastr.success("Ad hoc assignee added: " + name);
-          this.fetchAssigness();
-          resolve();
+          resolve(response.id);
         },
       );
     });
