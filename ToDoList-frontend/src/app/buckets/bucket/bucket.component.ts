@@ -318,7 +318,8 @@ export class BucketComponent implements OnInit {
   }
 
   exitNewBucketTaskForm() {
-    this.showNewBucketTaskForm = !this.showNewBucketTaskForm;
+    this.showNewBucketTaskForm = false;
+    this.showAssignees = false;
     this.refreshCurrentBucketBucketTasksComponents();
   }
 
@@ -335,6 +336,7 @@ export class BucketComponent implements OnInit {
 
   exitEditBucketTaskForm() {
     this.showEditBucketTaskForm = false;
+    this.showAssignees = false;
     this.refreshCurrentBucketBucketTasksComponents();
   }
 
