@@ -127,8 +127,8 @@ describe('BucketService', () => {
 
   it('should insert bucket', () => {
     service.postBucket('mock/api/bucket', fakeBucket).subscribe(
-      (buckets: Bucket) => {
-        expect(buckets).toEqual(fakeBucket);
+      (bucket: Bucket) => {
+        expect(bucket).toEqual(fakeBucket);
       });
       const request = httpMock.expectOne('mock/api/bucket');
       expect (request.request.method).toBe('POST');
