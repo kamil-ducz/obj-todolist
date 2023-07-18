@@ -3,7 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BucketService } from '../../services/bucket-service';
 import { Bucket } from '../../models/bucket.model';
 import { BucketTaskService } from '../../services/buckettask-service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { BucketTask } from '../../models/bucket-task.model';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
@@ -14,7 +14,7 @@ import { BucketCategory } from '../../models/bucket-category.model';
 import { BucketColor } from '../../models/bucket-color.model';
 import { Assignee } from '../../models/assignee.model';
 import { AssigneeService } from '../../services/assignee-service';
-import { empty } from 'rxjs';
+import { Observable, Subject, empty, map, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-bucket',
@@ -154,13 +154,34 @@ export class BucketComponent implements OnInit {
     }
   }
 
-  findAssigneeByName(assignees: Assignee[], name: string): number {
-    if (name) {
-      return assignees.find(a => a.name === name).id;
-    }
-    else {
+  async findAssigneeByName(assignees: Assignee[], name: string): Promise<number> {
+    const foundAssignee = assignees.find(a => a.name === name);
+    if (!foundAssignee && name === '' || foundAssignee == null) {
       return null;
     }
+    if (foundAssignee) {
+        return assignees.find(a => a.name === name).id;
+      }
+    else {
+        await this.createNewAdHocAssignee(name);
+        return this.assignees.find(a => a.name === name).id;
+    }
+  }
+
+  createNewAdHocAssignee(name:string): Promise<void> {
+    var newAssignee: Assignee = {
+      id: null,
+      name: name
+    }
+    return new Promise<void>((resolve) => {
+      this.assigneeService.postAssignee(environment.assigneeEndpoint, newAssignee).subscribe(
+        () => {
+          this.toastr.success("Ad hoc assignee added: " + name);
+          this.fetchAssigness();
+          resolve();
+        },
+      );
+    });
   }
 
   incrementBucketTaskState(bucketTask: BucketTask) {
@@ -219,11 +240,12 @@ export class BucketComponent implements OnInit {
     }
   }
 
-  onSubmitBucketTask(newBucketTask: BucketTask) {
+  async onSubmitBucketTask(newBucketTask: BucketTask) {
     this.currentBucketTask = newBucketTask;
     this.currentBucketTask.bucketTaskStateId = this.bucketTaskStates.find(bs => bs.name === this.currentBucketTask.bucketTaskState).id;
     this.currentBucketTask.bucketTaskPriorityId = this.bucketTaskPriorities.find(bp => bp.name === this.currentBucketTask.bucketTaskPriority).id;
-    this.currentBucketTask.assigneeId = this.findAssigneeByName(this.assignees, this.bucketTaskFormGroup.value.assignee);
+    this.currentBucketTask.assigneeId = await this.findAssigneeByName(this.assignees, this.bucketTaskFormGroup.value.assignee);
+    console.log("this.currentBucketTask.assigneeId = " + this.currentBucketTask.assigneeId);
     this.currentBucketTask.bucketTaskState = null;
     this.currentBucketTask.bucketTaskPriority = null;
     this.currentBucketTask.bucketId = this.currentBucketId;    
@@ -243,12 +265,13 @@ export class BucketComponent implements OnInit {
     }
   }
 
-  onSubmitEditBucketTask(newBucketTask: BucketTask) {
+  async onSubmitEditBucketTask(newBucketTask: BucketTask) {
     this.currentBucketTask = this.bucketTaskFormGroup.value;
     this.currentBucketTask.bucketId = this.currentBucketId;
     this.currentBucketTask.bucketTaskStateId = this.bucketTaskStates.find(bts => bts.name === newBucketTask.bucketTaskState).id;
     this.currentBucketTask.bucketTaskPriorityId = this.bucketTaskPriorities.find(btps => btps.name === newBucketTask.bucketTaskPriority).id;
-    this.currentBucketTask.assigneeId = this.findAssigneeByName(this.assignees, this.bucketTaskFormGroup.value.assignee);
+    this.currentBucketTask.assigneeId = await this.findAssigneeByName(this.assignees, this.bucketTaskFormGroup.value.assignee);
+    console.log("this.currentBucketTask.assigneeId = " + this.currentBucketTask.assigneeId);
     this.currentBucketTask.bucketTaskState = null;
     this.currentBucketTask.bucketTaskPriority = null;
 
