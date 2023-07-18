@@ -15,8 +15,8 @@ export class BucketService {
         private httpClient: HttpClient
     ) {}
 
-    getBuckets(url): Observable<Bucket> {
-        return this.httpClient.get<Bucket>(url);
+    getBuckets(url): Observable<Bucket[]> {
+        return this.httpClient.get<Bucket[]>(url);
     }
 
     getBucket(url): Observable<Bucket> {
