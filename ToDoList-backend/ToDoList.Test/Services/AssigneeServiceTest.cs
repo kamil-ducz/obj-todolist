@@ -25,7 +25,7 @@ public class AssigneeServiceTest
     }
 
     [Test]
-    public void GetAssignees_ReturnsAssignees()
+    public void GetAssignees_ReturnAssignees()
     {
         // Arrange
         var expectedAssignees = new List<AssigneeDto>()
@@ -42,5 +42,27 @@ public class AssigneeServiceTest
 
         // Assert
         Assert.That(expectedAssignees, Is.EqualTo(result));
+    }
+
+    [Test]
+    public void GetAssignee_ReturnAssignee()
+    {
+        // Arrange
+        var expectedAssignee = new AssigneeDto(3, "Pilirani Tendai");
+
+        _mapperMock.Setup(m => m.Map<AssigneeDto>(It.IsAny<Assignee>()))
+                   .Returns(expectedAssignee);
+
+        // Act
+        var result = _assigneeService.GetAssignee(3);
+
+        // Assert
+        Assert.That(expectedAssignee, Is.EqualTo(result));
+    }
+
+    [Test]
+    public void DeleteAssignee_ReturnVoid()
+    {
+        Assert.DoesNotThrow(() => _assigneeService.DeleteAssignee(4));
     }
 }
