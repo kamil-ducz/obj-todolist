@@ -65,4 +65,28 @@ public class AssigneeServiceTest
     {
         Assert.DoesNotThrow(() => _assigneeService.DeleteAssignee(4));
     }
+
+    [Test]
+    public void InsertAssignee_ReturnAssigneeId()
+    {
+        // Arrange
+        var expectedAssigneeId = 1234;
+
+        _mapperMock.Setup(m => m.Map<Assignee>(It.IsAny<AssigneeUpsertDto>()))
+                   .Returns(new Assignee());
+
+        _assigneeRepositoryMock.Setup(repo => repo.InsertAssignee(It.IsAny<Assignee>()))
+                               .Callback<Assignee>(assignee =>
+                               {
+                                   assignee.Id = expectedAssigneeId;
+                               });
+
+        // Act
+        var result = _assigneeService.InsertAssignee(new AssigneeUpsertDto("Example assignee to insert"));
+
+        // Assert
+        Assert.That(expectedAssigneeId, Is.EqualTo(result));
+    }
+
+
 }
