@@ -63,7 +63,7 @@ public class BucketService : IBucketService
 
     public IReadOnlyCollection<BucketTaskDto> GetAllBucketsTasks(int bucketId)
     {
-        var bucketTasks = _bucketTaskRepository.GetAllBucketTasks().Where(b => b.BucketId == bucketId);
-        return _mapper.Map<IReadOnlyCollection<BucketTaskDto>>(bucketTasks);
+        var bucketTasks = _bucketTaskRepository.GetAllBucketTasks().Where(b => b.BucketId == bucketId).ToList();
+        return _mapper.Map<List<BucketTaskDto>>(bucketTasks);
     }
 }
