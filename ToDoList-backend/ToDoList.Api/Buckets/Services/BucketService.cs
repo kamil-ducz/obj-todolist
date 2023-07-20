@@ -32,7 +32,7 @@ public class BucketService : IBucketService
 
     public IReadOnlyCollection<BucketDto> GetAllBuckets()
     {
-        return _mapper.Map<IReadOnlyCollection<BucketDto>>(_bucketRepository.GetAllBuckets());
+        return _mapper.Map<List<BucketDto>>(_bucketRepository.GetAllBuckets());
     }
 
     public BucketDto GetBucket(int bucketId)
