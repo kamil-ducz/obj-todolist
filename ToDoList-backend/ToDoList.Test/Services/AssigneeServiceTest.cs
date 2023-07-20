@@ -88,5 +88,14 @@ public class AssigneeServiceTest
         Assert.That(expectedAssigneeId, Is.EqualTo(result));
     }
 
+    [Test]
+    public void UpdateAssignee_ReturnVoid()
+    {
+        // Arrange
+        var expectedAssignee = new AssigneeUpsertDto("Pilirani Tendai");
+        var expectedAssigneeId = 3;
 
+        // Act
+        Assert.DoesNotThrow(() => _assigneeService.UpdateAssignee(expectedAssignee, expectedAssigneeId));
+    }
 }
