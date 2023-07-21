@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using ToDoList.Api.Assignees.Models;
 using ToDoList.Domain.Models;
@@ -19,15 +20,18 @@ public class AssigneeService : IAssigneeService
 {
     private readonly IAssigneeRepository _assigneeRepository;
     private readonly IMapper _mapper;
+    private readonly ILogger _logger;
 
-    public AssigneeService(IAssigneeRepository assigneeRepository, IMapper mapper)
+    public AssigneeService(IAssigneeRepository assigneeRepository, IMapper mapper, ILogger<AssigneeService> logger)
     {
         _assigneeRepository = assigneeRepository;
         _mapper = mapper;
+        _logger = logger;
     }
 
     public IReadOnlyCollection<AssigneeDto> GetAllAssignees()
     {
+        _logger.LogDebug("GetAllAssignees invoked");
         return _mapper.Map<IReadOnlyCollection<AssigneeDto>>(_assigneeRepository.GetAllAssignees());
     }
 
