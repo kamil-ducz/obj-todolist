@@ -1,14 +1,12 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
-using Serilog;
-using ToDoList.Api.Config;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog();
 
 // Add services to the container.
 builder.Services.AddApplicationServices();
+
+// configure strongly typed settings object
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
 var app = builder.Build();
 
@@ -33,6 +31,9 @@ app.UseAuthorization();
 app.UseCors(
     options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
     );
+
+// custom jwt auth middleware
+app.UseMiddleware<JwtMiddleware>();
 
 app.MapControllers();
 
