@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { AssigneeService } from '../services/assignee-service';
+import { AssigneeService } from '../services/assignee.service';
 import { Assignee } from '../models/assignee.model';
 
 describe('AssigneeService', () => {

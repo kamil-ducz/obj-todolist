@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { BucketService } from '../services/bucket-service';
+import { BucketService } from '../services/bucket.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Bucket } from '../models/bucket.model';
-import { BucketTask } from '../models/bucket-task.model';
+import { BucketTask } from '../models/bucket.task.model';
 
 describe('BucketService', () => {
   let service: BucketService;

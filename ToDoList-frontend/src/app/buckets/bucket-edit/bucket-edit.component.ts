@@ -3,10 +3,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Bucket } from 'src/app/models/bucket.model';
-import { BucketCategory } from 'src/app/models/bucket-category.model';
-import { BucketColor } from 'src/app/models/bucket-color.model';
-import { BucketService } from 'src/app/services/bucket-service';
-import { DictionaryService } from 'src/app/services/dictionary-service';
+import { BucketCategory } from 'src/app/models/bucket.category.model';
+import { BucketColor } from 'src/app/models/bucket.color.model';
+import { BucketService } from 'src/app/services/bucket.service';
+import { DictionaryService } from 'src/app/services/dictionary.service';
 import { environment } from 'src/environments/environment';
 
 @Component({

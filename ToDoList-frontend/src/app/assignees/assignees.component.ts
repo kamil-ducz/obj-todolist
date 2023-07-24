@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AssigneeService } from '../services/assignee-service';
+import { AssigneeService } from '../services/assignee.service';
 import { environment } from 'src/environments/environment';
 
 @Component({

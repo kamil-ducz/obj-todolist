@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BucketService } from 'src/app/services/bucket-service';
+import { BucketService } from 'src/app/services/bucket.service';
 import { Bucket } from 'src/app/models/bucket.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
