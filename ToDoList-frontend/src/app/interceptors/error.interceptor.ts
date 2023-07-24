@@ -30,9 +30,11 @@ export class ErrorInterceptor implements HttpInterceptor {
   private handleErrorResponse(error: HttpErrorResponse): void {
     if (error.status === 404) {
       this.toastr.error("Resource not found");
+      return;
     }
     if (error.status === 500) {
       this.toastr.error("Internal server error");
+      return;
     }
     else {
       this.toastr.error("Request failed");
