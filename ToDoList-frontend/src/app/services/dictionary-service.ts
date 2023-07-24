@@ -17,18 +17,18 @@ export class DictionaryService {
     ) {}
 
     getBucketColors(): Observable<BucketColor[]> {
-        return this.httpClient.get<BucketColor[]>('Dictionary/bucketColors/all/');
+        return this.httpClient.get<BucketColor[]>('Dictionary/bucketColors/');
     }
 
     getBucketCategories(): Observable<BucketCategory[]> {
-        return this.httpClient.get<BucketCategory[]>('Dictionary/bucketCategories/all/');
+        return this.httpClient.get<BucketCategory[]>('Dictionary/bucketCategories/');
     }
 
     getBucketTaskStates(): Observable<BucketTaskState[]> {
-        return this.httpClient.get<BucketTaskState[]>('Dictionary/bucketTaskStates/all/');
+        return this.httpClient.get<BucketTaskState[]>('Dictionary/bucketTaskStates/');
     }
 
     getBucketTaskPriorities(): Observable<BucketTaskPriority[]> {
-        return this.httpClient.get<BucketTaskPriority[]>('Dictionary/bucketTaskPriorities/all/');
+        return this.httpClient.get<BucketTaskPriority[]>('Dictionary/bucketTaskPriorities/');
     }
 }
