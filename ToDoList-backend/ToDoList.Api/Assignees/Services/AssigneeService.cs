@@ -31,8 +31,7 @@ public class AssigneeService : IAssigneeService
 
     public IReadOnlyCollection<AssigneeDto> GetAllAssignees()
     {
-        _logger.LogDebug("GetAllAssignees invoked");
-        return _mapper.Map<IReadOnlyCollection<AssigneeDto>>(_assigneeRepository.GetAllAssignees());
+        return _mapper.Map<List<AssigneeDto>>(_assigneeRepository.GetAllAssignees());
     }
 
     public AssigneeDto GetAssignee(int assigneeId)

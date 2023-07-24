@@ -3,20 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  localhostUrl: 'https://localhost:7247/api/',
+  production: false,  
 
-  assigneeEndpoint: 'https://localhost:7247/api/Assignee',
-  
-  bucketEndpoint: 'https://localhost:7247/api/Bucket/',
-  bucketColorEndpoint: 'https://localhost:7247/api/Dictionary/bucketColors/all',
-  bucketCategoryEndpoint: 'https://localhost:7247/api/Dictionary/bucketCategories/all',
-
-  bucketTaskEndpoint: 'https://localhost:7247/api/BucketTask/',
-  bucketTaskStatesEndpoint: 'https://localhost:7247/api/Dictionary/bucketTaskStates/all',
-  bucketTaskPrioritiesEndoint: 'https://localhost:7247/api/Dictionary/bucketTaskPriorities/all',
-
-  buckeTasksForBucketEndpoint: 'https://localhost:7247/api/Bucket/buckettask/',
+  apiBaseUrl: 'https://localhost:7247/api/'
 };
 
 /*

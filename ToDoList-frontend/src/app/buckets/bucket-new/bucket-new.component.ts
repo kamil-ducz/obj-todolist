@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BucketService } from 'src/app/services/bucket-service';
+import { BucketService } from 'src/app/services/bucket.service';
 import { Bucket } from 'src/app/models/bucket.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
@@ -46,12 +46,9 @@ export class BucketNewComponent implements OnInit {
   });
 
   onSubmitNewBucket(newBucket: Bucket) {
-    this.bucketService.postBucket(environment.bucketEndpoint, newBucket).subscribe(
+    this.bucketService.postBucket(newBucket).subscribe(
       (response: any) => {
         this.toastr.success(`Bucket ${newBucket.name} added successfully.`);
-      },
-      (error: any) => {
-        this.toastr.error("Request failed.")
       }
     );
   }

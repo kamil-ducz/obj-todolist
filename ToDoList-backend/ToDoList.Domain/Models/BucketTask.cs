@@ -12,5 +12,5 @@ public class BucketTask
     public Bucket? Bucket { get; set; }
     public int BucketId { get; set; }
     public Assignee? Assignee { get; set; }
-    public int AssigneeId { get; set; }
+    public int? AssigneeId { get; set; }
 }

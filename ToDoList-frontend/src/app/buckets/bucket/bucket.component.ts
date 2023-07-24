@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { BucketService } from '../../services/bucket-service';
+import { BucketService } from '../../services/bucket.service';
 import { Bucket } from '../../models/bucket.model';
-import { BucketTaskService } from '../../services/buckettask-service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BucketTask } from '../../models/bucket-task.model';
+import { BucketTaskService } from '../../services/bucket.task.service';
+import { FormControl, FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { BucketTask } from '../../models/bucket.task.model';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { DictionaryService } from '../../services/dictionary.service';
-import { BucketTaskState } from '../../models/bucket-task-state.model';
-import { BucketTaskPriority } from '../../models/bucket-task-priority.model';
-import { BucketCategory } from '../../models/bucket-category.model';
-import { BucketColor } from '../../models/bucket-color.model';
+import { BucketTaskState } from '../../models/bucket.task.state.model';
+import { BucketTaskPriority } from '../../models/bucket.task.priority.model';
+import { BucketCategory } from '../../models/bucket.category.model';
+import { BucketColor } from '../../models/bucket.color.model';
 import { Assignee } from '../../models/assignee.model';
-import { AssigneeService } from '../../services/assignee-service';
+import { AssigneeService } from '../../services/assignee.service';
 
 @Component({
   selector: 'app-bucket',
@@ -49,6 +49,7 @@ export class BucketComponent implements OnInit {
   bucketTasksCancelled: BucketTask[];
 
   assignees: Assignee[];
+  filteredAssignees: Assignee[];
   showAssignees = false;
   assignee = new FormControl();
 
@@ -61,8 +62,8 @@ export class BucketComponent implements OnInit {
     this.refreshCurrentBucketBucketTasksComponents();
   }
   
-  refreshCurrentBucketBucketTasksComponents() {
-    this.fetchBucketCategories();
+  async refreshCurrentBucketBucketTasksComponents() {
+    await this.fetchBucketCategories();
     this.fetchCurrentBucket();
     this.fetchBucketTasks();
     this.fetchBucketTasksStates();
@@ -71,77 +72,60 @@ export class BucketComponent implements OnInit {
   }
 
   fetchCurrentBucket() {
-    this.bucketService.getBucket(environment.bucketEndpoint+this.currentBucketId).subscribe(
+    this.bucketService.getBucket(this.currentBucketId).subscribe(
       (response: Bucket) => {
         this.currentBucket = response;
         this.currentBucketCategoryName = this.bucketCategories.find(bcat => bcat.id === this.currentBucket.bucketCategoryId).name;
-      },
-      (error: any) => {
-        console.error(error);
       }
     );
   }
 
-  fetchBucketCategories() {
-    this.dictionaryService.getBucketCategories(environment.bucketCategoryEndpoint).subscribe(
+  async fetchBucketCategories() {
+    this.dictionaryService.getBucketCategories().subscribe(
       (response: BucketCategory[]) => {
         this.bucketCategories = response;
-      },
-      (error: any) => {
-        this.toastr.error("Request failed")
       }
     );
   }
 
   fetchBucketTasks() {
-    this.bucketService.getBucketTasks(environment.buckeTasksForBucketEndpoint+this.currentBucketId).subscribe(
-      (response: any) => {
+    this.bucketService.getBucketTasks(this.currentBucketId).subscribe(
+      (response: BucketTask[]) => {
         this.currentBucketBucketTasks = response;
         this.bucketTasksToDo = this.currentBucketBucketTasks.filter(element => element.bucketTaskStateId == 1);
         this.bucketTasksInProgress = this.currentBucketBucketTasks.filter(element => element.bucketTaskStateId == 2);
         this.bucketTasksDone = this.currentBucketBucketTasks.filter(element => element.bucketTaskStateId == 3);
         this.bucketTasksCancelled = this.currentBucketBucketTasks.filter(element => element.bucketTaskStateId == 4);
-      },
-      (error: any) => {
-        console.error(error);
       }
     );
   }
 
   fetchBucketTasksStates() {
-    this.dictionaryService.getBucketTaskStates(environment.bucketTaskStatesEndpoint).subscribe(
+    this.dictionaryService.getBucketTaskStates().subscribe(
       (response: BucketTaskState[]) => {
         this.bucketTaskStates = response;
-      },
-      (error: any) => {
-        this.toastr.error("Request failed")
       }
     );
   }
 
   fetchBucketTaskPriorities() {
-    this.dictionaryService.getBucketTaskPriorities(environment.bucketTaskPrioritiesEndoint).subscribe(
+    this.dictionaryService.getBucketTaskPriorities().subscribe(
       (response: BucketTaskPriority[]) => {
         this.bucketTaskPriorities = response;
-      },
-      (error: any) => {
-        this.toastr.error("Request failed")
       }
     );
   }
 
   fetchAssigness() {
-    this.assigneeService.getAssignees(environment.assigneeEndpoint).subscribe(
+    this.assigneeService.getAssignees().subscribe(
       (response: Assignee[]) => {
         this.assignees = response;
-      },
-      (error: any) => {
-        this.toastr.error("Request failed")
       }
     );
   }
 
   toggleShowAssignees() {
+    this.filteredAssignees = this.assignees;
     this.showAssignees = !this.showAssignees;
   }
 
@@ -150,12 +134,69 @@ export class BucketComponent implements OnInit {
     this.showAssignees = false;
   }
 
-  findAssigneeById(assignees: Assignee[], id: number): string {
-    return assignees.find(a => a.id == id).name;
+  filterAssignees(value: string) {
+    this.filteredAssignees = this.assignees.filter(assignee => assignee.name.toLowerCase().includes(value.toLowerCase()));
   }
 
-  findAssigneeByName(assignees: Assignee[], name: string): number {
-    return assignees.find(a => a.name === name).id;
+  onAssigneeInputChange(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const value = inputElement.value;
+    this.filterAssignees(value);
+  }
+
+  findAssigneeById(assignees: Assignee[], id: number): string {
+    if (id) {
+      return assignees.find(a => a.id == id).name;
+    }
+    else {
+      return null;
+    }
+  }
+
+  async findAssigneeByName(assignees: Assignee[], name: string): Promise<number> {
+    const foundAssignee = assignees.find(a => a.name === name);
+    if (!foundAssignee && name === '' || foundAssignee == null && name === '') {
+      return null;
+    }
+    if (foundAssignee) {
+        return assignees.find(a => a.name === name).id;
+      }
+    else {
+        const newAssigneeId = await this.createNewAdHocAssignee(name);
+        return newAssigneeId;
+    }
+  }
+
+  createNewAdHocAssignee(name:string): Promise<number> {
+    var newAssignee: Assignee = {
+      id: null,
+      name: name
+    }
+    return new Promise<number>((resolve) => {
+      this.assigneeService.postAssignee(newAssignee).subscribe(
+        (response: Assignee) => {
+          this.toastr.success("Ad hoc assignee added: " + name);
+          resolve(response.id);
+        },
+      );
+    });
+  }
+
+  incrementBucketTaskState(bucketTask: BucketTask) {
+    event.stopPropagation();
+    const incrementedBucketTask = bucketTask;
+    if (incrementedBucketTask.bucketTaskStateId === 4) {
+      incrementedBucketTask.bucketTaskStateId = 1;
+    }
+    else {
+      incrementedBucketTask.bucketTaskStateId++;
+    }
+    this.bucketTaskService.putBucketTask(bucketTask.id, incrementedBucketTask).subscribe(
+      () => {
+        this.toastr.success("Increased bucket task state. Congratulations on good work friend!");
+        this.refreshCurrentBucketBucketTasksComponents();
+      }
+    )
   }
 
   newBucketTaskToCreate: BucketTask;
@@ -178,9 +219,7 @@ export class BucketComponent implements OnInit {
       bucketTaskPriority: new FormControl('', [
         Validators.required,
       ]),
-      assignee: new FormControl('', [
-        Validators.required,
-      ])
+      assignee: new FormControl('')
     });
 
     if (this.showEditBucketTaskForm === true)
@@ -199,23 +238,21 @@ export class BucketComponent implements OnInit {
     }
   }
 
-  onSubmitBucketTask(newBucketTask: BucketTask) {
+  async onSubmitBucketTask(newBucketTask: BucketTask) {
     this.currentBucketTask = newBucketTask;
     this.currentBucketTask.bucketTaskStateId = this.bucketTaskStates.find(bs => bs.name === this.currentBucketTask.bucketTaskState).id;
     this.currentBucketTask.bucketTaskPriorityId = this.bucketTaskPriorities.find(bp => bp.name === this.currentBucketTask.bucketTaskPriority).id;
-    this.currentBucketTask.assigneeId = this.findAssigneeByName(this.assignees, this.bucketTaskFormGroup.value.assignee);
+    this.currentBucketTask.assigneeId = await this.findAssigneeByName(this.assignees, this.bucketTaskFormGroup.value.assignee);
+    console.log("this.currentBucketTask.assigneeId = " + this.currentBucketTask.assigneeId);
     this.currentBucketTask.bucketTaskState = null;
     this.currentBucketTask.bucketTaskPriority = null;
     this.currentBucketTask.bucketId = this.currentBucketId;    
 
     if (this.currentBucketBucketTasks.length < this.currentBucket.maxAmountOfTasks)
     {
-      this.bucketTaskService.postBucketTask(environment.bucketTaskEndpoint, this.currentBucketTask).subscribe(
+      this.bucketTaskService.postBucketTask(this.currentBucketTask).subscribe(
         (response) => {
           this.toastr.success(`Bucket task ${this.currentBucketTask.name} created successfully`);
-        },
-        (error: any) => {
-          this.toastr.error("Request failed")
         }
       );
     }
@@ -226,46 +263,38 @@ export class BucketComponent implements OnInit {
     }
   }
 
-  onSubmitEditBucketTask(newBucketTask: BucketTask) {
+  async onSubmitEditBucketTask(newBucketTask: BucketTask) {
     this.currentBucketTask = this.bucketTaskFormGroup.value;
     this.currentBucketTask.bucketId = this.currentBucketId;
     this.currentBucketTask.bucketTaskStateId = this.bucketTaskStates.find(bts => bts.name === newBucketTask.bucketTaskState).id;
     this.currentBucketTask.bucketTaskPriorityId = this.bucketTaskPriorities.find(btps => btps.name === newBucketTask.bucketTaskPriority).id;
-    this.currentBucketTask.assigneeId = this.assignees.find(a => a.name === this.bucketTaskFormGroup.value.assignee).id;
+    this.currentBucketTask.assigneeId = await this.findAssigneeByName(this.assignees, this.bucketTaskFormGroup.value.assignee);
+    console.log("this.currentBucketTask.assigneeId = " + this.currentBucketTask.assigneeId);
     this.currentBucketTask.bucketTaskState = null;
     this.currentBucketTask.bucketTaskPriority = null;
 
-    this.bucketTaskService.putBucketTask(environment.bucketTaskEndpoint+this.bucketTaskForEditSaveId, this.currentBucketTask).subscribe(
+    this.bucketTaskService.putBucketTask(this.bucketTaskForEditSaveId, this.currentBucketTask).subscribe(
       (response: any) => {
         this.toastr.success(`Bucket task ${this.currentBucketTask.name} changes saved successfully.`);
-      },
-      (error: any) => {
-        console.error(error);
       }
     );
   }
 
   removeBucket(id: any) {
-    this.bucketService.deleteBucket(environment.bucketEndpoint+id).subscribe(
+    this.bucketService.deleteBucket(id).subscribe(
         (response: any) => {
           this.toastr.success(`Bucket ${this.currentBucket.name} deleted successfully.`);
           this.router.navigate(['/buckets']);
-        },
-        (error: any) => {
-          this.toastr.error("Request failed.")
         }
     );
   }
 
   removeBucketTask(bucketTaskId: number) {
-    this.bucketTaskService.deleteBucketTask(environment.bucketTaskEndpoint+bucketTaskId).subscribe(
+    this.bucketTaskService.deleteBucketTask(bucketTaskId).subscribe(
       (response: any) => {
         this.fetchBucketTasks();
         this.toastr.success(`Bucket task ${this.currentBucketTask.name} deleted successfully.`);
         this.exitDeleteBucketTaskConfirmationModal();
-      },
-      (error: any) => {
-        this.toastr.error("Request failed.")
       }
     );
   }
@@ -289,7 +318,8 @@ export class BucketComponent implements OnInit {
   }
 
   exitNewBucketTaskForm() {
-    this.showNewBucketTaskForm = !this.showNewBucketTaskForm;
+    this.showNewBucketTaskForm = false;
+    this.showAssignees = false;
     this.refreshCurrentBucketBucketTasksComponents();
   }
 
@@ -306,6 +336,7 @@ export class BucketComponent implements OnInit {
 
   exitEditBucketTaskForm() {
     this.showEditBucketTaskForm = false;
+    this.showAssignees = false;
     this.refreshCurrentBucketBucketTasksComponents();
   }
 
