@@ -16,19 +16,19 @@ export class DictionaryService {
         private httpClient: HttpClient
     ) {}
 
-    getBucketColors(url): Observable<BucketColor[]> {
-        return this.httpClient.get<BucketColor[]>(url);
+    getBucketColors(): Observable<BucketColor[]> {
+        return this.httpClient.get<BucketColor[]>('Dictionary/bucketColors/all/');
     }
 
-    getBucketCategories(url): Observable<BucketCategory[]> {
-        return this.httpClient.get<BucketCategory[]>(url);
+    getBucketCategories(): Observable<BucketCategory[]> {
+        return this.httpClient.get<BucketCategory[]>('Dictionary/bucketCategories/all/');
     }
 
-    getBucketTaskStates(url): Observable<BucketTaskState[]> {
-        return this.httpClient.get<BucketTaskState[]>(url);
+    getBucketTaskStates(): Observable<BucketTaskState[]> {
+        return this.httpClient.get<BucketTaskState[]>('Dictionary/bucketTaskStates/all/');
     }
 
-    getBucketTaskPriorities(url): Observable<BucketTaskPriority[]> {
-        return this.httpClient.get<BucketTaskPriority[]>(url);
+    getBucketTaskPriorities(): Observable<BucketTaskPriority[]> {
+        return this.httpClient.get<BucketTaskPriority[]>('Dictionary/bucketTaskPriorities/all/');
     }
 }

@@ -13,23 +13,23 @@ export class BucketTaskService {
         private httpClient: HttpClient
     ) {}
 
-    getBucketTasks(url): Observable<BucketTask[]> {
-        return this.httpClient.get<BucketTask[]>(url);
+    getBucketTasks(): Observable<BucketTask[]> {
+        return this.httpClient.get<BucketTask[]>('BucketTask/');
     }
 
-    getBucketTask(url): Observable<BucketTask> {
-        return this.httpClient.get<BucketTask>(url);
+    getBucketTask(bucketId: number): Observable<BucketTask> {
+        return this.httpClient.get<BucketTask>('BucketTask/'+bucketId);
     }
 
-    postBucketTask(url, newBucketTask): Observable<BucketTask> {
-        return this.httpClient.post<BucketTask>(url, newBucketTask);
+    postBucketTask(newBucketTask): Observable<BucketTask> {
+        return this.httpClient.post<BucketTask>('BucketTask/', newBucketTask);
     }
 
-    putBucketTask(url, updatedBucketTask): Observable<BucketTask> {
-        return this.httpClient.put<BucketTask>(url, updatedBucketTask);
+    putBucketTask(bucketTaskId: number, updatedBucketTask): Observable<BucketTask> {
+        return this.httpClient.put<BucketTask>('BucketTask/'+bucketTaskId, updatedBucketTask);
     }
 
-    deleteBucketTask(url): Observable<BucketTask> {
-        return this.httpClient.delete<BucketTask>(url);
+    deleteBucketTask(bucketTaskId: number): Observable<BucketTask> {
+        return this.httpClient.delete<BucketTask>('BucketTask/'+bucketTaskId);
     }
 }

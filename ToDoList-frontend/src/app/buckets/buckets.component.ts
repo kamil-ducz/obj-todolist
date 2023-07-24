@@ -43,7 +43,7 @@ export class BucketsComponent implements OnInit {
   }
   
   fetchBuckets() {
-    this.bucketService.getBuckets(environment.bucketEndpoint).subscribe(
+    this.bucketService.getBuckets().subscribe(
       (response: any) => {
         this.buckets = response;
       }
@@ -51,7 +51,7 @@ export class BucketsComponent implements OnInit {
   }
 
   fetchBucketTasks() {
-    this.bucketTaskService.getBucketTasks(environment.bucketTaskEndpoint).subscribe(
+    this.bucketTaskService.getBucketTasks().subscribe(
       (response: any) => {
         this.bucketTasks = response;
         this.bucketTasksToDo = this.bucketTasks.filter(element => element.bucketTaskStateId === 1);
@@ -63,7 +63,7 @@ export class BucketsComponent implements OnInit {
   }
 
   fetchBucketTasksStates() {
-    this.dictionaryService.getBucketTaskStates(environment.bucketTaskStatesEndpoint).subscribe(
+    this.dictionaryService.getBucketTaskStates().subscribe(
       (response: BucketTaskState[]) => {
         this.bucketTaskStates = response;
       }
@@ -71,7 +71,7 @@ export class BucketsComponent implements OnInit {
   }
 
   fetchBucketTaskPriorities() {
-    this.dictionaryService.getBucketTaskPriorities(environment.bucketTaskPrioritiesEndoint).subscribe(
+    this.dictionaryService.getBucketTaskPriorities().subscribe(
       (response: BucketTaskPriority[]) => {
         this.bucketTaskPriorities = response;
       }
@@ -79,7 +79,7 @@ export class BucketsComponent implements OnInit {
   }
 
   RemoveBucket(id: any) {
-    this.bucketService.deleteBucket(environment.bucketEndpoint+id).subscribe(
+    this.bucketService.deleteBucket(id).subscribe(
         (response: any) => {
           this.showModal = false;
           this.toastr.success(`Bucket ${this.buckets.find(b => b.id === id).name} deleted successfully.`);

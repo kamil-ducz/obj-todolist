@@ -46,7 +46,7 @@ export class BucketNewComponent implements OnInit {
   });
 
   onSubmitNewBucket(newBucket: Bucket) {
-    this.bucketService.postBucket(environment.bucketEndpoint, newBucket).subscribe(
+    this.bucketService.postBucket(newBucket).subscribe(
       (response: any) => {
         this.toastr.success(`Bucket ${newBucket.name} added successfully.`);
       }

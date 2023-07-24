@@ -72,7 +72,7 @@ export class BucketComponent implements OnInit {
   }
 
   fetchCurrentBucket() {
-    this.bucketService.getBucket(environment.bucketEndpoint+this.currentBucketId).subscribe(
+    this.bucketService.getBucket(this.currentBucketId).subscribe(
       (response: Bucket) => {
         this.currentBucket = response;
         this.currentBucketCategoryName = this.bucketCategories.find(bcat => bcat.id === this.currentBucket.bucketCategoryId).name;
@@ -81,7 +81,7 @@ export class BucketComponent implements OnInit {
   }
 
   async fetchBucketCategories() {
-    this.dictionaryService.getBucketCategories(environment.bucketCategoryEndpoint).subscribe(
+    this.dictionaryService.getBucketCategories().subscribe(
       (response: BucketCategory[]) => {
         this.bucketCategories = response;
       }
@@ -89,7 +89,7 @@ export class BucketComponent implements OnInit {
   }
 
   fetchBucketTasks() {
-    this.bucketService.getBucketTasks(environment.buckeTasksForBucketEndpoint+this.currentBucketId).subscribe(
+    this.bucketService.getBucketTasks(this.currentBucketId).subscribe(
       (response: BucketTask[]) => {
         this.currentBucketBucketTasks = response;
         this.bucketTasksToDo = this.currentBucketBucketTasks.filter(element => element.bucketTaskStateId == 1);
@@ -101,7 +101,7 @@ export class BucketComponent implements OnInit {
   }
 
   fetchBucketTasksStates() {
-    this.dictionaryService.getBucketTaskStates(environment.bucketTaskStatesEndpoint).subscribe(
+    this.dictionaryService.getBucketTaskStates().subscribe(
       (response: BucketTaskState[]) => {
         this.bucketTaskStates = response;
       }
@@ -109,7 +109,7 @@ export class BucketComponent implements OnInit {
   }
 
   fetchBucketTaskPriorities() {
-    this.dictionaryService.getBucketTaskPriorities(environment.bucketTaskPrioritiesEndoint).subscribe(
+    this.dictionaryService.getBucketTaskPriorities().subscribe(
       (response: BucketTaskPriority[]) => {
         this.bucketTaskPriorities = response;
       }
@@ -117,7 +117,7 @@ export class BucketComponent implements OnInit {
   }
 
   fetchAssigness() {
-    this.assigneeService.getAssignees(environment.assigneeEndpoint).subscribe(
+    this.assigneeService.getAssignees().subscribe(
       (response: Assignee[]) => {
         this.assignees = response;
       }
@@ -173,7 +173,7 @@ export class BucketComponent implements OnInit {
       name: name
     }
     return new Promise<number>((resolve) => {
-      this.assigneeService.postAssignee(environment.assigneeEndpoint, newAssignee).subscribe(
+      this.assigneeService.postAssignee(newAssignee).subscribe(
         (response: Assignee) => {
           this.toastr.success("Ad hoc assignee added: " + name);
           resolve(response.id);
@@ -191,7 +191,7 @@ export class BucketComponent implements OnInit {
     else {
       incrementedBucketTask.bucketTaskStateId++;
     }
-    this.bucketTaskService.putBucketTask(environment.bucketTaskEndpoint + bucketTask.id, incrementedBucketTask).subscribe(
+    this.bucketTaskService.putBucketTask(bucketTask.id, incrementedBucketTask).subscribe(
       () => {
         this.toastr.success("Increased bucket task state. Congratulations on good work friend!");
         this.refreshCurrentBucketBucketTasksComponents();
@@ -250,7 +250,7 @@ export class BucketComponent implements OnInit {
 
     if (this.currentBucketBucketTasks.length < this.currentBucket.maxAmountOfTasks)
     {
-      this.bucketTaskService.postBucketTask(environment.bucketTaskEndpoint, this.currentBucketTask).subscribe(
+      this.bucketTaskService.postBucketTask(this.currentBucketTask).subscribe(
         (response) => {
           this.toastr.success(`Bucket task ${this.currentBucketTask.name} created successfully`);
         }
@@ -273,7 +273,7 @@ export class BucketComponent implements OnInit {
     this.currentBucketTask.bucketTaskState = null;
     this.currentBucketTask.bucketTaskPriority = null;
 
-    this.bucketTaskService.putBucketTask(environment.bucketTaskEndpoint+this.bucketTaskForEditSaveId, this.currentBucketTask).subscribe(
+    this.bucketTaskService.putBucketTask(this.bucketTaskForEditSaveId, this.currentBucketTask).subscribe(
       (response: any) => {
         this.toastr.success(`Bucket task ${this.currentBucketTask.name} changes saved successfully.`);
       }
@@ -281,7 +281,7 @@ export class BucketComponent implements OnInit {
   }
 
   removeBucket(id: any) {
-    this.bucketService.deleteBucket(environment.bucketEndpoint+id).subscribe(
+    this.bucketService.deleteBucket(id).subscribe(
         (response: any) => {
           this.toastr.success(`Bucket ${this.currentBucket.name} deleted successfully.`);
           this.router.navigate(['/buckets']);
@@ -290,7 +290,7 @@ export class BucketComponent implements OnInit {
   }
 
   removeBucketTask(bucketTaskId: number) {
-    this.bucketTaskService.deleteBucketTask(environment.bucketTaskEndpoint+bucketTaskId).subscribe(
+    this.bucketTaskService.deleteBucketTask(bucketTaskId).subscribe(
       (response: any) => {
         this.fetchBucketTasks();
         this.toastr.success(`Bucket task ${this.currentBucketTask.name} deleted successfully.`);

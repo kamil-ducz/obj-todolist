@@ -13,23 +13,23 @@ export class AssigneeService {
         private httpClient: HttpClient
     ) {}
 
-    getAssignees(url): Observable<Assignee[]> {
-        return this.httpClient.get<Assignee[]>(url);
+    getAssignees(): Observable<Assignee[]> {
+        return this.httpClient.get<Assignee[]>('Assignee/');
     }
 
-    getAssignee(url): Observable<Assignee> {
-        return this.httpClient.get<Assignee>(url);
+    getAssignee(assigneeId: number): Observable<Assignee> {
+        return this.httpClient.get<Assignee>('Assignee/'+assigneeId);
     }
 
-    postAssignee(url, assignee: Assignee): Observable<Assignee> {
-        return this.httpClient.post<Assignee>(url, assignee);
+    postAssignee(newAssignee: Assignee): Observable<Assignee> {
+        return this.httpClient.post<Assignee>('Assignee/', newAssignee);
     }
 
-    putAssignee(url): Observable<Assignee> {
-        return this.httpClient.put<Assignee>(url, null);
+    putAssignee(assigneeId: number, updatedAssignee: Assignee): Observable<Assignee> {
+        return this.httpClient.put<Assignee>('Assignee/'+assigneeId, updatedAssignee);
     }
     
-    deleteAssignee(url): Observable<Assignee> {
-        return this.httpClient.delete<Assignee>(url);
+    deleteAssignee(assigneeId: number): Observable<Assignee> {
+        return this.httpClient.delete<Assignee>('Assignee/'+assigneeId);
     }  
 }
