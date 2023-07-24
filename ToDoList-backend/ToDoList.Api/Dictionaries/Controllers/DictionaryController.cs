@@ -16,25 +16,25 @@ public class DictionaryController : Controller
         _dictionaryService = dictionaryService;
     }
 
-    [HttpGet("bucketCategories/all")]
+    [HttpGet("bucketCategories")]
     public IReadOnlyCollection<BucketCategory> GetAllBucketCategories()
     {
         return _dictionaryService.GetAll<BucketCategory>();
     }
 
-    [HttpGet("bucketColors/all")]
+    [HttpGet("bucketColors")]
     public IReadOnlyCollection<BucketColor> GetAllBucketColors()
     {
         return _dictionaryService.GetAll<BucketColor>();
     }
 
-    [HttpGet("bucketTaskStates/all")]
+    [HttpGet("bucketTaskStates")]
     public IReadOnlyCollection<BucketTaskState> GetAllBucketTasks()
     {
         return _dictionaryService.GetAll<BucketTaskState>();
     }
 
-    [HttpGet("bucketTaskPriorities/all")]
+    [HttpGet("bucketTaskPriorities")]
     public IReadOnlyCollection<BucketTaskPriority> GetAllBucketTasksPriorities()
     {
         return _dictionaryService.GetAll<BucketTaskPriority>();

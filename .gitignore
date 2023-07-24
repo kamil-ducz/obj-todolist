@@ -14,3 +14,4 @@ bld/
 [Oo]bj/
 [Ll]og/
 .vs/
+/ToDoList-backend/ToDoList.Api/logs/WebApiFsp-Internal-Logs.txt
