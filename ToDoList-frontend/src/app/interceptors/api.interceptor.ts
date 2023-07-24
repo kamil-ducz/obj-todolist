@@ -3,6 +3,7 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from "@angular/c
 import { Observable, finalize } from "rxjs";
 import { LoaderService } from "../services/loader-service";
 import { ToastrService } from "ngx-toastr";
+import { environment } from "src/environments/environment";
 
 @Injectable({ providedIn: "root" })
 export class ApiInterceptor implements HttpInterceptor {
@@ -16,7 +17,7 @@ export class ApiInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.totalRequests++;
     this.loaderService.setLoading(true);
-    const apiReq = req.clone({ url: `https://localhost:7247/api/${req.url}` });
+    const apiReq = req.clone({ url: `${environment.apiBaseUrl}${req.url}` });
     return next.handle(apiReq).pipe(
       finalize(() => {
         this.totalRequests--;
