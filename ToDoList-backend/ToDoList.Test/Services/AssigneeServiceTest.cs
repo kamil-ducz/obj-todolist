@@ -1,5 +1,7 @@
 using AutoMapper;
+using FluentAssertions;
 using Moq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ToDoList.Api.Assignees.Models;
@@ -41,7 +43,7 @@ public class AssigneeServiceTest
         var result = _assigneeService.GetAllAssignees();
 
         // Assert
-        Assert.That(expectedAssignees, Is.EqualTo(result));
+        result.Should().BeEquivalentTo(expectedAssignees);
     }
 
     [Test]
@@ -57,13 +59,14 @@ public class AssigneeServiceTest
         var result = _assigneeService.GetAssignee(3);
 
         // Assert
-        Assert.That(expectedAssignee, Is.EqualTo(result));
+        expectedAssignee.Should().BeEquivalentTo(result);
     }
 
     [Test]
     public void DeleteAssignee_ReturnVoid()
     {
-        Assert.DoesNotThrow(() => _assigneeService.DeleteAssignee(4));
+        Action action = () => _assigneeService.DeleteAssignee(4);
+        action.Invoking(a => a.Invoke()).Should().NotThrow();
     }
 
     [Test]
@@ -85,7 +88,8 @@ public class AssigneeServiceTest
         var result = _assigneeService.InsertAssignee(new AssigneeUpsertDto("Example assignee to insert"));
 
         // Assert
-        Assert.That(expectedAssigneeId, Is.EqualTo(result));
+        //Assert.That(expectedAssigneeId, Is.EqualTo(result));
+        expectedAssigneeId.Should().Be(result);
     }
 
     [Test]
@@ -96,6 +100,7 @@ public class AssigneeServiceTest
         var expectedAssigneeId = 3;
 
         // Act
-        Assert.DoesNotThrow(() => _assigneeService.UpdateAssignee(expectedAssignee, expectedAssigneeId));
+        Action action = () => _assigneeService.UpdateAssignee(expectedAssignee, expectedAssigneeId);
+        action.Invoking(a => a.Invoke()).Should().NotThrow();
     }
 }

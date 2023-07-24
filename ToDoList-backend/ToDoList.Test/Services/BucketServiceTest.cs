@@ -1,5 +1,7 @@
 using AutoMapper;
+using FluentAssertions;
 using Moq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ToDoList.Api.Buckets.Models;
@@ -57,7 +59,7 @@ public class BucketServiceTest
         var result = _bucketService.GetAllBuckets();
 
         // Assert
-        CollectionAssert.AreEquivalent(expectedBuckets, result);
+        expectedBuckets.Should().BeEquivalentTo(result);
     }
 
 
@@ -74,13 +76,14 @@ public class BucketServiceTest
         var result = _bucketService.GetBucket(3);
 
         // Assert
-        Assert.That(expectedBucket, Is.EqualTo(result));
+        expectedBucket.Should().BeEquivalentTo(result);
     }
 
     [Test]
     public void DeleteBucket_ReturnVoid()
     {
-        Assert.DoesNotThrow(() => _bucketService.DeleteBucket(4));
+        Action action = () => _bucketService.DeleteBucket(4);
+        action.Invoking(a => a.Invoke()).Should().NotThrow();
     }
 
     [Test]
@@ -102,7 +105,7 @@ public class BucketServiceTest
         var result = _bucketService.InsertBucket(new BucketUpsertDto("Kitchen", "Sample desc2", (int)Domain.Enums.BucketCategory.Home, (int)Domain.Enums.BucketColor.Red, 15, true));
 
         // Assert
-        Assert.That(expectedBucketId, Is.EqualTo(result));
+        expectedBucketId.Should().Be(result);
     }
 
     [Test]
@@ -113,7 +116,8 @@ public class BucketServiceTest
         var expectedBucketId = 1;
 
         // Act
-        Assert.DoesNotThrow(() => _bucketService.UpdateBucket(expectedBucketId, expectedBucket));
+        Action action = () => _bucketService.UpdateBucket(expectedBucketId, expectedBucket);
+        action.Invoking(a => a.Invoke()).Should().NotThrow();
     }
 
     [Test]
@@ -155,6 +159,6 @@ public class BucketServiceTest
         var result = _bucketService.GetAllBucketsTasks(1);
 
         // Assert
-        Assert.That(expectedBucketTasks, Is.EqualTo(result));
+        expectedBucketTasks.Should().BeEquivalentTo(result);
     }
 }

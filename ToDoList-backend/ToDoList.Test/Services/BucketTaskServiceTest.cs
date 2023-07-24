@@ -1,5 +1,7 @@
 using AutoMapper;
+using FluentAssertions;
 using Moq;
+using System;
 using ToDoList.Api.BucketTasks.Models;
 using ToDoList.Api.BucketTasks.Services;
 using ToDoList.Domain.Models;
@@ -36,13 +38,14 @@ public class BucketTaskServiceTest
         var result = _bucketTaskService.GetBucketTask(1);
 
         // Assert
-        Assert.That(expectedBucketTask, Is.EqualTo(result));
+        expectedBucketTask.Should().BeEquivalentTo(result);
     }
 
     [Test]
     public void DeleteBucket_ReturnVoid()
     {
-        Assert.DoesNotThrow(() => _bucketTaskService.DeleteBucketTask(1));
+        Action action = () => _bucketTaskService.DeleteBucketTask(1);
+        action.Invoking(a => a.Invoke()).Should().NotThrow();
     }
 
     [Test]
@@ -64,7 +67,7 @@ public class BucketTaskServiceTest
         var result = _bucketTaskService.InsertBucketTask(new BucketUpsertTaskDto("Bucket task name to insert", "Sample description", (int)Domain.Enums.BucketTaskState.ToDo, (int)Domain.Enums.BucketTaskPriority.Low, 1, 1));
 
         // Assert
-        Assert.That(expectedBucketTaskId, Is.EqualTo(result));
+        expectedBucketTaskId.Should().Be(result);
     }
 
     [Test]
@@ -75,6 +78,7 @@ public class BucketTaskServiceTest
         var expectedBucketId = 1;
 
         // Act
-        Assert.DoesNotThrow(() => _bucketTaskService.UpdateBucketTask(expectedBucketId, expectedBucket));
+        Action action = () => _bucketTaskService.UpdateBucketTask(expectedBucketId, expectedBucket);
+        action.Invoking(a => a.Invoke()).Should().NotThrow();
     }
 }
