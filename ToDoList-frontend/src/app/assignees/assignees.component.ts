@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AssigneeService } from '../services/assignee-service';
+import { AssigneeService } from '../services/assignee.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -14,12 +14,9 @@ export class AssigneesComponent implements OnInit {
   assigness: any;
 
   ngOnInit(): void {
-    this.assigneeService.getAssignees(environment.localhostUrl).subscribe(
+    this.assigneeService.getAssignees().subscribe(
       (response: any) => {
         this.assigness = response;
-      },
-      (error: any) => {
-        console.error(error);
       }
     );
   }

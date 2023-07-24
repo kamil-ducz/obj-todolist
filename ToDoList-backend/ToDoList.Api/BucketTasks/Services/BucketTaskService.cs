@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
-using System.Linq;
 using ToDoList.Api.BucketTasks.Models;
 using ToDoList.Domain.Models;
 using ToDoList.Domain.Repositories;
@@ -39,7 +38,7 @@ public class BucketTaskService : IBucketTaskService
 
     public void DeleteBucketTask(int taskId)
     {
-        var bucketTaskToDelete = _bucketTaskRepository.GetAllBucketTasks().First(t => t.Id == taskId);
+        var bucketTaskToDelete = _bucketTaskRepository.GetBucketTask(taskId);
         _bucketTaskRepository.DeleteBucketTask(bucketTaskToDelete);
     }
 

@@ -3,9 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Bucket } from 'src/app/models/bucket.model';
-import { BucketCategory } from 'src/app/models/bucket-category.model';
-import { BucketColor } from 'src/app/models/bucket-color.model';
-import { BucketService } from 'src/app/services/bucket-service';
+import { BucketCategory } from 'src/app/models/bucket.category.model';
+import { BucketColor } from 'src/app/models/bucket.color.model';
+import { BucketService } from 'src/app/services/bucket.service';
 import { DictionaryService } from 'src/app/services/dictionary.service';
 import { environment } from 'src/environments/environment';
 
@@ -50,7 +50,7 @@ export class BucketEditComponent implements OnInit {
 
   async loadCurrentBucket(): Promise<Bucket> {
     return new Promise<Bucket>((resolve) => {
-      this.bucketService.getBucket(environment.bucketEndpoint + this.currentBucketId).subscribe(
+      this.bucketService.getBucket(this.currentBucketId).subscribe(
         (response: Bucket) => {
           resolve(response);
         });
@@ -59,7 +59,7 @@ export class BucketEditComponent implements OnInit {
 
   async loadBucketCategories() {
     return new Promise<BucketCategory[]>((resolve) => {
-      this.dictionaryService.getBucketCategories(environment.bucketCategoryEndpoint).subscribe(
+      this.dictionaryService.getBucketCategories().subscribe(
         (response: BucketCategory[]) => {
           resolve(response);
         });
@@ -68,7 +68,7 @@ export class BucketEditComponent implements OnInit {
 
   async loadBucketColors() {
     return new Promise<BucketColor[]>((resolve) => {
-      this.dictionaryService.getBucketColors(environment.bucketColorEndpoint).subscribe(
+      this.dictionaryService.getBucketColors().subscribe(
         (response: BucketColor[]) => {
           resolve(response);
         });
@@ -121,12 +121,9 @@ export class BucketEditComponent implements OnInit {
       this.currentBucket.bucketColorId = matchedColor.id;
     }
 
-    this.bucketService.putBucket(environment.bucketEndpoint + this.currentBucketId, this.currentBucket).subscribe(
+    this.bucketService.putBucket(this.currentBucketId, this.currentBucket).subscribe(
       (response: Bucket) => {
         this.toastr.success(`Bucket ${response.name} edit successfull.`);
-      },
-      (error: any) => {
-        this.toastr.error("Request failed.")
       }
     );
   }
