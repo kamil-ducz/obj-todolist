@@ -96,61 +96,61 @@ describe('BucketService', () => {
   })
 
   it('should retrieve buckets', () => {
-    service.getBuckets('mock/api/bucket').subscribe(
+    service.getBuckets().subscribe(
       (buckets: Bucket[]) => {
         expect(buckets).toEqual(fakeBuckets);
       });
-      const request = httpMock.expectOne('mock/api/bucket');
+      const request = httpMock.expectOne(req => req.method === 'GET');
       expect (request.request.method).toBe('GET');
       request.flush(fakeBuckets);
   });
 
   it('should retrieve bucket', () => {
-    service.getBucket('mock/api/bucket').subscribe(
+    service.getBucket(1).subscribe(
       (buckets: Bucket) => {
         expect(buckets).toEqual(fakeBucket);
       });
-      const request = httpMock.expectOne('mock/api/bucket');
+      const request = httpMock.expectOne(req => req.method === 'GET');
       expect (request.request.method).toBe('GET');
       request.flush(fakeBucket);
   });
 
   it('should retrieve bucket tasks', () => {
-    service.getBucketTasks('mock/api/bucket-tasks').subscribe(
+    service.getBucketTasks(1).subscribe(
       (bucketTasks: BucketTask[]) => {
         expect(bucketTasks).toEqual(fakeBucketTasks);
       });
-      const request = httpMock.expectOne('mock/api/bucket-tasks');
+      const request = httpMock.expectOne(req => req.method === 'GET');
       expect (request.request.method).toBe('GET');
       request.flush(fakeBucketTasks);
   });
 
   it('should insert bucket', () => {
-    service.postBucket('mock/api/bucket', fakeBucket).subscribe(
+    service.postBucket(fakeBucket).subscribe(
       (bucket: Bucket) => {
         expect(bucket).toEqual(fakeBucket);
       });
-      const request = httpMock.expectOne('mock/api/bucket');
+      const request = httpMock.expectOne(req => req.method === 'POST');
       expect (request.request.method).toBe('POST');
       request.flush(fakeBucket);
   });
 
   it('should update bucket', () => {
-    service.putBucket('mock/api/bucket', fakeBucket).subscribe(
+    service.putBucket(1, fakeBucket).subscribe(
       (buckets: Bucket) => {
         expect(buckets).toEqual(fakeBucket);
       });
-      const request = httpMock.expectOne('mock/api/bucket');
+      const request = httpMock.expectOne(req => req.method === 'PUT');
       expect (request.request.method).toBe('PUT');
       request.flush(fakeBucket);
   });
 
   it('should delete bucket', () => {
-    service.deleteBucket('mock/api/bucket').subscribe(
+    service.deleteBucket(1).subscribe(
       (buckets: Bucket) => {
         expect(buckets).toEqual(fakeBucket);
       });
-      const request = httpMock.expectOne('mock/api/bucket');
+      const request = httpMock.expectOne(req => req.method === 'DELETE');
       expect (request.request.method).toBe('DELETE');
       request.flush(fakeBucket);
   });

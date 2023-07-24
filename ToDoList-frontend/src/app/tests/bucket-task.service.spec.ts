@@ -73,51 +73,51 @@ describe('BucketService', () => {
   })
 
   it('should retrieve bucket tasks', () => {
-    service.getBucketTasks('mock/api/bucket-tasks').subscribe(
+    service.getBucketTasks().subscribe(
       (bucketTasks: BucketTask[]) => {
         expect(bucketTasks).toEqual(fakeBucketTasks);
       });
-      const request = httpMock.expectOne('mock/api/bucket-tasks');
+      const request = httpMock.expectOne(req => req.method === 'GET');
       expect (request.request.method).toBe('GET');
       request.flush(fakeBucketTasks);
   });
 
   it('should retrieve single bucket task', () => {
-    service.getBucketTask('mock/api/bucket-tasks').subscribe(
+    service.getBucketTask(1).subscribe(
       (bucketTask: BucketTask) => {
         expect(bucketTask).toEqual(fakeBucketTask);
       });
-      const request = httpMock.expectOne('mock/api/bucket-tasks');
+      const request = httpMock.expectOne(req => req.method === 'GET');
       expect (request.request.method).toBe('GET');
       request.flush(fakeBucketTask);
   });
 
   it('should insert new bucket task', () => {
-    service.postBucketTask('mock/api/bucket-tasks', fakeBucketTask).subscribe(
+    service.postBucketTask(fakeBucketTask).subscribe(
       (bucketTask: BucketTask) => {
         expect(bucketTask).toEqual(fakeBucketTask);
       });
-      const request = httpMock.expectOne('mock/api/bucket-tasks');
+      const request = httpMock.expectOne(req => req.method === 'POST');
       expect (request.request.method).toBe('POST');
       request.flush(fakeBucketTask);
   });
 
   it('should update bucket task', () => {
-    service.putBucketTask('mock/api/bucket-tasks', fakeBucketTask).subscribe(
+    service.putBucketTask(1, fakeBucketTask).subscribe(
       (bucketTask: BucketTask) => {
         expect(bucketTask).toEqual(fakeBucketTask);
       });
-      const request = httpMock.expectOne('mock/api/bucket-tasks');
+      const request = httpMock.expectOne(req => req.method === 'PUT');
       expect (request.request.method).toBe('PUT');
       request.flush(fakeBucketTask);
   });
 
   it('should update bucket', () => {
-    service.deleteBucketTask('mock/api/bucket-tasks').subscribe(
+    service.deleteBucketTask(1).subscribe(
       (bucketTask: BucketTask) => {
         expect(bucketTask).toEqual(fakeBucketTask);
       });
-      const request = httpMock.expectOne('mock/api/bucket-tasks');
+      const request = httpMock.expectOne(req => req.method === 'DELETE');
       expect (request.request.method).toBe('DELETE');
       request.flush(fakeBucketTask);
   });

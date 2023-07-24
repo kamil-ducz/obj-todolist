@@ -27,47 +27,47 @@ describe('AssigneeService', () => {
   });
 
   it('should retrieve assignees', () => {
-    service.getAssignees('mock/api/assignees').subscribe((assignees: Assignee[]) => {
+    service.getAssignees().subscribe((assignees: Assignee[]) => {
       expect(assignees).toEqual(fakeAssignees);
     });
-    const request = httpMock.expectOne('mock/api/assignees');
+    const request = httpMock.expectOne(req => req.method === 'GET');
     expect(request.request.method).toBe('GET');
     request.flush(fakeAssignees);
   });
 
   it('should retrieve single assignee', () => {
-    service.getAssignee('mock/api/assignee').subscribe((assignee: Assignee) => {
+    service.getAssignee(1).subscribe((assignee: Assignee) => {
       expect(assignee).toEqual(fakeAssignee);
     });
-    const request = httpMock.expectOne('mock/api/assignee');
+    const request = httpMock.expectOne(req => req.method === 'GET');
     expect(request.request.method).toBe('GET');
     request.flush(fakeAssignee);
   });
 
   it('should insert single assignee', () => {
-    service.postAssignee('mock/api/assignee', fakeAssignee).subscribe((assignee: Assignee) => {
+    service.postAssignee(fakeAssignee).subscribe((assignee: Assignee) => {
       expect(assignee).toEqual(fakeAssignee);
     });
-    const request = httpMock.expectOne('mock/api/assignee');
+    const request = httpMock.expectOne(req => req.method === 'POST');
     expect(request.request.method).toBe('POST');
     request.flush(fakeAssignee);
   });
 
   it('should update single assignee', () => {
-    service.putAssignee('mock/api/assignee').subscribe((assignee: Assignee) => {
+    service.putAssignee(1, fakeAssignee).subscribe((assignee: Assignee) => {
       expect(assignee).toEqual(fakeAssignee);
     });
-    const request = httpMock.expectOne('mock/api/assignee');
+    const request = httpMock.expectOne(req => req.method === 'PUT');
     expect(request.request.method).toBe('PUT');
     request.flush(fakeAssignee);
   });
 
   it('should delete single assignee', () => {
-    service.deleteAssignee('mock/api/assignee').subscribe((assignee: Assignee) => {
+    service.deleteAssignee(1).subscribe((assignee: Assignee) => {
       expect(assignee).toEqual(fakeAssignee);
     });
 
-    const request = httpMock.expectOne('mock/api/assignee');
+    const request = httpMock.expectOne(req => req.method === 'DELETE');
     expect(request.request.method).toBe('DELETE');
     request.flush(fakeAssignee);
   });
