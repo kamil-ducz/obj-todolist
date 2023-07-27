@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using Serilog;
 using System.Collections.Generic;
-using System.Linq;
 using ToDoList.Api.Assignees.Models;
 using ToDoList.Domain.Models;
 using ToDoList.Domain.Repositories;
@@ -30,7 +28,6 @@ public class AssigneeService : IAssigneeService
 
     public IReadOnlyCollection<AssigneeDto> GetAllAssignees()
     {
-        Log.Information("Assignees triggered, output = " + _mapper.Map<List<AssigneeDto>>(_assigneeRepository.GetAllAssignees()).ToList());
         return _mapper.Map<List<AssigneeDto>>(_assigneeRepository.GetAllAssignees());
     }
 
