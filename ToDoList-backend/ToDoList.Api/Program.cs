@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 using ToDoList.Api.Config;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog();
 
 // Add services to the container.
 builder.Services.AddApplicationServices();
@@ -15,6 +18,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Error()
+    .WriteTo.File("logs/error-log.txt")
+    .CreateLogger();
+
+app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 
