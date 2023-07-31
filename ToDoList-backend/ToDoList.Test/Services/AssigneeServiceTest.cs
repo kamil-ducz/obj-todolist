@@ -4,6 +4,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ToDoList.Api.Assignees.MappingProfiles;
 using ToDoList.Api.Assignees.Models;
 using ToDoList.Api.Assignees.Services;
 using ToDoList.Domain.Models;
@@ -15,29 +16,40 @@ namespace ToDoList.Test.Services;
 public class AssigneeServiceTest
 {
     private Mock<IAssigneeRepository> _assigneeRepositoryMock;
-    private Mock<IMapper> _mapperMock;
     private IAssigneeService _assigneeService;
+    private IMapper _mapper;
 
     [SetUp]
     public void Setup()
     {
+        var mappingConfig = new MapperConfiguration(mc =>
+        {
+            mc.AddProfile(new AssigneeMappingProfile());
+        });
+        IMapper mapper = mappingConfig.CreateMapper();
+        _mapper = mapper;
+
         _assigneeRepositoryMock = new Mock<IAssigneeRepository>();
-        _mapperMock = new Mock<IMapper>();
-        _assigneeService = new AssigneeService(_assigneeRepositoryMock.Object, _mapperMock.Object);
+        _assigneeService = new AssigneeService(_assigneeRepositoryMock.Object, _mapper);
     }
 
     [Test]
     public void GetAssignees_ReturnAssignees()
     {
         // Arrange
-        var expectedAssignees = new List<AssigneeDto>()
+        List<AssigneeDto> expectedAssignees = new List<AssigneeDto>
         {
-            new AssigneeDto(1, "John Doe"),
-            new AssigneeDto(2, "Otobong Shay")
+            new AssigneeDto (1, "John"),
+            new AssigneeDto (2, "Alice")
         };
 
-        _mapperMock.Setup(m => m.Map<List<AssigneeDto>>(It.IsAny<List<Assignee>>()))
-                   .Returns(expectedAssignees.Select(a => new AssigneeDto(a.Id, a.Name)).ToList());
+        _assigneeRepositoryMock.Setup(repo => repo.GetAllAssignees())
+            .Returns(expectedAssignees.Select(a => new Assignee()
+            {
+                Id = a.Id,
+                Name = a.Name
+            }).ToList());
+
 
         // Act
         var result = _assigneeService.GetAllAssignees();
@@ -50,16 +62,17 @@ public class AssigneeServiceTest
     public void GetAssignee_ReturnAssignee()
     {
         // Arrange
-        var expectedAssignee = new AssigneeDto(3, "Pilirani Tendai");
+        var expectedAssignee = new Assignee { Id = 3, Name = "Pilirani Tendai" };
 
-        _mapperMock.Setup(m => m.Map<AssigneeDto>(It.IsAny<Assignee>()))
-                   .Returns(expectedAssignee);
+        _assigneeRepositoryMock.Setup(repo => repo.GetAssignee(3)).Returns(expectedAssignee);
+
+        var expectedAssigneeDto = _mapper.Map<AssigneeDto>(expectedAssignee);
 
         // Act
         var result = _assigneeService.GetAssignee(3);
 
         // Assert
-        expectedAssignee.Should().BeEquivalentTo(result);
+        expectedAssignee.Should().BeEquivalentTo(expectedAssigneeDto);
     }
 
     [Test]
@@ -72,11 +85,8 @@ public class AssigneeServiceTest
     [Test]
     public void InsertAssignee_ReturnAssigneeId()
     {
-        // Arrange
+        //Arrange
         var expectedAssigneeId = 1234;
-
-        _mapperMock.Setup(m => m.Map<Assignee>(It.IsAny<AssigneeUpsertDto>()))
-                   .Returns(new Assignee());
 
         _assigneeRepositoryMock.Setup(repo => repo.InsertAssignee(It.IsAny<Assignee>()))
                                .Callback<Assignee>(assignee =>
@@ -88,7 +98,7 @@ public class AssigneeServiceTest
         var result = _assigneeService.InsertAssignee(new AssigneeUpsertDto("Example assignee to insert"));
 
         // Assert
-        //Assert.That(expectedAssigneeId, Is.EqualTo(result));
+        Assert.That(expectedAssigneeId, Is.EqualTo(result));
         expectedAssigneeId.Should().Be(result);
     }
 
