@@ -28,6 +28,11 @@ export class ErrorInterceptor implements HttpInterceptor {
   }
 
   private handleErrorResponse(error: HttpErrorResponse): void {
+    if (error.status === 400)
+    {
+      this.toastr.error("Username and password incorrect");
+      return;
+    }
     if (error.status === 404) {
       this.toastr.error("Resource not found");
       return;
