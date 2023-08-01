@@ -15,6 +15,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ApiInterceptor } from './interceptors/api.interceptor';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { SpinnerComponent } from './spinner/spinner.component';
     AssigneesComponent,
     BucketNewComponent,
     BucketEditComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
