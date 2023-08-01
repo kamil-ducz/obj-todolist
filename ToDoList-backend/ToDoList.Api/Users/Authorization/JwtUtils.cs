@@ -8,7 +8,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using ToDoList.Api.Users.Helpers;
-using ToDoList.Api.Users.Models;
+using ToDoList.Domain.Models;
 
 public interface IJwtUtils
 {

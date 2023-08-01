@@ -1,4 +1,6 @@
-﻿namespace ToDoList.Api.Users.Models;
+﻿using ToDoList.Domain.Models;
+
+namespace ToDoList.Api.Users.Models;
 
 public class AuthenticateResponse
 {

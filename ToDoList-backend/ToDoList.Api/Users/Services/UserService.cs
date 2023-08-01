@@ -2,6 +2,7 @@
 using System.Linq;
 using ToDoList.Api.Users.Authorization;
 using ToDoList.Api.Users.Models;
+using ToDoList.Domain.Models;
 
 namespace ToDoList.Api.Users.Services;
 
@@ -15,6 +16,8 @@ public interface IUserService
 public class UserService : IUserService
 {
     // users hardcoded for simplicity, store in a db with hashed passwords in production applications
+    // TODO create Users entity, seed data, repository for this UserService to have solid data
+
     private List<User> _users = new List<User>
     {
         new User { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "test" }
