@@ -11,9 +11,10 @@ const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'buckets', component: BucketsComponent, canActivate: [AuthGuard] },
-  { path: 'bucket-details/:id', component: BucketComponent },
-  { path: 'bucketnew', component: BucketNewComponent },
-  { path: 'bucket-edit/:id', component: BucketEditComponent }
+  { path: 'bucket-details/:id', component: BucketComponent, canActivate: [AuthGuard] },
+  { path: 'bucketnew', component: BucketNewComponent, canActivate: [AuthGuard] },
+  { path: 'bucket-edit/:id', component: BucketEditComponent, canActivate: [AuthGuard] },
+  { path: '**', redirectTo: '/login' } // Wildcard route to catch all other routes and redirect to login
 ];
 
 @NgModule({
