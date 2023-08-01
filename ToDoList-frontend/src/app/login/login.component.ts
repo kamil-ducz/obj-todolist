@@ -45,11 +45,12 @@ export class LoginComponent implements OnInit {
             .subscribe({
                 next: () => {
                     this.router.navigate(['/buckets']);
-                },
-                error: error => {
-                    this.error = error;
-                    this.loading = false;
                 }
             });
+    }
+
+    // TODO
+    register() {
+        event.preventDefault();
     }
 }
