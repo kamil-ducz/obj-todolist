@@ -43,6 +43,7 @@ public static class DependencyInjection
         services.AddScoped<IBucketRepository, BucketRepository>();
         services.AddScoped<IBucketTaskRepository, BucketTaskRepository>();
         services.AddScoped<IDictionaryRepository, DictionaryRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

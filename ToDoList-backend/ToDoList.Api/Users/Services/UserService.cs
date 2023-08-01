@@ -3,6 +3,7 @@ using System.Linq;
 using ToDoList.Api.Users.Authorization;
 using ToDoList.Api.Users.Models;
 using ToDoList.Domain.Models;
+using ToDoList.Domain.Repositories;
 
 namespace ToDoList.Api.Users.Services;
 
@@ -15,23 +16,19 @@ public interface IUserService
 
 public class UserService : IUserService
 {
-    // users hardcoded for simplicity, store in a db with hashed passwords in production applications
-    // TODO create Users entity, seed data, repository for this UserService to have solid data
-
-    private List<User> _users = new List<User>
-    {
-        new User { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "test" }
-    };
-
+    private readonly IUserRepository _userRepository;
     private readonly IJwtUtils _jwtUtils;
+    private IEnumerable<User> _users = new List<User>();
 
-    public UserService(IJwtUtils jwtUtils)
+    public UserService(IUserRepository userRepository, IJwtUtils jwtUtils)
     {
+        _userRepository = userRepository;
         _jwtUtils = jwtUtils;
     }
 
     public AuthenticateResponse? Authenticate(AuthenticateRequest model)
     {
+        _users = GetAll();
         var user = _users.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
 
         // return null if user not found
@@ -45,11 +42,11 @@ public class UserService : IUserService
 
     public IEnumerable<User> GetAll()
     {
-        return _users;
+        return _userRepository.GetAllUsers();
     }
 
     public User? GetById(int id)
     {
-        return _users.FirstOrDefault(x => x.Id == id);
+        return _userRepository.GetUser(id);
     }
 }
