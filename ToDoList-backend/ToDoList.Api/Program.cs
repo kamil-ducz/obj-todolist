@@ -1,3 +1,11 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Serilog;
+using ToDoList.Api.Config;
+using ToDoList.Api.Users.Authorization;
+using ToDoList.Api.Users.Helpers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog();
