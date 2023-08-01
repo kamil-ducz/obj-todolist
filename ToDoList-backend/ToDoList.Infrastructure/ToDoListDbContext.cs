@@ -33,4 +33,5 @@ public class ToDoListDbContext : DbContext
     public DbSet<BucketTask> BucketTasks { get; set; }
     public DbSet<BucketTaskState> BucketTaskStates { get; set; }
     public DbSet<BucketTaskPriority> BucketTaskPriorities { get; set; }
+    public DbSet<User> Users { get; set; }
 }
