@@ -9,15 +9,17 @@ import { AuthenticationService } from '../services/auth/authentication.service';
 export class HeaderComponent implements OnInit {
 
   constructor(
-    private authService: AuthenticationService
+    private authenticationService: AuthenticationService
   ) { }
 
-  alreadyLogged = false;
-
-  ngOnInit(): void {
+  ngOnInit() {
   }
 
   logout() {
-    this.authService.logout();
+    this.authenticationService.logout();
+  }
+
+  showLogout(): boolean {
+    return !!this.authenticationService.userValue;    
   }
 }
