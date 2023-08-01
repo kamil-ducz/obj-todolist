@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace ToDoList.Api.Users.Models;
+namespace ToDoList.Domain.Models;
 
 public class User
 {
