@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using ToDoList.Api.Users.Authorization;
 using ToDoList.Api.Users.Models;
 using ToDoList.Api.Users.Services;
@@ -42,6 +43,6 @@ public class UsersController : ControllerBase
     public IActionResult InsertNewUser(User user)
     {
         var userId = _userService.InsertNewUser(user);
-        return Ok(userId);
+        return Ok(Request.GetEncodedUrl() + "/" + userId);
     }
 }
