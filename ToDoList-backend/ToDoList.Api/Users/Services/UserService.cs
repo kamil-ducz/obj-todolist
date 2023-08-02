@@ -29,10 +29,19 @@ public class UserService : IUserService
     public AuthenticateResponse? Authenticate(AuthenticateRequest model)
     {
         _users = GetAll();
-        var user = _users.SingleOrDefault(x => x.Username == model.Username && x.Password == model.Password);
+        var user = _users.SingleOrDefault(x => x.Username == model.Username);
 
         // return null if user not found
-        if (user == null) return null;
+        if (user == null)
+        {
+            return null;
+        }
+
+        // return null if user-typed password hash not match hashed password in db
+        if (!AuthenticationService.VerifyPassword(user.Password, model.Password))
+        {
+            return null;
+        }
 
         // authentication successful so generate jwt token
         var token = _jwtUtils.GenerateJwtToken(user);
