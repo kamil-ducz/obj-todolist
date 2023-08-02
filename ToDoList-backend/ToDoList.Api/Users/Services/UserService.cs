@@ -66,6 +66,7 @@ public class UserService : IUserService
         {
             return null;
         }
+        user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
         _userRepository.InsertUser(user);
         return user.Id;
     }
