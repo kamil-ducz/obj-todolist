@@ -37,6 +37,11 @@ export class ErrorInterceptor implements HttpInterceptor {
       this.toastr.error("Resource not found");
       return;
     }
+    if (error.status === 409)
+    {
+      this.toastr.error("User already exists");
+      return;
+    }
     if (error.status === 500) {
       this.toastr.error("Internal server error");
       return;
