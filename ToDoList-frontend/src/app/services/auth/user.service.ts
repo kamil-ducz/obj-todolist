@@ -19,4 +19,8 @@ export class UserService {
   GetUser(userId: number): Observable<User> {
     return this.httpClient.get<User>('User/' + userId);
   }
+
+  postUser(user: User): Observable<User> {
+    return this.httpClient.post<User>('Users/', user);
+  }
 }

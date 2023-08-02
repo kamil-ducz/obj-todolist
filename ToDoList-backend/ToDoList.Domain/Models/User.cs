@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace ToDoList.Domain.Models;
+﻿namespace ToDoList.Domain.Models;
 
 public class User
 {
@@ -10,6 +8,5 @@ public class User
     public string Username { get; set; } = string.Empty;
     //[EmailAddress]
     //public string? Email { get; set; }
-    [JsonIgnore]
     public string Password { get; set; } = string.Empty;
 }
