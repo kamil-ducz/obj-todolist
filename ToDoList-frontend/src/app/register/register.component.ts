@@ -44,7 +44,7 @@ export class RegisterComponent {
   onSubmitNewUser(newUser: User) {
     this.userService.postUser(newUser).subscribe(
       () => {
-        this.toastr.success(`User ${newUser.Username} added successfully.`);
+        this.toastr.success(`User ${newUser.username} added successfully.`);
       }
     );
   }
