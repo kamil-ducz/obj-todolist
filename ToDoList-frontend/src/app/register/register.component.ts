@@ -21,21 +21,22 @@ export class RegisterComponent {
 
   registerUserFormGroup = new FormGroup({
     firstName: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3),
+      Validators.maxLength(50),
     ]),
     lastName: new FormControl('', [
       Validators.maxLength(50),
     ]),
     username: new FormControl('', [
-      Validators.required,      
+      Validators.required,
+      Validators.min(5),
+      Validators.max(15),      
     ]),
     // Email: new FormControl('', [
     //   Validators.required,
     // ]),
-    password: new FormControl('1', [
+    password: new FormControl('', [
       Validators.required,
-      Validators.min(1),
+      Validators.min(5),
       Validators.max(15),
     ])
   });
