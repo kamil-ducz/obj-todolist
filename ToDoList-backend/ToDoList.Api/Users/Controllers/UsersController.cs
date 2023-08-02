@@ -42,7 +42,11 @@ public class UsersController : ControllerBase
     [HttpPost]
     public IActionResult InsertNewUser(User user)
     {
-        var userId = _userService.InsertNewUser(user);
-        return Created(Request.GetEncodedUrl() + "/" + userId, _userService.GetById(userId));
+        int? userId = _userService.InsertNewUser(user);
+        if (userId == null)
+        {
+            return Conflict();
+        }
+        return Created(Request.GetEncodedUrl() + "/" + userId, _userService.GetById((int)userId));
     }
 }
