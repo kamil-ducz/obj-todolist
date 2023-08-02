@@ -43,6 +43,6 @@ public class UsersController : ControllerBase
     public IActionResult InsertNewUser(User user)
     {
         var userId = _userService.InsertNewUser(user);
-        return Ok(Request.GetEncodedUrl() + "/" + userId);
+        return Created(Request.GetEncodedUrl() + "/" + userId, _userService.GetById(userId));
     }
 }

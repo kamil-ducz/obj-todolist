@@ -52,8 +52,8 @@ export class LoginComponent implements OnInit {
             });
     }
 
-    // TODO
     register() {
         event.preventDefault();
+        this.router.navigate(['register']);
     }
 }
