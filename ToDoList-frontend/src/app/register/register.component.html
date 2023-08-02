@@ -23,10 +23,13 @@
         <div *ngIf="registerUserFormGroup.get('username').invalid && registerUserFormGroup.get('username').touched" class="text-red-600">
           *Username field cannot be empty, must be 5-20 characters long.
         </div>
-        <!-- <div class="mb-6">
+        <div class="mb-6">
             <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-            <input type="text" id="description" name="description" maxlength="20" formControlName="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Type in bucket description, e.x. Organize the office errands">
-        </div> -->
+            <input type="email" minlength="10" maxlength="80" formControlName="email" class="user-form-control">
+        </div>
+        <div *ngIf="registerUserFormGroup.get('email').invalid && registerUserFormGroup.get('email').touched" class="text-red-600">
+          Email field is optional, must be 10-80 characters long and must be valid.
+        </div>
         <div class="mb-6">
             <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
             <input type="password" minlength="5" maxlength="100" formControlName="password" class="user-form-control">
