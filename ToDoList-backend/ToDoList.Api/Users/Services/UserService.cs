@@ -12,6 +12,7 @@ public interface IUserService
     AuthenticateResponse? Authenticate(AuthenticateRequest model);
     IEnumerable<User> GetAll();
     User? GetById(int id);
+    public int InsertNewUser(User user);
 }
 
 public class UserService : IUserService
@@ -57,5 +58,11 @@ public class UserService : IUserService
     public User? GetById(int id)
     {
         return _userRepository.GetUser(id);
+    }
+
+    public int InsertNewUser(User user)
+    {
+        _userRepository.InsertUser(user);
+        return user.Id;
     }
 }
