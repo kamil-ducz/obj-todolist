@@ -20,6 +20,11 @@ public class JwtUtils : IJwtUtils
 {
     private readonly AppSettings _appSettings;
 
+    public JwtUtils()
+    {
+
+    }
+
     public JwtUtils(IOptions<AppSettings> appSettings)
     {
         _appSettings = appSettings.Value;
