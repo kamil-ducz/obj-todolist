@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using AutoMapper;
+using System.Collections.Generic;
 using System.Linq;
 using ToDoList.Api.Users.Authorization;
 using ToDoList.Api.Users.Models;
@@ -10,9 +11,9 @@ namespace ToDoList.Api.Users.Services;
 public interface IUserService
 {
     AuthenticateResponse? Authenticate(AuthenticateRequest model);
-    IEnumerable<User> GetAll();
+    IEnumerable<UserDto> GetAll();
     User? GetById(int id);
-    public int? InsertNewUser(User user);
+    public int? InsertNewUser(UserUpsertDto user);
 }
 
 public class UserService : IUserService
@@ -20,13 +21,15 @@ public class UserService : IUserService
     private readonly IUserRepository _userRepository;
     private readonly IJwtUtils _jwtUtils;
     private readonly IEmailService _emailService;
-    private IEnumerable<User> _users = new List<User>();
+    private readonly IMapper _mapper;
+    private IEnumerable<UserDto> _users = new List<UserDto>();
 
-    public UserService(IUserRepository userRepository, IJwtUtils jwtUtils, IEmailService emailService)
+    public UserService(IUserRepository userRepository, IJwtUtils jwtUtils, IEmailService emailService, IMapper mapper)
     {
         _userRepository = userRepository;
         _jwtUtils = jwtUtils;
         _emailService = emailService;
+        _mapper = mapper;
     }
 
     public AuthenticateResponse? Authenticate(AuthenticateRequest model)
@@ -52,9 +55,9 @@ public class UserService : IUserService
         return new AuthenticateResponse(user, token);
     }
 
-    public IEnumerable<User> GetAll()
+    public IEnumerable<UserDto> GetAll()
     {
-        return _userRepository.GetAllUsers();
+        return _mapper.Map<IEnumerable<UserDto>>(_userRepository.GetAllUsers());
     }
 
     public User? GetById(int id)
@@ -62,16 +65,17 @@ public class UserService : IUserService
         return _userRepository.GetUser(id);
     }
 
-    public int? InsertNewUser(User user)
+    public int? InsertNewUser(UserUpsertDto user)
     {
-        if (_userRepository.GetAllUsers().Any(u => u.Username == user.Username))
+        var userToInsert = _mapper.Map<User>(user);
+        if (_userRepository.GetAllUsers().Any(u => u.Username == userToInsert.Username))
         {
             return null;
         }
 
-        user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
-        _userRepository.InsertUser(user);
+        userToInsert.Password = BCrypt.Net.BCrypt.HashPassword(userToInsert.Password);
+        _userRepository.InsertUser(userToInsert);
         // _emailService.SendWelcomeEmail(user); disabled due to Google newest security policies
-        return user.Id;
+        return userToInsert.Id;
     }
 }
