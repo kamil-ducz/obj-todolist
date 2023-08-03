@@ -19,12 +19,14 @@ public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
     private readonly IJwtUtils _jwtUtils;
+    private readonly IEmailService _emailService;
     private IEnumerable<User> _users = new List<User>();
 
-    public UserService(IUserRepository userRepository, IJwtUtils jwtUtils)
+    public UserService(IUserRepository userRepository, IJwtUtils jwtUtils, IEmailService emailService)
     {
         _userRepository = userRepository;
         _jwtUtils = jwtUtils;
+        _emailService = emailService;
     }
 
     public AuthenticateResponse? Authenticate(AuthenticateRequest model)
@@ -66,8 +68,10 @@ public class UserService : IUserService
         {
             return null;
         }
+
         user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
         _userRepository.InsertUser(user);
+        // _emailService.SendWelcomeEmail(user); disabled due to Google newest security policies
         return user.Id;
     }
 }
