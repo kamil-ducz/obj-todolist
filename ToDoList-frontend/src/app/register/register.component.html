@@ -25,7 +25,7 @@
         </div>
         <div class="mb-6">
             <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-            <input type="email" minlength="10" maxlength="80" formControlName="email" class="user-form-control">
+            <input type="text" maxlength="80" formControlName="email" class="user-form-control">
         </div>
         <div *ngIf="registerUserFormGroup.get('email').invalid && registerUserFormGroup.get('email').touched" class="text-red-600">
           Email field is optional, must be 10-80 characters long and must be valid.

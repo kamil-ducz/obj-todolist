@@ -32,6 +32,7 @@ public static class DependencyInjection
         services.AddFluentValidationAutoValidation();
 
         services.AddScoped<IJwtUtils, JwtUtils>();
+        services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<IUserService, UserService>();
 
         services.AddScoped<IAssigneeService, AssigneeService>();
