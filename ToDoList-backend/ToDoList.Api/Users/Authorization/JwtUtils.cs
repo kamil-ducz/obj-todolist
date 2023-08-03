@@ -8,11 +8,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using ToDoList.Api.Users.Helpers;
-using ToDoList.Domain.Models;
+using ToDoList.Api.Users.Models;
 
 public interface IJwtUtils
 {
-    public string GenerateJwtToken(User user);
+    public string GenerateJwtToken(UserDto user);
     public int? ValidateJwtToken(string? token);
 }
 
@@ -28,7 +28,7 @@ public class JwtUtils : IJwtUtils
             throw new Exception("JWT secret not configured");
     }
 
-    public string GenerateJwtToken(User user)
+    public string GenerateJwtToken(UserDto user)
     {
         // generate token that is valid for 7 days
         var tokenHandler = new JwtSecurityTokenHandler();

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using ToDoList.Api.Users.Authorization;
 using ToDoList.Api.Users.Models;
 using ToDoList.Api.Users.Services;
-using ToDoList.Domain.Models;
 
 namespace ToDoList.Api.Users.Controllers;
 
@@ -40,7 +39,7 @@ public class UsersController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost]
-    public IActionResult InsertNewUser(User user)
+    public IActionResult InsertNewUser(UserUpsertDto user)
     {
         int? userId = _userService.InsertNewUser(user);
         if (userId == null)

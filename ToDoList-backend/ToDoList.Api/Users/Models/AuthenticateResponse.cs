@@ -1,6 +1,4 @@
-﻿using ToDoList.Domain.Models;
-
-namespace ToDoList.Api.Users.Models;
+﻿namespace ToDoList.Api.Users.Models;
 
 public class AuthenticateResponse
 {
@@ -11,7 +9,7 @@ public class AuthenticateResponse
     public string Token { get; set; }
 
 
-    public AuthenticateResponse(User user, string token)
+    public AuthenticateResponse(UserDto user, string token)
     {
         Id = user.Id;
         FirstName = user.FirstName;
