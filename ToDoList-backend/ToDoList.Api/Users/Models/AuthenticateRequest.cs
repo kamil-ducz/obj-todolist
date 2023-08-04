@@ -9,4 +9,10 @@ public class AuthenticateRequest
 
     [Required]
     public string? Password { get; set; }
+
+    public AuthenticateRequest(string? username, string? password)
+    {
+        Username = username;
+        Password = password;
+    }
 }

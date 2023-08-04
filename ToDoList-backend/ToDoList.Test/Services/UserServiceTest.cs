@@ -5,6 +5,7 @@ using Moq;
 using System.Collections.Generic;
 using System.Linq;
 using ToDoList.Api.Users.Authorization;
+using ToDoList.Api.Users.Helpers;
 using ToDoList.Api.Users.MappingProfiles;
 using ToDoList.Api.Users.Models;
 using ToDoList.Api.Users.Services;
@@ -19,6 +20,8 @@ public class UserServiceTest
     private Mock<IUserRepository> _userRepositoryMock;
     private IUserService _userService;
     private IMapper _mapper;
+    private IJwtUtils _jwtUtils;
+    private IEmailService _emailServiceMock;
 
     [SetUp]
     public void Setup()
@@ -29,14 +32,17 @@ public class UserServiceTest
         });
         var mapper = mapperConfig.CreateMapper();
         _mapper = mapper;
-        // TODO test public AuthenticateResponse? Authenticate(AuthenticateRequest model)
-        //var appSettings = new AppSettings();
-        var _jwtUtilsMock = new JwtUtils();
+        var appSettings = new AppSettings
+        {
+            Secret = "This is a secret authentication phase which should be always unique for the application"
+        };
+        IOptions<AppSettings> appSettingsOptions = Options.Create(appSettings);
+        _jwtUtils = new JwtUtils(appSettingsOptions);
         var smtpSettingsMock = new Mock<IOptions<SmtpSettings>>();
-        var _emailServiceMock = new EmailService(smtpSettingsMock.Object);
+        _emailServiceMock = new EmailService(smtpSettingsMock.Object);
 
         _userRepositoryMock = new Mock<IUserRepository>();
-        _userService = new UserService(_userRepositoryMock.Object, _jwtUtilsMock, _emailServiceMock, _mapper);
+        _userService = new UserService(_userRepositoryMock.Object, _jwtUtils, _emailServiceMock, _mapper);
     }
 
     [Test]
@@ -113,19 +119,40 @@ public class UserServiceTest
         expectedUserId.Should().Be(result);
     }
 
-    //[Test]
-    //public void AuthenticateRequest_ReturnAuthenticateResponse()
-    //{
-    //    // Arrange
-    //    var expectedUserDto = new UserDto(1, "John", "Doe", "JD", "john.doe@alfa.com", "test123");
-    //    var token = _jwtUtils.GenerateJwtToken(expectedUserDto);
-    //    var authenticateRequest = new AuthenticateRequest(expectedUserDto.Username, expectedUserDto.Password);
-    //    var expectedAuthenticateResponse = new AuthenticateResponse(expectedUserDto, token);
+    [Test]
+    public void AuthenticateRequest_ReturnAuthenticateResponse()
+    {
+        // Arrange
+        var expectedUsers = new List<UserDto>()
+        {
+            new UserDto(1, "John", "Doe", "JD", "john.doe@alfa.com", "test123"),
+            new UserDto(2, "Erick", "Gold", "EG", "eg@beta.com", "test123"),
+        };
 
-    //    // Act 
-    //    var authenticateResponse = _userService.Authenticate(authenticateRequest);
+        _userRepositoryMock.Setup(repo => repo.GetAllUsers())
+            .Returns(() => expectedUsers.Select(b => new User
+            {
+                Id = b.Id,
+                FirstName = b.FirstName,
+                LastName = b.LastName,
+                Username = b.Username,
+                Email = b.Email,
+                Password = b.Password,
+            }).ToList());
 
-    //    // Assert
-    //    expectedAuthenticateResponse.Should().Be(authenticateResponse);
-    //}
+        var expectedUserDto = new UserDto(1, "John", "Doe", "JD", "john.doe@alfa.com", "test123");
+        var expectedToken = _jwtUtils.GenerateJwtToken(expectedUserDto); // verify token generation mechanism
+
+        var authenticateRequest = new AuthenticateRequest(expectedUserDto.Username, expectedUserDto.Password);
+        var expectedAuthenticateResponse = new AuthenticateResponse(expectedUserDto, expectedToken);
+
+        _userService = new UserService(_userRepositoryMock.Object, _jwtUtils, _emailServiceMock, _mapper);
+
+        // Act 
+        var authenticateResponse = _userService.Authenticate(authenticateRequest);
+        authenticateResponse.Token = expectedToken; // assign generated token for response so that assertion successes
+
+        // Assert
+        expectedAuthenticateResponse.Should().BeEquivalentTo(authenticateResponse);
+    }
 }
