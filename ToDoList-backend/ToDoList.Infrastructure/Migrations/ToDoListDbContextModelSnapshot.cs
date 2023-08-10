@@ -404,6 +404,65 @@ namespace ToDoList.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("ToDoList.Domain.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "example@example.com",
+                            FirstName = "John",
+                            LastName = "Doe",
+                            Password = "$2a$11$xNoeFcBpV79d9fYx8CFd6OObjMFkm8ZCqDcfeprHsQPl4lqQFZbjm",
+                            Username = "JD"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "ian.orange@gmail.com",
+                            FirstName = "Ian",
+                            LastName = "Orange",
+                            Password = "$2a$11$xyy47OLG7v4LLFI5hbX.WuyIUc12dSPk0SYzM9Yj/ozb5ew99P.Gq",
+                            Username = "IO"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "silverman@superpeople.com",
+                            FirstName = "Walter",
+                            LastName = "Silver",
+                            Password = "$2a$11$nzyq4pwDo2hS4RUF7u7uBOuhGNyWeelD47fMgDL6SSRqhkphRpC42",
+                            Username = "WS"
+                        });
+                });
+
             modelBuilder.Entity("ToDoList.Domain.Models.Bucket", b =>
                 {
                     b.HasOne("ToDoList.Domain.Models.BucketCategory", "BucketCategory")

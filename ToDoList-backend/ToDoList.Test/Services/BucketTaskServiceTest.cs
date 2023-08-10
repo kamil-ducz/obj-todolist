@@ -2,6 +2,9 @@ using AutoMapper;
 using FluentAssertions;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using ToDoList.Api.BucketTasks.MappingProfiles;
 using ToDoList.Api.BucketTasks.Models;
 using ToDoList.Api.BucketTasks.Services;
 using ToDoList.Domain.Models;
@@ -13,26 +16,60 @@ namespace ToDoList.Test.Services;
 public class BucketTaskServiceTest
 {
     private Mock<IBucketTaskRepository> _bucketTaskRepositoryMock;
-    private Mock<IMapper> _mapperMock;
     private IBucketTaskService _bucketTaskService;
+    private IMapper _mapper;
 
     [SetUp]
     public void Setup()
     {
+        var mapperConfig = new MapperConfiguration(mc =>
+        {
+            mc.AddProfile(new BucketTaskMappingProfile());
+        });
+        var mapper = mapperConfig.CreateMapper();
+        _mapper = mapper;
+
         _bucketTaskRepositoryMock = new Mock<IBucketTaskRepository>();
-        _mapperMock = new Mock<IMapper>();
-        _bucketTaskService = new BucketTaskService(_bucketTaskRepositoryMock.Object, _mapperMock.Object);
+        _bucketTaskService = new BucketTaskService(_bucketTaskRepositoryMock.Object, _mapper);
     }
 
+    [Test]
+    public void GetBucketTasks_ReturnBucketTasks()
+    {
+        // Arrange
+        var expectedBucketTasks = new List<BucketTaskDto>()
+        {
+            new BucketTaskDto(1, "1:1 leader", "Sample description", (int)Domain.Enums.BucketTaskState.ToDo, (int)Domain.Enums.BucketTaskPriority.Low, 1, 1),
+            new BucketTaskDto(4, "Clean bedroom", "Sample description4", (int)Domain.Enums.BucketTaskState.InProgress, (int)Domain.Enums.BucketTaskPriority.High, 1, 4),
+        };
+
+        _bucketTaskRepositoryMock.Setup(repo => repo.GetAllBucketTasks())
+            .Returns(() => expectedBucketTasks.Select(b => new BucketTask
+            {
+                Id = b.Id,
+                Name = b.Name,
+                Description = b.Description,
+                BucketTaskStateId = b.BucketTaskStateId,
+                BucketTaskPriorityId = b.BucketTaskPriorityId,
+                BucketId = b.BucketId,
+                AssigneeId = b.AssigneeId
+            }).ToList());
+
+        // Act 
+        var result = _bucketTaskService.GetBucketTasks();
+
+        // Assert
+        expectedBucketTasks.Should().BeEquivalentTo(result);
+    }
 
     [Test]
     public void GetBucketTask_ReturnBucketTask()
     {
         // Arrange
-        var expectedBucketTask = new BucketTaskDto(1, "1:1 leader", "Sample description", (int)Domain.Enums.BucketTaskState.ToDo, (int)Domain.Enums.BucketTaskPriority.Low, 1, 1);
+        var expectedBucketTaskDto = new BucketTaskDto(1, "1:1 leader", "Sample description", (int)Domain.Enums.BucketTaskState.ToDo, (int)Domain.Enums.BucketTaskPriority.Low, 1, 1);
 
-        _mapperMock.Setup(m => m.Map<BucketTaskDto>(It.IsAny<BucketTask>()))
-                   .Returns(expectedBucketTask);
+        var expectedBucketTask = _mapper.Map<BucketTask>(expectedBucketTaskDto);
+        _bucketTaskRepositoryMock.Setup(repo => repo.GetBucketTask(1)).Returns(expectedBucketTask);
 
         // Act
         var result = _bucketTaskService.GetBucketTask(1);
@@ -53,9 +90,6 @@ public class BucketTaskServiceTest
     {
         // Arrange
         var expectedBucketTaskId = 1234;
-
-        _mapperMock.Setup(m => m.Map<BucketTask>(It.IsAny<BucketUpsertTaskDto>()))
-                   .Returns(new BucketTask());
 
         _bucketTaskRepositoryMock.Setup(repo => repo.InsertBucketTask(It.IsAny<BucketTask>()))
                                .Callback<BucketTask>(bucketTask =>
