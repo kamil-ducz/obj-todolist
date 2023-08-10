@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ToDoList.Api;
 
@@ -11,9 +12,10 @@ using ToDoList.Api;
 namespace ToDoList.Infrastructure.Migrations
 {
     [DbContext(typeof(ToDoListDbContext))]
-    partial class ToDoListDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230801202046_Hash passwords")]
+    partial class Hashpasswords
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -412,9 +414,6 @@ namespace ToDoList.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
@@ -422,7 +421,6 @@ namespace ToDoList.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
@@ -437,28 +435,25 @@ namespace ToDoList.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Email = "example@example.com",
                             FirstName = "John",
                             LastName = "Doe",
-                            Password = "$2a$11$xNoeFcBpV79d9fYx8CFd6OObjMFkm8ZCqDcfeprHsQPl4lqQFZbjm",
+                            Password = "$2a$11$B8sZwf6Fexg.GeP.9a8YL.YzeSEcdohSk3110byKKcJzx0Q93qsPu",
                             Username = "JD"
                         },
                         new
                         {
                             Id = 2,
-                            Email = "ian.orange@gmail.com",
                             FirstName = "Ian",
                             LastName = "Orange",
-                            Password = "$2a$11$xyy47OLG7v4LLFI5hbX.WuyIUc12dSPk0SYzM9Yj/ozb5ew99P.Gq",
+                            Password = "$2a$11$zWN1m4Fo1trSmK9xf80DL.MsJ87GISNJ2F67fgR0jN.nGJxMMyLy2",
                             Username = "IO"
                         },
                         new
                         {
                             Id = 3,
-                            Email = "silverman@superpeople.com",
                             FirstName = "Walter",
                             LastName = "Silver",
-                            Password = "$2a$11$nzyq4pwDo2hS4RUF7u7uBOuhGNyWeelD47fMgDL6SSRqhkphRpC42",
+                            Password = "$2a$11$3orOuHfei/xYe.sF/cwZC.a.k08ERCrTceScT.lugJjR8Bj1/biFm",
                             Username = "WS"
                         });
                 });
