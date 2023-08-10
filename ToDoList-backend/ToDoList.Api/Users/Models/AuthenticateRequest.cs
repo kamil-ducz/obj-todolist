@@ -1,4 +1,6 @@
-﻿namespace ToDoList.Api.Users.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ToDoList.Api.Users.Models;
 
 public class AuthenticateRequest
 {
