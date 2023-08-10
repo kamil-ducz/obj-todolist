@@ -4,8 +4,10 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ToDoList.Api.Buckets.MappingProfiles;
 using ToDoList.Api.Buckets.Models;
 using ToDoList.Api.Buckets.Services;
+using ToDoList.Api.BucketTasks.MappingProfiles;
 using ToDoList.Api.BucketTasks.Models;
 using ToDoList.Domain.Models;
 using ToDoList.Domain.Repositories;
@@ -17,31 +19,44 @@ public class BucketServiceTest
 {
     private Mock<IBucketRepository> _bucketRepositoryMock;
     private Mock<IBucketTaskRepository> _bucketTaskRepositoryMock;
-    private Mock<IMapper> _mapperMock;
     private IBucketService _bucketService;
+    private IBucketService _bucketServiceForBucketTasks;
+    private IMapper _mapper;
+    private IMapper _mapperBucketTask;
 
     [SetUp]
     public void Setup()
     {
+        var mapperConfig = new MapperConfiguration(mc =>
+        {
+            mc.AddProfile(new BucketMappingProfile());
+        });
+        var mapper = mapperConfig.CreateMapper();
+        _mapper = mapper;
+
+        var mapperBucketTaskConfig = new MapperConfiguration(mc =>
+        {
+            mc.AddProfile(new BucketTaskMappingProfile());
+        });
+        var mapperBucketTask = mapperBucketTaskConfig.CreateMapper();
+        _mapperBucketTask = mapperBucketTask;
+
         _bucketRepositoryMock = new Mock<IBucketRepository>();
         _bucketTaskRepositoryMock = new Mock<IBucketTaskRepository>();
-        _mapperMock = new Mock<IMapper>();
-        _bucketService = new BucketService(_bucketRepositoryMock.Object, _bucketTaskRepositoryMock.Object, _mapperMock.Object);
+        _bucketService = new BucketService(_bucketRepositoryMock.Object, _bucketTaskRepositoryMock.Object, _mapper);
+        _bucketServiceForBucketTasks = new BucketService(_bucketRepositoryMock.Object, _bucketTaskRepositoryMock.Object, _mapperBucketTask);
     }
 
     [Test]
     public void GetBuckets_ReturnBuckets()
     {
-        // Arrange<
+        // Arrange
         var expectedBuckets = new List<BucketDto>()
-    {
-        new BucketDto(1, "Objectivity", "Sample desc", (int)Domain.Enums.BucketCategory.Work, (int)Domain.Enums.BucketColor.Brown, 15, true),
-        new BucketDto(2, "Kitchen", "Sample desc2", (int)Domain.Enums.BucketCategory.Home, (int)Domain.Enums.BucketColor.Red, 15, true),
-        new BucketDto(3, "Gym", "Sample desc3", (int)Domain.Enums.BucketCategory.Hobby, (int)Domain.Enums.BucketColor.Red, 15, true)
-    };
-
-        _mapperMock.Setup(m => m.Map<List<BucketDto>>(It.IsAny<List<Bucket>>()))
-                   .Returns(expectedBuckets.Select(a => new BucketDto(a.Id, a.Name, a.Description, a.BucketCategoryId, a.BucketColorId, a.MaxAmountOfTasks, a.IsActive)).ToList());
+        {
+            new BucketDto(1, "Objectivity", "Sample desc", (int)Domain.Enums.BucketCategory.Work, (int)Domain.Enums.BucketColor.Brown, 15, true),
+            new BucketDto(2, "Kitchen", "Sample desc2", (int)Domain.Enums.BucketCategory.Home, (int)Domain.Enums.BucketColor.Red, 15, true),
+            new BucketDto(3, "Gym", "Sample desc3", (int)Domain.Enums.BucketCategory.Hobby, (int)Domain.Enums.BucketColor.Red, 15, true)
+        };
 
         _bucketRepositoryMock.Setup(repo => repo.GetAllBuckets())
             .Returns(expectedBuckets.Select(b => new Bucket()
@@ -67,16 +82,17 @@ public class BucketServiceTest
     public void GetBucket_ReturnBucket()
     {
         // Arrange
-        var expectedBucket = new BucketDto(3, "Gym", "Sample desc3", (int)Domain.Enums.BucketCategory.Hobby, (int)Domain.Enums.BucketColor.Red, 15, true);
+        var expectedBucketDto = new BucketDto(3, "Gym", "Sample desc3", (int)Domain.Enums.BucketCategory.Hobby, (int)Domain.Enums.BucketColor.Red, 15, true);
 
-        _mapperMock.Setup(m => m.Map<BucketDto>(It.IsAny<Bucket>()))
-                   .Returns(expectedBucket);
+        var expectedBucket = _mapper.Map<Bucket>(expectedBucketDto);
+
+        _bucketRepositoryMock.Setup(repo => repo.GetBucket(3)).Returns(expectedBucket);
 
         // Act
         var result = _bucketService.GetBucket(3);
 
         // Assert
-        expectedBucket.Should().BeEquivalentTo(result);
+        expectedBucketDto.Should().BeEquivalentTo(result);
     }
 
     [Test]
@@ -91,9 +107,6 @@ public class BucketServiceTest
     {
         // Arrange
         var expectedBucketId = 1234;
-
-        _mapperMock.Setup(m => m.Map<Bucket>(It.IsAny<BucketUpsertDto>()))
-                   .Returns(new Bucket());
 
         _bucketRepositoryMock.Setup(repo => repo.InsertBucket(It.IsAny<Bucket>()))
                                .Callback<Bucket>(bucket =>
@@ -123,7 +136,6 @@ public class BucketServiceTest
     [Test]
     public void GetBucketTasks_ReturnBucketTasks()
     {
-
         // Arrange
         var expectedBucketTasks = new List<BucketTaskDto>()
         {
@@ -143,20 +155,8 @@ public class BucketServiceTest
                 AssigneeId = b.AssigneeId
             }).ToList());
 
-        _mapperMock.Setup(m => m.Map<List<BucketTaskDto>>(It.IsAny<List<BucketTask>>()))
-            .Returns(expectedBucketTasks.Select(b => new BucketTaskDto
-                (
-                b.Id,
-                b.Name,
-                b.Description,
-                b.BucketTaskStateId,
-                b.BucketTaskPriorityId,
-                b.BucketId,
-                b.AssigneeId
-                )).ToList());
-
         // Act 
-        var result = _bucketService.GetAllBucketsTasks(1);
+        var result = _bucketServiceForBucketTasks.GetAllBucketsTasks(1);
 
         // Assert
         expectedBucketTasks.Should().BeEquivalentTo(result);
