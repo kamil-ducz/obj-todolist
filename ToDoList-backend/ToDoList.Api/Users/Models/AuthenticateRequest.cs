@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ToDoList.Api.Users.Models;
+﻿namespace ToDoList.Api.Users.Models;
 
 public class AuthenticateRequest
 {
@@ -9,4 +7,10 @@ public class AuthenticateRequest
 
     [Required]
     public string? Password { get; set; }
+
+    public AuthenticateRequest(string? username, string? password)
+    {
+        Username = username;
+        Password = password;
+    }
 }
