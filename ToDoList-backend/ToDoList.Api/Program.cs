@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Serilog;
 using ToDoList.Api.Config;
 using ToDoList.Api.Users.Authorization;
@@ -17,7 +16,7 @@ builder.Services.AddApplicationServices();
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
 
-var app = builder.Build();
+var app = builder.Build()
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
