@@ -74,9 +74,4 @@ describe('AuthenticationService tests', () => {
         expect(request.request.method).toBe('POST');
         request.flush(fakeResponse);
     });
-
-    it('Should perform fail login operation', () => {
-
-    });
-
 });
