@@ -1,6 +1,7 @@
 import json
 import random
 from faker import Faker
+import string
 
 # Initialize the Faker library
 fake = Faker()
@@ -22,13 +23,18 @@ unique_nouns = set()
 
 for i in range(1, num_records_true + 1):
     # Generate a unique English noun
-    noun = fake.unique.word()
+    noun = fake.unique.word().capitalize()
     # Add the noun to the set of unique nouns
     unique_nouns.add(noun)
     
+    # Generate a random sentence for the description
+    description = fake.sentence(nb_words=5, variable_nb_words=True, ext_word_list=None)
+    description = description[:20]  # Limit to 20 characters
+    
     record = {
         "Id": i,  # Assign a unique Id value
-        "Name": f"{noun} for Tasks",
+        "Name": noun,
+        "Description": description,
         "BucketCategoryId": random.choice(bucket_categories),
         "BucketColorId": random.choice(bucket_colors),
         "MaxAmountOfTasks": random.randint(1, 15),
@@ -38,13 +44,18 @@ for i in range(1, num_records_true + 1):
 
 for i in range(num_records_true + 1, records_amount):
     # Generate a unique English noun
-    noun = fake.unique.word()
+    noun = fake.unique.word().capitalize()
     # Add the noun to the set of unique nouns
     unique_nouns.add(noun)
     
+    # Generate a random sentence for the description
+    description = fake.sentence(nb_words=5, variable_nb_words=True, ext_word_list=None)
+    description = description[:20]  # Limit to 20 characters
+    
     record = {
         "Id": i,  # Assign a unique Id value
-        "Name": f"{noun} Container",
+        "Name": noun,
+        "Description": description,
         "BucketCategoryId": random.choice(bucket_categories),
         "BucketColorId": random.choice(bucket_colors),
         "MaxAmountOfTasks": random.randint(1, 15),
@@ -56,4 +67,4 @@ for i in range(num_records_true + 1, records_amount):
 with open('bucket-population-data.json', 'w') as json_file:
     json.dump(records, json_file, indent=4)
 
-print("JSON file 'bucket-population-data.json' with 300 records and unique English nouns generated.")
+print("JSON file 'bucket-population-data.json' with 300 records, unique English nouns, and descriptions generated.")
