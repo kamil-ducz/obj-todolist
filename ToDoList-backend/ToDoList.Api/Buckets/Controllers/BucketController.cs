@@ -22,9 +22,9 @@ public class BucketController : ControllerBase
     }
 
     [HttpGet]
-    public IReadOnlyCollection<BucketDto> Get()
+    public IReadOnlyCollection<BucketDto> Get(string? searchPhrase)
     {
-        return _bucketService.GetAllBuckets();
+        return _bucketService.GetAllBuckets(searchPhrase);
     }
 
     [HttpGet("{id}")]

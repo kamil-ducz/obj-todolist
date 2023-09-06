@@ -9,7 +9,7 @@ namespace ToDoList.Api.Buckets.Services;
 
 public interface IBucketService
 {
-    IReadOnlyCollection<BucketDto> GetAllBuckets();
+    IReadOnlyCollection<BucketDto> GetAllBuckets(string? searchPhrase);
     BucketDto GetBucket(int bucketId);
     IReadOnlyCollection<BucketTaskDto> GetAllBucketsTasks(int bucketId);
     int InsertBucket(BucketUpsertDto bucket);
@@ -30,9 +30,9 @@ public class BucketService : IBucketService
         _mapper = mapper;
     }
 
-    public IReadOnlyCollection<BucketDto> GetAllBuckets()
+    public IReadOnlyCollection<BucketDto> GetAllBuckets(string? searchPhrase)
     {
-        return _mapper.Map<List<BucketDto>>(_bucketRepository.GetAllBuckets());
+        return _mapper.Map<List<BucketDto>>(_bucketRepository.GetAllBuckets(searchPhrase));
     }
 
     public BucketDto GetBucket(int bucketId)

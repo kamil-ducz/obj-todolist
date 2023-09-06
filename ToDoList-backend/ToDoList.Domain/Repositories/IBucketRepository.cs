@@ -5,7 +5,7 @@ namespace ToDoList.Domain.Repositories;
 
 public interface IBucketRepository
 {
-    IReadOnlyList<Bucket> GetAllBuckets();
+    IReadOnlyList<Bucket> GetAllBuckets(string? searchPhrase);
     Bucket GetBucket(int bucketId);
     void InsertBucket(Bucket bucket);
     void DeleteBucket(Bucket bucket);
