@@ -58,7 +58,7 @@ public class BucketServiceTest
             new BucketDto(3, "Gym", "Sample desc3", (int)Domain.Enums.BucketCategory.Hobby, (int)Domain.Enums.BucketColor.Red, 15, true)
         };
 
-        _bucketRepositoryMock.Setup(repo => repo.GetAllBuckets(null))
+        _bucketRepositoryMock.Setup(repo => repo.GetAllBuckets(null, null, null))
             .Returns(expectedBuckets.Select(b => new Bucket()
             {
                 Id = b.Id,
@@ -71,7 +71,7 @@ public class BucketServiceTest
             }).ToList());
 
         // Act
-        var result = _bucketService.GetAllBuckets(null);
+        var result = _bucketService.GetAllBuckets(null, null, null);
 
         // Assert
         expectedBuckets.Should().BeEquivalentTo(result);

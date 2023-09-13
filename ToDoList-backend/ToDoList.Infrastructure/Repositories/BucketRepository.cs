@@ -13,7 +13,7 @@ public class BucketRepository : IBucketRepository
         _toDoListDbContext = toDoListDbContext;
     }
 
-    public IReadOnlyList<Bucket> GetAllBuckets(string? searchPhrase)
+    public IReadOnlyList<Bucket> GetAllBuckets(string? searchPhrase, int? currentPage, int? itemsPerPage)
     {
         if (searchPhrase is null)
         {

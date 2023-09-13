@@ -22,9 +22,12 @@ public class BucketController : ControllerBase
     }
 
     [HttpGet]
-    public IReadOnlyCollection<BucketDto> Get(string? searchPhrase)
+    public IReadOnlyCollection<BucketDto> Get(string? searchPhrase, int? currentPage, int? itemsPerPage)
     {
-        return _bucketService.GetAllBuckets(searchPhrase);
+        // return must contain:
+        // items collection, itemsShown number, totalPages number, itemsRange number 
+
+        return _bucketService.GetAllBuckets(searchPhrase, currentPage, itemsPerPage);
     }
 
     [HttpGet("{id}")]
