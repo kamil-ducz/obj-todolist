@@ -13,15 +13,10 @@ public class BucketRepository : IBucketRepository
         _toDoListDbContext = toDoListDbContext;
     }
 
-    public IReadOnlyList<Bucket> GetAllBuckets(string? searchPhrase, int? currentPage, int? itemsPerPage)
+    public IReadOnlyList<Bucket> GetAllBuckets()
     {
-        if (searchPhrase is null)
-        {
-            return _toDoListDbContext.Buckets.ToList();
-        }
-        var normalizedSearchPhrase = searchPhrase?.ToLower();
-        var buckets = _toDoListDbContext.Buckets.Where(b => b.Name.Contains(normalizedSearchPhrase!));
-        return buckets.ToList();
+        var buckets = _toDoListDbContext.Buckets.ToList();
+        return buckets;
     }
 
     public Bucket GetBucket(int bucketId)
