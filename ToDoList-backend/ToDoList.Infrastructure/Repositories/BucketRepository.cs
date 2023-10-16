@@ -19,6 +19,17 @@ public class BucketRepository : IBucketRepository
         return buckets;
     }
 
+    public PaginatedBucketsResult GetPaginatedBucketsResult(string? searchPhrase, int? currentPage, int? itemsPerPage)
+    {
+        PaginatedBucketsResult result = new PaginatedBucketsResult();
+
+        //var normalizedSearchPhrase = searchPhrase?.ToLower();
+        //var buckets = _toDoListDbContext.Buckets.Where(b => b.Name.Contains(normalizedSearchPhrase!));
+        //return buckets.ToList();
+
+        return result;
+    }
+
     public Bucket GetBucket(int bucketId)
     {
         var bucket = _toDoListDbContext.Buckets!.First(a => a.Id == bucketId);
