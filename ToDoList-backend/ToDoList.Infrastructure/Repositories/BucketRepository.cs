@@ -19,13 +19,39 @@ public class BucketRepository : IBucketRepository
         return buckets;
     }
 
-    public PaginatedBucketsResult GetPaginatedBucketsResult(PaginatedBucketsResult result, string? searchPhrase, int? currentPage, int? itemsPerPage)
+    public PaginatedBucketsResult GetPaginatedBucketsResult(string? searchPhrase, int currentPage = 1, int itemsPerPage = 10)
     {
-        var normalizedSearchPhrase = searchPhrase?.ToLower();
-        result.BucketsBatch = _toDoListDbContext.Buckets.Where(b => b.Name.Contains(normalizedSearchPhrase)).ToList(); // normalizedSearchPhrase will never be null, null case is handled in service
+        PaginatedBucketsResult result = new PaginatedBucketsResult();
+
+        var query = _toDoListDbContext.Buckets.AsQueryable();
+
+        if (!string.IsNullOrEmpty(searchPhrase))
+        {
+            var normalizedSearchPhrase = searchPhrase.ToLower();
+            query = query.Where(b => b.Name.Contains(normalizedSearchPhrase));
+            // If search phrase provided by client, return found results without pagination
+            result.BucketsBatch = query.ToList();
+            return result;
+        }
+
+        // Calculate total buckets (before applying pagination)
+        result.TotalBuckets = query.Count();
+
+        // Apply pagination
+        result.BucketsBatch = query
+            .OrderBy(b => b.Id) // You might want to order by a specific property
+            .Skip((currentPage - 1) * itemsPerPage)
+            .Take(itemsPerPage)
+            .ToList();
+
+        // Calculate total pages
+        result.TotalPages = (int)Math.Ceiling((double)result.TotalBuckets / itemsPerPage);
+
+        result.CurrentPage = currentPage;
 
         return result;
     }
+
 
     public Bucket GetBucket(int bucketId)
     {

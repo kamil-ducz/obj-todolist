@@ -11,7 +11,7 @@ namespace ToDoList.Api.Buckets.Services;
 public interface IBucketService
 {
     IReadOnlyCollection<BucketDto> GetAllBuckets();
-    PaginatedBucketsResult GetPaginatedBucketsResult(string? searchPhrase, int? currentPage, int? itemsPerPage);
+    PaginatedBucketsResult GetPaginatedBucketsResult(string? searchPhrase, int currentPage, int itemsPerPage);
     BucketDto GetBucket(int bucketId);
     IReadOnlyCollection<BucketTaskDto> GetAllBucketsTasks(int bucketId);
     int InsertBucket(BucketUpsertDto bucket);
@@ -37,24 +37,9 @@ public class BucketService : IBucketService
         return _mapper.Map<List<BucketDto>>(_bucketRepository.GetAllBuckets());
     }
 
-    public PaginatedBucketsResult GetPaginatedBucketsResult(string? searchPhrase, int? currentPage, int? itemsPerPage)
+    public PaginatedBucketsResult GetPaginatedBucketsResult(string? searchPhrase, int currentPage, int itemsPerPage)
     {
-        PaginatedBucketsResult paginatedBucketsResult = new PaginatedBucketsResult();
-
-        if (searchPhrase is null && itemsPerPage is null && itemsPerPage is null)
-        {
-            // get all buckets and set default pagination params
-            paginatedBucketsResult.BucketsBatch = _mapper.Map<IReadOnlyCollection<Bucket>>(_bucketRepository.GetAllBuckets());
-            paginatedBucketsResult.TotalBuckets = paginatedBucketsResult.BucketsBatch.Count;
-            paginatedBucketsResult.TotalPages = 1;
-            paginatedBucketsResult.StartPage = 1;
-            paginatedBucketsResult.EndPage = 1;
-            paginatedBucketsResult.CurrentPage = 1;
-
-            return paginatedBucketsResult;
-        }
-
-        return _bucketRepository.GetPaginatedBucketsResult(paginatedBucketsResult, searchPhrase, currentPage, itemsPerPage);
+        return _bucketRepository.GetPaginatedBucketsResult(searchPhrase, currentPage, itemsPerPage);
     }
 
     public BucketDto GetBucket(int bucketId)
