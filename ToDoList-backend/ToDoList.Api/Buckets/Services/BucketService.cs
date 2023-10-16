@@ -39,25 +39,22 @@ public class BucketService : IBucketService
 
     public PaginatedBucketsResult GetPaginatedBucketsResult(string? searchPhrase, int? currentPage, int? itemsPerPage)
     {
-        PaginatedBucketsResult result = new PaginatedBucketsResult();
+        PaginatedBucketsResult paginatedBucketsResult = new PaginatedBucketsResult();
 
         if (searchPhrase is null && itemsPerPage is null && itemsPerPage is null)
         {
             // get all buckets and set default pagination params
-            result.BucketsBatch = _mapper.Map<IReadOnlyCollection<Bucket>>(_bucketRepository.GetAllBuckets());
-            result.TotalBuckets = result.BucketsBatch.Count;
-            result.TotalPages = 1; // Since there's only one page for all buckets
-            result.StartPage = 1;
-            result.EndPage = 1;
-            result.CurrentPage = 1;
+            paginatedBucketsResult.BucketsBatch = _mapper.Map<IReadOnlyCollection<Bucket>>(_bucketRepository.GetAllBuckets());
+            paginatedBucketsResult.TotalBuckets = paginatedBucketsResult.BucketsBatch.Count;
+            paginatedBucketsResult.TotalPages = 1;
+            paginatedBucketsResult.StartPage = 1;
+            paginatedBucketsResult.EndPage = 1;
+            paginatedBucketsResult.CurrentPage = 1;
 
-            return result;
+            return paginatedBucketsResult;
         }
-        //var normalizedSearchPhrase = searchPhrase?.ToLower();
-        //var buckets = _toDoListDbContext.Buckets.Where(b => b.Name.Contains(normalizedSearchPhrase!));
-        //return buckets.ToList();
 
-        return result;
+        return _bucketRepository.GetPaginatedBucketsResult(paginatedBucketsResult, searchPhrase, currentPage, itemsPerPage);
     }
 
     public BucketDto GetBucket(int bucketId)

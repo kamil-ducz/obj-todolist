@@ -19,13 +19,10 @@ public class BucketRepository : IBucketRepository
         return buckets;
     }
 
-    public PaginatedBucketsResult GetPaginatedBucketsResult(string? searchPhrase, int? currentPage, int? itemsPerPage)
+    public PaginatedBucketsResult GetPaginatedBucketsResult(PaginatedBucketsResult result, string? searchPhrase, int? currentPage, int? itemsPerPage)
     {
-        PaginatedBucketsResult result = new PaginatedBucketsResult();
-
-        //var normalizedSearchPhrase = searchPhrase?.ToLower();
-        //var buckets = _toDoListDbContext.Buckets.Where(b => b.Name.Contains(normalizedSearchPhrase!));
-        //return buckets.ToList();
+        var normalizedSearchPhrase = searchPhrase?.ToLower();
+        result.BucketsBatch = _toDoListDbContext.Buckets.Where(b => b.Name.Contains(normalizedSearchPhrase)).ToList(); // normalizedSearchPhrase will never be null, null case is handled in service
 
         return result;
     }
