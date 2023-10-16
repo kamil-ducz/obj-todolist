@@ -15,7 +15,17 @@ export class BucketService {
     ) {}
 
     getBuckets(): Observable<Bucket[]> {
-        return this.httpClient.get<Bucket[]>('Bucket/');
+        return this.httpClient.get<Bucket[]>('Bucket/all');
+    }
+
+    getPaginatedBuckets(searchPhrase: string, currentPage: number, itemsPerPage: number): Observable<Bucket[]> {
+        const params = {
+            searchPhrase: searchPhrase,
+            currentPage: currentPage.toString(),
+            itemsPerPage: itemsPerPage.toString()
+        };
+    
+        return this.httpClient.get<Bucket[]>('Bucket/paginatedBuckets', { params: params });
     }
 
     getBucket(bucketId: number): Observable<Bucket> {

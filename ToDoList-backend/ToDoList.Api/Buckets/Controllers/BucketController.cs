@@ -23,7 +23,7 @@ public class BucketController : ControllerBase
     }
 
     [HttpGet("paginatedBuckets")]
-    public PaginatedBucketsResult Get(string? searchPhrase, int currentPage = 1, int itemsPerPage = 15)
+    public PaginatedBucketsResult Get([FromQuery] string? searchPhrase, [FromQuery] int currentPage = 1, [FromQuery] int itemsPerPage = 15)
     {
         return _bucketService.GetPaginatedBucketsResult(searchPhrase, currentPage, itemsPerPage);
     }
