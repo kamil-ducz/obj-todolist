@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ToDoList.Api.Buckets.Models;
@@ -40,7 +41,36 @@ public class BucketService : IBucketService
     // TODO add unit test for this method
     public PaginatedBucketsResult GetPaginatedBucketsResult(string? searchPhrase, int currentPage, int itemsPerPage)
     {
-        return _bucketRepository.GetPaginatedBucketsResult(searchPhrase, currentPage, itemsPerPage);
+        PaginatedBucketsResult result = new PaginatedBucketsResult();
+
+        var query = _bucketRepository.GetAllBuckets().AsQueryable();
+
+        if (!string.IsNullOrEmpty(searchPhrase))
+        {
+            var normalizedSearchPhrase = searchPhrase.ToLower();
+            query = query.Where(b => b.Name.Contains(normalizedSearchPhrase));
+            // If search phrase provided by client, return found results without pagination
+            result.BucketsBatch = query.ToList();
+            return result;
+        }
+
+        // Calculate total buckets (before applying pagination)
+        result.TotalBuckets = query.Count();
+
+        // Apply pagination
+        result.BucketsBatch = query
+            .OrderBy(b => b.Id) // You might want to order by a specific property
+            .Skip((currentPage - 1) * itemsPerPage)
+            .Take(itemsPerPage)
+            .ToList();
+
+        // Calculate total pages
+        result.TotalPages = (int)Math.Ceiling((double)result.TotalBuckets / itemsPerPage);
+
+        result.CurrentPage = currentPage;
+
+        return result;
+        //return _bucketRepository.GetPaginatedBucketsResult(searchPhrase, currentPage, itemsPerPage);
     }
 
     public BucketDto GetBucket(int bucketId)
