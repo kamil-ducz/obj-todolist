@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BucketTaskState } from '../models/bucket.task.state.model';
 import { BucketTaskPriority } from '../models/bucket.task.priority.model';
 import { DictionaryService } from '../services/dictionary.service';
+import { PaginatedBucketResult } from '../models/paginated.bucket.result.model';
 
 @Component({
   selector: 'app-buckets',
@@ -29,16 +30,33 @@ export class BucketsComponent implements OnInit {
   bucketTasksInProgress: BucketTask[];
   bucketTasksDone: BucketTask[];
   bucketTasksCancelled: BucketTask[];
+  // Server pagination variables  
+  paginatedBucketResult: PaginatedBucketResult;
+  // Client pagination variables
+  searchPhrase: string;
+  currentPage: number = 1;
+  itemsPerPage: number = 15;
 
   ngOnInit() {
     this.refreshBucketAndBucketsComponents();
   }
 
   refreshBucketAndBucketsComponents() {
-    this.fetchBuckets();
+    this.fetchBuckets(); // to be removed
+    this.fetchPaginatedBuckets();
     this.fetchBucketTasks();
     this.fetchBucketTasksStates();
     this.fetchBucketTaskPriorities();
+  }
+
+  fetchPaginatedBuckets() {
+    this.bucketService.getPaginatedBuckets(this.searchPhrase, this.currentPage, this.itemsPerPage).subscribe(
+      (response: PaginatedBucketResult) => {
+        this.paginatedBucketResult = response;
+        console.log("response in JSON = " + JSON.stringify(response));
+        console.log("this.paginatedBucketResult = " + JSON.stringify(this.paginatedBucketResult));
+      }
+    )
   }
   
   fetchBuckets() {

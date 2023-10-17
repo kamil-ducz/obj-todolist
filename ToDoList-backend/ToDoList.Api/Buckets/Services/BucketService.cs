@@ -37,6 +37,7 @@ public class BucketService : IBucketService
         return _mapper.Map<List<BucketDto>>(_bucketRepository.GetAllBuckets());
     }
 
+    // TODO add unit test for this method
     public PaginatedBucketsResult GetPaginatedBucketsResult(string? searchPhrase, int currentPage, int itemsPerPage)
     {
         return _bucketRepository.GetPaginatedBucketsResult(searchPhrase, currentPage, itemsPerPage);
