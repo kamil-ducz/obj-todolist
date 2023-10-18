@@ -18,8 +18,7 @@ export class FooterComponent implements OnInit {
 
   searchPhrase: string;
   currentPage: number = 1;
-  itemsPerPage: number = 15;
-  totalPages: number;
+  itemsPerPage: number = 25;
   // Pages variable for pagination
   pages: number[];
 
@@ -31,8 +30,7 @@ export class FooterComponent implements OnInit {
     this.bucketService.getPaginatedBuckets(this.searchPhrase, this.currentPage, this.itemsPerPage).subscribe(
       (response: PaginatedBucketResult) => {
         this.paginatedBucketResult = response;
-        this.totalPages = response.totalPages;
-        this.pages = Array.from({ length: this.totalPages }, (_, index) => index + 1);
+        this.pages = Array.from({ length: response.totalPages }, (_, index) => index + 1);
       }
     )
   }
@@ -46,5 +44,4 @@ export class FooterComponent implements OnInit {
     this.bucketPaginationService.setCurrentPage(page);
     this.fetchPaginatedBuckets();
   }
-
 }

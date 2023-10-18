@@ -19,7 +19,7 @@ export class BucketService {
         return this.httpClient.get<Bucket[]>('Bucket/all');
     }
 
-    getPaginatedBuckets(searchPhrase: string | null = null, currentPage: number = 1, itemsPerPage: number = 15): Observable<PaginatedBucketResult> {
+    getPaginatedBuckets(searchPhrase: string | null = null, currentPage: number = 1, itemsPerPage: number): Observable<PaginatedBucketResult> {
         let params = new HttpParams()
           .set('currentPage', currentPage.toString())
           .set('itemsPerPage', itemsPerPage.toString());

@@ -48,8 +48,8 @@ export class BucketsComponent implements OnInit {
   paginatedBuckets: Bucket[];
   // Client pagination variables
   searchPhrase: string;
-  currentPage: number = 1;
-  itemsPerPage: number = 15;
+  currentPage: number;
+  itemsPerPage: number;
 
   ngOnInit() {
     this.refreshBucketAndBucketsComponents();

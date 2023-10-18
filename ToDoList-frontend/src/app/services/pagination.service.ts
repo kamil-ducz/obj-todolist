@@ -7,14 +7,12 @@ import { PaginatedBucketResult } from "../models/paginated.bucket.result.model";
   providedIn: 'root'
 })
 export class BucketPaginationService {
-  constructor(
-    private httpClient: HttpClient,
-  ) { }
+  constructor() {}
 
   private currentPageSubject: BehaviorSubject<number> = new BehaviorSubject<number>(1);
   public currentPage$: Observable<number> = this.currentPageSubject.asObservable();
 
-  private itemsPerPageSubject: BehaviorSubject<number> = new BehaviorSubject<number>(15);
+  private itemsPerPageSubject: BehaviorSubject<number> = new BehaviorSubject<number>(25);
   public itemsPerPage$: Observable<number> = this.itemsPerPageSubject.asObservable();
 
   setCurrentPage(page: number) {
