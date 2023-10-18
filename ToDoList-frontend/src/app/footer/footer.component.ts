@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BucketService } from '../services/bucket.service';
 import { PaginatedBucketResult } from '../models/paginated.bucket.result.model';
 import { BucketPaginationService } from '../services/pagination.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-footer',
@@ -12,6 +13,7 @@ export class FooterComponent implements OnInit {
   constructor(
     private bucketService: BucketService,
     private bucketPaginationService: BucketPaginationService,
+    public router: Router
   ) {}
 
   paginatedBucketResult: PaginatedBucketResult;
