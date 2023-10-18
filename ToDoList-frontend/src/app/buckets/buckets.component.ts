@@ -32,6 +32,7 @@ export class BucketsComponent implements OnInit {
   bucketTasksCancelled: BucketTask[];
   // Server pagination variables  
   paginatedBucketResult: PaginatedBucketResult;
+  paginatedBuckets: Bucket[];
   // Client pagination variables
   searchPhrase: string;
   currentPage: number = 1;
@@ -53,6 +54,7 @@ export class BucketsComponent implements OnInit {
     this.bucketService.getPaginatedBuckets(this.searchPhrase, this.currentPage, this.itemsPerPage).subscribe(
       (response: PaginatedBucketResult) => {
         this.paginatedBucketResult = response;
+        this.paginatedBuckets = response.bucketsBatch;
         console.log("response in JSON = " + JSON.stringify(response));
         console.log("this.paginatedBucketResult = " + JSON.stringify(this.paginatedBucketResult));
       }

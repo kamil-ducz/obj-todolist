@@ -26,3 +26,33 @@
 .user-form-control {
     @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500
 }
+
+.pagination-pages {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .pagination-pages a {
+    margin: 0 5px;
+    padding: 8px 12px;
+    text-decoration: none;
+    border: 1px solid #007bff;
+    color: #007bff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .pagination-pages a:hover {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .pagination-pages a.active {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+    cursor: default;
+  }
+  

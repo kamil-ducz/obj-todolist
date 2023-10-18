@@ -19,7 +19,7 @@
 </div>
 <br><br>
 <div class="h-66 grid grid-cols-3 gap-8 content-start">
-  <ng-container *ngFor="let item of buckets">
+  <ng-container *ngFor="let item of paginatedBuckets">
     <div 
     [routerLink]="['/bucket-details', item.id]"
     [ngClass]="{'bg-yellow-900': item.bucketColorId == 1,

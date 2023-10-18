@@ -1,7 +1,8 @@
-<!-- <footer class="pagination-container">
+<footer class="pagination-container">
     <div class="pagination-info">
-      <span>Total Records: {{ totalRecords }}</span>
-      <span>Total Pages: {{ totalPages }}</span>
+      <span>Total Records: {{ paginatedBucketResult.totalBuckets }}</span>
+       | 
+      <span>Total Pages: {{ paginatedBucketResult.totalPages }}</span>
     </div>
     <div class="pagination-pages">
       <a *ngFor="let page of pages" [class.active]="page === currentPage" (click)="goToPage(page)">{{ page }}</a>
@@ -18,7 +19,7 @@
     </div>
     <hr>
     <div class="copyright">
-      <p>This is a test project created by Kamil Duczakowski. It is free to use and source code is available for everybody to learn. Enjoy! :)</p>
+      <p class="italic">This is a test project created by Kamil Duczakowski. It is free to use and source code is available for everybody to learn. Enjoy! :)</p>
     </div>
   </footer>
-   -->
+  
