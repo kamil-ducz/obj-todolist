@@ -21,6 +21,7 @@ export class FooterComponent implements OnInit {
   itemsPerPage: number = 25;
   // Pages variable for pagination
   pages: number[];
+  activePage: number = 1; // Initialize with page 1
 
   ngOnInit(): void {
     this.fetchPaginatedBuckets();
@@ -37,11 +38,12 @@ export class FooterComponent implements OnInit {
 
   changeItemsPerPage() {
     this.bucketPaginationService.setItemsPerPage(this.itemsPerPage);
-    this.fetchPaginatedBuckets();
+    this.changePage(1); // After selecting items per page always reset to page 1 to avoid missing buckets and keep it neat
   }
 
   changePage(page: number) {
     this.bucketPaginationService.setCurrentPage(page);
+    this.activePage = page;
     this.fetchPaginatedBuckets();
   }
 }
