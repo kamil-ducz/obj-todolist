@@ -5,7 +5,7 @@
       <span>Total Pages: {{ paginatedBucketResult.totalPages }}</span>
     </div>
     <div class="pagination-pages">
-      <a *ngFor="let page of pages" [class.active]="page === currentPage" (click)="goToPage(page)">{{ page }}</a>
+      <a *ngFor="let page of pages" [class.active]="page === currentPage" (click)="changePage(page)">{{ page }}</a>
     </div>
     <div class="items-per-page">
       <label for="itemsPerPage">Items Per Page:</label>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BucketService } from '../services/bucket.service';
 import { PaginatedBucketResult } from '../models/paginated.bucket.result.model';
+import { BucketPaginationService } from '../services/pagination.service';
 
 @Component({
   selector: 'app-footer',
@@ -10,6 +11,7 @@ import { PaginatedBucketResult } from '../models/paginated.bucket.result.model';
 export class FooterComponent implements OnInit {
   constructor(
     private bucketService: BucketService,
+    private bucketPaginationService: BucketPaginationService,
   ) {}
 
   paginatedBucketResult: PaginatedBucketResult;
@@ -31,20 +33,18 @@ export class FooterComponent implements OnInit {
         this.paginatedBucketResult = response;
         this.totalPages = response.totalPages;
         this.pages = Array.from({ length: this.totalPages }, (_, index) => index + 1);
-        console.log("response in JSON = " + JSON.stringify(response));
-        console.log("this.paginatedBucketResult = " + JSON.stringify(this.paginatedBucketResult));
       }
     )
   }
 
-  goToPage(page: number) {
-    this.currentPage = page;
+  changeItemsPerPage() {
+    this.bucketPaginationService.setItemsPerPage(this.itemsPerPage);
     this.fetchPaginatedBuckets();
-
   }
 
-  changeItemsPerPage() {
-
+  changePage(page: number) {
+    this.bucketPaginationService.setCurrentPage(page);
+    this.fetchPaginatedBuckets();
   }
 
 }

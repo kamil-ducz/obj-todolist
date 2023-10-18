@@ -8,6 +8,7 @@ import { BucketTaskState } from '../models/bucket.task.state.model';
 import { BucketTaskPriority } from '../models/bucket.task.priority.model';
 import { DictionaryService } from '../services/dictionary.service';
 import { PaginatedBucketResult } from '../models/paginated.bucket.result.model';
+import { BucketPaginationService } from '../services/pagination.service';
 
 @Component({
   selector: 'app-buckets',
@@ -18,9 +19,21 @@ export class BucketsComponent implements OnInit {
   constructor(
     private bucketService: BucketService, 
     private bucketTaskService: BucketTaskService, 
-    private dictionaryService: DictionaryService, 
+    private dictionaryService: DictionaryService,
+    private bucketPaginationService: BucketPaginationService,
     private toastr: ToastrService
-    ) { }
+    ) {
+        this.bucketPaginationService.currentPage$.subscribe
+        (page => {
+          this.currentPage = page;
+          this.fetchPaginatedBuckets();
+        });
+
+        this.bucketPaginationService.itemsPerPage$.subscribe(itemsPerPage => {
+          this.itemsPerPage = itemsPerPage;
+          this.fetchPaginatedBuckets();
+        });
+    }
 
   buckets: Bucket[];
   bucketTasks: BucketTask[];
@@ -43,7 +56,6 @@ export class BucketsComponent implements OnInit {
   }
 
   refreshBucketAndBucketsComponents() {
-    this.fetchBuckets(); // to be removed
     this.fetchPaginatedBuckets();
     this.fetchBucketTasks();
     this.fetchBucketTasksStates();
@@ -55,18 +67,8 @@ export class BucketsComponent implements OnInit {
       (response: PaginatedBucketResult) => {
         this.paginatedBucketResult = response;
         this.paginatedBuckets = response.bucketsBatch;
-        console.log("response in JSON = " + JSON.stringify(response));
-        console.log("this.paginatedBucketResult = " + JSON.stringify(this.paginatedBucketResult));
       }
     )
-  }
-  
-  fetchBuckets() {
-    this.bucketService.getBuckets().subscribe(
-      (response: any) => {
-        this.buckets = response;
-      }
-    );
   }
 
   fetchBucketTasks() {
