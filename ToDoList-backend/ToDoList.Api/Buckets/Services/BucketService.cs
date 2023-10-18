@@ -70,7 +70,6 @@ public class BucketService : IBucketService
         result.CurrentPage = currentPage;
 
         return result;
-        //return _bucketRepository.GetPaginatedBucketsResult(searchPhrase, currentPage, itemsPerPage);
     }
 
     public BucketDto GetBucket(int bucketId)
