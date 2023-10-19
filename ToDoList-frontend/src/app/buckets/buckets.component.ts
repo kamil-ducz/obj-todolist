@@ -137,4 +137,11 @@ export class BucketsComponent implements OnInit {
   exitDeleteModal() {
     this.showModal = !this.showModal;
   }
+
+  searchBucketsByPhrase(userInputToSearch: Event): void {
+    const inputElement = userInputToSearch.target as HTMLInputElement;
+    const searchPhrase = inputElement.value;
+    this.searchPhrase = searchPhrase;
+    this.fetchPaginatedBuckets();
+  }
 }
