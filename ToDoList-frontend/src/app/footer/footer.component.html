@@ -1,8 +1,8 @@
 <footer class="pagination-container" *ngIf="router.url === '/buckets'">
     <div class="pagination-info">
-      <span>Total Records: {{ paginatedBucketResult.totalBuckets }}</span>
+      <span>Total Records: {{ totalBuckets }}</span>
        | 
-      <span>Total Pages: {{ paginatedBucketResult.totalPages }}</span>
+      <span>Total Pages: {{ totalPages }}</span>
     </div>
     <div class="pagination-pages grid grid-cols-10 gap-1">
       <a *ngFor="let page of pages" [class.active]="page === activePage" (click)="changePage(page)">{{ page }}</a>
