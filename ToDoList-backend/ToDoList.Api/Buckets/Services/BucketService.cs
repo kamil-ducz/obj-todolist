@@ -48,7 +48,7 @@ public class BucketService : IBucketService
         if (!string.IsNullOrEmpty(searchPhrase))
         {
             var normalizedSearchPhrase = searchPhrase.ToLower();
-            query = query.Where(b => b.Name.Contains(normalizedSearchPhrase));
+            query = query.Where(b => b.Name.ToLower().Contains(normalizedSearchPhrase));
             // If search phrase provided by client, return found results without pagination
             result.BucketsBatch = query.ToList();
             return result;
