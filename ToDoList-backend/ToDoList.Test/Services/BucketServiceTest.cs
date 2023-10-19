@@ -96,6 +96,46 @@ public class BucketServiceTest
     }
 
     [Test]
+    public void GetPaginatedBucketWithEmptySearchPhraseAndCurrentPageAndItemsPerPage_ReturnPaginatedBucketResult()
+    {
+        // Arrange
+        var expectedBucketPaginationResult = new PaginatedBucketsResult()
+        {
+            BucketsBatch = new List<Bucket>() {
+                new Bucket() { Id = 1, Name = "PaginatedBucket1", BucketCategoryId = (int)Domain.Enums.BucketCategory.Hobby, BucketColorId = (int)Domain.Enums.BucketColor.Red, MaxAmountOfTasks = 5, IsActive = true  },
+                new Bucket() { Id = 2, Name = "PaginatedBucket2", BucketCategoryId = (int)Domain.Enums.BucketCategory.Work, BucketColorId = (int)Domain.Enums.BucketColor.Red, MaxAmountOfTasks = 15, IsActive = true  },
+                new Bucket() { Id = 3, Name = "PaginatedBucket3", BucketCategoryId = (int)Domain.Enums.BucketCategory.Home, BucketColorId = (int)Domain.Enums.BucketColor.Red, MaxAmountOfTasks = 3, IsActive = false  },
+            },
+            TotalBuckets = 3,
+            TotalPages = 1,
+            CurrentPage = 1
+        };
+
+        _bucketRepositoryMock.Setup(repo => repo.GetAllBuckets())
+            .Returns(expectedBucketPaginationResult.BucketsBatch.Select(b => new Bucket()
+            {
+                Id = b.Id,
+                Name = b.Name,
+                Description = b.Description,
+                BucketCategoryId = b.BucketCategoryId,
+                BucketColorId = b.BucketColorId,
+                MaxAmountOfTasks = b.MaxAmountOfTasks,
+                IsActive = b.IsActive
+            }).ToList());
+
+        // Act
+        // Input 5 that is more than 3 buckets to check if still returns 
+        var result = _bucketService.GetPaginatedBucketsResult(null, expectedBucketPaginationResult.CurrentPage, 5);
+
+        // Assert
+        expectedBucketPaginationResult.Should().BeEquivalentTo(result);
+    }
+
+    // TODO Add paginated bucket unit test with more sample data and more complicated values
+
+    // TODO Add paginated bucket unit test with search phrase
+
+    [Test]
     public void DeleteBucket_ReturnVoid()
     {
         Action action = () => _bucketService.DeleteBucket(4);
