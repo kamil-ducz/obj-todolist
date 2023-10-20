@@ -38,7 +38,6 @@ public class BucketService : IBucketService
         return _mapper.Map<List<BucketDto>>(_bucketRepository.GetAllBuckets());
     }
 
-    // TODO add unit test for this method
     public PaginatedBucketsResult GetPaginatedBucketsResult(string? searchPhrase, int currentPage, int itemsPerPage)
     {
         PaginatedBucketsResult result = new PaginatedBucketsResult();
@@ -47,8 +46,8 @@ public class BucketService : IBucketService
 
         if (!string.IsNullOrEmpty(searchPhrase))
         {
-            var normalizedSearchPhrase = searchPhrase.ToLower();
-            query = query.Where(b => b.Name.ToLower().Contains(normalizedSearchPhrase));
+            var normalizedSearchPhrase = searchPhrase.ToLower().Trim();
+            query = query.Where(b => b.Name.ToLower().Trim().Contains(normalizedSearchPhrase));
             // If search phrase provided by client, return found results without pagination
             result.BucketsBatch = query.ToList();
             return result;
