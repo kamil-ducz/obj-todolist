@@ -96,7 +96,7 @@ public class BucketServiceTest
     }
 
     [Test]
-    public void GetPaginatedBucketWithEmptySearchPhraseAndCurrentPageAndItemsPerPageMoreThanActual_ReturnPaginatedBucketResult()
+    public void GetPaginatedBucketResultWithEmptySearchPhraseAndCurrentPageAndItemsPerPageMoreThanActual_ReturnPaginatedBucketResult()
     {
         // Arrange
         var sampleBucketsBatch = new List<Bucket>() {
@@ -136,7 +136,7 @@ public class BucketServiceTest
     }
 
     [Test]
-    public void GetPaginatedBucketWithEmptySearchPhraseAndCurrentPageNot1AndItemsPerPageAsActual_ReturnPaginatedBucketResult()
+    public void GetPaginatedBucketResultWithEmptySearchPhraseAndCurrentPageNot1AndItemsPerPageAsActual_ReturnPaginatedBucketResult()
     {
         // Arrange
         var sampleBucketsBatch = new List<Bucket>() {
@@ -182,6 +182,54 @@ public class BucketServiceTest
     }
 
     // TODO Add paginated bucket unit test with search phrase
+    [Test]
+    public void GetPaginatedBucketResultWithSearchPhrase_ReturnBucketsCollection()
+    {
+        // Arrange
+        var sampleBucketsBatch = new List<Bucket>() {
+                new Bucket() { Id = 1, Name = "Wood", BucketCategoryId = (int)Domain.Enums.BucketCategory.Hobby, BucketColorId = (int)Domain.Enums.BucketColor.Red, MaxAmountOfTasks = 5, IsActive = true  },
+                new Bucket() { Id = 2, Name = "Horse", BucketCategoryId = (int)Domain.Enums.BucketCategory.Work, BucketColorId = (int)Domain.Enums.BucketColor.Blue, MaxAmountOfTasks = 15, IsActive = true  },
+                new Bucket() { Id = 3, Name = "Backyard", BucketCategoryId = (int)Domain.Enums.BucketCategory.Work, BucketColorId = (int)Domain.Enums.BucketColor.Yellow, MaxAmountOfTasks = 3, IsActive = false  },
+                new Bucket() { Id = 4, Name = "House", BucketCategoryId = (int)Domain.Enums.BucketCategory.Work, BucketColorId = (int)Domain.Enums.BucketColor.Yellow, MaxAmountOfTasks = 3, IsActive = true  },
+                new Bucket() { Id = 5, Name = "Desk", BucketCategoryId = (int)Domain.Enums.BucketCategory.Home, BucketColorId = (int)Domain.Enums.BucketColor.Red, MaxAmountOfTasks = 3, IsActive = true  },
+                new Bucket() { Id = 6, Name = "Gym", BucketCategoryId = (int)Domain.Enums.BucketCategory.Work, BucketColorId = (int)Domain.Enums.BucketColor.Blue, MaxAmountOfTasks = 3, IsActive = true  },
+                new Bucket() { Id = 7, Name = "Broom", BucketCategoryId = (int)Domain.Enums.BucketCategory.Home, BucketColorId = (int)Domain.Enums.BucketColor.Green, MaxAmountOfTasks = 3, IsActive = true  },
+                new Bucket() { Id = 8, Name = "Exercises", BucketCategoryId = (int)Domain.Enums.BucketCategory.Work, BucketColorId = (int)Domain.Enums.BucketColor.Blue, MaxAmountOfTasks = 3, IsActive = true  },
+                new Bucket() { Id = 9, Name = "Lifts", BucketCategoryId = (int)Domain.Enums.BucketCategory.Work, BucketColorId = (int)Domain.Enums.BucketColor.Red, MaxAmountOfTasks = 3, IsActive = true  },
+                new Bucket() { Id = 10, Name = "Person", BucketCategoryId = (int)Domain.Enums.BucketCategory.Home, BucketColorId = (int)Domain.Enums.BucketColor.Blue, MaxAmountOfTasks = 3, IsActive = true  },
+            };
+
+        // If search phrase is not null, only buckets batch collection has elements, the rest metadata equals 0 - planned behavior
+        var expectedBucketPaginationResult = new PaginatedBucketsResult()
+        {
+            BucketsBatch = new List<Bucket>() {
+                new Bucket() { Id = 8, Name = "Exercises", BucketCategoryId = (int)Domain.Enums.BucketCategory.Work, BucketColorId = (int)Domain.Enums.BucketColor.Blue, MaxAmountOfTasks = 3, IsActive = true  },
+            },
+            TotalBuckets = 0,
+            TotalPages = 0,
+            CurrentPage = 0
+        };
+
+        _bucketRepositoryMock.Setup(repo => repo.GetAllBuckets())
+            .Returns(sampleBucketsBatch.Select(b => new Bucket()
+            {
+                Id = b.Id,
+                Name = b.Name,
+                Description = b.Description,
+                BucketCategoryId = b.BucketCategoryId,
+                BucketColorId = b.BucketColorId,
+                MaxAmountOfTasks = b.MaxAmountOfTasks,
+                IsActive = b.IsActive
+            }).ToList());
+
+        // Act
+        // Add tab before and space after search phrase to check if trimmed ok
+        var result = _bucketService.GetPaginatedBucketsResult(" rcISes  ", 1, 25);
+
+        // Assert
+        expectedBucketPaginationResult.Should().BeEquivalentTo(result);
+
+    }
 
     [Test]
     public void DeleteBucket_ReturnVoid()
