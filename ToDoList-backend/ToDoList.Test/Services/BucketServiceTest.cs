@@ -96,9 +96,14 @@ public class BucketServiceTest
     }
 
     [Test]
-    public void GetPaginatedBucketWithEmptySearchPhraseAndCurrentPageAndItemsPerPage_ReturnPaginatedBucketResult()
+    public void GetPaginatedBucketWithEmptySearchPhraseAndCurrentPageAndItemsPerPageMoreThanActual_ReturnPaginatedBucketResult()
     {
         // Arrange
+        var sampleBucketsBatch = new List<Bucket>() {
+                new Bucket() { Id = 1, Name = "PaginatedBucket1", BucketCategoryId = (int)Domain.Enums.BucketCategory.Hobby, BucketColorId = (int)Domain.Enums.BucketColor.Red, MaxAmountOfTasks = 5, IsActive = true  },
+                new Bucket() { Id = 2, Name = "PaginatedBucket2", BucketCategoryId = (int)Domain.Enums.BucketCategory.Work, BucketColorId = (int)Domain.Enums.BucketColor.Red, MaxAmountOfTasks = 15, IsActive = true  },
+                new Bucket() { Id = 3, Name = "PaginatedBucket3", BucketCategoryId = (int)Domain.Enums.BucketCategory.Home, BucketColorId = (int)Domain.Enums.BucketColor.Red, MaxAmountOfTasks = 3, IsActive = false  },
+            };
         var expectedBucketPaginationResult = new PaginatedBucketsResult()
         {
             BucketsBatch = new List<Bucket>() {
@@ -112,7 +117,7 @@ public class BucketServiceTest
         };
 
         _bucketRepositoryMock.Setup(repo => repo.GetAllBuckets())
-            .Returns(expectedBucketPaginationResult.BucketsBatch.Select(b => new Bucket()
+            .Returns(sampleBucketsBatch.Select(b => new Bucket()
             {
                 Id = b.Id,
                 Name = b.Name,
@@ -124,14 +129,57 @@ public class BucketServiceTest
             }).ToList());
 
         // Act
-        // Input 5 that is more than 3 buckets to check if still returns 
-        var result = _bucketService.GetPaginatedBucketsResult(null, expectedBucketPaginationResult.CurrentPage, 5);
+        var result = _bucketService.GetPaginatedBucketsResult(null, 1, 5);
 
         // Assert
         expectedBucketPaginationResult.Should().BeEquivalentTo(result);
     }
 
-    // TODO Add paginated bucket unit test with more sample data and more complicated values
+    [Test]
+    public void GetPaginatedBucketWithEmptySearchPhraseAndCurrentPageNot1AndItemsPerPageAsActual_ReturnPaginatedBucketResult()
+    {
+        // Arrange
+        var sampleBucketsBatch = new List<Bucket>() {
+                new Bucket() { Id = 1, Name = "Wood", BucketCategoryId = (int)Domain.Enums.BucketCategory.Hobby, BucketColorId = (int)Domain.Enums.BucketColor.Red, MaxAmountOfTasks = 5, IsActive = true  },
+                new Bucket() { Id = 2, Name = "Horse", BucketCategoryId = (int)Domain.Enums.BucketCategory.Work, BucketColorId = (int)Domain.Enums.BucketColor.Blue, MaxAmountOfTasks = 15, IsActive = true  },
+                new Bucket() { Id = 3, Name = "Backyard", BucketCategoryId = (int)Domain.Enums.BucketCategory.Work, BucketColorId = (int)Domain.Enums.BucketColor.Yellow, MaxAmountOfTasks = 3, IsActive = false  },
+                new Bucket() { Id = 4, Name = "House", BucketCategoryId = (int)Domain.Enums.BucketCategory.Work, BucketColorId = (int)Domain.Enums.BucketColor.Yellow, MaxAmountOfTasks = 3, IsActive = true  },
+                new Bucket() { Id = 5, Name = "Desk", BucketCategoryId = (int)Domain.Enums.BucketCategory.Home, BucketColorId = (int)Domain.Enums.BucketColor.Red, MaxAmountOfTasks = 3, IsActive = true  },
+                new Bucket() { Id = 6, Name = "Gym", BucketCategoryId = (int)Domain.Enums.BucketCategory.Work, BucketColorId = (int)Domain.Enums.BucketColor.Blue, MaxAmountOfTasks = 3, IsActive = true  },
+                new Bucket() { Id = 7, Name = "Broom", BucketCategoryId = (int)Domain.Enums.BucketCategory.Home, BucketColorId = (int)Domain.Enums.BucketColor.Green, MaxAmountOfTasks = 3, IsActive = true  },
+                new Bucket() { Id = 8, Name = "Exercises", BucketCategoryId = (int)Domain.Enums.BucketCategory.Work, BucketColorId = (int)Domain.Enums.BucketColor.Blue, MaxAmountOfTasks = 3, IsActive = true  },
+                new Bucket() { Id = 9, Name = "Lifts", BucketCategoryId = (int)Domain.Enums.BucketCategory.Work, BucketColorId = (int)Domain.Enums.BucketColor.Red, MaxAmountOfTasks = 3, IsActive = true  },
+                new Bucket() { Id = 10, Name = "Person", BucketCategoryId = (int)Domain.Enums.BucketCategory.Home, BucketColorId = (int)Domain.Enums.BucketColor.Blue, MaxAmountOfTasks = 3, IsActive = true  },
+            };
+        var expectedBucketPaginationResult = new PaginatedBucketsResult()
+        {
+            BucketsBatch = new List<Bucket>() {
+                new Bucket() { Id = 5, Name = "Desk", BucketCategoryId = (int)Domain.Enums.BucketCategory.Home, BucketColorId = (int)Domain.Enums.BucketColor.Red, MaxAmountOfTasks = 3, IsActive = true  },
+                new Bucket() { Id = 6, Name = "Gym", BucketCategoryId = (int)Domain.Enums.BucketCategory.Work, BucketColorId = (int)Domain.Enums.BucketColor.Blue, MaxAmountOfTasks = 3, IsActive = true  },
+            },
+            TotalBuckets = 10,
+            TotalPages = 5,
+            CurrentPage = 3
+        };
+
+        _bucketRepositoryMock.Setup(repo => repo.GetAllBuckets())
+            .Returns(sampleBucketsBatch.Select(b => new Bucket()
+            {
+                Id = b.Id,
+                Name = b.Name,
+                Description = b.Description,
+                BucketCategoryId = b.BucketCategoryId,
+                BucketColorId = b.BucketColorId,
+                MaxAmountOfTasks = b.MaxAmountOfTasks,
+                IsActive = b.IsActive
+            }).ToList());
+
+        // Act
+        var result = _bucketService.GetPaginatedBucketsResult(null, 3, 2);
+
+        // Assert
+        expectedBucketPaginationResult.Should().BeEquivalentTo(result);
+    }
 
     // TODO Add paginated bucket unit test with search phrase
 
