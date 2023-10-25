@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push: 
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v3.2.0
+        with: 
+          dotnet-version: 7.0.x
+      - name: Restore dependencies
+        run: dotnet restore ToDoList-backend/ToDoList.sln
+      - name: Build
+        run: dotnet build --no-restore ToDoList-backend/ToDoList.sln
+      - name: Test
+        run: dotnet test ToDoList-backend/ToDoList.sln
+        

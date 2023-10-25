@@ -83,7 +83,6 @@ public class BucketServiceTest
     {
         // Arrange
         var expectedBucketDto = new BucketDto(3, "Gym", "Sample desc3", (int)Domain.Enums.BucketCategory.Hobby, (int)Domain.Enums.BucketColor.Red, 15, true);
-
         var expectedBucket = _mapper.Map<Bucket>(expectedBucketDto);
 
         _bucketRepositoryMock.Setup(repo => repo.GetBucket(3)).Returns(expectedBucket);
@@ -228,7 +227,6 @@ public class BucketServiceTest
 
         // Assert
         expectedBucketPaginationResult.Should().BeEquivalentTo(result);
-
     }
 
     [Test]
