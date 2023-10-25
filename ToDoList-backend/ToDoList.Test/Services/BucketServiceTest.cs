@@ -104,7 +104,7 @@ public class BucketServiceTest
                 new Bucket() { Id = 2, Name = "PaginatedBucket2", BucketCategoryId = (int)Domain.Enums.BucketCategory.Work, BucketColorId = (int)Domain.Enums.BucketColor.Red, MaxAmountOfTasks = 15, IsActive = true  },
                 new Bucket() { Id = 3, Name = "PaginatedBucket3", BucketCategoryId = (int)Domain.Enums.BucketCategory.Home, BucketColorId = (int)Domain.Enums.BucketColor.Red, MaxAmountOfTasks = 3, IsActive = false  },
             };
-        var expectedBucketPaginationResult = new PaginatedBucketsResult()
+        var expectedBucketPaginationResult = new PaginatedBucketsResult<Bucket>()
         {
             BucketsBatch = new List<Bucket>() {
                 new Bucket() { Id = 1, Name = "PaginatedBucket1", BucketCategoryId = (int)Domain.Enums.BucketCategory.Hobby, BucketColorId = (int)Domain.Enums.BucketColor.Red, MaxAmountOfTasks = 5, IsActive = true  },
@@ -151,7 +151,7 @@ public class BucketServiceTest
                 new Bucket() { Id = 9, Name = "Lifts", BucketCategoryId = (int)Domain.Enums.BucketCategory.Work, BucketColorId = (int)Domain.Enums.BucketColor.Red, MaxAmountOfTasks = 3, IsActive = true  },
                 new Bucket() { Id = 10, Name = "Person", BucketCategoryId = (int)Domain.Enums.BucketCategory.Home, BucketColorId = (int)Domain.Enums.BucketColor.Blue, MaxAmountOfTasks = 3, IsActive = true  },
             };
-        var expectedBucketPaginationResult = new PaginatedBucketsResult()
+        var expectedBucketPaginationResult = new PaginatedBucketsResult<Bucket>()
         {
             BucketsBatch = new List<Bucket>() {
                 new Bucket() { Id = 5, Name = "Desk", BucketCategoryId = (int)Domain.Enums.BucketCategory.Home, BucketColorId = (int)Domain.Enums.BucketColor.Red, MaxAmountOfTasks = 3, IsActive = true  },
@@ -200,7 +200,7 @@ public class BucketServiceTest
             };
 
         // If search phrase is not null, only buckets batch collection has elements, the rest metadata equals 0 - planned behavior
-        var expectedBucketPaginationResult = new PaginatedBucketsResult()
+        var expectedBucketPaginationResult = new PaginatedBucketsResult<Bucket>()
         {
             BucketsBatch = new List<Bucket>() {
                 new Bucket() { Id = 8, Name = "Exercises", BucketCategoryId = (int)Domain.Enums.BucketCategory.Work, BucketColorId = (int)Domain.Enums.BucketColor.Blue, MaxAmountOfTasks = 3, IsActive = true  },

@@ -12,7 +12,7 @@ namespace ToDoList.Api.Buckets.Services;
 public interface IBucketService
 {
     IReadOnlyCollection<BucketDto> GetAllBuckets();
-    PaginatedBucketsResult GetPaginatedBucketsResult(string? searchPhrase, int currentPage, int itemsPerPage);
+    PaginatedBucketsResult<Bucket> GetPaginatedBucketsResult(string? searchPhrase, int currentPage, int itemsPerPage);
     BucketDto GetBucket(int bucketId);
     IReadOnlyCollection<BucketTaskDto> GetAllBucketsTasks(int bucketId);
     int InsertBucket(BucketUpsertDto bucket);
@@ -38,9 +38,9 @@ public class BucketService : IBucketService
         return _mapper.Map<List<BucketDto>>(_bucketRepository.GetAllBuckets());
     }
 
-    public PaginatedBucketsResult GetPaginatedBucketsResult(string? searchPhrase, int currentPage, int itemsPerPage)
+    public PaginatedBucketsResult<Bucket> GetPaginatedBucketsResult(string? searchPhrase, int currentPage, int itemsPerPage)
     {
-        PaginatedBucketsResult result = new PaginatedBucketsResult();
+        PaginatedBucketsResult<Bucket> result = new PaginatedBucketsResult<Bucket>();
 
         var query = _bucketRepository.GetAllBuckets().AsQueryable();
 
