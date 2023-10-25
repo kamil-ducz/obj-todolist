@@ -180,7 +180,6 @@ public class BucketServiceTest
         expectedBucketPaginationResult.Should().BeEquivalentTo(result);
     }
 
-    // TODO Add paginated bucket unit test with search phrase
     [Test]
     public void GetPaginatedBucketResultWithSearchPhrase_ReturnBucketsCollection()
     {
