@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using ToDoList.Api.Buckets.Models;
 using ToDoList.Api.Buckets.Services;
 using ToDoList.Api.BucketTasks.Models;
+using ToDoList.Domain.Models;
 
 namespace ToDoList.Api.Buckets.Controllers;
 
@@ -21,10 +22,10 @@ public class BucketController : ControllerBase
         _bucketInsertDtoValidator = bucketInsertDtoValidator;
     }
 
-    [HttpGet]
-    public IReadOnlyCollection<BucketDto> Get()
+    [HttpGet("buckets")]
+    public PaginatedBucketsResult<Bucket> Get([FromQuery] string? searchPhrase, [FromQuery] int currentPage = 1, [FromQuery] int itemsPerPage = 25)
     {
-        return _bucketService.GetAllBuckets();
+        return _bucketService.GetPaginatedBucketsResult(searchPhrase, currentPage, itemsPerPage);
     }
 
     [HttpGet("{id}")]

@@ -1,8 +1,9 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Bucket } from "../models/bucket.model";
 import { BucketTask } from "../models/bucket.task.model";
+import { PaginatedBucketResult } from "../models/paginated.bucket.result.model";
 
 @Injectable ({
     providedIn: 'root'
@@ -15,7 +16,20 @@ export class BucketService {
     ) {}
 
     getBuckets(): Observable<Bucket[]> {
-        return this.httpClient.get<Bucket[]>('Bucket/');
+        return this.httpClient.get<Bucket[]>('Bucket/all');
+    }
+
+    getPaginatedBuckets(searchPhrase: string | null = null, currentPage: number = 1, itemsPerPage: number = 25): Observable<PaginatedBucketResult> {
+        let params = new HttpParams()
+          .set('currentPage', currentPage.toString())
+          .set('itemsPerPage', itemsPerPage.toString());
+    
+        // Conditionally add searchPhrase to the params
+        if (searchPhrase !== null) {
+          params = params.set('searchPhrase', searchPhrase);
+        }
+    
+        return this.httpClient.get<PaginatedBucketResult>('Bucket/buckets/', { params: params });
     }
 
     getBucket(bucketId: number): Observable<Bucket> {

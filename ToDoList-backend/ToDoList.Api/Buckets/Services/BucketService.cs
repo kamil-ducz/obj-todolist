@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using ToDoList.Api.Buckets.Models;
 using ToDoList.Api.BucketTasks.Models;
+using ToDoList.Domain.Models;
 using ToDoList.Domain.Repositories;
 
 namespace ToDoList.Api.Buckets.Services;
@@ -10,6 +12,7 @@ namespace ToDoList.Api.Buckets.Services;
 public interface IBucketService
 {
     IReadOnlyCollection<BucketDto> GetAllBuckets();
+    PaginatedBucketsResult<Bucket> GetPaginatedBucketsResult(string? searchPhrase, int currentPage, int itemsPerPage);
     BucketDto GetBucket(int bucketId);
     IReadOnlyCollection<BucketTaskDto> GetAllBucketsTasks(int bucketId);
     int InsertBucket(BucketUpsertDto bucket);
@@ -33,6 +36,39 @@ public class BucketService : IBucketService
     public IReadOnlyCollection<BucketDto> GetAllBuckets()
     {
         return _mapper.Map<List<BucketDto>>(_bucketRepository.GetAllBuckets());
+    }
+
+    public PaginatedBucketsResult<Bucket> GetPaginatedBucketsResult(string? searchPhrase, int currentPage, int itemsPerPage)
+    {
+        PaginatedBucketsResult<Bucket> result = new PaginatedBucketsResult<Bucket>();
+
+        var query = _bucketRepository.GetAllBuckets().AsQueryable();
+
+        if (!string.IsNullOrEmpty(searchPhrase))
+        {
+            var normalizedSearchPhrase = searchPhrase.ToLower().Trim();
+            query = query.Where(b => b.Name.ToLower().Trim().Contains(normalizedSearchPhrase));
+            // If search phrase provided by client, return found results without pagination
+            result.BucketsBatch = query.ToList();
+            return result;
+        }
+
+        // Calculate total buckets (before applying pagination)
+        result.TotalBuckets = query.Count();
+
+        // Apply pagination
+        result.BucketsBatch = query
+            .OrderBy(b => b.Id) // You might want to order by a specific property
+            .Skip((currentPage - 1) * itemsPerPage)
+            .Take(itemsPerPage)
+            .ToList();
+
+        // Calculate total pages
+        result.TotalPages = (int)Math.Ceiling((double)result.TotalBuckets / itemsPerPage);
+
+        result.CurrentPage = currentPage;
+
+        return result;
     }
 
     public BucketDto GetBucket(int bucketId)
