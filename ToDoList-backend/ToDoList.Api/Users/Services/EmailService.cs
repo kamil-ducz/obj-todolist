@@ -19,7 +19,7 @@ public class EmailService : IEmailService
         _smtpSettings = smtpSettings.Value;
     }
 
-    public void SendEmail(string to, string subject, string html, string from = null)
+    public void SendEmail(string to, string subject, string html, string from)
     {
         // create message
         var email = new MimeMessage();
