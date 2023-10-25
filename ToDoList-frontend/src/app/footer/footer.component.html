@@ -1,0 +1,25 @@
+<footer class="pagination-container" *ngIf="router.url === '/buckets'">
+    <div class="pagination-info">
+      <span>Total Records: {{ totalBuckets }}</span>
+       | 
+      <span>Total Pages: {{ totalPages }}</span>
+    </div>
+    <div class="pagination-pages grid grid-cols-10 gap-1">
+      <a *ngFor="let page of pages" [class.active]="page === activePage" (click)="changePage(page)">{{ page }}</a>
+    </div>
+    <div class="items-per-page">
+      <label for="itemsPerPage">Items Per Page:</label>
+      <select id="itemsPerPage" [(ngModel)]="itemsPerPage" (change)="changeItemsPerPage()">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select>
+    </div>
+    <hr>
+    <div class="copyright">
+      <p class="italic">This is a test project created by Kamil Duczakowski. It is free to use and source code is available for everybody to learn. Enjoy! :)</p>
+    </div>
+</footer>
+  

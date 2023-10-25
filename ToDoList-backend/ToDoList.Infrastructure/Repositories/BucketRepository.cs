@@ -15,7 +15,7 @@ public class BucketRepository : IBucketRepository
 
     public IReadOnlyList<Bucket> GetAllBuckets()
     {
-        var buckets = _toDoListDbContext.Buckets!.ToList();
+        var buckets = _toDoListDbContext.Buckets.ToList();
         return buckets;
     }
 
