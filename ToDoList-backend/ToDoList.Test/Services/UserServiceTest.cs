@@ -150,7 +150,10 @@ public class UserServiceTest
 
         // Act 
         var authenticateResponse = _userService.Authenticate(authenticateRequest);
-        authenticateResponse.Token = expectedToken; // assign generated token for response so that assertion successes
+        if (authenticateResponse is not null)
+        {
+            authenticateResponse.Token = expectedToken; // assign generated token for response so that assertion successes
+        }
 
         // Assert
         expectedAuthenticateResponse.Should().BeEquivalentTo(authenticateResponse);
