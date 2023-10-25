@@ -22,16 +22,10 @@ public class BucketController : ControllerBase
         _bucketInsertDtoValidator = bucketInsertDtoValidator;
     }
 
-    [HttpGet("paginatedBuckets")]
+    [HttpGet("buckets")]
     public PaginatedBucketsResult Get([FromQuery] string? searchPhrase, [FromQuery] int currentPage = 1, [FromQuery] int itemsPerPage = 25)
     {
         return _bucketService.GetPaginatedBucketsResult(searchPhrase, currentPage, itemsPerPage);
-    }
-
-    [HttpGet("all")]
-    public IReadOnlyCollection<BucketDto> GetAllBuckets()
-    {
-        return _bucketService.GetAllBuckets();
     }
 
     [HttpGet("{id}")]

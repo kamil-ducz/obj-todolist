@@ -29,7 +29,7 @@ export class BucketService {
           params = params.set('searchPhrase', searchPhrase);
         }
     
-        return this.httpClient.get<PaginatedBucketResult>('Bucket/paginatedBuckets/', { params: params });
+        return this.httpClient.get<PaginatedBucketResult>('Bucket/buckets/', { params: params });
     }
 
     getBucket(bucketId: number): Observable<Bucket> {
