@@ -15,6 +15,7 @@ using ToDoList.Api.Dictionaries.Services;
 using ToDoList.Api.Users.Authorization;
 using ToDoList.Api.Users.Services;
 using ToDoList.Domain.Repositories;
+using ToDoList.Infrastructure;
 using ToDoList.Infrastructure.Repositories;
 
 namespace ToDoList.Api.Config;
