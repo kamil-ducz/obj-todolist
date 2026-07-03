@@ -1,5 +1,8 @@
-Local setup
+# ToDoList Local setup
+## Purpose
+This project demonstrates full CRUD operations and communication between a SQL database, a .NET backend, and an Angular frontend. It also includes unit tests for both backend and frontend services. It handles user authentication and error handling.
 
+## Steps
 1. Clone the repository to your local machine.
 2. Checkout to the development branch.
 3. Open backend project
