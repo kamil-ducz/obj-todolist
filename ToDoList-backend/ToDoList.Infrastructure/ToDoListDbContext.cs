@@ -5,7 +5,7 @@ using ToDoList.Domain.Models;
 // Declared db sets will never be null
 #pragma warning disable CS8618
 
-namespace ToDoList.Api;
+namespace ToDoList.Infrastructure;
 
 public class ToDoListDbContext : DbContext
 {
