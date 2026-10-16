@@ -3,7 +3,7 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from "@angular/c
 import { Observable, finalize } from "rxjs";
 import { LoaderService } from "../services/loader.service";
 import { ToastrService } from "ngx-toastr";
-import { environment } from "src/environments/environment";
+import { environment } from "src/environments/environment.prod";
 
 @Injectable({ providedIn: "root" })
 export class ApiInterceptor implements HttpInterceptor {

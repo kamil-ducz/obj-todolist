@@ -35,11 +35,13 @@ app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseCors(
-    options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
-    );
+// CORS settings on Azure
+//app.UseCors(
+//    options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+//    );
 
 // custom jwt auth middleware
 app.UseMiddleware<JwtMiddleware>();
