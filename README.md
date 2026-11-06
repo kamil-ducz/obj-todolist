@@ -1,9 +1,4 @@
 # ToDoList Local setup
-
-## Live Demo
-1. On Azure: https://calm-field-081a6601e.5.azurestaticapps.net/login
-2. On GitHub Pages: https://kamil-ducz.github.io/obj-todolist/login
-
 ## Purpose
 This project demonstrates full CRUD operations and communication between a SQL database, a .NET backend, and an Angular frontend. It also includes unit tests for both backend and frontend services. It handles user authentication and error handling.
 
