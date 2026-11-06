@@ -1,6 +1,5 @@
 # Live demo
-## On Azure: https://calm-field-081a6601e.5.azurestaticapps.net/login
-## On GitHub Pages: https://kamil-ducz.github.io/obj-todolist/login
+## On Azure: https://calm-field-081a6601e.5.azurestaticapps.net/
 
 # Kanban Board Local setup
 ## Purpose
